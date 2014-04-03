@@ -1,0 +1,13 @@
+127.0.0.1 local.<%= domain %> localhost local
+127.0.1.1 <%= scope.lookupvar('::fqdn') -%> <%= scope.lookupvar('::hostname') %>
+192.168.1.1 gateway.<%= domain %> gateway
+
+# The following lines are desirable for IPv6 capable hosts
+::1 localhost.<%= domain %> ip6-localhost ip6-loopback localhost
+<%= scope.lookupvar("my_ip6address") %> <%= hostname %>.<%= domain %> <%= host name %>
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
