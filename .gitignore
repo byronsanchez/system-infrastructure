@@ -39,5 +39,4 @@ $RECYCLE.BIN/
 # librarian-puppet
 .tmp/
 .librarian/
-modules/
 
