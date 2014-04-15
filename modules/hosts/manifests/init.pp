@@ -1,4 +1,4 @@
-class hosts {
+class hosts ($node_name = '') {
   file { '/etc/hosts':
     ensure  => present,
     owner   => 'root',

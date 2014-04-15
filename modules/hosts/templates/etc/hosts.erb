@@ -1,10 +1,37 @@
-127.0.0.1 local.<%= domain %> localhost local
-127.0.1.1 <%= scope.lookupvar('::fqdn') -%> <%= scope.lookupvar('::hostname') %>
-192.168.1.1 gateway.<%= domain %> gateway
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+127.0.0.1 localhost local
+<% if @node_name -%>
+127.0.1.1 <%= @node_name %>.<%= @domain %> <%= @node_name %>
+<% end -%>
+<% if @puppetmaster_address -%>
+<%= @puppetmaster_address %> puppet.<%= @domain %> puppet
+<% end -%>
+<% if @ldapserver_address -%>
+<%= @ldapserver_address%> ldap.<%= @domain %> ldap
+<%= @ldapserver_address%> ldap1.<%= @domain %> ldap1
+<% end -%>
+<% if @mediaserver_address -%>
+<%= @mediaserver_address %> media.<%= @domain %> media
+<%= @mediaserver_address %> media1.<%= @domain %> media1
+<% end -%>
+<% if @binhost_address -%>
+<%= @binhost_address %> binhost.<%= @domain %> binhost
+<%= @binhost_address %> binhost1.<%= @domain %> binhost1
+<% end -%>
+<% if @vpn_address -%>
+<%= @vpn_address %> vpn.<%= @domain %> vpn
+<%= @vpn_address %> vpn1.<%= @domain %> vpn1
+<% end -%>
 
 # The following lines are desirable for IPv6 capable hosts
-::1 localhost.<%= domain %> ip6-localhost ip6-loopback localhost
-<%= scope.lookupvar("my_ip6address") %> <%= hostname %>.<%= domain %> <%= host name %>
+::1 ip6-localhost ip6-loopback localhost
 fe00::0 ip6-localnet
 ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
