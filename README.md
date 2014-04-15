@@ -36,6 +36,8 @@ Here is the list of incompatible patterns:
     be installed per node at a time. mail.pp uses msmtp for simple delivery of
     mail to an external mail server, whereas web.pp uses exim as an actual mail
     server.
+  - vpnserver.pp and vpnclient.pp - both contain a config that defines an
+    individual role as a client or a server
 
 ### Building Configs From Fragments
 
