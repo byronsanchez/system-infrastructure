@@ -1,0 +1,60 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# upstream gitlab {
+#   server unix:/home/git/gitlab/tmp/sockets/gitlab.socket;
+# }
+
+# Redirect main request to hackbytes portfolio.
+server {
+  server_name byronsanchez.net www.byronsanchez.net;
+  rewrite ^ http://hackbytes.com/portfolio permanent;
+}
+
+# My git development server.
+# NOTE: Gitlab and all dependencies are currently not installed on
+# this server, nor are the certs generated, so the following
+# will not work unless they are setup
+# server {
+#   listen *:8080 default_server ssl;         # e.g., listen 192.168.1.1:80;
+#   ssl_certificate /usr/local/nginx/conf/server.crt;
+#   ssl_certificate_key /usr/local/nginx/conf/server.key;
+#   server_name git.byronsanchez.net;     # e.g., server_name source.example.com;
+# 
+#   access_log /var/log/nginx/gitlab.access_log;
+#   error_log /var/log/nginx/gitlab.error_log;
+# 
+#   root /home/git/gitlab/public;
+#   index index.php index.htm index.html;
+# 
+#   location / {
+#     # serve static files from defined root folder;.
+#     # @gitlab is a named location for the upstream fallback, see below
+#     try_files $uri $uri/index.html $uri.html @gitlab;
+#   }
+# 
+#   # if a file, which is not found in the root folder is requested,
+#   # then the proxy pass the request to the upsteam (gitlab puma)
+#   location @gitlab {
+#     proxy_read_timeout 300; # https://github.com/gitlabhq/gitlabhq/issues/694
+#     proxy_connect_timeout 300; # https://github.com/gitlabhq/gitlabhq/issues/694
+#     proxy_redirect     off;
+# 
+#     proxy_set_header   X-Forwarded-Proto $scheme;
+#     proxy_set_header   Host              $http_host;
+#     proxy_set_header   X-Real-IP         $remote_addr;
+# 
+#     proxy_pass http://gitlab;
+#   }
+# }
+# 
+# server {
+#   listen      80;
+#   server_name git.byronsanchez.net;
+#   rewrite     ^   https://$server_name$request_uri? permanent;
+# }
