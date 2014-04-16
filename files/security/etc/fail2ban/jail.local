@@ -1,0 +1,94 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# Fail2Ban configuration file override.
+
+[DEFAULT]
+
+# email action. Since 0.8.1 upstream fail2ban uses sendmail
+# MTA for the mailing. Change mta configuration parameter to mail
+# if you want to revert to conventional 'mail'.
+mta = mail
+
+
+#[ssh]
+#
+#enabled = true
+#port	= ssh
+#filter	= sshd
+#logpath  = /var/log/secure
+#maxretry = 6
+#
+#[xinetd-fail]
+#
+#enabled   = true
+#filter    = xinetd-fail
+#port      = all
+#banaction = iptables-multiport-log
+#logpath   = /var/log/daemon.log
+#maxretry  = 2
+#
+#[ssh-ddos]
+#
+#enabled = true
+#port    = ssh
+#filter  = sshd-ddos
+#logpath  = /var/log/secure
+#maxretry = 6
+#
+#
+## Block anyone failing to authenticate using nginx basic authentication
+#[nginx-auth]
+#
+#enabled = false
+#filter = nginx-http-auth
+#action = iptables-multiport[name=NoAuthFailures, port="http,https"]
+#logpath = /var/log/nginx*/*error*.log
+#bantime = 600
+#maxretry = 6
+#
+## Block anyone failing to authenticate using our application's log in page
+#[nginx-login]
+#
+#enabled = false
+#filter = nginx-login
+#action = iptables-multiport[name=NoLoginFailures, port="http,https"]
+#logpath = /var/log/nginx*/*access*.log
+#bantime = 600
+#maxretry = 6
+#
+## Block bad bots
+#[nginx-badbots]
+#
+#enabled  = true
+#filter = apache-badbots
+#action = iptables-multiport[name=BadBots, port="http,https"]
+#logpath = /var/log/nginx*/*access*.log
+#bantime = 86400
+#maxretry = 1
+#
+## Block anyone trying to run scripts (.pl, .cgi, .exe, etc)
+#[nginx-noscript]
+#
+#enabled = true
+#action = iptables-multiport[name=NoScript, port="http,https"]
+#filter = nginx-noscript
+#logpath = /var/log/nginx*/*access*.log
+#maxretry = 6
+#bantime  = 86400
+#
+## Block anyone trying to use the server as a proxy
+#[nginx-proxy]
+#
+#enabled = true
+#action = iptables-multiport[name=NoProxy, port="http,https"]
+#filter = nginx-proxy
+#logpath = /var/log/nginx*/*access*.log
+#maxretry = 0
+#bantime  = 86400
+#
