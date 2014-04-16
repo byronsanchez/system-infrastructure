@@ -1,0 +1,10 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+sys-apps/net-tools old-output
+app-admin/puppet augeas
