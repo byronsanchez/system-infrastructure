@@ -1,0 +1,10 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# screen, HEAD of git repo through overlay
+=app-misc/screen-9999 **
