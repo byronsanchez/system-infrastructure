@@ -1,0 +1,12 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+x11-base/xorg-server xorg
+dev-libs/libxml2 python
+media-libs/mesa gbm
+x11-libs/gtk+ X
