@@ -1,0 +1,12 @@
+##########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+##
+## User privilege specification
+##
+byronsanchez	ALL=(ALL:ALL) ALL
