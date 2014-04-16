@@ -1,0 +1,10 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+x11-misc/hsetroot X
+media-libs/imlib2 X jpeg gif
