@@ -1,0 +1,11 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+media-sound/mpd alsa clock curl fftw flac id3tag lame mad musicbrainz ogg outputs taglib unicode vorbis wavpack visualizer
+media-libs/flac ogg
+
