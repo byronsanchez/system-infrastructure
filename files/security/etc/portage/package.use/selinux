@@ -1,0 +1,11 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+app-admin/setools python
+sys-libs/libselinux static-libs ruby
+dev-libs/libpcre static-libs
