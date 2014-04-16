@@ -1,0 +1,25 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+if [ ! -f /tmp/mirror_gentoo_local ];
+then
+  touch /tmp/mirror_gentoo_local;
+
+  # sync local distfiles
+  rsync -aqvz --delete --delete-after /usr/portage/distfiles/ \
+  /vol/io/gentoo-local-distfiles;
+
+  # sync local packages
+  rsync -aqvz --delete --delete-after /usr/portage/packages/ \
+  /vol/io/gentoo-local-packages;
+
+  rm /tmp/mirror_gentoo_local;
+fi
+
