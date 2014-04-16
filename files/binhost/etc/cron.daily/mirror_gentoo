@@ -1,0 +1,26 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+if [ ! -f /tmp/mirror_gentoo ];
+then
+  touch /tmp/mirror_gentoo;
+
+  # sync the public portage tree against the main sync rotation
+  rsync -aqvz --delete --delete-after rsync.us.gentoo.org::gentoo-portage \
+  /vol/io/gentoo-portage;
+
+  # sync the main gentoo mirror
+  # this mirrors the whole tree, including distfiles, releases,  and snapshots
+  rsync -aqvz --delete --delete-after rsync.us.gentoo.org::gentoo \
+  /vol/io/gentoo;
+
+  rm /tmp/mirror_gentoo;
+fi
+
