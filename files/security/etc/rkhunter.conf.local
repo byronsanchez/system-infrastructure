@@ -1,0 +1,152 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+#
+# This is the local configuration file for Rootkit Hunter.
+# This file has been made for a Debian-based webserver.
+#
+
+#
+# Email a message to this address if a warning is found when the
+# system is being checked. Multiple addresses may be specified
+# simply be separating them with a space. Setting this option to
+# null disables the option.
+#
+# NOTE: This option should be present in the configuration file.
+#
+#MAIL-ON-WARNING=me@mydomain   root@mydomain
+MAIL-ON-WARNING=bfs5030+io@gmail.com
+
+#
+# Specify the mail command to use if MAIL-ON-WARNING is set.
+# NOTE: Double quotes are not required around the command, but
+# are required around the subject line if it contains spaces.
+#
+MAIL_CMD=mail -s "[rkhunter] Warnings found for ${HOST_NAME}"
+
+#
+# The PKGMGR option tells rkhunter to use the specified package manager
+# to obtain the file property information. This is used when updating
+# the file properties file ('rkhunter.dat'), and when running the file
+# properties check. For RedHat/RPM-based systems, 'RPM' can be used
+# to get information from the RPM database. For Debian-based systems
+# 'DPKG' can be used, and for *BSD systems 'BSD' can be used.
+# No value, or a value of 'NONE', indicates that no package manager
+# is to be used. The default is 'NONE'.
+#
+# The current package managers store the file hash values using an
+# MD5 hash function.
+#
+# The 'DPKG' and 'BSD' package managers only provide MD5 hash values.
+# The 'RPM' package manager additionally provides values for the inode,
+# file permissions, uid, gid and other values.
+#
+# For any file not part of a package, rkhunter will revert to using
+# the HASH_FUNC hash function instead.
+#
+# Whenever this option is changed 'rkhunter --propupd' must be run.
+#
+# NONE is the default for Debian as well, as running --propupd takes
+# about 4 times longer when it's set to DPKG
+#
+#PKGMGR=NONE
+
+#
+# This setting tells rkhunter where the xinetd configuration
+# file is located.
+#
+XINETD_CONF_PATH=/etc/xinetd.conf
+
+#
+# Allow the following enabled xinetd services. Whilst it would be
+# nice to use the service names themselves, at the time of testing
+# we only have the pathname available. As such, these entries are
+# the xinetd file pathnames.
+# Only one service (file) per line (use multiple XINETD_ALLOWED_SVC lines).
+#
+XINETD_ALLOWED_SVC=/etc/xinetd.d/echo
+XINETD_ALLOWED_SVC=/etc/xinetd.d/dropbear
+
+#
+# Set the following option to 1 if the log file is to be copied when
+# rkhunter finishes and an error or warning has occurred. The copied
+# log file name will be appended with the current date and time
+# (in YYYY-MM-DD_HH:MM:SS format).
+# For example: rkhunter.log.2009-04-21_00:57:51
+#
+COPY_LOG_ON_ERROR=1
+
+#
+# Set the following option to 0 if rkhunter should not detect if X is
+# being used. If X is detected as being used, then the second colour
+# set will automatically be used.
+#
+AUTO_X_DETECT=0
+
+#
+# The PHALANX2_DIRTEST option is used to indicate if the Phalanx2 test is to
+# perform a basic check, or a more thorough check. If the option is set to 0,
+# then a basic check is performed. If it is set to 1, then all the directries
+# in the /etc and /usr directories are scanned. The default value is 0. Users
+# should note that setting this option to 1 will cause the test to take longer
+# to complete.
+#
+PHALANX2_DIRTEST=1
+
+# 
+# Scan for suspicious files in directories containing temporary files and
+# directories posing a relatively higher risk due to user write access.
+# Please do not enable by default as suspscan is CPU and I/O intensive and prone to
+# producing false positives. Do review all settings before usage.
+# Also be aware that running suspscan in combination with verbose logging on,
+# RKH's default, will show all ignored files.
+# Please consider adding all directories the user the (web)server runs as has 
+# write access to including the document root (example: "/var/www") and log
+# directories (example: "/var/log/httpd"). 
+#
+# A space-separated list of directories to scan.
+#
+SUSPSCAN_DIRS="/tmp /var/tmp /srv/www /var/www /var/log"
+
+
+#
+# Specify the log file pathname.
+#
+# NOTE: This option should be present in the configuration file.
+#
+LOGFILE=/var/log/rkhunter/rkhunter.log
+
+#
+# Set the following option to 1 if locking is to be used when rkhunter runs.
+# The lock is set just before logging starts, and is removed when the program
+# ends. It is used to prevent items such as the log file, and the file
+# properties file, from becoming corrupted if rkhunter is running more than
+# once. The mechanism used is to simply create a lock file in the TMPDIR
+# directory. If the lock file already exists, because rkhunter is already
+# running, then the current process simply loops around sleeping for 10 seconds
+# and then retrying the lock.
+#
+# The default is not to use locking.
+#
+USE_LOCKING=1
+
+#
+# Allow the specified hidden directories.
+# One directory per line (use multiple ALLOWHIDDENDIR lines).
+#
+#ALLOWHIDDENDIR=/etc/.java
+#ALLOWHIDDENDIR=/dev/.udev
+#ALLOWHIDDENDIR=/dev/.udevdb
+#ALLOWHIDDENDIR=/dev/.udev.tdb
+#ALLOWHIDDENDIR=/dev/.static
+#ALLOWHIDDENDIR=/dev/.initramfs
+#ALLOWHIDDENDIR=/dev/.SRC-unix
+#ALLOWHIDDENDIR=/dev/.mdadm
+##ALLOWHIDDENDIR=/dev/.udev
+##ALLOWHIDDENDIR=/dev/.initramfs
+
