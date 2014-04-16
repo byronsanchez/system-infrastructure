@@ -1,0 +1,10 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# convenient; necessary for fail2ban
+dev-lang/python sqlite
