@@ -1,0 +1,10 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+x11-terms/rxvt-unicode 256-color alt-font-width blink xft fading-colors startup-notification pixbuf secondary-wheel -vanilla buffer-on-clear secondary-wheel
+x11-libs/cairo X
