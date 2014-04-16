@@ -1,0 +1,41 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+- /root/downloads/*
+- /root/Downloads/*
+- /bin/*
+- /sbin/*
+- /srv/*
+- /media/*
+- /lib/*
+- /dev/*
+- /proc/*
+- /sys/*
+- /tmp/*
+- /vol/*
+- /run/*
+- /mnt/*
+- /media/*
+- /lost+found
+- /home/*/Downloads/*
+- /home/*/downloads/*
+- /home/scratch/**
+- /var/lib/libvirt/images/**
+- /var/tmp/ccache/**
+- /usr/portage/**
+# mac stuff
+- /Users/byronsanchez/mnt/*
+- /Users/byronsanchez/Downloads/*
+- /Users/byronsanchez/private/var/vm/*
+- /private/var/vm/*¬
+- /private/var/folders/*
+- /private/var/tmp/*
+- /private/var/tmp*
+- /Users/byronsanchez/Library/Caches/*
+- /Users/*/.Trash/*
+- /Users/*/VirtualBox\ VMs/*
