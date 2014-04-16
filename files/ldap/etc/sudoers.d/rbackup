@@ -1,0 +1,12 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+##
+## User privilege specification
+##
+rbackup	ALL=NOPASSWD: /usr/bin/rsync
