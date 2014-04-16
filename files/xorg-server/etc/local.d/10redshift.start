@@ -1,0 +1,14 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+if [ -f "$HOME/.redshift.conf" ];
+then
+  redshift -c $HOME/.redshift.conf &
+fi
