@@ -1,0 +1,11 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+www-client/firefox sqlite sqlite3
+media-libs/libpng apng
+x11-libs/pango X
