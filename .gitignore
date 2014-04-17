@@ -40,3 +40,6 @@ $RECYCLE.BIN/
 .tmp/
 .librarian/
 
+# ignore files with encrypted data
+*.eyaml
+
