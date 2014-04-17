@@ -1,0 +1,16 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+<% if @network_type == "hypervisor" -%>
+bridge_br0="<%= @network_interface %>"
+config_br0="dhcp"
+config_<%= @network_interface %>="null"
+<% else %>
+config_<%= @network_interface %>="dhcp"
+<% end -%>
+
