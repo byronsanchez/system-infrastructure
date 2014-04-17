@@ -1,0 +1,19 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+if [ ! -f /tmp/mirror_tldp ];
+then
+  touch /tmp/mirror_tldp;
+
+  rsync -aqvz --delete --delete-after ftp.ibiblio.org::ldp_mirror /vol/io/tldp;
+
+  rm /tmp/mirror_tldp;
+fi
+
