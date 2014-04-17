@@ -17,5 +17,7 @@
 
 :hierarchy:
   - "%{::fqdn}"
+  - "%{::fqdn}.secrets"
   - common
+  - secrets
 
