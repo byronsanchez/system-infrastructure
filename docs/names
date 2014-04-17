@@ -1,0 +1,38 @@
+### Node naming convention
+
+I currently do not require a formal naming convention, so I am simply using an
+arbitrary naming scheme. I set up different nodes with different services (for
+now), so even naming a node "puppet" does not show it may also run other server
+applications (which in my use case, it may).
+
+This may change in the future, but for now I will simply maintain a list of
+hostnames and the services they provide.
+
+Name - service mapping
+
+maia = data
+polaris = dns
+vega = sec
+kraz = proxy
+sol = puppet, binhost, provision
+sirius = web
+
+Network naming conventions
+
+internal.nitelite.io are nodes on the local subnet
+external.nitelite.io are nodes on remote subnets
+
+development server names - dev.name.tld (needed when working with others)
+staging server names - stage.name.tld
+production app names - name.tld
+
+Use internal DNS, hosts, nginx w/e to manage the names. Just make sure to not
+make your dev environments public
+
+### Volumes
+
+luna = main file share
+io = backup
+europa = mirrors
+callisto = mail
+
