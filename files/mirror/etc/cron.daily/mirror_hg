@@ -10,7 +10,7 @@
 
 # Automates syncing of local hg mirrors.
 
-backup_dir="/vol/io/hg"
+backup_dir="/srv/nfs/io/hg"
 conf_dir="/etc/nitelite/hglist"
 
 # Strip comments and empty lines from the config file

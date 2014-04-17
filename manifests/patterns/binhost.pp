@@ -52,22 +52,6 @@ class binhost {
        target  => "${portage_package_directory}",
        require => File["/srv/www"],
     }
-
-    file { "/srv/nfs/gentoo-local-packages":
-      ensure  => "directory",
-      owner   => "root",
-      group   => "root",
-      require => File["/srv/nfs"],
-    }
-
-    # Need to bind mount as symlinks will not work with nfs
-    mount { "/srv/nfs/gentoo-local-packages":
-      ensure  => mounted,
-      device  => "${portage_package_directory}",
-      fstype  => "none",
-      options => "rw,bind",
-      require => File["/srv/nfs/gentoo-local-packages"],
-    }
   }
 
   file { "/etc/rsyncd.d/binhost.conf":
@@ -105,22 +89,6 @@ class binhost {
       ensure  => 'link',
       target  => "${portage_tree_directory}",
       require => File["/srv/rsync"],
-    }
-
-    file { "/srv/nfs/gentoo-portage":
-      ensure  => "directory",
-      owner   => "root",
-      group   => "root",
-      require => File["/srv/nfs"],
-    }
-
-    # Need to bind mount as symlinks will not work with nfs
-    mount { "/srv/nfs/gentoo-portage":
-      ensure  => mounted,
-      device  => "${portage_tree_directory}",
-      fstype  => "none",
-      options => "rw,bind",
-      require => File["/srv/nfs/gentoo-portage"],
     }
   }
 

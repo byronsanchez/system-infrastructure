@@ -10,7 +10,7 @@
 
 # Automates syncing of local svn mirrors.
 
-backup_dir="/vol/io/svn"
+backup_dir="/srv/nfs/io/svn"
 conf_dir="/etc/nitelite/svnlist"
 
 # Strip comments and empty lines from the config file

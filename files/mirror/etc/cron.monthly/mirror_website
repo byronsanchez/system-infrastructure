@@ -9,7 +9,7 @@
 ###########################################
 
 user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:25.0) Gecko/20100101 Firefox/25.0'
-backup_dir="/vol/io/websites"
+backup_dir="/srv/nfs/io/websites"
 conf_dir="/etc/nitelite/websitelist"
 
 if [ ! -d "$backup_dir" ]; then

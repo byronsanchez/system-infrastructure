@@ -10,7 +10,7 @@
 
 # Automates syncing of local git mirrors. Requires git >= 1.6.0
 
-backup_dir="/vol/io/git"
+backup_dir="/srv/nfs/io/git"
 conf_file="/etc/nitelite/gitlist"
 
 # Strip comments and empty lines from the config file

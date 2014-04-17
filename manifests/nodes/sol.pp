@@ -17,18 +17,18 @@ node 'sol.internal.nitelite.io' inherits network {
 
   # provision
 
-  $boot_pxe_path = "/vol/luna/Projects/hackbytes/gentoo-provision/profiles/internal.nitelite.io/devices/pxe"
+  $boot_pxe_path = "/srv/nfs/luna/Projects/hackbytes/gentoo-provision/profiles/internal.nitelite.io/devices/pxe"
   # Used by puppet pattern to build link to puppet path for nfs share
-  $puppet_path="/vol/luna/Projects/hackbytes/puppet"
+  $puppet_path="/srv/nfs/luna/Projects/hackbytes/puppet"
   # Used for remotes so that they may download the autoinstall script
-  $rsync_provision_directory="/vol/luna/Projects/hackbytes/gentoo-provision"
+  $rsync_provision_directory="/srv/nfs/luna/Projects/hackbytes/gentoo-provision"
 
   # binhost
 
-  $portage_package_directory = "/vol/io/gentoo-local-packages"
-  $portage_tree_directory = "/vol/io/gentoo-portage"
+  $portage_package_directory = "/srv/nfs/io/gentoo-local-packages"
+  $portage_tree_directory = "/srv/nfs/io/gentoo-portage"
   # TODO: Change to full mirror once it's available
-  $gentoo_directory = "/vol/io/gentoo-stages"
+  $gentoo_directory = "/srv/nfs/io/gentoo-stages"
 
   # Setup host configuration
   class { "base":
@@ -47,6 +47,7 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "rsyncd": }
   class { "webserver": }
   class { "binhost": }
+  # TODO: remove old exports file
   class { "nas": }
   class { "vpnserver": }
   class { "provision": }

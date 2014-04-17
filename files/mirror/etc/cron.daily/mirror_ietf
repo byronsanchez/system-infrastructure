@@ -14,7 +14,7 @@ then
 
   # sync the public portage tree against the main sync rotation
   rsync -aqvz --delete --delete-after www.ietf.org::internet-drafts \
-  /vol/io/ietf;
+  /srv/nfs/io/ietf;
 
   rm /tmp/mirror_ietf;
 fi
