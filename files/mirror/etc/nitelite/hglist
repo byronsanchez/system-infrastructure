@@ -1,0 +1,16 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+http://hg.python.org/cpython/
+http://hg.python.org/devguide/
+http://hg.python.org/extensions/
+http://hg.python.org/coc/
+http://bitbucket.org/bos/hgbook
+http://selenic.com/repo/hg
+http://selenic.com/repo/hgbook/
+https://bitbucket.org/sjl/dotfiles
