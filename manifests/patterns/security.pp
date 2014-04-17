@@ -209,6 +209,15 @@ class security($iptables_type = "web") {
     source => "puppet:///files/security/etc/portage/package.use/rkhunter",
   }
 
+  file { "/etc/portage/package.use/selinux":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/selinux",
+    source => "puppet:///files/security/etc/portage/package.use/selinux",
+  }
+
   $packages = [
     "chkrootkit",
     "rkhunter",
