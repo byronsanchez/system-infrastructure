@@ -3,22 +3,7 @@
 
 class nas {
 
-  file { "/srv/nfs":
-    ensure  => "directory",
-    owner   => "root",
-    group   => "root",
-    mode    => '755',
-    require => File["/srv"],
-  }
-
-  file { "/etc/exports":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode => 0644,
-    path => "/etc/exports",
-    source => "puppet:///files/nas/etc/exports",
-  }
+  class { "nfs": }
 
   file { "/etc/hosts.allow":
     ensure => present,
@@ -75,23 +60,26 @@ class nas {
     source => "puppet:///files/nas/etc/samba/smbusers",
   }
 
+  if $file_share_path {
+
+    # Need to bind mount as symlinks will not work with nfs
+    mount { "/srv/nfs/luna":
+      ensure  => mounted,
+      device  => "${file_share_path}",
+      fstype  => "none",
+      options => "rw,bind",
+      require => File["/srv/nfs/luna"],
+    }
+
+  }
+
   $packages = [
-    "nfs-utils",
     "samba",
   ]
 
   package { $packages: ensure => installed }
 
-  service { 'nfs':
-    ensure  => 'running',
-    enable  => 'true',
-    subscribe => File['/etc/exports'],
-    require => [
-      Package[nfs-utils],
-      File['/etc/exports'],
-    ],
-  }
-
+  # TODO: ensure all files listed in exports are created
   service { 'samba':
     ensure  => 'running',
     enable  => 'true',
@@ -100,12 +88,6 @@ class nas {
       Package[samba],
       File['/etc/samba/smb.conf']
     ],
-  }
-
-  exec { "nfs_export":
-    command => "/usr/sbin/exportfs -a",
-    subscribe   => File['/etc/exports'],
-    refreshonly => true,
   }
 
 }
