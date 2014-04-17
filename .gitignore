@@ -43,4 +43,8 @@ $RECYCLE.BIN/
 # ignore files with encrypted data
 secure/
 *.eyaml
+# plain text yaml secrets
+*secrets.yaml
+# encrypted yaml secrets
+*secrets.eyaml
 
