@@ -1,0 +1,21 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+if [ ! -f /tmp/mirror_ietf ];
+then
+  touch /tmp/mirror_ietf;
+
+  # sync the public portage tree against the main sync rotation
+  rsync -aqvz --delete --delete-after www.ietf.org::internet-drafts \
+  /vol/io/ietf;
+
+  rm /tmp/mirror_ietf;
+fi
+
