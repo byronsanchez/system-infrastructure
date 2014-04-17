@@ -1,0 +1,56 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# Automates syncing of local svn mirrors.
+
+backup_dir="/vol/io/svn"
+conf_dir="/etc/nitelite/svnlist"
+
+# Strip comments and empty lines from the config file
+DATA=$(cat $conf_file | grep -v "^#" | grep -v "^$" | sed -e 's:#.*::g');
+
+if [ ! -d "$backup_dir" ]; then
+  mkdir "$backup_dir"
+fi
+
+while read -r line; do
+
+  # Currently, the script assumes that the url is a standard http(s) url
+  # without parameters or any other special characters. If this is necessary
+  # simply include a handleizer for the url.
+
+  # Remove protocols and www prefixes, as well as .git suffix if they exist
+  repo_name=`printf "$line" | sed -E 's/(((https?)|(svn)):\/\/)?(www\.)?//g'`
+  mirror_dir="$backup_dir/$repo_name"
+
+  if [ ! -d "$mirror_dir" ]; then
+    mkdir -p "$mirror_dir"
+  fi
+
+  printf "URL: $repo_name\n"
+  echo "Repository Mirror Path: $mirror_dir"
+
+  # if directory is not empty...
+  if [ "$(ls -A $mirror_dir)" ]; then
+    printf "Updating existing mirror repo...\n"
+    # Mirror already exists, update it cd "$mirror_dir"
+  else
+    printf "Cloning new mirror repo...\n"
+    svnadmin create "$mirror_dir"
+    echo '#!/bin/sh' > "$mirror_dir/hooks/pre-revprop-change"
+    chmod +x "$mirror_dir/hooks/pre-revprop-change"
+    svnsync init "file://$mirror_dir" "$line"
+  fi
+
+  cd "$mirror_dir"
+  svnsync --non-interactive sync "file://$mirror_dir"
+
+done <<< "$DATA"
+
