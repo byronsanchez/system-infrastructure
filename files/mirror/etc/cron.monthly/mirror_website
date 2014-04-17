@@ -1,0 +1,67 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:25.0) Gecko/20100101 Firefox/25.0'
+backup_dir="/vol/io/websites"
+conf_dir="/etc/nitelite/websitelist"
+
+if [ ! -d "$backup_dir" ]; then
+  mkdir "$backup_dir"
+fi
+
+while read line; do
+
+  # VARIABLES FOR MIRROR COMMAND
+  #
+  # site_name - the web site name minus protocol and www; used as parent 
+  # directory for snapshots
+  #
+  # latest_dir - the most recent snapshot for the current website. if it 
+  # exists, a copy will be created with hard links. then an update will take 
+  # place to ensure only updated files get downloaded. This avoids duplication 
+  # of files while retaining an accurate copy of a snapshot for a given date.
+  #
+  # mirror_dir - the absolute directory path for the snapshot that is about 
+  # to be created. this will contains a hard-linked version of the latest 
+  # snapshot (if the latest snapshot exists). Then the mirror command will 
+  # update this directory, so all other snapshots are preserved.
+
+  # Remove protocol prefix if it exists
+  site_name=`printf "$line" | sed -E 's/(https?:\/\/)?(www\.)?//g'`
+  latest_dir=""
+
+  if [ ! -d "$backup_dir/$site_name" ]; then
+    mkdir "$backup_dir/$site_name"
+  else
+
+    # We're depending on how ls sorts dates of the form: YYYY-MM-DD
+    # for this to work properly
+    latest_dir="$backup_dir/$site_name/$(ls $backup_dir/$site_name | tail -1)"
+  fi
+
+  mirror_dir="$backup_dir/$site_name/`date +\%F`"
+
+  printf "URL: $site_name\n"
+  printf "Most Recent Mirror: $latest_dir\n"
+  printf "New Mirror Path: $mirror_dir\n"
+
+  if [ -n "$latest_dir" ]; then
+    printf "$latest_dir exists. Hard linking..."
+
+    # mac can't use regular old cp, so use gcp
+    gcp -al "$latest_dir" "$mirror_dir"
+  else
+    mkdir "$mirror_dir"
+  fi
+
+  # -sN 0 - never follow robots.txt and meta robots tags
+  httrack "$line" -O "$mirror_dir" -R5s0zZvDnr50c1 -F "$user_agent" "+*.$site_name/*"
+done < $conf_dir
+
