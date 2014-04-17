@@ -1,0 +1,46 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+include /etc/openldap/schema/core.schema
+include /etc/openldap/schema/cosine.schema
+include /etc/openldap/schema/inetorgperson.schema
+include /etc/openldap/schema/nis.schema
+include /etc/openldap/schema/misc.schema
+
+pidfile /var/run/openldap/slapd.pid
+argsfile /var/run/openldap/slapd.args
+
+## serverID used in case of replication
+#serverID 0
+loglevel 0
+
+## Access Controls
+access to dn.base="" by * read
+access to dn.base="cn=Subschema" by * read
+access to *
+  by self write
+  by users read
+  by anonymous read
+
+## Database definition
+database hdb
+suffix "dc=internal,dc=nitelite,dc=io"
+checkpoint 32 30
+rootdn "cn=Manager,dc=internal,dc=nitelite,dc=io"
+## rootpwd generated earlier via slappasswd command
+rootpw "<%= @rootpw %>"
+directory "/var/lib/openldap-ldbm"
+index objectClass eq
+
+#index entryCSN eq
+#index entryUUID eq
+
+#mirrormode TRUE
+
+#overlay syncprov
+#syncprov-checkpoint 100 10
