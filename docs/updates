@@ -1,0 +1,66 @@
+# Updating Gentoo packages
+#
+# source: blog.yjl.im/2010/11/my-weekly-gentoo-update-process.html
+
+Some notes regarding gentoo package updates
+
+# Updating Gentoo
+
+Try to stick to a regular weekly update process.
+
+Run the following commands, one-by-one, analyze outputs and determine steps
+based on the information you see.
+
+# The following command is the equivalent to running:
+#
+# emerge --sync
+# eix-update
+# eix-diff
+# 
+# Check the changes to the portage tree
+sudo eix-remote update; # for adding overlays to the cache
+sudo eix-sync;
+
+# After you analyze the portage tree, check what can be upgraded. Show
+# dependencies so that you know why a package was pulled into the update list.
+emerge -pvuDt world;
+
+# If there are news items, read them carefully
+eselect news;
+
+# Securiy advisory check
+glsa-check;
+
+# Read logs and determine whether or not you really want to update the package.
+emerge -pvul <package>;
+
+# IF YOU NEED TO UPDATE A LIST, use the following command so it doesn't go into
+# world file
+emerge -quD1;
+
+# Get estimated merge time
+emerge -pvuD world | sudo genlop -p2;
+
+# After update, read messages
+less /var/log/portage/elog;
+
+# Update configs if necessary and merge the updates with the puppet sources
+dispatch-conf;
+
+# To check last merge time, run the command:
+sudo genlop -t1 --date 1 day ago;
+
+# Also, don't forget to run the following command after updates:
+revdep-rebuild;
+
+### Troubleshooting common problems
+
+If you have perl-related problems because of a perl upgrade, make sure to run:
+
+    perl-cleaner --all
+
+If you have gcc problems after a gcc upgrade, make sure a compiler is properly
+set by running:
+
+    gcc-config
+
