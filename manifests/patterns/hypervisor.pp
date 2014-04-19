@@ -1,5 +1,13 @@
 class hypervisor {
 
+  file { "/srv/kvm":
+    ensure  => "directory",
+    owner   => "root",
+    group   => "root",
+    mode    => '755',
+    require => File["/srv"],
+  }
+
   file { "/etc/portage/package.use/virt-manager":
     ensure => present,
     owner => "root",
