@@ -92,13 +92,4 @@ class binhost {
     }
   }
 
-  # Make the provision directory available via rsync
-  if $rsync_provision_directory {
-    file { "/srv/rsync/gentoo-provision":
-       ensure  => 'link',
-       target  => "${rsync_provision_directory}",
-       require => File["/srv/rsync"],
-    }
-  }
-
 }
