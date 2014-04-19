@@ -48,6 +48,24 @@ class backup {
     require => File['/etc/cron.monthly'],
   }
 
+  file { '/home/rbackup/validate-rsync.sh':
+    ensure  => present,
+    path => "/home/rbackup/validate-rsync.sh",
+    source => 'puppet:///files/backup/home/rbackup/validate-rsync.sh',
+    owner   => 'rbackup',
+    group   => 'rbackup',
+    mode    => '755',
+  }
+
+  file { '/usr/local/bin/rsync_wrapper.sh':
+    ensure  => present,
+    path => "/usr/local/bin/rsync_wrapper.sh",
+    source => 'puppet:///files/backup/usr/local/bin/rsync_wrapper.sh',
+    owner   => 'rbackup',
+    group   => 'rbackup',
+    mode    => '755',
+  }
+
   $packages = [
     "rsnapshot",
   ]
