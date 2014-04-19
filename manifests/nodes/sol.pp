@@ -17,7 +17,8 @@ node 'sol.internal.nitelite.io' inherits network {
 
   # provision
 
-  $boot_pxe_path = "/srv/nfs/luna/Projects/hackbytes/gentoo-provision/profiles/internal.nitelite.io/devices/pxe"
+  $boot_pxe_path = "/srv/nfs/luna/Projects/hackbytes/gentoo-bootmodder/profiles/internal.nitelite.io/devices/pxe"
+  $boot_update_path = "/srv/nfs/luna/Projects/hackbytes/gentoo-provision/kernel"
   # Used by puppet pattern to build link to puppet path for nfs share
   $puppet_path="/srv/nfs/luna/Projects/hackbytes/puppet"
   # Used for remotes so that they may download the autoinstall script
@@ -37,7 +38,7 @@ node 'sol.internal.nitelite.io' inherits network {
   }
   class { "gentoo": }
   class { "security":
-    iptables_type => "hypervisor",
+    iptables_type => "${iptables_type}",
   }
 
   # Add node-specific resources
