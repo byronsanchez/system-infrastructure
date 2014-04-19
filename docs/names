@@ -35,4 +35,5 @@ luna = main file share
 io = backup
 europa = mirrors
 callisto = mail
+rhea = kvm guest images
 
