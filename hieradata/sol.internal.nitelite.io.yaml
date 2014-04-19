@@ -1,7 +1,7 @@
 ---
 exports:
-  - /srv/nfs/luna 10.66.77.0/24(rw,sync,insecure,all_squash,anonuid=0,anongid=0)
-  - /srv/nfs/callisto 10.66.77.0/24(rw,sync,insecure,all_squash,anonuid=0,anongid=0)
+  - /srv/nfs/luna 10.66.77.0/24(rw,sync,insecure,subtree_check,all_squash,anonuid=0,anongid=0)
+  - /srv/nfs/callisto 10.66.77.0/24(rw,sync,insecure,subtree_check,all_squash,anonuid=0,anongid=0)
   - /srv/nfs/puppet 10.66.77.0/24(async,ro,insecure,subtree_check,no_root_squash)
   - /srv/nfs/gentoo-local-packages 10.66.77.0/24(async,ro,insecure,subtree_check,no_root_squash)
   - /srv/nfs/gentoo-portage 10.66.77.0/24(async,ro,insecure,subtree_check,no_root_squash)
