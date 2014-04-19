@@ -1,0 +1,19 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+<% if @ns1_address -%>
+search <%= @domain %>
+nameserver <%= @ns1_address %>
+<% else -%>
+nameserver 208.67.222.222
+<% end -%>
+<% if @ns2_address -%>
+nameserver <%= @ns2_address %>
+<% else -%>
+nameserver 208.67.220.220
+<% end -%>
