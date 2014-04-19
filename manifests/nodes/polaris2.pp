@@ -1,14 +1,14 @@
-node 'polaris.internal.nitelite.io' inherits network {
+node 'polaris2.internal.nitelite.io' inherits network {
 
-  $iptables_type="dns"
+  $iptables_type="web"
   # Locale
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
   # DNS server settings
-  $dns_type="master"
+  $dns_type="slave"
 
   class { "base":
-    hostname          => "polaris",
+    hostname          => "polaris2",
     network_interface => "eth0",
   }
   class { "gentoo": }

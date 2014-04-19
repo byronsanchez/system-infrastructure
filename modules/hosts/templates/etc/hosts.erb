@@ -29,6 +29,12 @@
 <%= @vpn_address %> vpn.<%= @domain %> vpn
 <%= @vpn_address %> vpn1.<%= @domain %> vpn1
 <% end -%>
+<% if @ns1_address -%>
+<%= @ns1_address %> ns1.<%= @domain %> ns1
+<% end -%>
+<% if @ns2_address -%>
+<%= @ns2_address %> ns2.<%= @domain %> ns2
+<% end -%>
 
 # The following lines are desirable for IPv6 capable hosts
 ::1 ip6-localhost ip6-loopback localhost

@@ -10,9 +10,12 @@ node "network" {
 
   # network services
   $puppetmaster_address = "10.66.77.100"
+  $hypervisor_address = "10.66.77.100"
   $mediaserver_address = "10.66.77.100"
   $ldapserver_address = "10.66.77.100"
   $binhost_address = "10.66.77.100"
+  $ns1_address = "10.66.77.101"
+  $ns2_address = "10.66.77.102"
 
 }
 
