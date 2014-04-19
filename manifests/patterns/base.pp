@@ -14,6 +14,14 @@ class base ($hostname = '', $network_interface = 'eth0') {
 
   class { "::ntp": }
 
+  file { "/etc/sysctl.conf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/sysctl.conf",
+    content => template("base/etc/sysctl.conf.erb"),
+  }
+
   file { "/etc/conf.d/keymaps":
     ensure => present,
     mode => 0644,
@@ -286,6 +294,12 @@ class base ($hostname = '', $network_interface = 'eth0') {
       Package[puppet],
       File['/etc/puppet/puppet.conf']
     ],
+  }
+
+  exec { "sysctl_update":
+    command => "/sbin/sysctl --system",
+    subscribe   => File['/etc/sysctl.conf'],
+    refreshonly => true,
   }
 
   # TODO: Have other overlay packages dep on the overlay being set properly
