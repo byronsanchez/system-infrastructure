@@ -3,11 +3,11 @@ class base ($hostname = '', $network_interface = 'eth0') {
 
   if $hostname {
     # set hostname
-    hostname { $hostname:
+    nl_hostname { $hostname:
       node_name => "${hostname}",
     }
     # add host data in hosts files
-    class { "hosts":
+    class { "nl_hosts":
       node_name => "${hostname}"
     }
   }

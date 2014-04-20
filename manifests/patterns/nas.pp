@@ -3,7 +3,7 @@
 
 class nas {
 
-  class { "nfs": }
+  class { "nl_nfs": }
 
   file { "/etc/hosts.allow":
     ensure => present,

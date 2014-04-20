@@ -1,4 +1,4 @@
-define hostname ($node_name = '') {
+define nl_hostname ($node_name = '') {
 
   if $node_name {
     file { "/etc/conf.d/hostname":

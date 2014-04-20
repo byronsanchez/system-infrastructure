@@ -1,4 +1,4 @@
-class nfs {
+class nl_nfs {
 
   $exports = hiera('exports')
 
