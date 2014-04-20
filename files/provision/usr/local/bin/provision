@@ -5,7 +5,7 @@
 name=$1
 
 # Create the guest image
-qemu-img create -f qcow2 -o preallocation=metadata "$name.img" 20G
+qemu-img create -f qcow2 -o preallocation=metadata "$name.qcow2" 20G
 
 screenNotInstalled=0
 # If screen is installed...
@@ -18,20 +18,20 @@ then
   printf "Launching installation..."
 
   # Launch installation
-  virt-install --connect qemu:///system --name "$name.img" \
+  virt-install --connect qemu:///system --name "$name" \
   --cpuset=1 --ram 4048 \
   --vcpus=2 --network bridge=br0 --disk \
-  path="$name.img,format=qcow2,bus=virtio" \
+  path="$name.qcow2,format=qcow2,bus=virtio" \
   --pxe --accelerate --hvm --vnc --noautoconsole --os-type=linux \
   --os-variant=virtio26 --keymap=en_us
 else
   printf "Launching installation within screen..."
 
   # Launch installation inside screen
-  screen -d -m virt-install --connect qemu:///system --name "$name.img" \
+  screen -d -m virt-install --connect qemu:///system --name "$name" \
   --cpuset=1 --ram 4048 \
   --vcpus=2 --network bridge=br0 --disk \
-  path="$name.img,format=qcow2,bus=virtio" \
+  path="$name.qcow2,format=qcow2,bus=virtio" \
   --pxe --accelerate --hvm --vnc --noautoconsole --os-type=linux \
   --os-variant=virtio26 --keymap=en_us
 fi
