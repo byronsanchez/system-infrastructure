@@ -16,7 +16,7 @@ class nl_nfs {
     group => "root",
     mode => 0644,
     path => "/etc/exports",
-    content => template('nfs/etc/exports.erb'),
+    content => template('nl_nfs/etc/exports.erb'),
   }
 
   file { "${exports}":

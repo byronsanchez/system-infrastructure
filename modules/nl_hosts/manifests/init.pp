@@ -4,6 +4,6 @@ class nl_hosts ($node_name = '') {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('hosts/etc/hosts.erb'),
+    content => template('nl_hosts/etc/hosts.erb'),
   }
 }

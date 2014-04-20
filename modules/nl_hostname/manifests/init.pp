@@ -6,7 +6,7 @@ define nl_hostname ($node_name = '') {
       mode => 0644,
       owner => "root",
       group => "root",
-      content => template("hostname/etc/conf.d/hostname.erb"),
+      content => template("nl_hostname/etc/conf.d/hostname.erb"),
     }
   }
 
