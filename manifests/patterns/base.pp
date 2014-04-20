@@ -180,6 +180,37 @@ class base ($hostname = '', $network_interface = 'eth0') {
     source => "puppet:///files/base/etc/profile.d/fortune.custom.sh",
   }
 
+  file { "/usr/local/lib/nitelite":
+    ensure => "directory",
+    owner  => "root",
+    group  => "root",
+  }
+
+  file { "/usr/local/lib/nitelite/helpers":
+    ensure => "directory",
+    owner  => "root",
+    group  => "root",
+    require => File['/usr/local/lib/nitelite'],
+  }
+
+  file { "/usr/local/lib/nitelite/helpers/common.lib.sh":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/usr/local/lib/nitelite/helpers'],
+    path => "/usr/local/lib/nitelite/helpers/common.lib.sh",
+    source => "puppet:///files/base/usr/local/lib/nitelite/helpers/common.lib.sh",
+  }
+
+  file { "/usr/local/bin/update-node":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/local/bin/update-node",
+    source => "puppet:///files/base/usr/local/bin/update-node",
+  }
+
   file { "/etc/screenrc":
     ensure => absent,
     owner => "root",

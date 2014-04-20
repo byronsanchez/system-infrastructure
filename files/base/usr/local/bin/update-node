@@ -1,0 +1,103 @@
+#!/bin/sh
+#
+# Updates kernel and initramfs using the provision server as the source
+# directory
+
+source /usr/local/lib/nitelite/helpers/common.lib.sh;
+
+update_type="$1"
+WORKDIR="/tmp/nitelite"
+
+# Initialize our own variables:
+initramfs=""
+kernel=""
+quiet=0
+
+############################
+# Argument Parsing Functions
+
+function show_help ()
+{
+cat <<-EOM
+
+$0 [OPTION]
+
+options:
+
+    -k --kernel=NAME           kernel filename
+    -i --initramfs=NAME        initramfs filename
+    -q --quiet                 do not log messages to STDOUT
+    -h --help                  display this message
+
+EOM
+    exit 1
+}
+
+function get_options () {
+    argv=()
+    while [ $# -gt 0 ]
+    do
+        opt=$1
+        shift
+        case ${opt} in
+            -k|--kernel)
+                kernel=$1
+                shift
+                ;;
+            --kernel=*)
+                kernel=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -i|--initramfs)
+                initramfs=$1
+                shift
+                ;;
+            --initramfs=*)
+                initramfs=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -q|--quiet)
+                quiet=1
+                ;;
+            -h|--help)
+                show_help
+                ;;
+            *)
+                if [ "${opt:0:1}" = "-" ]; then
+                    fail "${opt}: unknown option."
+                fi
+                argv+=(${opt});;
+        esac
+    done 
+}
+
+#############
+# MAIN SCRIPT
+
+# Parse options if they were passed
+get_options $*
+
+if [ ! -n "$kernel" ];
+then
+  fail "Please provide a kernel filename";
+fi
+
+if [ ! -n "$initramfs" ];
+then
+  fail "Please provide an initramfs filename";
+fi
+
+mkdir -p "${WORKDIR}";
+
+rsync -avug \
+rsync://provision.internal.nitelite.io:/gentoo-boot/$initramfs \
+${WORKDIR}/$initramfs;
+
+rsync -avug \
+rsync://provision.internal.nitelite.io:/gentoo-boot/$kernel \
+${WORKDIR}/linux-binary.tar.bz2;
+
+tar xjf ${WORKDIR}/linux-binary.tar.bz2 -C /;
+mv -f /boot/vmlinuz-* /boot/kernel;
+mv -f ${WORKDIR}/$initramfs /boot/initramfs;
+
+rm -rf ${WORKDIR};
+
