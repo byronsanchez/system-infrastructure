@@ -2,7 +2,9 @@
 #
 # source: blog.yjl.im/2010/11/my-weekly-gentoo-update-process.html
 
-Some notes regarding gentoo package updates
+Some notes regarding gentoo package updates. Updates will currently be done
+manually. Once a significant amount of nodes are being managed, semi-automation
+should be considered.
 
 # Updating Gentoo
 
