@@ -8,5 +8,6 @@ forge "http://forge.puppetlabs.com"
 
 mod 'puppetlabs/stdlib'
 mod 'puppetlabs/ntp'
-mod 'gentoo/portage'
+mod 'gentoo/portage',
+  :git => "git://github.com/gentoo/puppet-portage.git"
 
