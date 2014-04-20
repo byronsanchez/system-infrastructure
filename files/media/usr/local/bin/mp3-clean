@@ -1,0 +1,11 @@
+#~/bin/bash
+
+FILE_LIST=$1
+
+printf "Cleaning corrupt files listed in $FILE_LIST\n"
+
+while read line; do
+  printf "Removing $line\n"
+  rm "$line"
+done < $FILE_LIST
+

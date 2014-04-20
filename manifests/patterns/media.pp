@@ -46,6 +46,42 @@ class media {
     mode    => '644',
   }
 
+  file { "/usr/local/lib/nitelite/mp3-duration.fmt":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/usr/local/lib/nitelite'],
+    path => "/usr/local/lib/nitelite/mp3-duration.fmt",
+    source => "puppet:///files/base/usr/local/lib/nitelite/mp3-duration.fmt",
+  }
+
+  file { "/usr/local/bin/mp3-clean":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/local/bin/mp3-clean",
+    source => "puppet:///files/media/usr/local/bin/mp3-clean",
+  }
+
+  file { "/usr/local/bin/mp3-validate":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/local/bin/mp3-validate",
+    source => "puppet:///files/media/usr/local/bin/mp3-validate",
+  }
+
+  file { "/usr/local/bin/playlist-scan":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/local/bin/playlist-scan",
+    source => "puppet:///files/media/usr/local/bin/playlist-scan",
+  }
+
   $packages = [
     "mpd",
     "media-sound/mpc",

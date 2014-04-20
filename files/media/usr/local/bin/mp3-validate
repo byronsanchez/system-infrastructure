@@ -1,0 +1,90 @@
+#~/bin/bash
+
+# Byte threshold for junk data after the final mp3 frame.
+JUNK_DATA_THRESHOLD=51200
+FILE_DURATION_THRESHOLD="0:01:00"
+MUSIC_DIRECTORY=$1
+
+printf "Building corrupt file list of $MUSIC_DIRECTORY\n"
+
+# -e Perform an error check
+# -S Ignore junk before first frame
+
+# NOTE: This option must be managed manually. It is common for some
+# files to have several hundred bytes fo junk data after the last frame
+# however if the junk data is large (megabytes) it could mean the file
+# was an incomplete download and all the early frames work. The file
+# is incomplete.
+# -E Ignore junk after last frame
+
+# -B Enable bit rate switching (doesn't report VBRs as an error)
+# -G Ignore 128 byte tag AFTER last frame
+# -T ignore truncated last frames
+# -3 Only process files ending in .mp3 or .MP3
+# -r Process directory recursively
+# -0 Do not modify any file except the log file (dummy mode)
+# -s Print each result on a single line.
+mp3check -e -S -B -G -T -3 -r -0 -s "$MUSIC_DIRECTORY" 1> corrupt-files.txt
+
+touch corrupt-queue.txt corrupt-not-queue.txt corrupt-rejects.txt
+
+while read line; do
+  # Match for errors involving junk data after the last frame
+  if [[ "$line" =~ (/mnt.*?\.[mM][pP]3) ]]; then
+    file_target=${BASH_REMATCH[1]}
+    printf "\n\nProcessing: %s\n" "$file_target"
+
+    if [[ "$line" =~ ([0-9]+?)\ bytes?\ of\ junk ]]; then
+      junk_data_size=${BASH_REMATCH[1]}
+      printf "Junk data: %s bytes\n" "$junk_data_size"
+      if [[  $junk_data_size -gt $JUNK_DATA_THRESHOLD ]]; then
+        printf "%s\n" "$file_target" >> corrupt-queue.txt
+      else
+        printf "%s\n" "$file_target size: $junk_data_size" >> corrupt-not-queue.txt
+      fi
+    else
+      printf "%s\n" "$file_target" >> corrupt-queue.txt
+    fi
+  else
+    printf "%s\n" "$line" >> corrupt-rejects.txt
+  fi
+done < corrupt-files.txt
+
+# Build the valid, but short, file list.
+# STDOUT and STDERR must be handled seperately. If the streams are both
+# redirected to the same file, there will be some line corruption
+# and not all files will be properly parsed.
+exiftool -r -ext mp3 -p /usr/local/lib/nitelite/mp3-duration.fmt "$MUSIC_DIRECTORY" 1> duration-files.txt 2> duration-files-warnings.txt
+
+touch duration-queue.txt duration-not-queue.txt duration-warnings.txt duration-rejects.txt
+
+# Iterate through the result of STDOUT
+while read line; do
+  # Match for file lines (case in which a duration tag exists)
+  if [[ "$line" =~ ^File:\ (/mnt.*?\.[mM][pP]3)\ -\ ([0-9:]*) ]]; then
+    file_target=${BASH_REMATCH[1]}
+    file_duration=${BASH_REMATCH[2]}
+    
+    if [[ "$file_duration" < "$FILE_DURATION_THRESHOLD" ]]; then
+      printf "%s\n" "$file_target" >> duration-queue.txt
+    else
+      printf "%s\n" "$file_target duration: $file_duration" >> duration-not-queue.txt
+    fi
+  else
+    printf "%s\n" "$line" >> duration-rejects.txt
+  fi
+done < duration-files.txt
+
+# Iterate through the result of STDERR
+while read line; do
+  # Non-capturing groups (?:...) do NOT exist in bash, so just ignore
+  # the first capturing group.
+  if [[ "$line" =~ ^(Warning|Error):\ .*?(/mnt.*?\.[mM][pP]3) ]]; then
+    file_target=${BASH_REMATCH[2]}
+    printf "%s\n" "$file_target" >> duration-warnings.txt
+  # All other cases
+  else
+    printf "%s\n" "$line" >> duration-rejects.txt
+  fi
+done < duration-files-warnings.txt
+
