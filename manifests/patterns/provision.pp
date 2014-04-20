@@ -39,6 +39,16 @@ class provision {
     require => File["/srv"],
   }
 
+  file { "/etc/rsyncd.d/provision.conf":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0644,
+    path   => "/etc/rsyncd.d/provision.conf",
+    source => "puppet:///files/provision/etc/rsyncd.d/provision.conf",
+    require => File["/etc/rsyncd.d"],
+  }
+
   if $boot_pxe_path {
 
     file { '/srv/tftp/boot-pxe':
