@@ -62,6 +62,7 @@ node 'sol.internal.nitelite.io' inherits network {
   # users
   # TODO: migrate to LDAP
   class { "root": }
+  class { "rbackup": }
   class { "byronsanchez":
     #groups    => ['wheel', 'audio', 'cdrom', 'usb', 'plugdev', 'android'],
     groups => ['audio', 'cdrom', 'kvm', 'usb', 'wheel',],

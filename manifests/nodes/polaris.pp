@@ -25,6 +25,7 @@ node 'polaris.internal.nitelite.io' inherits network {
   # users
   # TODO: migrate to LDAP
   class { "root": }
+  class { "rbackup": }
   class { "byronsanchez":
     groups => ['audio', 'cdrom', 'usb', 'wheel',],
   }

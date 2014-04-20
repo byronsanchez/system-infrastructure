@@ -32,6 +32,7 @@ node 'sirius.external.nitelite.io' inherits network {
   # users
   # TODO: migrate to LDAP
   class { "root": }
+  class { "rbackup": }
   class { "deployer": }
   class { "byronsanchez":
     groups => ['audio', 'cdrom', 'usb', 'wheel',],
