@@ -39,7 +39,8 @@ $RECYCLE.BIN/
 # librarian-puppet
 .tmp/
 .librarian/
-#modules/
+modules/
+!modules/nl_*
 
 # ignore files with encrypted data
 secure/
