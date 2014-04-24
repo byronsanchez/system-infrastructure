@@ -37,6 +37,15 @@ class gentoo {
     source => "puppet:///files/gentoo/etc/portage/package.use/layman",
   }
 
+  file { "/etc/portage/package.accept_keywords/overlay-nitelite":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/overlay-nitelite",
+    source => "puppet:///files/gentoo/etc/portage/package.accept_keywords/overlay-nitelite",
+  }
+
   file { "/etc/portage/patches":
     ensure => "directory",
     owner => "root",
