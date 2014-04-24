@@ -11,11 +11,14 @@ hostnames and the services they provide.
 Name - service mapping
 
 maia = data
-polaris = dns
+polaris = dns master
+polaris2 = dns replication
 vega = sec
 kraz = proxy
-sol = puppet, binhost, provision
-sirius = web
+sol = puppet, binhost, provision, hypervisor, media, web (base)
+sirius = web (nitelite)
+electra = ldap master
+electra2 = ldap replication
 
 Network naming conventions
 
@@ -36,4 +39,6 @@ io = backup
 europa = mirrors
 callisto = mail
 rhea = kvm guest images
+phobos = bootable usb install or recovery
+deimos = 
 
