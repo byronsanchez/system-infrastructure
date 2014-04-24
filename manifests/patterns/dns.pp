@@ -10,10 +10,34 @@ class dns($dns_type) {
 
   if $dns_type == "master" {
 
-    file { "/var/bind/pri/internal.nitelite.io.internal":
+    file { "/var/bind/pri/hackbytes.com.internal":
       ensure => present,
-      path => "/var/bind/pri/internal.nitelite.io.internal",
-      source => "puppet:///files/dns/var/bind/pri/internal.nitelite.io.internal",
+      path => "/var/bind/pri/hackbytes.com.internal",
+      source => "puppet:///files/dns/var/bind/pri/hackbytes.com.internal",
+    }
+
+    file { "/var/bind/pri/nitelite.io.internal":
+      ensure => present,
+      path => "/var/bind/pri/nitelite.io.internal",
+      source => "puppet:///files/dns/var/bind/pri/nitelite.io.internal",
+    }
+
+    file { "/var/bind/pri/chompix.com.internal":
+      ensure => present,
+      path => "/var/bind/pri/chompix.com.internal",
+      source => "puppet:///files/dns/var/bind/pri/chompix.com.internal",
+    }
+
+    file { "/var/bind/pri/tehpotatoking.com.internal":
+      ensure => present,
+      path => "/var/bind/pri/tehpotatoking.com.internal",
+      source => "puppet:///files/dns/var/bind/pri/tehpotatoking.com.internal",
+    }
+
+    file { "/var/bind/pri/byronsanchez.net.internal":
+      ensure => present,
+      path => "/var/bind/pri/byronsanchez.net.internal",
+      source => "puppet:///files/dns/var/bind/pri/byronsanchez.net.internal",
     }
 
     file { "/var/bind/pri/10.66.77.internal":
