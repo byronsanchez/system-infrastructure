@@ -7,10 +7,10 @@ class webserver {
   # perms for any web apps
   # puppet will make all files 0644 and dirs will be 0755. If you want to
   # restrict dirs even further, these need to be individually set.
+  # we'll let the applications decide how to set ownership and perms of files
   file { "/srv/www/":
-    recurse => true,
     ensure  => 'directory',
-    owner   => 'nginx',
+    owner   => 'deployer',
     group   => 'nginx',
     mode    => 0640,
   }
