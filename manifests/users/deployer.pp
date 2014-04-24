@@ -2,7 +2,8 @@ class deployer {
 
   user { 'deployer':
     ensure           => 'present',
-    gid              => '1002',
+    managehome => true,
+    gid              => 'nginx',
     home             => '/home/deployer',
     shell            => '/bin/sh',
     uid              => '1002',

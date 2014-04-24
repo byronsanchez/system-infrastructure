@@ -2,6 +2,7 @@ class rbackup {
 
   user { 'rbackup':
     ensure => 'present',
+    managehome => true,
     gid    => '1001',
     home   => '/home/rbackup',
     shell  => '/bin/bash',
