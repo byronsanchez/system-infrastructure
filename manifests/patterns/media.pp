@@ -52,7 +52,7 @@ class media {
     group => "root",
     require => File['/usr/local/lib/nitelite'],
     path => "/usr/local/lib/nitelite/mp3-duration.fmt",
-    source => "puppet:///files/base/usr/local/lib/nitelite/mp3-duration.fmt",
+    source => "puppet:///files/media/usr/local/lib/nitelite/mp3-duration.fmt",
   }
 
   file { "/usr/local/bin/mp3-clean":
