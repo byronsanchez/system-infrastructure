@@ -34,14 +34,6 @@ node 'sirius.external.nitelite.io' inherits network {
     environment => "production",
   }
 
-  # VPN server must be identified uniquely per node because it is the only
-  # service that needs true direct access to the host server. All other services
-  # defined in the local subnet (even hosts for remote nodes) will be accessed
-  # through this VPN tunnel.
-  class { "vpnclient":
-    vpn_server => "nitelite.bounceme.net",
-  }
-
   # users
   class { "root": }
   class { "rbackup": }
