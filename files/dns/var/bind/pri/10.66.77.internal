@@ -8,12 +8,12 @@ $TTL 1200
 
 77.66.10.in-addr.arpa. IN  NS  ns1.internal.nitelite.io.
 77.66.10.in-addr.arpa. IN  NS  ns1.internal.nitelite.io.
-101.77.66.10.in-addr.arpa.  IN  PTR ns1.internal.nitelite.io.
-102.77.66.10.in-addr.arpa.  IN  PTR ns2.internal.nitelite.io.
 100.77.66.10.in-addr.arpa.  IN  PTR sol.internal.nitelite.io.
 101.77.66.10.in-addr.arpa.  IN  PTR polaris.internal.nitelite.io.
 102.77.66.10.in-addr.arpa.  IN  PTR polaris2.internal.nitelite.io.
-103.77.66.10.in-addr.arpa.  IN  PTR kraz.internal.nitelite.io.
-104.77.66.10.in-addr.arpa.  IN  PTR vega.internal.nitelite.io.
-105.77.66.10.in-addr.arpa.  IN  PTR maia.internal.nitelite.io.
-106.77.66.10.in-addr.arpa.  IN  PTR sirius.internal.nitelite.io.
+103.77.66.10.in-addr.arpa.  IN  PTR electra.internal.nitelite.io.
+104.77.66.10.in-addr.arpa.  IN  PTR electra2.internal.nitelite.io.
+105.77.66.10.in-addr.arpa.  IN  PTR kraz.internal.nitelite.io.
+106.77.66.10.in-addr.arpa.  IN  PTR vega.internal.nitelite.io.
+107.77.66.10.in-addr.arpa.  IN  PTR maia.internal.nitelite.io.
+108.77.66.10.in-addr.arpa.  IN  PTR sirius.internal.nitelite.io.
