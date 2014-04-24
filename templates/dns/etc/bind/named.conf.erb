@@ -80,9 +80,11 @@ view "internal" {
   match-clients { 10.66.77.0/24; localhost; };
   recursion yes;
 
-  zone "internal.nitelite.io" {
+  zone "nitelite.io" {
     type master;
-    file "pri/internal.nitelite.io.internal";
+    file "pri/nitelite.io.internal";
+    allow-transfer { can_xfer; };
+  };
     allow-transfer { can_xfer; };
   };
 
