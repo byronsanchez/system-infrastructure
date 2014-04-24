@@ -12,7 +12,9 @@
 :OUTPUT ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
 # SSH via nonstandard port
--A PREROUTING -p tcp --dport 1224 -j REDIRECT --to-port 22
+-A PREROUTING -p tcp -m tcp --dport 1224 -j REDIRECT --to-ports 22
+# allow forwarding from localhost
+-A OUTPUT -o lo -p tcp -m tcp --dport 1224 -j REDIRECT --to-ports 22
 COMMIT
 
 *mangle
@@ -21,6 +23,10 @@ COMMIT
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
+# Tag direct port 22 packets to block (this way, only the forwarded port is
+# allowed access while blocking the destination ssh port; otherwise, both ports
+# would need be open to public)
+-A PREROUTING -p tcp -m tcp --dport 22 -j MARK --set-mark 1
 COMMIT
 
 *filter
@@ -45,9 +51,14 @@ COMMIT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 53 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 53 -j ACCEPT
 
+# Drop marked packets (direct port 22 packets)
+-A INPUT -m mark --mark 1 -j DROP
+# Accept forwarded SSH connections from anywhere
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 1224 -j ACCEPT
+
 # Log iptables denied calls
 -A INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables denied: " --log-level 7
-
 # Drop all other inbound - default deny unless explicitly allowed policy
 -A INPUT -j DROP
 -A FORWARD -j DROP
