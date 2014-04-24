@@ -1,4 +1,6 @@
-class ldap {
+# ldap server must overlay webserver
+
+class ldap($ldap_type) {
 
   $rootpw = hiera('rootpw')
 
@@ -29,6 +31,16 @@ class ldap {
     source => "puppet:///files/ldap/etc/sudoers.d/byronsanchez",
   }
 
+  file { "/etc/sudoers.d/staff":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    require => File['/etc/sudoers.d'],
+    path => "/etc/sudoers.d/staff",
+    source => "puppet:///files/ldap/etc/sudoers.d/staff",
+  }
+
   file { "/etc/sudoers.d/rbackup":
     ensure => present,
     owner => "root",
@@ -48,29 +60,76 @@ class ldap {
     source => "puppet:///files/ldap/etc/portage/package.use/openldap",
   }
 
+  file { "/etc/nsswitch.conf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '644',
+    path => "/etc/nsswitch.conf",
+    source => "puppet:///files/ldap/etc/nsswitch.conf",
+  }
+
   file { "/etc/openldap":
-    ensure => "directory",
-    owner => "root",
-    group => "root",
-    mode   => '755',
+    ensure  => "directory",
+    owner   => "ldap",
+    group   => "ldap",
+    recurse => "true",
+    mode    => '755',
   }
 
-  file { "/etc/conf.d/slapd":
+  file { "/etc/ldap.conf":
     ensure => present,
-    mode => 0644,
     owner => "root",
     group => "root",
-    source => "puppet:///files/ldap/etc/conf.d/slapd",
+    mode    => '644',
+    path => "/etc/ldap.conf",
+    source => "puppet:///files/ldap/etc/ldap.conf",
   }
 
-  file { "/etc/openldap/slapd.conf":
-    ensure => present,
-    owner => "root",
-    group => "ldap",
-    mode    => '640',
-    require => File['/etc/openldap'],
-    path => "/etc/openldap/slapd.conf",
-    content => template("ldap/etc/openldap/slapd.conf.erb"),
+  if $ldap_type == "master" {
+
+    file { "/etc/portage/package.use/phpldapadmin":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      require => File['/etc/portage/package.use'],
+      path => "/etc/portage/package.use/phpldapadmin",
+      source => "puppet:///files/ldap/etc/portage/package.use/phpldapadmin",
+    }
+
+    file { "/etc/conf.d/slapd":
+      ensure => present,
+      mode => 0644,
+      owner => "root",
+      group => "root",
+      source => "puppet:///files/ldap/etc/conf.d/slapd",
+    }
+
+    file { "/etc/openldap/slapd.conf":
+      ensure => present,
+      owner => "root",
+      group => "ldap",
+      mode    => '640',
+      require => File['/etc/openldap'],
+      path => "/etc/openldap/slapd.conf",
+      content => template("ldap/etc/openldap/slapd.conf.erb"),
+    }
+
+    file { "/etc/vhosts/webapp-config":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      mode    => '644',
+      path => "/etc/vhosts/webapp-config",
+      source => "puppet:///files/ldap/etc/vhosts/webapp-config",
+    }
+
+    nl_nginx::website { "phpldapadmin":
+      websiteName     => "ldap.internal.nitelite.io",
+      environmentName => "production",
+      feed_path       => "ldap",
+    }
+
   }
 
   file { "/etc/openldap/ldap.conf":
@@ -81,6 +140,15 @@ class ldap {
     require => File['/etc/openldap'],
     path => "/etc/openldap/ldap.conf",
     source => "puppet:///files/ldap/etc/openldap/ldap.conf",
+  }
+
+  file { "/etc/pam.d/system-auth":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '644',
+    path => "/etc/pam.d/system-auth",
+    source => "puppet:///files/ldap/etc/pam.d/system-auth",
   }
 
   file { "/var/lib/openldap-ldbm":
@@ -101,6 +169,16 @@ class ldap {
     source => "puppet:///files/ldap/var/lib/openldap-ldbm/DB_CONFIG",
   }
 
+  file { "/etc/cron.daily/backup_ldap":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/etc/cron.daily/backup_ldap",
+    source => "puppet:///files/ldap/etc/cron.daily/backup_ldap",
+    require => File["/etc/cron.daily"],
+  }
+
   $packages = [
     "openldap",
     "pam_ldap",
@@ -109,14 +187,47 @@ class ldap {
 
   package { $packages: ensure => 'installed' }
 
-  service { 'slapd':
-    ensure  => 'running',
-    enable  => 'true',
-    subscribe => File['/etc/openldap/slapd.conf'],
-    require => [
-      Package[openldap],
-      File['/etc/openldap/slapd.conf']
-    ],
+  # Only run slapd on the master ldap server
+  if $ldap_type == "master" {
+
+    eselect { 'php::fpm':
+      set => 'php5.4',
+    }
+
+    package { "phpldapadmin":
+      ensure  => 'installed',
+      require => Package[nginx],
+    }
+
+    service { 'slapd':
+      ensure  => 'running',
+      enable  => 'true',
+      subscribe => File['/etc/openldap/slapd.conf'],
+      require => [
+        Package[openldap],
+        File['/etc/openldap/slapd.conf']
+      ],
+    }
+
+    exec { "webapp_config_ldap":
+      command => "/usr/sbin/webapp-config -I -h ldap.${internal_domain} -d phpldapadmin phpldapadmin 1.2.3",
+      creates => "/srv/www/ldap.${internal_domain}/htdocs/phpldapadmin",
+      require => [
+        Package[phpldapadmin],
+        File['/srv/www'],
+        File['/etc/vhosts/webapp-config'],
+      ]
+    }
+
+  } else {
+
+    service { 'slapd':
+      ensure  => 'stopped',
+      enable  => 'false',
+      require => [
+        Package[openldap],
+      ],
+    }
   }
 
 }
