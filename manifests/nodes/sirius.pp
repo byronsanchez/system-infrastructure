@@ -4,6 +4,9 @@ node 'sirius.external.nitelite.io' inherits network {
   # Locale
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
+  # ldap
+  $ldap_type="client"
+
   class { "base":
     hostname          => "sirius",
     network_interface => "eth0",
@@ -12,11 +15,21 @@ node 'sirius.external.nitelite.io' inherits network {
   class { "security":
     iptables_type => "web",
   }
+  class { "ssh":
+    username => [
+      "rbackup",
+      "deployer",
+      "staff",
+    ],
+  }
 
   # Add node-specific resources
-  class { "ldap": }
+  class { "ldap":
+    ldap_type => "${ldap_type}"
+  }
   class { "rsyncd": }
   class { "webserver": }
+  class { "php": }
   class { "nitelite":
     environment => "production",
   }
@@ -30,12 +43,9 @@ node 'sirius.external.nitelite.io' inherits network {
   }
 
   # users
-  # TODO: migrate to LDAP
   class { "root": }
   class { "rbackup": }
   class { "deployer": }
-  class { "byronsanchez":
-    groups => ['audio', 'cdrom', 'usb', 'wheel',],
-  }
+  class { "staff": }
 
 }
