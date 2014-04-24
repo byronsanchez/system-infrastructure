@@ -4,6 +4,9 @@ node 'polaris2.internal.nitelite.io' inherits network {
   # Locale
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
+  # ldap
+  $ldap_type="client"
+
   # DNS server settings
   $dns_type="slave"
 
@@ -15,19 +18,25 @@ node 'polaris2.internal.nitelite.io' inherits network {
   class { "security":
     iptables_type => "${iptables_type}",
   }
+  class { "ssh":
+    username => [
+      "rbackup",
+      "staff",
+    ],
+  }
 
   # Add node-specific resources
-  class { "ldap": }
+  class { "nasclient": }
+  class { "ldap":
+    ldap_type => "${ldap_type}"
+  }
   class { "dns":
     dns_type => "${dns_type}",
   }
 
   # users
-  # TODO: migrate to LDAP
   class { "root": }
   class { "rbackup": }
-  class { "byronsanchez":
-    groups => ['audio', 'cdrom', 'usb', 'wheel',],
-  }
+  class { "staff": }
 
 }
