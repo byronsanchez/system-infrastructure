@@ -1,0 +1,21 @@
+$ORIGIN chompix.com.
+$TTL 1200 
+@ IN SOA  ns.internal.nitelite.io. admin.internal.nitelite.io. (
+  2014041701  ; serial
+  3h    ; refresh
+  1h    ; retry
+  1w    ; expiry
+  1d )    ; minimum
+
+;; NS Records
+chompix.com.   IN NS ns1.internal.nitelite.io.
+chompix.com.   IN NS ns2.internal.nitelite.io.
+
+;; CNAME Records
+production.chompix.com. IN CNAME chompix.com.
+www.chompix.com. IN CNAME chompix.com.
+
+;; A Records (IPv4 addresses)
+chompix.com. IN A 198.98.51.148
+stage.chompix.com. IN A 10.66.77.108
+

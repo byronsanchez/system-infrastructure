@@ -1,0 +1,26 @@
+$ORIGIN hackbytes.com.
+$TTL 1200 
+@ IN SOA  ns.internal.nitelite.io. admin.internal.nitelite.io. (
+  2014041701  ; serial
+  3h    ; refresh
+  1h    ; retry
+  1w    ; expiry
+  1d )    ; minimum
+
+;; NS Records
+hackbytes.com.   IN NS ns1.internal.nitelite.io.
+hackbytes.com.   IN NS ns2.internal.nitelite.io.
+
+;; MX Records
+hackbytes.com. IN MX 10 mx.zohomail.com.
+hackbytes.com. IN MX 20 mx2.zohomail.com.
+
+;; CNAME Records
+production.hackbytes.com. IN CNAME hackbytes.com.
+www.hackbytes.com. IN CNAME hackbytes.com.
+feeds.hackbytes.com. IN CNAME 1t5jdoq.feedproxy.ghs.google.com.
+
+;; A Records (IPv4 addresses)
+hackbytes.com. IN A 198.98.51.148
+stage.hackbytes.com. IN A 10.66.77.108
+
