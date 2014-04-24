@@ -7,18 +7,42 @@
 ###########################################
 
 server {
-  server_name  www.stage.hackbytes.com;
-  rewrite ^(.*) http://stage.hackbytes.com$1 permanent;
+  server_name www.<%= @realWebsiteName %>;
+  rewrite ^(.*) http://<%= @realWebsiteName %>$1 permanent;
 }
 
 server {
   listen 80;
-  server_name stage.hackbytes.com;
+  server_name feeds.<%= @realWebsiteName %>;
 
-  access_log /var/log/nginx/hackbytes.access_log;
-  error_log /var/log/nginx/hackbytes.error_log;
+  location / {
+    rewrite ^(.*) http://<%= @realWebsiteName %>$1 permanent;
+  }
 
-  root /srv/www/hackbytes.com/current/_site;
+  location /<%= @feed_path %> {
+    alias /srv/www/<%= @websiteName %>/current/build/atom.xml;
+    types {
+      application/xml xml;
+    }
+    types { }
+    default_type application/xml;
+  }
+
+  rewrite ^/<%= @feed_path %>/.* /<%= @feed_path %>;
+}
+
+server {
+  listen 80;
+  server_name <%= @realWebsiteName %>;
+
+  access_log /var/log/nginx/<%= @websiteName %>.access_log;
+  error_log /var/log/nginx/<%= @websiteName %>.error_log;
+
+  <% if @root_path -%>
+  root /srv/www/<%= @websiteName %><%= @root_path %>;
+  <% else -%>
+  root /srv/www/<%= @websiteName %>;
+  <% end -%>
   index index.php index.htm index.html;
   error_page 404 = /assets/path.php;
 
@@ -36,7 +60,8 @@ server {
     include fastcgi_params;
     fastcgi_index index.php;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    #fastcgi_intercept_errors on;
+  #    fastcgi_intercept_errors on;
     fastcgi_pass unix:/var/run/php5-fpm.sock;
   }
 }
+
