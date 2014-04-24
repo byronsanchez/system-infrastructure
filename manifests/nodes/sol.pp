@@ -15,6 +15,9 @@ node 'sol.internal.nitelite.io' inherits network {
   # Locale
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
+  # ldap
+  $ldap_type="client"
+
   # provision
 
   $boot_pxe_path = "/srv/nfs/luna/Projects/hackbytes/gentoo-bootmodder/profiles/internal.nitelite.io/devices/pxe"
@@ -40,16 +43,26 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "security":
     iptables_type => "${iptables_type}",
   }
+  class { "ssh":
+    username => [
+      "root",
+      "rbackup",
+      "staff",
+      "byronsanchez",
+    ],
+  }
 
   # Add node-specific resources
-  class { "ldap": }
+  class { "nas": }
+  class { "nasclient": }
+  class { "ldap":
+    ldap_type => "${ldap_type}"
+  }
   class { "vcs": }
   class { "backup": }
   class { "rsyncd": }
   class { "webserver": }
   class { "binhost": }
-  # TODO: remove old exports file
-  class { "nas": }
   class { "vpnserver": }
   class { "provision": }
   class { "hypervisor": }
@@ -60,11 +73,11 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "workstation": }
 
   # users
-  # TODO: migrate to LDAP
   class { "root": }
   class { "rbackup": }
+  class { "staff": }
   class { "byronsanchez":
-    #groups    => ['wheel', 'audio', 'cdrom', 'usb', 'plugdev', 'android'],
+    #groups    => ['plugdev', 'android'],
     groups => ['audio', 'cdrom', 'kvm', 'usb', 'wheel',],
   }
 
