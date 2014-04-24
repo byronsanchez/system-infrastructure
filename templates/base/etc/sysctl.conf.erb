@@ -87,15 +87,15 @@ net.ipv4.conf.all.accept_redirects = 0
 kernel.hostname= <%= @fqdn %>
 kernel.domainname = <%= @domain %>
 
-<% if @ipaddress == @hypervisor_address -%>
-## enable forwarding for guest packets
+## enable forwarding for guest packets and ssh port
 net.ipv4.ip_forward = 1
 
+<% if @ipaddress == @hypervisor_address -%>
 # disable filters that prevent smooth bridging
 net.bridge.bridge-nf-call-ip6tables = 0
 net.bridge.bridge-nf-call-iptables = 0
 net.bridge.bridge-nf-call-arptables = 0
 <% else -%>
 ## disable ALL packet forwarding (not a router, disable it) (default)
-net.ipv4.ip_forward = 0
+#net.ipv4.ip_forward = 0
 <% end -%>
