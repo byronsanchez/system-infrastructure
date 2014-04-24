@@ -7,3 +7,4 @@
 ###########################################
 
 net-nds/openldap -sasl syslog debug
+dev-lang/php ldap
