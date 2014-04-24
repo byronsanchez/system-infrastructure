@@ -60,19 +60,6 @@ class nas {
     source => "puppet:///files/nas/etc/samba/smbusers",
   }
 
-  if $file_share_path {
-
-    # Need to bind mount as symlinks will not work with nfs
-    mount { "/srv/nfs/luna":
-      ensure  => mounted,
-      device  => "${file_share_path}",
-      fstype  => "none",
-      options => "rw,bind",
-      require => File["/srv/nfs/luna"],
-    }
-
-  }
-
   $packages = [
     "samba",
   ]
