@@ -19,6 +19,7 @@ sol = puppet, binhost, provision, hypervisor, media, web (base)
 sirius = web (nitelite)
 electra = ldap master
 electra2 = ldap replication
+mira = workstation
 
 Network naming conventions
 
