@@ -8,14 +8,20 @@ class nl_ssh {
     $home = "home_${user}"
     $home_path = inline_template("<%= scope.lookupvar('::$home') %>")
 
-    # Ensure permission and owndership is properly set for the user's ssh
-    # directory
-    file { "${home_path}/.ssh":
-      ensure  => "directory",
-      owner   => "${user}",
-      group   => "${user}",
-      recurse => true,
-      mode    => 0700,
+    # Ensure the home directories exist. If they don't, it'll cause a
+    # duplicate compile error on /.ssh
+    if $home_path {
+
+      # Ensure permission and owndership is properly set for the user's ssh
+      # directory
+      file { "${home_path}/.ssh":
+        ensure  => "directory",
+        owner   => "${user}",
+        group   => "${user}",
+        recurse => true,
+        mode    => 0700,
+      }
+
     }
 
     # AUTHORIZED KEYS WHEN ROLE == SERVER
@@ -43,25 +49,28 @@ class nl_ssh {
     # CONFIGS WHEN ROLE == CLIENT
 
     # retrieve a merge of ALL hiera config files containing the ssh_configs hash
-    $all_configs = hiera_hash('ssh_configs', "")
+    if $home_path {
 
-    if $all_configs {
-      $user_configs = $all_configs["${user}"]
-    }
+      $all_configs = hiera_hash('ssh_configs', "")
 
-    if $user_configs {
+      if $all_configs {
+        $user_configs = $all_configs["${user}"]
+      }
 
-      file { "${home_path}/.ssh/config":
-        ensure => present,
-        owner => "${user}",
-        group => "${user}",
-        mode => 0644,
-        path => "${home_path}/.ssh/config",
-        content => template("nl_ssh/config.erb"),
+      if $user_configs {
+
+        file { "${home_path}/.ssh/config":
+          ensure => present,
+          owner => "${user}",
+          group => "${user}",
+          mode => 0644,
+          path => "${home_path}/.ssh/config",
+          content => template("nl_ssh/config.erb"),
+        }
+
       }
 
     }
-
   }
 
   # Needed to process ssh key arrays
