@@ -180,6 +180,15 @@ class base ($hostname = '', $network_interface = 'eth0') {
     source => "puppet:///files/base/etc/profile.d/fortune.custom.sh",
   }
 
+  file { "/etc/syslog-ng/syslog-ng.conf":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    path    => "/etc/syslog-ng/syslog-ng.conf",
+    source  => "puppet:///files/base/etc/syslog-ng/syslog-ng.conf",
+    require => Class[logger],
+  }
+
   file { "/usr/local/lib/nitelite":
     ensure => "directory",
     owner  => "root",
@@ -313,6 +322,16 @@ class base ($hostname = '', $network_interface = 'eth0') {
     enable  => true,
     require => [
       Package[vixie-cron],
+    ],
+  }
+
+  service { 'syslog-ng':
+    ensure  => running,
+    enable  => true,
+    subscribe => File['/etc/syslog-ng/syslog-ng.conf'],
+    require => [
+      Package[syslog-ng],
+      File['/etc/syslog-ng/syslog-ng.conf']
     ],
   }
 
