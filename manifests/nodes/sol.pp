@@ -73,10 +73,12 @@ node 'sol.internal.nitelite.io' inherits network {
   # development
   class { "workstation": }
   class { "nodejs": }
+  class { "php": }
 
   # users
   class { "root": }
   class { "rbackup": }
+  class { "deployer": }
   class { "staff": }
   class { "byronsanchez":
     #groups    => ['plugdev', 'android'],
