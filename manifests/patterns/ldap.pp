@@ -2,7 +2,8 @@
 
 class ldap($ldap_type) {
 
-  $rootpw = hiera('rootpw')
+  $rootpw = hiera('rootpw', '')
+  $ldapreaderpw = hiera('ldapreaderpw', '')
 
   # TODO: sudoers in ldap to remind myself to migrate to ldap!
   file { "/etc/sudoers":
@@ -128,6 +129,7 @@ class ldap($ldap_type) {
       websiteName     => "ldap.internal.nitelite.io",
       environmentName => "production",
       feed_path       => "ldap",
+      root_path       => "/htdocs/phpldapadmin/htdocs"
     }
 
   }
