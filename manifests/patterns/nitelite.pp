@@ -73,8 +73,8 @@ class nitelite($environment) {
     source => "puppet:///files/nitelite/etc/exim/system_filter.exim",
     require => File["/etc/exim"],
   }
+
   $packages = [
-    "nodejs",
     "exim",
     "sqlite3",
   ]

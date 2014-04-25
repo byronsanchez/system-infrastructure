@@ -70,7 +70,9 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "mail": }
   class { "mirror": }
   class { "media": }
+  # development
   class { "workstation": }
+  class { "nodejs": }
 
   # users
   class { "root": }

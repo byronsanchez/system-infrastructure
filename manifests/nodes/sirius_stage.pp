@@ -31,6 +31,7 @@ node 'sirius.internal.nitelite.io' inherits network {
   class { "rsyncd": }
   class { "webserver": }
   class { "php": }
+  class { "nodejs": }
   class { "nitelite":
     environment => "stage",
   }
