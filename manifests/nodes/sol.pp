@@ -80,5 +80,6 @@ node 'sol.internal.nitelite.io' inherits network {
     #groups    => ['plugdev', 'android'],
     groups => ['audio', 'cdrom', 'kvm', 'usb', 'wheel',],
   }
+  class { "logger": }
 
 }

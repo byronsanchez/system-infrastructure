@@ -38,5 +38,6 @@ node 'polaris2.internal.nitelite.io' inherits network {
   class { "root": }
   class { "rbackup": }
   class { "staff": }
+  class { "logger": }
 
 }

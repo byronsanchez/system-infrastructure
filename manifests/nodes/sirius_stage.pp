@@ -40,5 +40,6 @@ node 'sirius.internal.nitelite.io' inherits network {
   class { "rbackup": }
   class { "deployer": }
   class { "staff": }
+  class { "logger": }
 
 }
