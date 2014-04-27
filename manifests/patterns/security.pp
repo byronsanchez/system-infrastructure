@@ -20,6 +20,26 @@ class security($iptables_type = '') {
     source => "puppet:///files/security/etc/rkhunter.conf.local",
   }
 
+  file { "/etc/cron.daily/chkrootkit":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0755,
+    require => File['/etc/cron.daily'],
+    path    => "/etc/cron.daily/chkrootkit",
+    source  => "puppet:///files/security/etc/cron.daily/chkrootkit",
+  }
+
+  file { "/etc/cron.daily/rkhunter":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0755,
+    require => File['/etc/cron.daily'],
+    path    => "/etc/cron.daily/rkhunter",
+    source  => "puppet:///files/security/etc/cron.daily/rkhunter",
+  }
+
   file { "/var/lib/iptables":
     ensure => "directory",
     owner => "root",

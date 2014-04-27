@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# uncomment this to make it work
+#
+
+# q - quite mode
+# n - skip NFS mounted dirs
+exec /usr/sbin/chkrootkit -q -n
