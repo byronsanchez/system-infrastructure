@@ -6,5 +6,5 @@
 #                                         #
 ###########################################
 
-dev-lang/php fpm
+dev-lang/php fpm spell
 app-admin/eselect-php fpm
