@@ -1,3 +1,4 @@
+# TODO: add icedtea bin or abstract it out of workstation.pp
 class mobile {
 
   file { "/etc/profile.d/mobile.custom.sh":
@@ -22,9 +23,6 @@ class mobile {
     "android-sdk-update-manager",
     "ant",
     "maven-bin",
-    "gradle-bin",
-    "oracle-jdk-bin",
-    "jdk",
   ]
 
   package { $packages: ensure => 'installed' }
