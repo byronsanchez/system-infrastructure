@@ -28,54 +28,7 @@ class nitelite($environment) {
     feed_path       => "tehpotatoking",
   }
 
-  file { "/etc/sudoers.d/deployer":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => '440',
-    require => File['/etc/sudoers.d'],
-    path => "/etc/sudoers.d/deployer",
-    source => "puppet:///files/nitelite/etc/sudoers.d/deployer",
-  }
-
-  file { "/etc/exim":
-    ensure => "directory",
-    owner => "root",
-    group => "root",
-  }
-
-  file { "/etc/exim/auth_conf.sub":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/exim/auth_conf.sub",
-    source => "puppet:///files/nitelite/etc/exim/auth_conf.sub",
-    require => File["/etc/exim"],
-  }
-
-  file { "/etc/exim/exim.conf":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/exim/exim.conf",
-    source => "puppet:///files/nitelite/etc/exim/exim.conf",
-    require => File["/etc/exim"],
-  }
-
-  file { "/etc/exim/system_filter.exim":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/exim/system_filter.exim",
-    source => "puppet:///files/nitelite/etc/exim/system_filter.exim",
-    require => File["/etc/exim"],
-  }
-
   $packages = [
-    "exim",
     "sqlite3",
   ]
 
