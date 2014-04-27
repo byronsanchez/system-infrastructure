@@ -1,5 +1,24 @@
 class workstation {
 
+  file { "/etc/cron.daily/mirror_mail":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0755,
+    path   => "/etc/cron.daily/mirror_mail",
+    source => "puppet:///files/workstation/etc/cron.daily/mirror_mail",
+    require => File["/etc/cron.daily"],
+  }
+
+  file { "/etc/portage/package.use/mutt":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/mutt",
+    source => "puppet:///files/workstation/etc/portage/package.use/mutt",
+  }
+
   file { "/etc/irssi.conf":
     ensure => present,
     owner  => "root",
@@ -69,6 +88,12 @@ class workstation {
     "keepassx",
     "truecrypt",
     "sshfs-fuse",
+    "offlineimap",
+    "msmtp",
+    "notmuch",
+    "urlview",
+    "mutt",
+    "dev-python/keyring",
   ]
 
   package { $packages: ensure => installed }

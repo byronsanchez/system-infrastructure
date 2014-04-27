@@ -20,12 +20,6 @@ class mail {
   }
 
   $packages = [
-    "offlineimap",
-    "msmtp",
-    "notmuch",
-    "urlview",
-    "mutt",
-    "dev-python/keyring",
   ]
 
   package { $packages:
