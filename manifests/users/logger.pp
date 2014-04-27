@@ -3,7 +3,7 @@ class logger {
   user { 'logger':
     ensure => 'present',
     gid    => '1004',
-    shell  => '/bin/sh',
+    shell  => '/bin/false',
     uid    => '1004',
   }
 
