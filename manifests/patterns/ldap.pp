@@ -52,6 +52,16 @@ class ldap($ldap_type) {
     source => "puppet:///files/ldap/etc/sudoers.d/rbackup",
   }
 
+  file { "/etc/sudoers.d/deployer":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    require => File['/etc/sudoers.d'],
+    path => "/etc/sudoers.d/deployer",
+    source => "puppet:///files/ldap/etc/sudoers.d/deployer",
+  }
+
   file { "/etc/portage/package.use/openldap":
     ensure => present,
     owner => "root",
