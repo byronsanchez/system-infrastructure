@@ -1,6 +1,6 @@
 # TODO: make type be able to be multiple so that it can be pattern-specific as
 # opposed to node-specific
-class security($iptables_type) {
+class security($iptables_type = '') {
 
   file { "/etc/chkrootkit.conf":
     ensure => present,
