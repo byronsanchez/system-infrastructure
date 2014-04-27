@@ -11,11 +11,28 @@ ldap replication is pretty simple. After initial migration, make sure conf files
 are setup and it should work properly
   - add ldapreader user and give the replicant server access
 
+ldapreader.ldif:
+
+    dn: cn=ldapreader,dc=nitelite,dc=io
+    userPassword: secret
+    objectClass: organizationalRole
+    objectClass: simpleSecurityObject
+    cn: ldapreader
+    description: LDAP reader used for synchronization
+
+then run:
+
+    ldapadd -x -W -D "cn=Manager,dc=nitelite,dc=io" -f ldapreader.ldif
+
 ### pgsql
 
 pgsql replication is slightly trickier, but not really. just make sure conf
 files are setup and prior to starting up the replicant server, run the
-`sync_pgservers` script on the pgmaster node
+`sync_pgservers` script on the pgmaster node:
+
+    psql -c "select pg_start_backup('initial_backup');"
+    rsync -cva --inplace --exclude=*pg_xlog* /var/lib/postgresql/9.3/data/ slave_IP_address:/var/lib/postgresql/9.3/data/
+    psql -c "select pg_stop_backup();"
 
 This will copy the database from the master to the slave target. Both nodes need
 to have the initial databases as the slave will only read the logs to figure out
