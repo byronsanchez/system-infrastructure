@@ -1,4 +1,6 @@
-class security($iptables_type = "web") {
+# TODO: make type be able to be multiple so that it can be pattern-specific as
+# opposed to node-specific
+class security($iptables_type) {
 
   file { "/etc/chkrootkit.conf":
     ensure => present,
@@ -30,7 +32,7 @@ class security($iptables_type = "web") {
     group   => "root",
     mode    => 0600,
     path    => "/var/lib/iptables/rules-save",
-    source  => "puppet:///files/security/var/lib/iptables/rules-save.${iptables_type}",
+    content => template("security/var/lib/iptables/rules-save.erb"),
     require => File["/var/lib/iptables"],
   }
 
@@ -46,7 +48,7 @@ class security($iptables_type = "web") {
     group  => "root",
     mode   => 0600,
     path   => "/var/lib/ip6tables/rules-save",
-    source => "puppet:///files/security/var/lib/ip6tables/rules-save.${iptables_type}",
+    content => template("security/var/lib/ip6tables/rules-save.erb"),
     require => File["/var/lib/ip6tables"],
   }
 

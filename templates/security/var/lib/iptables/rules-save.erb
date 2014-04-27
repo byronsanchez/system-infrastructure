@@ -41,31 +41,43 @@ COMMIT
 # Accept all established inbound connections
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-#  Allow ping
+# Allow ping
 -A INPUT -p icmp -j ACCEPT
 
 # Allow all outbound traffic - you can modify this to only allow certain traffic
 -A OUTPUT -j ACCEPT
 
-# DNS
+<% if @iptables_type == "web" -%>
+# Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+<% end-%>
+
+# DNS (for all nodes)
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 53 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 53 -j ACCEPT
 
+<% if @iptables_type == "hypervisor" -%>
 # BOOTP
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 67 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 67 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 68 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 68 -j ACCEPT
 
-# Cobbler
+# TFTP
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 69 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 69 -j ACCEPT
+
+# Web
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 80 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 80 -j ACCEPT
+
+# SSL
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 443 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 443 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 25151 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 25151 -j ACCEPT
+
+# Rsync
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 873 -m state --state NEW -j ACCEPT
 
 # Samba Ports
 -A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 137 -j ACCEPT
@@ -103,11 +115,44 @@ COMMIT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 8140 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 8140 -j ACCEPT
 
-# MPD and HTTP Stream
--A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 6600 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -m state --state NEW -p udp --dport 6600 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 12000 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -m state --state NEW -p udp --dport 12000 -j ACCEPT
+# MPD
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 6600 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 6600 -m state --state NEW -j ACCEPT
+# MPD HTTP Stream
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 12000 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 12000 -m state --state NEW -j ACCEPT
+<% end-%>
+
+<% if @iptables_type == "data" -%>
+# Syslog
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 1000 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 514 -m state --state NEW -j ACCEPT
+<% end-%>
+
+<% if @iptables_type == "mysql" -%>
+# MySQL
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 3306 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 3306 -m state --state NEW -j ACCEPT
+<% end-%>
+
+<% if @iptables_type == "pgsql" -%>
+# PgSQL
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 5432 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 5432 -m state --state NEW -j ACCEPT
+<% end-%>
+
+<% if @iptables_type == "mail" -%>
+# SMTP-MTA (MTA-to-MTA comms)
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 25 -m state --state NEW -j ACCEPT
+# IMAP
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 143 -m state --state NEW -j ACCEPT
+# IMAP TLS/SSL
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 993 -m state --state NEW -j ACCEPT
+# SMTPS (legacy)
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 465 -m state --state NEW -j ACCEPT
+# SMTP-MSA (email submissons; eg. mail client to mail server)
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 587 -m state --state NEW -j ACCEPT
+<% end-%>
 
 # Drop marked packets (direct port 22 packets)
 -A INPUT -m mark --mark 1 -j DROP
