@@ -1,3 +1,4 @@
+# TODO: find a way to require the NFS module
 class nasclient {
   # MOUNTS
   # These depend on a running NAS server somewhere on the network
@@ -101,6 +102,12 @@ class nasclient {
     fstype  => "nfs4",
     options => "soft,timeo=30",
     require => File['/mnt/byronsanchez'],
+  }
+
+  # For fstab NFS mounting
+  service { nfsmount:
+    ensure    => running,
+    enable => true,
   }
 
 }
