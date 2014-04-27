@@ -13,13 +13,18 @@ Name - service mapping
 maia = data
 polaris = dns master
 polaris2 = dns replication
-vega = sec
 kraz = proxy
+kuma = mail
 sol = puppet, binhost, provision, hypervisor, media, web (base)
 sirius = web (nitelite)
 electra = ldap master
 electra2 = ldap replication
 mira = workstation
+alya = postgres
+alya2 = postgres replication
+atlas = mysql
+atlas2 = mysql replication
+chow|vega|kastra|zosma = isolated pentests
 
 Network naming conventions
 
