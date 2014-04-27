@@ -1,4 +1,4 @@
-class gentoo {
+class gentoo($lowmemorybox = false) {
 
   file { "/etc/portage/make.conf":
     ensure => present,
