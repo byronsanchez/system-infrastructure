@@ -6,12 +6,35 @@
 #                                         #
 ###########################################
 
-USE="agent audit bcmath device-mapper dlz gd -gpm -gtk imap ipv6 -ldap libwww maildir mhash mysql maildir png -pppd sasl sockets -sqlite3 ssl truetype ubac unicode xml -xorg udev -unconfined xattr"
+USE="agent audit bcmath device-mapper dlz gd -gpm -gtk imap ipv6 -ldap libwww maildir mhash mysql maildir png -pppd sasl sockets -sqlite3 ssl truetype ubac unicode xml -xorg udev -unconfined vhosts xattr"
+<% if @lowmemorybox -%>
+# Low memory, so compiles will go slower with these flags, but at least they
+# won't be killed for OOM errors
+# Forces GCC to never allocate more than ggc-min-heapsize amount of heap
+# IF ALL ELSE FAILS, CONSIDER SETTING UP DISTCC AND PIPE THE PROCESSES TO A MORE
+# CAPABLE NODE ON THE NETWORK (EG BINHOST)
+# use if you have 512mb+ ram systems that have OOM compile errors
+#CFLAGS="-march=x86-64 -O2 -pipe --param ggc-min-expand=20 --param ggc-min-heapsize=32768"
+# use for 256mb or less
+#CFLAGS="-march=x86-64 -O2 -pipe --param ggc-min-expand=0 --param ggc-min-heapsize=8192"
+# whether or not to enable pipes has mixed opinions on internet discussions. In
+# my own case, I was not able to compile rabbitmq-server dependencies with pipes
+# enabled (OOM errors that killed the compile). Disabling pipes made that
+# problem go away. This was on a 256MB RAM node.
+CFLAGS="-march=x86-64 -O2 --param ggc-min-expand=0 --param ggc-min-heapsize=8192"
+#LDFLAGS="${LDFLAGS} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads, -Wl,--hash-style=gnu"
+LDFLAGS="${LDFLAGS} -Wl,--hash-style=gnu"
+<% else -%>
 CFLAGS="-march=x86-64 -O2 -pipe"
+LDFLAGS="${LDFLAGS} -Wl,--hash-style=gnu"
+<% end -%>
 CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"
 GENTOO_MIRRORS="http://binhost.internal.nitelite.io/gentoo http://mirror.mcs.anl.gov/pub/gentoo/ http://gentoo.osuosl.org/ http://mirror.lug.udel.edu/pub/gentoo/"
-LDFLAGS="${LDFLAGS} -Wl,--hash-style=gnu"
+# Set PORTDIR for backward compatibility with various tools:
+#   gentoo-bashcomp - bug #478444
+#   euse - bug #474574
+#   euses and ufed - bug #478318
 # Each node has its own portage tree to track for overlays, main tree
 PORTDIR="/usr/portage"
 DISTDIR="/usr/portage/distfiles"
@@ -23,10 +46,6 @@ PKGDIR="/usr/portage/packages"
 EMERGE_DEFAULT_OPTS="-k -g"
 EMERGE_EXTRA_OPTS="-k -g"
 FEATURES="buildpkg webrsync-gpg userfetch"
-# Set PORTDIR for backward compatibility with various tools:
-#   gentoo-bashcomp - bug #478444
-#   euse - bug #474574
-#   euses and ufed - bug #478318
 <% else -%>
 PORTAGE_BINHOST="http://binhost.internal.nitelite.io/packages"
 # k - (--usepkg) - asks emerge to try to install the prebuilt package first

@@ -4,7 +4,6 @@ node 'sirius.internal.nitelite.io' inherits network {
   # Locale
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
-  # ldap
   $ldap_type="client"
 
   class { "base":
