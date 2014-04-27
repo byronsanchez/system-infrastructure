@@ -1,9 +1,0 @@
-###########################################
-#                                         #
-# MANAGED BY PUPPET                       #
-#                                         #
-# Manual changes WILL be overwritten      #
-#                                         #
-###########################################
-
-mail-client/mutt imap gpg smtp sasl sidebar
