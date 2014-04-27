@@ -11,6 +11,9 @@ $TTL 1200
 nitelite.io.   IN NS ns1.internal.nitelite.io.
 nitelite.io.   IN NS ns2.internal.nitelite.io.
 
+;; MX Records
+nitelite.io. IN MX 10 mail.internal.nitelite.io.
+
 ;; CNAME Records
 production.nitelite.io. IN CNAME nitelite.io.
 www.nitelite.io. IN CNAME nitelite.io.
@@ -34,6 +37,14 @@ proxy.internal.nitelite.io. IN CNAME kraz.internal.nitelite.io.
 ldap.internal.nitelite.io. IN CNAME electra.internal.nitelite.io.
 ldap1.internal.nitelite.io. IN CNAME electra.internal.nitelite.io.
 ldap2.internal.nitelite.io. IN CNAME electra2.internal.nitelite.io.
+mail.internal.nitelite.io. IN CNAME kuma.internal.nitelite.io.
+mail1.internal.nitelite.io. IN CNAME kuma.internal.nitelite.io.
+pg.internal.nitelite.io. IN CNAME alya.internal.nitelite.io.
+pg1.internal.nitelite.io. IN CNAME alya.internal.nitelite.io.
+pg2.internal.nitelite.io. IN CNAME alya2.internal.nitelite.io.
+my.internal.nitelite.io. IN CNAME atlas.internal.nitelite.io.
+my1.internal.nitelite.io. IN CNAME atlas.internal.nitelite.io.
+my2.internal.nitelite.io. IN CNAME atlas2.internal.nitelite.io.
 
 ;; A Records (IPv4 addresses)
 ns1.internal.nitelite.io. IN A 10.66.77.101
@@ -42,6 +53,11 @@ sol.internal.nitelite.io. IN A  10.66.77.100
 electra.internal.nitelite.io. IN A  10.66.77.103
 electra2.internal.nitelite.io. IN A  10.66.77.104
 kraz.internal.nitelite.io. IN A  10.66.77.105
-vega.internal.nitelite.io. IN A  10.66.77.106
+kuma.internal.nitelite.io. IN A  10.66.77.106
 maia.internal.nitelite.io. IN A  10.66.77.107
-sirius.internal.nitelite.io. IN A  10.66.77.108
+alya.internal.nitelite.io. IN A  10.66.77.108
+alya2.internal.nitelite.io. IN A  10.66.77.109
+atlas.internal.nitelite.io. IN A  10.66.77.110
+atlas2.internal.nitelite.io. IN A  10.66.77.111
+sirius.internal.nitelite.io. IN A  10.66.77.112
+
