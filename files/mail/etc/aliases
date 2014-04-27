@@ -1,7 +1,7 @@
 # Example aliases file
 
 # Send root to...
-root: bfs5030@example.com
+root: bfs5030@gmail.com
 
 # Send cron to...
 cron: bfs5030@gmail.com
