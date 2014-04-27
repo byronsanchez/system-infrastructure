@@ -5,6 +5,7 @@ node 'sirius.internal.nitelite.io' inherits network {
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
   $ldap_type="client"
+  $mail_type="client"
 
   class { "base":
     hostname          => "sirius",
@@ -20,6 +21,9 @@ node 'sirius.internal.nitelite.io' inherits network {
       "deployer",
       "staff",
     ],
+  }
+  class { "mail":
+    mail_type => "${mail_type}",
   }
 
   # Add node-specific resources

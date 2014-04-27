@@ -5,8 +5,7 @@ node 'polaris2.internal.nitelite.io' inherits network {
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
   $ldap_type="client"
-
-  # DNS server settings
+  $mail_type="client"
   $dns_type="slave"
 
   class { "base":
@@ -24,6 +23,9 @@ node 'polaris2.internal.nitelite.io' inherits network {
       "rbackup",
       "staff",
     ],
+  }
+  class { "mail":
+    mail_type => "${mail_type}",
   }
 
   # Add node-specific resources

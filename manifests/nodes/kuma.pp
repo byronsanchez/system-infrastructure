@@ -1,15 +1,15 @@
-node 'polaris.internal.nitelite.io' inherits network {
+node 'kuma.internal.nitelite.io' inherits network {
 
-  $iptables_type="dns"
+  $iptables_type="mail"
   # Locale
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
+
   $ldap_type="client"
-  $mail_type="client"
-  $dns_type="master"
+  $mail_type="server"
 
   class { "base":
-    hostname          => "polaris",
+    hostname          => "kuma",
     network_interface => "eth0",
   }
   class { "gentoo":
@@ -33,13 +33,11 @@ node 'polaris.internal.nitelite.io' inherits network {
   class { "ldap":
     ldap_type => "${ldap_type}"
   }
-  class { "dns":
-    dns_type => "${dns_type}",
-  }
 
   # users
   class { "root": }
   class { "rbackup": }
+  class { "deployer": }
   class { "staff": }
   class { "logger": }
 

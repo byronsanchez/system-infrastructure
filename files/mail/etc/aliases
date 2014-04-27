@@ -1,0 +1,10 @@
+# Example aliases file
+
+# Send root to...
+root: bfs5030@example.com
+
+# Send cron to...
+cron: bfs5030@gmail.com
+
+# Send everything else to...
+default: bfs5030@gmail.com

@@ -16,6 +16,7 @@ node 'sol.internal.nitelite.io' inherits network {
   $linguas="en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru"
 
   $ldap_type="client"
+  $mail_type="client"
 
   # provision
 
@@ -50,6 +51,9 @@ node 'sol.internal.nitelite.io' inherits network {
       "byronsanchez",
     ],
   }
+  class { "mail":
+    mail_type => "${mail_type}",
+  }
 
   # Add node-specific resources
   class { "nas": }
@@ -66,11 +70,9 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "provision": }
   class { "hypervisor": }
   class { "xorgserver": }
-  class { "mail": }
   class { "mirror": }
   class { "media": }
   # development
-  class { "workstation": }
   class { "nodejs": }
   class { "php": }
 

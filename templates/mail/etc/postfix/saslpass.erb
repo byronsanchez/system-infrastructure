@@ -1,0 +1,7 @@
+# $Header: /var/cvsroot/gentoo-x86/mail-mta/postfix/files/smtp.pass,v 1.2 2004/07/18 03:26:56 dragonheart Exp $
+#
+# remotehost user:password
+
+<% if @mail_type == "server" %>
+[smtp.gmail.com]:587  <%= @gmailuser %>:<%= @gmailpw %>
+<% end %>
