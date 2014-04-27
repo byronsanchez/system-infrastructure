@@ -18,6 +18,7 @@ node "network" {
   $ns1_address = "10.66.77.101"
   $ns2_address = "10.66.77.102"
   $ldapserver_address = "10.66.77.103"
+  $pgmaster_address = "10.66.77.108"
 
 }
 
