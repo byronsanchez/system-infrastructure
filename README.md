@@ -32,10 +32,10 @@ error.
 
 Here is the list of incompatible patterns:
 
-  - web.pp and mail.pp - both define an MTA package resource. Only one MTA can
-    be installed per node at a time. mail.pp uses msmtp for simple delivery of
-    mail to an external mail server, whereas web.pp uses exim as an actual mail
-    server.
+  - workstation.pp and mail.pp - both define an MTA package resource. Only one
+    MTA can be installed per node at a time. mail.pp uses postfix for
+    network-wide send only delivery of mail, whereas workstation.pp uses msmtp
+    for simple workstation delivery of mail
   - vpnserver.pp and vpnclient.pp - both contain a config that defines an
     individual role as a client or a server
 
