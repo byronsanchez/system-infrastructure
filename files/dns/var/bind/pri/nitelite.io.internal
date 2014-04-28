@@ -34,6 +34,7 @@ provision.internal.nitelite.io. IN CNAME sol.internal.nitelite.io.
 nas.internal.nitelite.io. IN CNAME sol.internal.nitelite.io.
 media.internal.nitelite.io. IN CNAME sol.internal.nitelite.io.
 proxy.internal.nitelite.io. IN CNAME kraz.internal.nitelite.io.
+data.internal.nitelite.io. IN CNAME maia.internal.nitelite.io.
 ldap.internal.nitelite.io. IN CNAME electra.internal.nitelite.io.
 ldap1.internal.nitelite.io. IN CNAME electra.internal.nitelite.io.
 ldap2.internal.nitelite.io. IN CNAME electra2.internal.nitelite.io.
