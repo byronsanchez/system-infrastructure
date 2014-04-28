@@ -72,10 +72,16 @@ class dns($dns_type) {
   service { 'named':
     ensure => running,
     enable => true,
-    subscribe => File['/etc/bind/named.conf'],
-    require => [
+    subscribe => [
       File['/etc/bind/named.conf'],
+      File['/var/bind/pri/nitelite.io.internal'],
+      File['/var/bind/pri/10.66.77.internal'],
+    ],
+    require => [
       Package[bind],
+      File['/etc/bind/named.conf'],
+      File['/var/bind/pri/nitelite.io.internal'],
+      File['/var/bind/pri/10.66.77.internal'],
     ],
   }
 
