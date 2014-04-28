@@ -88,6 +88,17 @@ class base ($hostname = '', $network_interface = 'eth0') {
     group   => "root",
   }
 
+  # mask mysql in case it gets pulled in via the USE flag; we want mariadb
+  # instead
+  file { "/etc/portage/package.mask/mysql":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.mask'],
+    path => "/etc/portage/package.mask/mysql",
+    source => "puppet:///files/base/etc/portage/package.mask/mysql",
+  }
+
   file { "/etc/portage/package.use/git":
     ensure => present,
     owner => "root",

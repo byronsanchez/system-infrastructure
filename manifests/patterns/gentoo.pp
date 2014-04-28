@@ -22,6 +22,12 @@ class gentoo($lowmemorybox = false) {
     group => "root",
   }
 
+  file { "/etc/portage/package.mask":
+    ensure => "directory",
+    owner => "root",
+    group => "root",
+  }
+
   file { "/etc/portage/package.use":
     ensure => "directory",
     owner => "root",
