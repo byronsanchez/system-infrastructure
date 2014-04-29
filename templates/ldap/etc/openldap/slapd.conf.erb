@@ -27,14 +27,15 @@ loglevel 0
 access to attrs="userPassword"
   by dn="uid=root,ou=People,dc=nitelite,dc=io" write
   by dn="uid=byronsanchez,ou=People,dc=nitelite,dc=io" write
-  by anonymous auth
   by self write
+  by anonymous auth
   by * none
  
 access to *
   by dn="uid=root,ou=People,dc=nitelite,dc=io" write
   by dn="uid=byronsanchez,ou=People,dc=nitelite,dc=io" write
-  by * search
+  by self write
+  by * read
 
 ## Database definition
 database hdb
