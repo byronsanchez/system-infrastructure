@@ -6,4 +6,4 @@
 #                                         #
 ###########################################
 
-mail-client/mutt imap gpg smtp sasl sidebar
+mail-client/mutt imap gpg smtp sasl sidebar smime
