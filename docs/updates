@@ -13,53 +13,93 @@ Try to stick to a regular weekly update process.
 Run the following commands, one-by-one, analyze outputs and determine steps
 based on the information you see.
 
-# The following command is the equivalent to running:
+# binhost
 #
-# emerge --sync
-# eix-update
-# eix-diff
-# 
-# Check the changes to the portage tree
-sudo eix-remote update; # for adding overlays to the cache
-sudo eix-sync;
+# source: http://forums.gentoo.org/viewtopic-t-976032-start-0.html
 
-# After you analyze the portage tree, check what can be upgraded. Show
-# dependencies so that you know why a package was pulled into the update list.
-emerge -pvuDt world;
+When rebuilding @preserved-rebuild:
 
-# If there are news items, read them carefully
-eselect news;
+    emerge --usepkg=n @preserved-rebuild
 
-# Securiy advisory check
-glsa-check;
+When doing revdep-rebuild:
 
-# Read logs and determine whether or not you really want to update the package.
-emerge -pvul <package>;
+    revdep-rebuild -- --usepkg=n
 
-# IF YOU NEED TO UPDATE A LIST, use the following command so it doesn't go into
-# world file
-emerge -quD1;
+When doing perl-cleaner:
 
-# Get estimated merge time
-emerge -pvuD world | sudo genlop -p2;
+    perl-cleaner --all -- --usepkg=n
 
-# After update, read messages
-less /var/log/portage/elog;
+When doing python-updater:
 
-# Update configs if necessary and merge the updates with the puppet sources
-dispatch-conf;
+    python-updater -- --usepkg=n
 
-# To check last merge time, run the command:
-sudo genlop -t1 --date 1 day ago;
+# general instructions
 
-# Also, don't forget to run the following command after updates:
-revdep-rebuild;
+The following command is the equivalent to running:
+
+    emerge --sync
+    eix-update
+    eix-diff
+
+Check the changes to the portage tree
+    sudo eix-remote update; # for adding overlays to the cache
+    sudo eix-sync;
+
+After you analyze the portage tree, check what can be upgraded. Show
+dependencies so that you know why a package was pulled into the update list.
+
+    emerge -Duvpt world;
+
+If there are news items, read them carefully
+
+    eselect news;
+
+Securiy advisory check
+
+    glsa-check;
+
+Read logs and determine whether or not you really want to update the package.
+
+    emerge -uvpl <package>;
+
+IF YOU NEED TO UPDATE A LIST, use the following command so it doesn't go into
+world file
+
+    emerge -Duq1;
+
+Get estimated merge time
+
+    emerge -Duvp world | sudo genlop -p;
+
+Update
+
+    emerge -DuvaN --with-bdeps=y world
+
+After update, read messages
+
+    less /var/log/portage/elog;
+
+Update configs if necessary and merge the updates with the puppet sources
+
+    dispatch-conf;
+
+To check last merge time, run the command:
+
+    sudo genlop -t1 --date 1 day ago;
+
+Also, don't forget to run the following command after updates:
+
+    revdep-rebuild;
 
 ### Troubleshooting common problems
 
 If you have perl-related problems because of a perl upgrade, make sure to run:
 
     perl-cleaner --all
+
+Python package updates
+
+    python-updater
 
 If you have gcc problems after a gcc upgrade, make sure a compiler is properly
 set by running:
