@@ -44,15 +44,6 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/rtorrent",
   }
 
-  file { "/etc/portage/package.use/java":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/java",
-    source => "puppet:///files/workstation/etc/portage/package.use/java",
-  }
-
   file { "/etc/portage/package.accept_keywords/truecrypt":
     ensure => present,
     owner => "root",
@@ -88,7 +79,6 @@ class workstation {
     "keepassx",
     "truecrypt",
     "sshfs-fuse",
-    "icedtea-bin",
     "offlineimap",
     "msmtp",
     "notmuch",
