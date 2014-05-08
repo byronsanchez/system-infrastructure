@@ -1,0 +1,293 @@
+@version: 3.4
+# $Header: /var/cvsroot/gentoo-x86/app-admin/syslog-ng/files/3.4/syslog-ng.conf.gentoo,v 1.2 2013/06/02 01:18:35 mr_bones_ Exp $
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+#
+# Syslog-ng default configuration file for Gentoo Linux
+
+# https://bugs.gentoo.org/show_bug.cgi?id=426814
+@include "scl.conf"
+
+options {
+  threaded(yes);
+  # disable the chained hostname format in logs (default is enabled)
+  chain_hostnames(no);
+
+  # The default action of syslog-ng is to log a STATS line
+  # to the file every 10 minutes.  That's pretty ugly after a while.
+  # Change it to every 12 hours so you get a nice daily update of
+  # how many messages syslog-ng missed (0).
+  stats_freq(43200);
+  stats_level(2);
+  # The default action of syslog-ng is to log a MARK line
+  # to the file every 20 minutes.  That's seems high for most
+  # people so turn it down to once an hour.  Set it to zero
+  # if you don't want the functionality at all.
+  mark_freq(3600);
+
+  # enable or disable directory creation for destination files
+  create_dirs(yes);
+
+  # don't rely on dns; use /etc/hosts to resolve hostnames
+  # If your syslog-ng is behind a firewall and not accessible to the outside of
+  # the world then 'yes' would be appropriate.
+  use_dns(persist_only);
+  # whether or not to display fqdn or just the hostname
+  use_fqdn(no);
+  dns_cache_hosts(/etc/hosts);
+  dns_cache_expire(87600);
+
+  # the number of lines fitting in the output queue
+  log_fifo_size(512);
+
+  # default owner, group, and permissions for log files (defaults are 0, 0, 0600)
+  owner(root);
+  group(logger);
+  perm(0640);
+
+  # default owner, group, and permissions for created directories (defaults are 0, 0, 0700)
+  dir_owner(root);
+  dir_group(logger);
+  dir_perm(0740);
+
+  # the time to wait before a died connection is re-established (default is 60)
+  time_reopen(10);
+
+  # the time to wait before an idle destination file is closed (default is 60)
+  time_reap(360);
+
+  # regex of hostnames that should not be handled as hostnames
+  bad_hostname("^gconfd$");
+  # lc all hostname chars for easy readability
+  normalize_hostnames(yes);
+  # keeps the hostname if running through a relay or an external server, so that
+  # when the host finally reaches the central server the hostname comes with it
+  # instead of relying on DNS (or /etc/hosts)
+  keep_hostname(yes);
+
+  # number of lines flushed to a dest at a time; 0 = send as message is received
+  flush_lines(0);
+
+};
+
+source src {
+  unix-stream("/dev/log" max-connections(256));
+  internal();
+
+  # TODO: from a chrooted bind install
+  #unix-stream("/var/named/chroot/dev/log");
+};
+
+source kernsrc { file("/proc/kmsg"); };
+
+<% if @data_type == "server" -%>
+source netsrc {
+  # listen on tcp 1000 (not 514, because rsh uses that) and udp 514 for clients
+  # that can't change from 514.
+  udp ();
+  tcp(ip(<%= @ipaddress %>) port(1000)
+  tls( ca_dir("/etc/ssl/certs")
+  key_file("/etc/ssl/data/private/cakey.pem.unencrypted")
+  cert_file("/etc/ssl/data/cacert.pem")
+  # disable mutual auth
+  peer_verify(optional-untrusted)) );
+};
+<% end -%>
+
+# source s_pipe { pipe("/dev/pipe" pad_size(2048)); };)
+
+# destinations for logs from localhost
+destination d_file { file("/var/log/$YEAR.$MONTH.$DAY/everything.log" template("$HOUR:$MIN:$SEC [$LEVEL] [$FACILITY] [$PROGRAM] $MSG\n") template_escape(no)); };
+destination d_authlog { file("/var/log/auth.log"); };
+destination d_syslog { file("/var/log/syslog.log"); };
+destination d_user { file("/var/log/user.log"); };
+destination d_cron { file("/var/log/cron.log"); };
+destination d_daemon { file("/var/log/daemon.log"); };
+destination d_kern { file("/var/log/kern.log"); };
+destination d_lpr { file("/var/log/lpr.log"); };
+destination d_uucp { file("/var/log/uucp.log"); };
+destination d_ppp { file("/var/log/ppp.log"); };
+destination d_iptables { file("/var/log/iptables.log"); };
+destination d_avc { file("/var/log/avc.log"); };
+destination d_audit { file("/var/log/audit.log"); };
+destination d_pax { file("/var/log/pax.log"); };
+destination d_grsec { file("/var/log/grsec.log"); };
+destination d_mail { file("/var/log/mail.log"); };
+destination d_mailinfo { file("/var/log/mail/mail.info"); };
+destination d_mailwarn { file("/var/log/mail/mail.warn"); };
+destination d_mailerr { file("/var/log/mail/mail.err"); };
+destination d_newscrit { file("/var/log/news/news.crit"); };
+destination d_newserr { file("/var/log/news/news.err"); };
+destination d_newsnotice { file("/var/log/news/news.notice"); };
+destination d_debug { file("/var/log/debug"); };
+destination d_messages { file("/var/log/messages"); };
+destination d_everything { file("/var/log/everything"); };
+destination d_local { file("/var/log/local.log"); };
+
+# monitors
+destination d_console { usertty("root"); };
+destination d_console_all { file("/dev/tty12"); };
+destination d_loghost { udp("loghost" port(999)); };
+destination d_xconsole { pipe("/dev/xconsole"); };
+
+<% if @data_type == "server" -%>
+# Destination for logs from external nodes.
+destination d_net_file { file("/var/log/remote/$HOST/$YEAR.$MONTH.$DAY/everything.log" template("$HOUR:$MIN:$SEC [$LEVEL] [$FACILITY] [$PROGRAM] $MSG\n") template_escape(no)); };
+destination d_net_authlog { file("/var/log/remote/$HOST/auth.log"); };
+destination d_net_syslog { file("/var/log/remote/$HOST/syslog.log"); };
+destination d_net_user { file("/var/log/remote/$HOST/user.log"); };
+destination d_net_cron { file("/var/log/remote/$HOST/cron.log"); };
+destination d_net_daemon { file("/var/log/remote/$HOST/daemon.log"); };
+destination d_net_kern { file("/var/log/remote/$HOST/kern.log"); };
+destination d_net_lpr { file("/var/log/remote/$HOST/lpr.log"); };
+destination d_net_uucp { file("/var/log/remote/$HOST/uucp.log"); };
+destination d_net_ppp { file("/var/log/remote/$HOST/ppp.log"); };
+destination d_net_iptables { file("/var/log/remote/$HOST/iptables.log"); };
+destination d_net_avc { file("/var/log/remote/$HOST/avc.log"); };
+destination d_net_audit { file("/var/log/remote/$HOST/audit.log"); };
+destination d_net_pax { file("/var/log/remote/$HOST/pax.log"); };
+destination d_net_grsec { file("/var/log/remote/$HOST/grsec.log"); };
+destination d_net_mail { file("/var/log/remote/$HOST/mail.log"); };
+destination d_net_mailinfo { file("/var/log/remote/$HOST/mail/mail.info"); };
+destination d_net_mailwarn { file("/var/log/remote/$HOST/mail/mail.warn"); };
+destination d_net_mailerr { file("/var/log/remote/$HOST/mail/mail.err"); };
+destination d_net_newscrit { file("/var/log/remote/$HOST/news/news.crit"); };
+destination d_net_newserr { file("/var/log/remote/$HOST/news/news.err"); };
+destination d_net_newsnotice { file("/var/log/remote/$HOST/news/news.notice"); };
+destination d_net_debug { file("/var/log/remote/$HOST/debug"); };
+destination d_net_messages { file("/var/log/remote/$HOST/messages"); };
+destination d_net_everything { file("/var/log/remote/$HOST/everything"); };
+destination d_net_local { file("/var/log/remote/$HOST/local.log"); };
+
+# monitors
+destination d_net_console { usertty("root"); };
+destination d_net_console_all { file("/dev/tty12"); };
+destination d_net_loghost { udp("loghost" port(999)); };
+destination d_net_xconsole { pipe("/dev/xconsole"); };
+<% elsif @data_type == "client" -%>
+destination d_tls_log{ tcp("data.internal.nitelite.io" port(1000) tls( ca_dir("/etc/ssl/nitelite")) ); };
+<% end -%>
+
+# ...if you intend to use /dev/console for programs like xconsole
+# you can comment out the destination line above that references /dev/tty12
+# and uncomment the line below.
+#destination console_all { file("/dev/console"); };
+
+# create filters
+# if you find yourself needing a centralized debug log and not using debugs for
+# specific logs, just add "and not filter(f_debug);" to this set (auth to ppp)
+filter f_auth { facility(auth); };
+filter f_authpriv { facility(auth, authpriv); };
+#filter f_syslog { not facility(authpriv, mail); };
+filter f_syslog { program(syslog-ng); };
+filter f_user { facility(user); };
+filter f_cron { facility(cron); };
+filter f_daemon { facility(daemon); };
+filter f_kern { facility(kern) and not filter(f_iptables); };
+filter f_lpr { facility(lpr); };
+filter f_mail { facility(mail); };
+filter f_uucp { facility(cron); };
+filter f_news { facility(news); };
+filter f_ppp { facility(local2); };
+filter f_iptables { facility(kern) and match("IN=" value("MESSAGE")) and match("OUT=" value("MESSAGE")); };
+filter f_avc { message(".*avc: .*"); };
+filter f_audit { message("^(\\[.*\..*\] |)audit.*") and not message(".*avc: .*"); };
+filter f_pax { message("^(\\[.*\..*\] |)PAX:.*"); };
+filter f_grsec { message("^(\\[.*\..*\] |)grsec:.*"); };
+
+filter f_dbg { level(debug); };
+filter f_info { level(info); };
+filter f_notice { level(notice); };
+filter f_warn { level(warn); };
+filter f_crit { level(crit); };
+filter f_err { level(err); };
+filter f_emergency { level(emerg); };
+filter f_debug { level(debug) and not facility(auth, authpriv, news, mail); };
+filter f_error { level(err .. emerg) ; }; 
+filter f_messages { level(info..warn) and not facility(auth, authpriv, cron, daemon, mail, news) and not program(syslog-ng) and not filter(f_iptables); };
+filter f_everything { level(debug..emerg); };
+filter f_local { facility(local0, local1, local3, local4, local5, local6, local7); };
+
+filter f_acpid { program("acpid"); };
+filter f_failed { match("failed" value(MESSAGE)); };
+filter f_denied { match("denied" value(MESSAGE)); };
+# TODO: consider adding shorewall
+filter f_noshorewall { not match("Shorewall" value(MESSAGE)); };              # Filter everything except regex keyword Shorewall
+filter f_shorewall { match("Shorewall" value(MESSAGE)); };                    # Filter regex keyword Shorewall
+
+# connect filter and destination
+log { source(src); destination(d_file); };
+log { source(src); filter(f_authpriv); destination(d_authlog); };
+log { source(src); filter(f_syslog); destination(d_syslog); };
+log { source(src); filter(f_user); destination(d_user); };
+log { source(src); filter(f_cron); destination(d_cron); };
+log { source(src); filter(f_daemon); destination(d_daemon); };
+log { source(kernsrc); filter(f_kern); destination(d_kern); };
+log { source(src); filter(f_lpr); destination(d_lpr); };
+log { source(src); filter(f_uucp); destination(d_uucp); };
+log { source(src); filter(f_ppp); destination(d_ppp); };
+log { source(kernsrc); filter(f_iptables); destination(d_iptables); };
+log { source(kernsrc); filter(f_avc); destination(d_avc); };
+log { source(kernsrc); filter(f_audit); destination(d_audit); };
+log { source(kernsrc); filter(f_pax); destination(d_pax); };
+log { source(kernsrc); filter(f_grsec); destination(d_grsec); };
+log { source(src); filter(f_mail); destination(d_mail); };
+log { source(src); filter(f_mail); filter(f_info); destination(d_mailinfo); };
+log { source(src); filter(f_mail); filter(f_warn); destination(d_mailwarn); };
+log { source(src); filter(f_mail); filter(f_err); destination(d_mailerr); };
+log { source(src); filter(f_news); filter(f_crit); destination(d_newscrit); };
+log { source(src); filter(f_news); filter(f_err); destination(d_newserr); };
+log { source(src); filter(f_news); filter(f_notice); destination(d_newsnotice); };
+log { source(src); filter(f_debug); destination(d_debug); };
+log { source(src); filter(f_messages); destination(d_messages); };
+log { source(src); filter(f_local); destination(d_local); };
+
+log { source(src); filter(f_emergency); destination(d_console); };
+# default log
+log { source(src); destination(d_console_all); };
+
+<% if @data_type == "server" -%>
+
+# connect filter and destination
+log { source(netsrc); destination(d_net_file); };
+log { source(netsrc); filter(f_authpriv); destination(d_net_authlog); };
+log { source(netsrc); filter(f_syslog); destination(d_net_syslog); };
+log { source(netsrc); filter(f_user); destination(d_net_user); };
+log { source(netsrc); filter(f_cron); destination(d_net_cron); };
+log { source(netsrc); filter(f_daemon); destination(d_net_daemon); };
+log { source(netsrc); filter(f_kern); destination(d_net_kern); };
+log { source(netsrc); filter(f_lpr); destination(d_net_lpr); };
+log { source(netsrc); filter(f_uucp); destination(d_net_uucp); };
+log { source(netsrc); filter(f_ppp); destination(d_net_ppp); };
+log { source(netsrc); filter(f_iptables); destination(d_net_iptables); };
+log { source(netsrc); filter(f_avc); destination(d_net_avc); };
+log { source(netsrc); filter(f_audit); destination(d_net_audit); };
+log { source(netsrc); filter(f_pax); destination(d_net_pax); };
+log { source(netsrc); filter(f_grsec); destination(d_net_grsec); };
+log { source(netsrc); filter(f_mail); destination(d_net_mail); };
+log { source(netsrc); filter(f_mail); filter(f_info); destination(d_net_mailinfo); };
+log { source(netsrc); filter(f_mail); filter(f_warn); destination(d_net_mailwarn); };
+log { source(netsrc); filter(f_mail); filter(f_err); destination(d_net_mailerr); };
+log { source(netsrc); filter(f_news); filter(f_crit); destination(d_net_newscrit); };
+log { source(netsrc); filter(f_news); filter(f_err); destination(d_net_newserr); };
+log { source(netsrc); filter(f_news); filter(f_notice); destination(d_net_newsnotice); };
+log { source(netsrc); filter(f_debug); destination(d_net_debug); };
+log { source(netsrc); filter(f_messages); destination(d_net_messages); };
+log { source(netsrc); filter(f_local); destination(d_net_local); };
+
+#log { source(netsrc); filter(f_emergency); destination(d_net_console); };
+# default log
+#log { source(netsrc); destination(d_net_console_all); };
+
+<% elsif @data_type == "client" -%>
+log { source(src); destination(d_tls_log); };
+log { source(kernsrc); destination(d_tls_log); };
+<% end -%>
+

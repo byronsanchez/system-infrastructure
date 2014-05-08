@@ -1,0 +1,57 @@
+# $Header: /var/cvsroot/gentoo-x86/app-admin/syslog-ng/files/syslog-ng.logrotate.in,v 1.1 2014/01/22 04:25:35 mr_bones_ Exp $
+#
+# Syslog-ng logrotate snippet for Gentoo Linux
+# contributed by Michael Sterrett
+#
+
+/var/log/auth.log
+/var/log/syslog.log
+/var/log/user.log
+/var/log/cron.log
+/var/log/daemon.log
+/var/log/kern.log
+/var/log/lpr.log
+/var/log/uucp.log
+/var/log/ppp.log
+/var/log/iptables.log
+/var/log/avc.log
+/var/log/audit.log
+/var/log/pax.log
+/var/log/grsec.log
+/var/log/mail.log
+/var/log/mail/*
+/var/log/news/*
+/var/log/debug
+/var/log/messages
+/var/log/everything
+/var/log/local.log
+{
+    # files will be rotated 5 times on a monthly basis prior to removal
+    # this results in 6 months of history
+    rotate 5
+    weekly
+    missingok
+    create
+    sharedscripts
+    postrotate
+        /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+    endscript
+}
+
+<% if @data_type == "server" -%>
+
+/var/log/remote/*/
+{
+    # files will be rotated 6 times on a monthly basis prior to removal
+    # this results in 7 months of history
+    rotate 5
+    weekly
+    missingok
+    create
+    sharedscripts
+    postrotate
+        /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+    endscript
+}
+
+<% end -%>
