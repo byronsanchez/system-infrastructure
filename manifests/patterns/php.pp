@@ -1,4 +1,13 @@
-class php {
+class php(
+  $php_timezone = '',
+  $php_version = '',
+) {
+
+  if $php_version {
+    eselect { 'php::fpm':
+      set => "${php_version}",
+    }
+  }
 
   # TODO: Install PECL YAML extension
   # TODO: development vs production param for php.ini
@@ -18,6 +27,13 @@ class php {
   }
 
   file { "/etc/php/fpm-php5.5":
+    ensure  => "directory",
+    owner   => "root",
+    group   => "root",
+    require => File["/etc/php"],
+  }
+
+  file { "/etc/php/cli-php5.5":
     ensure  => "directory",
     owner   => "root",
     group   => "root",
@@ -49,10 +65,35 @@ class php {
     source => "puppet:///files/php/etc/php/fpm-php5.5/pool.d/www.conf",
   }
 
+  file { "/etc/php/fpm-php5.5/php.ini":
+    ensure   => present,
+    owner    => "root",
+    group    => "root",
+    require  => File['/etc/php/fpm-php5.5'],
+    path     => "/etc/php/fpm-php5.5/php.ini",
+    content => template("php/etc/php/fpm-php5.5/php.ini.erb"),
+  }
+
+  file { "/etc/php/cli-php5.5/php.ini":
+    ensure   => present,
+    owner    => "root",
+    group    => "root",
+    require  => File['/etc/php/cli-php5.5'],
+    path     => "/etc/php/cli-php5.5/php.ini",
+    content => template("php/etc/php/cli-php5.5/php.ini.erb"),
+  }
+
   # 5.4 REDUNDANCY
   # TODO: Template this stuff
 
   file { "/etc/php/fpm-php5.4":
+    ensure  => "directory",
+    owner   => "root",
+    group   => "root",
+    require => File["/etc/php"],
+  }
+
+  file { "/etc/php/cli-php5.4":
     ensure  => "directory",
     owner   => "root",
     group   => "root",
@@ -84,12 +125,30 @@ class php {
     source => "puppet:///files/php/etc/php/fpm-php5.4/pool.d/www.conf",
   }
 
+  file { "/etc/php/fpm-php5.4/php.ini":
+    ensure   => present,
+    owner    => "root",
+    group    => "root",
+    require  => File['/etc/php/fpm-php5.4'],
+    path     => "/etc/php/fpm-php5.4/php.ini",
+    content => template("php/etc/php/fpm-php5.4/php.ini.erb"),
+  }
+
+  file { "/etc/php/cli-php5.4/php.ini":
+    ensure   => present,
+    owner    => "root",
+    group    => "root",
+    require  => File['/etc/php/cli-php5.4'],
+    path     => "/etc/php/cli-php5.4/php.ini",
+    content => template("php/etc/php/cli-php5.4/php.ini.erb"),
+  }
+
   # Different apps require different versions (like ruby). For example,
   # phpldapadmin needs 5.4 for now, but I develop on 5.5. So make sure all
   # required versions are available and just eselect based on node's purpose.
   $packages = [
-    "php:5.5",
-    "php:5.4",
+    "dev-lang/php:5.5",
+    "dev-lang/php:5.4",
     "pecl-yaml",
   ]
 
@@ -105,8 +164,8 @@ class php {
     require   => [
       File['/etc/php/fpm-php5.5/php-fpm.conf'],
       File['/etc/php/fpm-php5.4/php-fpm.conf'],
-      Package["php:5.4"],
-      Package["php:5.5"],
+      Package["dev-lang/php:5.4"],
+      Package["dev-lang/php:5.5"],
     ],
   }
 

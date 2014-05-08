@@ -6,5 +6,5 @@
 #                                         #
 ###########################################
 
-dev-lang/php fpm spell
+dev-lang/php exif fpm intl spell pdo
 app-admin/eselect-php fpm
