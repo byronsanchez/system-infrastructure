@@ -1,0 +1,74 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+<% if @vpn_type == "server" %>
+port 443
+proto udp
+dev tun
+
+ca /etc/ssl/nitelite/systemcert.pem
+cert /etc/ssl/vpn/cacert.pem
+key /etc/ssl/vpn/private/cakey.pem.unencrypted
+dh /etc/ssl/vpn/dh4096.pem
+tls-auth /etc/ssl/vpn/ta.key 0
+
+server 10.66.78.0 255.255.255.0
+ifconfig-pool-persist /var/lib/openvpn/ipp.txt
+#push "redirect-gateway def1 bypass-dhcp"
+#push "dhcp-option DNS 8.8.8.8"
+#push "dhcp-option DNS 8.8.4.4"
+
+client-to-client
+keepalive 1800 4000
+
+
+comp-lzo
+
+max-clients 10
+
+log        /var/log/openvpn/openvpn.log
+status     /var/log/openvpn/openvpn-status.log
+verb 3
+
+user nobody
+group nobody
+
+#mute 20
+
+#topology subnet
+#client-to-client
+<% elsif @vpn_type == "client" %>
+
+client
+remote vpn.internal.nitelite.io 443
+proto udp
+dev tun
+
+ca /etc/ssl/nitelite/systemcert.pem
+cert /etc/ssl/<%= @hostname %>/<%= @hostname %>cert.pem
+key /etc/ssl/<%= @hostname %>/private/cakey.pem.unencrypted
+tls-auth /etc/ssl/<%= @hostname %>/ta.key 1
+
+resolv-retry infinite
+nobind
+
+comp-lzo yes
+
+auth-nocache
+script-security 2
+
+user openvpn
+group openvpn
+
+<% end %>
+
+cipher DES-EDE3-CBC # Triple-DES
+
+persist-key
+persist-tun
+

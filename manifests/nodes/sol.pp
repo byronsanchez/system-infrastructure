@@ -66,7 +66,6 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "rsyncd": }
   class { "webserver": }
   class { "binhost": }
-  class { "vpnserver": }
   class { "provision": }
   class { "hypervisor": }
   class { "xorgserver": }

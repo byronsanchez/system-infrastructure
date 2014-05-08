@@ -1,4 +1,24 @@
-class vpnserver {
+class vpn(
+  $vpn_type,
+) {
+
+  if $vpn_type == "server" {
+
+    $server_packages = [
+      "noip-updater",
+    ]
+
+    package { $server_packages: ensure => installed }
+
+    service { 'noip':
+      ensure => running,
+      enable => true,
+      require   => [
+        Package[noip-updater],
+      ],
+    }
+
+  }
 
   file { "/etc/openvpn/openvpn.conf":
     ensure => present,
@@ -6,7 +26,7 @@ class vpnserver {
     group => "root",
     mode    => '644',
     path => "/etc/openvpn/openvpn.conf",
-    source => "puppet:///files/vpnserver/etc/openvpn/openvpn.conf",
+    content => template("vpn/etc/openvpn/openvpn.conf.erb"),
   }
 
   file { "/var/log/openvpn":
@@ -22,9 +42,7 @@ class vpnserver {
   }
 
   $packages = [
-    "easy-rsa",
     "openvpn",
-    "noip-updater",
   ]
 
   package { $packages: ensure => installed }
@@ -38,14 +56,6 @@ class vpnserver {
       File['/var/log/openvpn'],
       File['/var/lib/openvpn'],
       Package[openvpn],
-    ],
-  }
-
-  service { 'noip':
-    ensure => running,
-    enable => true,
-    require   => [
-      Package[noip-updater],
     ],
   }
 
