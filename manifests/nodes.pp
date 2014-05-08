@@ -5,12 +5,14 @@
 node "network" {
 
   # network settings
-  # TODO: account for differences between the internal and external domains
-  $domain = "internal.nitelite.io"
-  $internal_domain = "internal.nitelite.io"
-  $external_domain = "external.nitelite.io"
+  # TODO: make sure all references to nitelite.io are not hardcoded in templates
+  # or modules or files
+  $domain = "nitelite.io"
+  $internal_domain = "internal.${domain}"
 
   # network services
+  # TODO: instead of using these variables, let DNS do most of the work and just
+  # call standard fqdns in config files
   $puppetmaster_address = "10.66.77.100"
   $hypervisor_address = "10.66.77.100"
   $mediaserver_address = "10.66.77.100"
@@ -19,6 +21,7 @@ node "network" {
   $ns2_address = "10.66.77.102"
   $ldapserver_address = "10.66.77.103"
   $pgmaster_address = "10.66.77.108"
+  $mymaster_address = "10.66.77.110"
 
 }
 
