@@ -6,7 +6,9 @@
 #                                         #
 ###########################################
 
+<% if @exports -%>
 <% @exports.each do |export| -%>
 <%= export %>
+<% end -%>
 <% end -%>
 
