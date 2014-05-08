@@ -20,6 +20,7 @@ class nodejs {
 
   $packages = [
     "nodejs",
+    "dev-nodejs/nvm",
   ]
 
   package { $packages: ensure => installed }
