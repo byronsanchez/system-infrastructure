@@ -1,4 +1,10 @@
-class gentoo($lowmemorybox = false) {
+class gentoo(
+  $use_flags = '',
+  $linguas = '',
+  $video_cards = '',
+  $input_devices = '',
+  $lowmemorybox = false,
+) {
 
   file { "/etc/portage/make.conf":
     ensure => present,
