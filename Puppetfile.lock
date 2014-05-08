@@ -4,7 +4,8 @@ FORGE
     nanliu/staging (0.4.0)
     puppetlabs/apt (1.4.2)
       puppetlabs/stdlib (>= 2.2.1)
-    puppetlabs/concat (1.0.2)
+    puppetlabs/concat (1.1.0-rc1)
+      puppetlabs/stdlib (>= 3.0.0)
     puppetlabs/ntp (3.0.3)
       puppetlabs/stdlib (>= 0.1.6)
     puppetlabs/stdlib (4.1.0)
@@ -22,14 +23,22 @@ GIT
 GIT
   remote: git://github.com/gentoo/puppet-portage.git
   ref: master
-  sha: c04ae99c62c2fe7e6431a6d92a672e970a18b59c
+  sha: f3e427a51e946dddf1fbe61ab9bf05ce370a930f
   specs:
     gentoo/portage (2.2.0-rc1)
-      puppetlabs/concat (~> 1.0.0)
+      puppetlabs/concat (~> 1.0)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-vcsrepo.git
+  ref: master
+  sha: 46588aa62d444c5f0a538cccec357a80cd191b93
+  specs:
+    puppetlabs/vcsrepo (0.2.0)
 
 DEPENDENCIES
   byronsanchez/rabbitmq (>= 0)
   gentoo/portage (>= 0)
   puppetlabs/ntp (>= 0)
   puppetlabs/stdlib (>= 0)
+  puppetlabs/vcsrepo (>= 0)
 
