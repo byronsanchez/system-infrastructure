@@ -85,6 +85,15 @@ class xorgserver {
     source => "puppet:///files/xorg-server/etc/portage/package.use/dwb",
   }
 
+  file { "/etc/portage/package.use/freetype":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/freetype",
+    source => "puppet:///files/xorg-server/etc/portage/package.use/freetype",
+  }
+
   file { "/etc/local.d/10redshift.start":
     ensure => present,
     owner  => "root",
@@ -92,6 +101,14 @@ class xorgserver {
     mode   => 0755,
     path   => "/etc/local.d/10redshift.start",
     source => "puppet:///files/xorg-server/etc/local.d/10redshift.start",
+  }
+
+  file { "/etc/fonts/51-local.conf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/fonts/51-local.conf",
+    source => "puppet:///files/xorg-server/etc/fonts/51-local.conf",
   }
 
   $packages = [
@@ -109,6 +126,9 @@ class xorgserver {
     "dwb",
     "hsetroot",
     "x11-misc/xclip",
+    "freetype",
+    "fontconfig",
+    "fontconfig-infinality",
   ]
 
   package { $packages:
@@ -116,6 +136,14 @@ class xorgserver {
     require => [
       File['/etc/portage/package.use/xorg-server'],
     ],
+  }
+
+  eselect { 'infinality':
+    set => 'osx',
+  }
+
+  eselect { 'lcdfilter':
+    set => 'osx',
   }
 
   # Update environment if xorg is freshly installed

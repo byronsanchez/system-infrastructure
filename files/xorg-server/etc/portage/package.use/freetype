@@ -6,4 +6,4 @@
 #                                         #
 ###########################################
 
-x11-terms/rxvt-unicode 256-color alt-font-width blink xft fading-colors startup-notification pixbuf secondary-wheel -vanilla buffer-on-clear secondary-wheel
+media-libs/freetype infinality X
