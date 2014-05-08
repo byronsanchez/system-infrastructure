@@ -40,3 +40,8 @@
 # ----------------------------------
 
 # MAPNAME       SYSTEM-USERNAME         PG-USERNAME
+<% if @ident_maps -%>
+<% @ident_maps.each do |ident_map| -%>
+<%= ident_map %>
+<% end -%>
+<% end -%>

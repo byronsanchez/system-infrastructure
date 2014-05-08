@@ -86,15 +86,22 @@ local   all             all                                     password
 host    all             all             127.0.0.1/32            password
 # IPv6 local connections:
 host    all             all             ::1/128                 password
+
+<% if @db_type == "master" || @db_type == "save" %>
 # nitelite.io
-host    all             all             10.66.77.0/24           md5
+#host    all             all             10.66.77.0/24           md5
+hostssl    all             all             10.66.77.0/24           md5
+<% end -%>
+
 # Allow replication connections from localhost, by a user with the
 # replication privilege.
 # This logic is useful if you wanna do a mask of 32 and specify specific ips
 <% if @db_type == "master" -%>
-host    replication     pgreader        10.66.77.0/24           md5
+#host    replication     pgreader        10.66.77.0/24           md5
+hostssl    replication     pgreader        10.66.77.0/24           md5
 <% elsif @db_type == "slave" -%>
-host    replication     pgreader        10.66.77.0/24           md5
+#host    replication     pgreader        10.66.77.0/24           md5
+hostssl    replication     pgreader        10.66.77.0/24           md5
 <% end -%>
 #local   replication     postgres                                trust
 #host    replication     postgres        127.0.0.1/32            trust
