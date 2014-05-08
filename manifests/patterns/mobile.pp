@@ -1,4 +1,3 @@
-# TODO: add icedtea bin or abstract it out of workstation.pp
 class mobile {
 
   file { "/etc/profile.d/mobile.custom.sh":
