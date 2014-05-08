@@ -36,8 +36,8 @@ Here is the list of incompatible patterns:
     MTA can be installed per node at a time. mail.pp uses postfix for
     network-wide send only delivery of mail, whereas workstation.pp uses msmtp
     for simple workstation delivery of mail
-  - vpnserver.pp and vpnclient.pp - both contain a config that defines an
-    individual role as a client or a server
+  - vpn.pp and webserver.pp - both use port 443 - webserver uses it for https
+    connections and vpn uses it for vpn connections
 
 ### Building Configs From Fragments
 
