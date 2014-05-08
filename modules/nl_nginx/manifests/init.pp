@@ -5,7 +5,15 @@ class nl_nginx {
   #
   # realWebsiteName = domain name WITH env appended to the front (eg.
   # stage.hackbytes.com)
-  define website ($websiteName, $environmentName, $feed_path, $root_path = '') {
+  define website (
+    $websiteName,
+    $environmentName,
+    $feed_path,
+    $root_path = '',
+    $enable_ssl = false,
+    $ssl_cert_path = '',
+    $ssl_key_path = '',
+  ) {
 
     if $environmentName == "production" {
       $realWebsiteName = "${websiteName}"

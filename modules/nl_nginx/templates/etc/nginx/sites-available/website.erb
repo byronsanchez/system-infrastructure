@@ -6,13 +6,30 @@
 #                                         #
 ###########################################
 
+# redirect www requests to www-less
 server {
   server_name www.<%= @realWebsiteName %>;
   rewrite ^(.*) http://<%= @realWebsiteName %>$1 permanent;
 }
 
+<% if @enable_ssl %>
+# if ssl is enabled, redirect all port 80 requests to 443
 server {
   listen 80;
+  server_name <%= @realWebsiteName %>;
+  rewrite ^(.*) https://<%= @realWebsiteName %>$1 permanent;
+}
+<% end %>
+
+server {
+  <% if @enable_ssl %>
+  listen 443;
+  ssl on;
+  ssl_certificate <%= @ssl_cert_path %>;
+  ssl_certificate_key <%= @ssl_key_path %>;
+  <% else %>
+  listen 80;
+  <% end %>
   server_name feeds.<%= @realWebsiteName %>;
 
   location / {
@@ -32,7 +49,14 @@ server {
 }
 
 server {
+  <% if @enable_ssl %>
+  listen 443;
+  ssl on;
+  ssl_certificate <%= @ssl_cert_path %>;
+  ssl_certificate_key <%= @ssl_key_path %>;
+  <% else %>
   listen 80;
+  <% end %>
   server_name <%= @realWebsiteName %>;
 
   access_log /var/log/nginx/<%= @websiteName %>.access_log;
