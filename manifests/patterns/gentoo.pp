@@ -111,6 +111,24 @@ class gentoo($lowmemorybox = false) {
   # TODO: place layman nitelite as a dep for packages that will retrieve from
   # the overlay
   layman { 'niteLite':
+    ensure  => absent,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
+  layman { 'niteLite-a':
+    ensure  => present,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
+  layman { 'niteLite-b':
     ensure  => present,
     require => [
       Package[layman],
