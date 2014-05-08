@@ -1,7 +1,11 @@
 # must overlay webserver 
 # must overlay rsyncd
 
-class binhost {
+class binhost(
+  $portage_package_directory = '',
+  $portage_tree_directory = '',
+  $gentoo_directory = '',
+) {
 
   file { "/etc/nginx/sites-available/binhost.internal.nitelite.io":
     ensure => present,
@@ -90,6 +94,21 @@ class binhost {
       target  => "${portage_tree_directory}",
       require => File["/srv/rsync"],
     }
+  }
+
+  file { "/srv/rsync/secrets":
+    ensure  => 'directory',
+    owner   => 'root',
+    group => 'root',
+    require => File["/srv/rsync"],
+  }
+
+  $packages = [
+    "catalyst",
+  ]
+
+  package {
+    $packages: ensure => installed,
   }
 
 }
