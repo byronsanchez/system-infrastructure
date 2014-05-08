@@ -82,6 +82,15 @@ class webserver {
     require => File["/etc/nginx"],
   }
 
+  file { "/etc/vhosts/webapp-config":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '644',
+    path => "/etc/vhosts/webapp-config",
+    source => "puppet:///files/webserver/etc/vhosts/webapp-config",
+  }
+
   $packages = [
     "nginx",
   ]
