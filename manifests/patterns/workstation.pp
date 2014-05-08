@@ -10,15 +10,6 @@ class workstation {
     require => File["/etc/cron.daily"],
   }
 
-  file { "/etc/portage/package.use/mutt":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/mutt",
-    source => "puppet:///files/workstation/etc/portage/package.use/mutt",
-  }
-
   file { "/etc/irssi.conf":
     ensure => present,
     owner  => "root",
@@ -102,7 +93,6 @@ class workstation {
     "msmtp",
     "notmuch",
     "urlview",
-    "mutt",
     "dev-python/keyring",
   ]
 

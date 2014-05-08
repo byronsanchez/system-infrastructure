@@ -115,6 +115,15 @@ class base ($hostname = '', $network_interface = 'eth0') {
     source => "puppet:///files/base/etc/portage/package.use/vim",
   }
 
+  file { "/etc/portage/package.use/mutt":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/mutt",
+    source => "puppet:///files/base/etc/portage/package.use/mutt",
+  }
+
   file { "/etc/profile.d":
     ensure => "directory",
     owner => "root",
@@ -247,7 +256,7 @@ class base ($hostname = '', $network_interface = 'eth0') {
     "htop",
     "curl",
     "unrar",
-    "ca-certificates",
+    "mutt",
     "netkit-telnetd",
     "tcpdump",
     "strace",
@@ -347,15 +356,18 @@ class base ($hostname = '', $network_interface = 'eth0') {
     command => "/sbin/sysctl --system",
     subscribe   => File['/etc/sysctl.conf'],
     refreshonly => true,
+    require     => [
+      File['/etc/sysctl.conf']
+    ],
   }
 
-  # TODO: Have other overlay packages dep on the overlay being set properly
-  #package { "app-misc/screen":
-  #  ensure  => installed,
-  #  require => [
-  #    Layman[niteLite],
-  #    File['/etc/portage/package.accept_keywords/screen']
-  #  ],
-  #}
+  package { "app-misc/screen":
+    ensure  => installed,
+    require => [
+      Layman['niteLite-a'],
+      Layman['niteLite-b'],
+    ],
+  }
+
 
 }
