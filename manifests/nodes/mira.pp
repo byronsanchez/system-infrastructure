@@ -58,6 +58,18 @@ node 'mira.internal.nitelite.io' inherits network {
 
   class { "java": }
 
+  class { "ruby": }
+
+  class { "nl_rvm":
+    user => "byronsanchez",
+    home => "/home/byronsanchez",
+  }
+
+  class { "nl_nvm":
+    user => "byronsanchez",
+    home => "/home/byronsanchez",
+  }
+
   class { "mobile": }
 
   # users

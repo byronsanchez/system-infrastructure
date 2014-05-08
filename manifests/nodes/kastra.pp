@@ -48,6 +48,16 @@ node 'kastra.internal.nitelite.io' inherits network {
 
   class { "ruby": }
 
+  class { "nl_rvm":
+    user => "jenkins",
+    home => "/var/lib/jenkins",
+  }
+
+  class { "nl_nvm":
+    user => "jenkins",
+    home => "/var/lib/jenkins",
+  }
+
   class { "java": }
 
   class { "ci": }
