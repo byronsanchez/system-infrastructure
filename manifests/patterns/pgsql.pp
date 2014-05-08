@@ -1,4 +1,8 @@
-class pgsql($db_type, $pgmaster_address = '') {
+# can be server or slave. client is a generic localhost installation
+class pgsql(
+  $db_type,
+  $pgmaster_address = '',
+) {
 
   $pgreaderpw = hiera('pgreaderpw', '')
 
@@ -23,7 +27,7 @@ class pgsql($db_type, $pgmaster_address = '') {
     owner   => "postgres",
     group   => "postgres",
     path    => "/etc/postgresql-9.3/pg_ident.conf",
-    source  => "puppet:///files/pgsql/etc/postgresql-9.3/pg_ident.conf",
+    content => template("pgsql/etc/postgresql-9.3/pg_ident.conf.erb"),
   }
 
   file { "/etc/postgresql-9.3/pg_hba.conf":
@@ -65,13 +69,13 @@ class pgsql($db_type, $pgmaster_address = '') {
   # Only run once after the initial installation
   # runs configuration with defaults from conf.d/postgresql-9.3
   # TODO: Auto answer yes to the emerge question
-  exec { "postgres_config":
-    command => "/usr/bin/emerge --config -y postgresql-server",
-    refreshonly => true,
-    require => [
-      Package[postgresql-server],
-      File['/etc/conf.d/postgresql-9.3'],
-    ],
-  }
+  #exec { "postgres_config":
+  #  command => "/usr/bin/emerge --config -y postgresql-server",
+  #  refreshonly => true,
+  #  require => [
+  #    Package[postgresql-server],
+  #    File['/etc/conf.d/postgresql-9.3'],
+  #  ],
+  #}
 
 }
