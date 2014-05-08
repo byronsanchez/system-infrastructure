@@ -1,13 +1,5 @@
 class dns($dns_type) {
 
-  file { "/etc/bind/named.conf":
-    ensure => present,
-    path => "/etc/bind/named.conf",
-    owner => "root",
-    group => "root",
-    content => template("dns/etc/bind/named.conf.erb"),
-  }
-
   if $dns_type == "master" {
 
     file { "/var/bind/pri/hackbytes.com.internal":
@@ -48,6 +40,14 @@ class dns($dns_type) {
 
   }
 
+  file { "/etc/bind/named.conf":
+    ensure => present,
+    path => "/etc/bind/named.conf",
+    owner => "root",
+    group => "root",
+    content => template("dns/etc/bind/named.conf.erb"),
+  }
+
   file { "/var/log/named":
     ensure => "directory",
     owner  => "named",
@@ -74,14 +74,10 @@ class dns($dns_type) {
     enable => true,
     subscribe => [
       File['/etc/bind/named.conf'],
-      File['/var/bind/pri/nitelite.io.internal'],
-      File['/var/bind/pri/10.66.77.internal'],
     ],
     require => [
       Package[bind],
       File['/etc/bind/named.conf'],
-      File['/var/bind/pri/nitelite.io.internal'],
-      File['/var/bind/pri/10.66.77.internal'],
     ],
   }
 
