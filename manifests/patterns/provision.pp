@@ -1,7 +1,12 @@
 # must overlay rsyncd (for xinetd)
 # must overlay nas
 
-class provision {
+class provision (
+  $boot_pxe_path = '',
+  $boot_update_path = '',
+  $puppet_path = '',
+  $rsync_provision_directory = '',
+){
 
   file { "/etc/xinetd.d/tftpd":
     ensure  => present,
