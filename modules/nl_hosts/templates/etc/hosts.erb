@@ -8,28 +8,28 @@
 
 127.0.0.1 localhost local
 <% if @node_name -%>
-127.0.1.1 <%= @node_name %>.<%= @domain %> <%= @node_name %>
+127.0.1.1 <%= @node_name %>.<%= @internal_domain %> <%= @node_name %>
 <% end -%>
 <% if @puppetmaster_address -%>
-<%= @puppetmaster_address %> puppet.<%= @domain %> puppet
+<%= @puppetmaster_address %> puppet.<%= @internal_domain %> puppet
 <% end -%>
 <% if @ldapserver_address -%>
-<%= @ldapserver_address%> ldap.<%= @domain %> ldap
-<%= @ldapserver_address%> ldap1.<%= @domain %> ldap1
+<%= @ldapserver_address%> ldap.<%= @internal_domain %> ldap
+<%= @ldapserver_address%> ldap1.<%= @internal_domain %> ldap1
 <% end -%>
 <% if @binhost_address -%>
-<%= @binhost_address %> binhost.<%= @domain %> binhost
-<%= @binhost_address %> binhost1.<%= @domain %> binhost1
+<%= @binhost_address %> binhost.<%= @internal_domain %> binhost
+<%= @binhost_address %> binhost1.<%= @internal_domain %> binhost1
 <% end -%>
 <% if @vpn_address -%>
-<%= @vpn_address %> vpn.<%= @domain %> vpn
-<%= @vpn_address %> vpn1.<%= @domain %> vpn1
+<%= @vpn_address %> vpn.<%= @internal_domain %> vpn
+<%= @vpn_address %> vpn1.<%= @internal_domain %> vpn1
 <% end -%>
 <% if @ns1_address -%>
-<%= @ns1_address %> ns1.<%= @domain %> ns1
+<%= @ns1_address %> ns1.<%= @internal_domain %> ns1
 <% end -%>
 <% if @ns2_address -%>
-<%= @ns2_address %> ns2.<%= @domain %> ns2
+<%= @ns2_address %> ns2.<%= @internal_domain %> ns2
 <% end -%>
 
 # The following lines are desirable for IPv6 capable hosts
