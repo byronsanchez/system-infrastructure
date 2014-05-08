@@ -1,0 +1,12 @@
+# Use this to map non-user emails to real system user mailboxes
+
+<% if @hostname == "vega" %>
+# deliver to local account
+csr@vega.internal.nitelite.io csrpuller
+<% end %>
+
+<% if @hostname == "kuma" %>
+# forward to another mail address
+#admin@nitelite.io bfs5030@gmail.com
+<% end %>
+

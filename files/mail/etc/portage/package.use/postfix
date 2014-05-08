@@ -6,5 +6,5 @@
 #                                         #
 ###########################################
 
-mail-mta/postfix vda
+mail-mta/postfix vda dovecot-sasl -pam
 

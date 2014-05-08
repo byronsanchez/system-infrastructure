@@ -74,13 +74,14 @@ mail_owner = postfix
 #
 #myhostname = host.domain.tld
 #myhostname = virtual.domain.tld
+myhostname = <%= @fqdn %>
 
 # The mydomain parameter specifies the local internet domain name.
 # The default is to use $myhostname minus the first component.
 # $mydomain is used as a default value for many other configuration
 # parameters.
 #
-#mydomain = domain.tld
+mydomain = <%= @internal_domain %>
 
 # SENDING MAIL
 # 
@@ -97,7 +98,9 @@ mail_owner = postfix
 #
 #myorigin = $myhostname
 #myorigin = $mydomain
-myorigin = <%= @internal_domain %>
+# make it the fqdn w hostname so that we can distinguish which user@machine a
+# message came from.
+myorigin = $myhostname
 
 # RECEIVING MAIL
 
@@ -162,10 +165,16 @@ myorigin = <%= @internal_domain %>
 #mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
 #mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain,
 #	mail.$mydomain, www.$mydomain, ftp.$mydomain
+<% if @mail_type == "server" %>
+# the server is the final mail destination for the "nitelite.io"
+# domain, in addition to the names of the machine itself.
+mydestination = $myhostname localhost.$mydomain localhost $mydomain
+<% elsif @mail_type == "client" %>
 # Since we are not going to receive emails, set this to blank to disable local
 # mail deilvery; this is only needed for the server since it's going to be the
 # exposed one
 mydestination =
+<% end%>
 
 # REJECTING MAIL FOR UNKNOWN LOCAL USERS
 #
@@ -249,7 +258,8 @@ unknown_local_recipient_reject_code = 550
 # 
 #mynetworks_style = class
 #mynetworks_style = subnet
-#mynetworks_style = host
+# only trust the mail server for relaying. all other nodes must login.
+mynetworks_style = host
 
 # Alternatively, you can specify the mynetworks list by hand, in
 # which case Postfix ignores the mynetworks_style setting.
@@ -348,7 +358,7 @@ smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
 smtp_sasl_security_options =
 <% elsif @mail_type == "client" %>
 # Optional: forward all non-local mail to mailhost
-relayhost = [mail.internal.nitelite.io]
+relayhost = [mx.internal.nitelite.io]
 <% end -%>
 
 # REJECTING UNKNOWN RELAY USERS
@@ -452,6 +462,7 @@ relayhost = [mail.internal.nitelite.io]
 #
 #home_mailbox = Mailbox
 #home_mailbox = Maildir/
+home_mailbox = .maildir/
  
 # The mail_spool_directory parameter specifies the directory where
 # UNIX-style mailboxes are kept. The default setting depends on the
@@ -694,7 +705,59 @@ sample_directory = /etc/postfix
 #
 readme_directory = no
 inet_protocols = ipv4
-home_mailbox = .maildir/
 
-# redefine local_transport since the server is send-only
-local_transport = error:local delivery is disabled
+<% if @mail_type == "server" %>
+
+# VIRTUAL ALIAS DOMAINS
+#
+# aliases for local system accounts. any machine can have this since this is
+# based on aliasing actual system accounts. each machine should only define
+# their own aliases for the accounts it actually has on the system.
+
+# we're gonna use complete virtual mailboxes. aliases are just aliases to
+# actualy system accounts and mail would be in the home directory.
+#virtual_alias_domains = $myhostname $mydomain
+# use the specified file for alias mappings
+virtual_alias_maps = proxy:mysql:/etc/postfix/virtual_alias_maps.cf
+
+
+# VIRTUAL MAILBOX DOMAINS
+#
+# accounts with no associated system account. this is centralized on on the mail
+# server only.
+
+# set which domain to use as a virtual_mailbox_domain
+virtual_mailbox_domains = proxy:mysql:/etc/postfix/virtual_domain_maps.cf
+virtual_mailbox_maps = proxy:mysql:/etc/postfix/virtual_mailbox_maps.cf
+virtual_mailbox_base = /srv/vmail
+virtual_mailbox_limit = 512000000
+#virtual_minimum_uid = 5000
+virtual_minimum_uid = 100
+virtual_transport = virtual
+# Link the mailbox uid and gid to postfix.
+virtual_uid_maps = static:5000
+virtual_gid_maps = static:5000
+local_transport = virtual
+local_recipient_maps = $virtual_mailbox_maps
+transport_maps = hash:/etc/postfix/transport
+
+# smtps
+# these settings should correspond with dovecot configuration
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_type = dovecot
+# match /etc/dovecot/conf.d/10-master.conf
+smtpd_sasl_path = /var/run/dovecot/auth-client
+smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+smtpd_sasl_security_options = noanonymous, noplaintext
+smtpd_sasl_tls_security_options = $smtpd_sasl_security_options
+smtpd_tls_auth_only = yes
+smtpd_tls_cert_file = /etc/ssl/mail/cacert.pem
+smtpd_tls_key_file = /etc/ssl/mail/private/cakey.pem.unencrypted
+smtpd_sasl_local_domain = $mydomain
+broken_sasl_auth_clients = yes
+smtpd_tls_loglevel = 1
+# require tls
+smtp_tls_security_level = encrypt
+
+<% end %>

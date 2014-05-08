@@ -1,0 +1,5 @@
+user = mailreader
+password = <%= @mailreaderpw %>
+hosts = my.internal.nitelite.io
+dbname = mail
+query = SELECT goto FROM alias WHERE address='%s' AND active = true

@@ -1,0 +1,4 @@
+/^nitelite\.io/ OK
+/((\w[\w\-]*)\.)+nitelite\.io/ OK
+/^internal.nitelite\.io/ OK
+/((\w[\w\-]*)\.)+internal\.nitelite\.io/ OK

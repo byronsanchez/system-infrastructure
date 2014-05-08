@@ -1,0 +1,5 @@
+user = mailreader
+password = <%= @mailreaderpw %>
+hosts = my.internal.nitelite.io
+dbname = mail
+query = SELECT CONCAT(maildir, 'maildir/') as maildir FROM mailbox WHERE username='%s' AND active = true

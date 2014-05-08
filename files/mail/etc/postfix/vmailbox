@@ -1,0 +1,4 @@
+# Use this to map non-user emails to directory mailboxes
+
+byron@nitelite.io nitelite.io/byron/
+csrpuller@vega.internal.nitelite.io vega.internal.nitelite.io/csrpuller/

@@ -1,0 +1,5 @@
+user = mailreader
+password = <%= @mailreaderpw %>
+hosts = my.internal.nitelite.io
+dbname = mail
+query = SELECT domain FROM domain WHERE domain='%s' AND backupmx = false AND active = true
