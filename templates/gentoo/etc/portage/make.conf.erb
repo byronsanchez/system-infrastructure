@@ -6,7 +6,12 @@
 #                                         #
 ###########################################
 
-USE="agent audit bcmath device-mapper dlz gd -gpm -gtk imap ipv6 -ldap libwww maildir mhash mysql maildir png -pppd sasl sockets -sqlite3 ssl truetype ubac unicode xml -xorg udev -unconfined vhosts xattr"
+USE="agent audit bcmath device-mapper dlz gd -gpm -gtk imap ipv6 -ldap libwww maildir mhash maildir png -pppd sasl sockets -sqlite3 ssl truetype ubac unicode xml -xorg udev -unconfined vhosts xattr"
+
+<% if @use_flags -%>
+USE="${USE} <%= @use_flags %>"
+<% end -%>
+
 <% if @lowmemorybox -%>
 # Low memory, so compiles will go slower with these flags, but at least they
 # won't be killed for OOM errors
@@ -43,8 +48,8 @@ PKGDIR="/usr/portage/packages"
 <% if @ipaddress == @binhost_address -%>
 # k - (--usepkg) - asks emerge to try to install the prebuilt package first
 # before fetching the sources and compiling it
-EMERGE_DEFAULT_OPTS="-k -g"
-EMERGE_EXTRA_OPTS="-k -g"
+#EMERGE_DEFAULT_OPTS="-k -g"
+#EMERGE_EXTRA_OPTS="-k -g"
 FEATURES="buildpkg webrsync-gpg userfetch"
 <% else -%>
 PORTAGE_BINHOST="http://binhost.internal.nitelite.io/packages"
@@ -55,8 +60,11 @@ PORTAGE_BINHOST="http://binhost.internal.nitelite.io/packages"
 # binpkg-respect-use=y - ignore binaries if it's use flags don't match. This is
 # important because deviations can break the infrastructure (eg. php without fpm
 # is no good if the node requires fpm).
-EMERGE_DEFAULT_OPTS="-k -g --binpkg-respect-use=y"
-EMERGE_EXTRA_OPTS="-k -g --binpkg-respect-use=y"
+# rebuilt-binaries=y - reinstall every binary that has been rebuild since the
+# package was installed. This is useful in case rebuilding tools like
+# revdep-rebuild or python-updater are run on the binary package server. 
+EMERGE_DEFAULT_OPTS="-k -g --binpkg-respect-use=y --rebuilt-binaries=y"
+EMERGE_EXTRA_OPTS="-k -g --binpkg-respect-use=y --rebuilt-binaries=y"
 FEATURES="buildpkg"
 # Use nfs mounts if you get the USE flag matching scripts written
 #DISTDIR="/mnt/gentoo-distfiles"
@@ -70,13 +78,16 @@ FEATURES="buildpkg"
 POLICY_TYPES="strict mcs"
 PORT_LOGDIR="/var/log/portage/builds"
 MAKEOPTS="-j<%= @processorcount %>"
-<% if scope.lookupvar("linguas") %>
+
+<% if @linguas %>
 LINGUAS="<%= @linguas %>"
 <% end -%>
-<% if scope.lookupvar("video_cards") %>
+
+<% if @video_cards -%>
 VIDEO_CARDS="<%= @video_cards %>"
 <% end -%>
-<% if scope.lookupvar("input_devices") %>
+
+<% if @input_devices %>
 INPUT_DEVICES="<%= @input_devices %>"
 <% end -%>
 
