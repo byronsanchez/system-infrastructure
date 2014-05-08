@@ -47,12 +47,17 @@ rootpw "<%= @rootpw %>"
 directory "/var/lib/openldap-ldbm"
 index objectClass eq
 
+## TLS
+TLSCACertificateFile /etc/ssl/certs/niteliteCA-system.pem
+TLSCertificateFile /etc/ssl/ldap/cacert.pem
+TLSCertificateKeyFile /etc/ssl/ldap/private/cakey.pem.unencrypted
+
 ## Synchronisation (pull from other LDAP server)
 syncrepl rid=000
   <% if @ldap_type == "master" -%>
-  provider=ldap://ldap2.internal.nitelite.io
+  provider=ldaps://ldap2.internal.nitelite.io
   <% elsif @ldap_type == "slave" -%>
-  provider=ldap://lda1.internal.nitelite.io
+  provider=ldaps://ldap1.internal.nitelite.io
   <% end -%>
   type=refreshAndPersist
   retry="5 5 300 +"
