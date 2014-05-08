@@ -62,6 +62,16 @@ class ldap($ldap_type) {
     source => "puppet:///files/ldap/etc/sudoers.d/deployer",
   }
 
+  file { "/etc/sudoers.d/jenkins":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    require => File['/etc/sudoers.d'],
+    path => "/etc/sudoers.d/jenkins",
+    source => "puppet:///files/ldap/etc/sudoers.d/jenkins",
+  }
+
   file { "/etc/portage/package.use/openldap":
     ensure => present,
     owner => "root",
@@ -99,15 +109,6 @@ class ldap($ldap_type) {
 
   if $ldap_type == "master" {
 
-    file { "/etc/portage/package.use/phpldapadmin":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      require => File['/etc/portage/package.use'],
-      path => "/etc/portage/package.use/phpldapadmin",
-      source => "puppet:///files/ldap/etc/portage/package.use/phpldapadmin",
-    }
-
     file { "/etc/conf.d/slapd":
       ensure => present,
       mode => 0644,
@@ -124,22 +125,6 @@ class ldap($ldap_type) {
       require => File['/etc/openldap'],
       path => "/etc/openldap/slapd.conf",
       content => template("ldap/etc/openldap/slapd.conf.erb"),
-    }
-
-    file { "/etc/vhosts/webapp-config":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      mode    => '644',
-      path => "/etc/vhosts/webapp-config",
-      source => "puppet:///files/ldap/etc/vhosts/webapp-config",
-    }
-
-    nl_nginx::website { "phpldapadmin":
-      websiteName     => "ldap.internal.nitelite.io",
-      environmentName => "production",
-      feed_path       => "ldap",
-      root_path       => "/htdocs/phpldapadmin/htdocs"
     }
 
   }
@@ -202,15 +187,6 @@ class ldap($ldap_type) {
   # Only run slapd on the master ldap server
   if $ldap_type == "master" {
 
-    eselect { 'php::fpm':
-      set => 'php5.4',
-    }
-
-    package { "phpldapadmin":
-      ensure  => 'installed',
-      require => Package[nginx],
-    }
-
     service { 'slapd':
       ensure  => 'running',
       enable  => 'true',
@@ -219,16 +195,6 @@ class ldap($ldap_type) {
         Package[openldap],
         File['/etc/openldap/slapd.conf']
       ],
-    }
-
-    exec { "webapp_config_ldap":
-      command => "/usr/sbin/webapp-config -I -h ldap.${internal_domain} -d phpldapadmin phpldapadmin 1.2.3",
-      creates => "/srv/www/ldap.${internal_domain}/htdocs/phpldapadmin",
-      require => [
-        Package[phpldapadmin],
-        File['/srv/www'],
-        File['/etc/vhosts/webapp-config'],
-      ]
     }
 
   } else {
@@ -240,6 +206,25 @@ class ldap($ldap_type) {
         Package[openldap],
       ],
     }
+  }
+
+  file { "/usr/local/share/ca-certificates/nitelite.io/ldap.crt":
+    ensure  => present,
+    owner   => "ldap",
+    group   => "ldap",
+    require => File['/usr/local/share/ca-certificates/nitelite.io'],
+    path    => "/usr/local/share/ca-certificates/nitelite.io/ldap.crt",
+    source  => "puppet:///secure/ssl/ldap/cacert.pem",
+  }
+
+  exec { "certificates_update_ldap":
+    command => "/usr/sbin/update-ca-certificates",
+    subscribe   => File['/etc/ca-certificates.conf'],
+    require => [
+      Package['ca-certificates'],
+      File['/etc/ca-certificates.conf'],
+      File['/usr/local/share/ca-certificates/nitelite.io/ldap.crt'],
+    ],
   }
 
 }
