@@ -92,6 +92,7 @@ class media {
     "mp3check",
     "media-sound/picard",
     "mplayer",
+    "musicbrainz",
   ]
 
   package { $packages: ensure => installed }
