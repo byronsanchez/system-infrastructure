@@ -85,7 +85,7 @@ net.ipv4.conf.all.accept_redirects = 0
 
 # set hostname and domainname
 kernel.hostname= <%= @fqdn %>
-kernel.domainname = <%= @domain %>
+kernel.domainname = <%= @internal_domain %>
 
 ## enable forwarding for guest packets and ssh port
 net.ipv4.ip_forward = 1

@@ -1,5 +1,19 @@
-class base ($hostname = '', $network_interface = 'eth0') {
+# hostname = duh
+# mcollective_type = client || server
+#  - not intuitive at first. servers = nodes to manage, clients = nodes to
+#  administer from
+#  - think of it this way. servers SERVE node data to clients. Clients are used
+#  to actually administer nodes. so most nodes will be servers, and nodes that
+#  will be used to administer things are clients. this is why the default is
+#  server
+class base (
+  $hostname,
+  $network_type = '',
+  $mcollective_type = 'server',
+  $network_interface = 'eth0'
+) {
 
+  $rabbitmq_mcollective_password = hiera('rabbitmq_mcollective_password', '')
 
   if $hostname {
     # set hostname
@@ -13,6 +27,47 @@ class base ($hostname = '', $network_interface = 'eth0') {
   }
 
   class { "::ntp": }
+
+  # set the client USE flag on nodes that will be used to administer mco
+  # commands
+  file { "/etc/portage/package.use/mcollective":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/mcollective",
+    content => template("base/etc/portage/package.use/mcollective.erb"),
+  }
+
+  file { "/etc/mcollective/facts.yaml":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 400,
+    path    => "/etc/mcollective/facts.yaml",
+    content => template('base/etc/mcollective/facts.yaml.erb'),
+  }
+
+  # all nodes are servers, but not all nodes are clients (admins)
+  file { "/etc/mcollective/server.cfg":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/mcollective/server.cfg",
+    content => template("base/etc/mcollective/server.cfg.erb"),
+  }
+
+  if $mcollective_type == "client" {
+
+    file { "/etc/mcollective/client.cfg":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      path => "/etc/mcollective/client.cfg",
+      content => template("base/etc/mcollective/client.cfg.erb"),
+    }
+
+  }
 
   file { "/etc/sysctl.conf":
     ensure => present,
@@ -270,6 +325,22 @@ class base ($hostname = '', $network_interface = 'eth0') {
     $packages: ensure => installed,
   }
 
+  # Ensure ruby 1.9 is set prior to installing these via portage
+  $ruby_packages = [
+    "puppet",
+    "stomp",
+    "mcollective",
+  ]
+
+  package { $ruby_packages:
+    ensure  => installed,
+    require => [
+      Eselect[ruby],
+    ],
+  }
+
+  # System ruby HAS to be 1.9 for mcollective to work. If other rubies are
+  # needed, find an alternative solution to deploy them.
   eselect { 'ruby':
     set => 'ruby19',
   }
@@ -286,6 +357,18 @@ class base ($hostname = '', $network_interface = 'eth0') {
     require => [
       Eselect[ruby],
     ],
+  }
+
+  $mcollective_packages = [
+    "mcollective-filemgr-agent",
+    "mcollective-package-agent",
+    "mcollective-process-agent",
+    "mcollective-puppet-agent",
+    "mcollective-service-agent",
+  ]
+
+  package { $mcollective_packages:
+    ensure  => installed,
   }
 
   exec { "gem-update":
@@ -352,6 +435,28 @@ class base ($hostname = '', $network_interface = 'eth0') {
     ],
   }
 
+  # The daemon needs to be running on all nodes which will be managed with mco
+  # (even the admin server so the commands will be invoked on the invoking node)
+  service { 'mcollectived':
+    ensure  => running,
+    enable  => true,
+    subscribe => File['/etc/mcollective/server.cfg'],
+    require => [
+      Package[mcollective],
+      File['/etc/mcollective/server.cfg'],
+    ],
+  }
+
+  # ensure automatic updates of system hostname if it changes
+  exec { 'hostname_update':
+    command     => '/sbin/rc-service hostname restart',
+    subscribe   => File['/etc/conf.d/hostname'],
+    refreshonly => true,
+    require     => [
+      File['/etc/conf.d/hostname']
+    ],
+  }
+
   exec { "sysctl_update":
     command => "/sbin/sysctl --system",
     subscribe   => File['/etc/sysctl.conf'],
@@ -369,5 +474,37 @@ class base ($hostname = '', $network_interface = 'eth0') {
     ],
   }
 
+  # TODO: Remove the following section once testing is done
+
+  # MCO TESTING
+
+  file { "/usr/share/mcollective/plugins/mcollective/agent/nitelite.rb":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/share/mcollective/plugins/mcollective/agent/nitelite.rb",
+    source => "puppet:///files/mcollective-nitelite/agent/nitelite.rb",
+    require => Package[mcollective],
+  }
+
+  file { "/usr/share/mcollective/plugins/mcollective/agent/nitelite.ddl":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/share/mcollective/plugins/mcollective/agent/nitelite.ddl",
+    source => "puppet:///files/mcollective-nitelite/agent/nitelite.ddl",
+    require => Package[mcollective],
+  }
+
+  file { "/usr/share/mcollective/plugins/mcollective/application/nitelite.rb":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/share/mcollective/plugins/mcollective/application/nitelite.rb",
+    source => "puppet:///files/mcollective-nitelite/application/nitelite.rb",
+  }
 
 }

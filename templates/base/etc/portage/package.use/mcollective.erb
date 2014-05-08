@@ -6,14 +6,8 @@
 #                                         #
 ###########################################
 
-<% if @ns1_address -%>
-search <%= @internal_domain %>
-nameserver <%= @ns1_address %>
-<% else -%>
-nameserver 208.67.222.222
-<% end -%>
-<% if @ns2_address -%>
-nameserver <%= @ns2_address %>
-<% else -%>
-nameserver 208.67.220.220
+<% if @mcollective_type == "server" -%>
+app-admin/mcollective -client
+<% elsif @mcollective_type == "client" -%>
+app-admin/mcollective client
 <% end -%>
