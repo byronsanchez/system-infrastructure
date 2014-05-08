@@ -127,6 +127,12 @@ COMMIT
 # Syslog
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 1000 -m state --state NEW -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 514 -m state --state NEW -j ACCEPT
+# Stomp
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 6163 -m state --state NEW -j ACCEPT
+# Stomp SSL
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 6164 -m state --state NEW -j ACCEPT
+# RabbitMQ
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 5672 -m state --state NEW -j ACCEPT
 <% end-%>
 
 <% if @iptables_type == "mysql" -%>
