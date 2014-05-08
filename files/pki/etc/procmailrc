@@ -1,0 +1,4 @@
+CSR_DROP_DIR=$HOME/requests
+:0c
+* ^To: csrpuller@systems.nitelite.io
+| munpack -q -C "$CSR_DROP_DIR"

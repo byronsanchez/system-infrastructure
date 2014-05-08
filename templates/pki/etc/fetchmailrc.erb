@@ -1,0 +1,7 @@
+set daemon 60
+poll mail.internal.nitelite.io protocol IMAP:
+  user "csrpuller@systems.nitelite.io" is csrpuller here
+  password '<%= @csrpullerpw %>'
+  keep
+  ssl
+  mda "/usr/bin/procmail -d %T"
