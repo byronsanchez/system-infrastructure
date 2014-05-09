@@ -83,6 +83,7 @@ class workstation {
     "msmtp",
     "notmuch",
     "urlview",
+    "vagrant",
     "dev-python/keyring",
   ]
 
