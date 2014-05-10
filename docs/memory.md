@@ -7,6 +7,11 @@ be accounted for as well.
 **Default to 256MB unless more is definitely needed. If optimizations are
 absolutely required, use the following as a guide.**
 
+1024MB
+
+centralized vcs if running gitlab
+ci server
+
 512MB 2 cores, 50GB
 
 webserver
