@@ -12,7 +12,7 @@ if [ ! -f /tmp/mirror_tldp ];
 then
   touch /tmp/mirror_tldp;
 
-  rsync -aqvz --delete --delete-after ftp.ibiblio.org::ldp_mirror /srv/nfs/io/tldp;
+  rsync -aqvz --delete --delete-during ftp.ibiblio.org::ldp_mirror /srv/nfs/io/tldp;
 
   rm /tmp/mirror_tldp;
 fi
