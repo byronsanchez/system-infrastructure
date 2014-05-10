@@ -5,6 +5,10 @@ class binhost(
   $portage_package_directory = '',
   $portage_tree_directory = '',
   $gentoo_directory = '',
+  $staging_directory = '',
+  $production_directory = '',
+  $overlay_a = '',
+  $overlay_b = '',
 ) {
 
   file { "/etc/nginx/sites-available/binhost.internal.nitelite.io":
@@ -86,13 +90,43 @@ class binhost(
       require => File["/srv/rsync"],
     }
 
-    # TODO:
-    # Link distfiles, snapshots, releases to be accessible via http
-    # When the full mirror is done, this part uses that mirror for snapshots and
-    # stages
     file { '/srv/www/binhost.internal.nitelite.io/gentoo':
        ensure  => 'link',
        target  => "${gentoo_directory}",
+       require => File["/srv/www/binhost.internal.nitelite.io"],
+    }
+  }
+
+  # Make the development environment distfiles available over http
+  if $staging_directory {
+    file { '/srv/www/binhost.internal.nitelite.io/nitelite-staging':
+       ensure  => 'link',
+       target  => "${staging_directory}",
+       require => File["/srv/www/binhost.internal.nitelite.io"],
+    }
+  }
+
+  if $production_directory {
+    file { '/srv/www/binhost.internal.nitelite.io/nitelite-production':
+       ensure  => 'link',
+       target  => "${production_directory}",
+       require => File["/srv/www/binhost.internal.nitelite.io"],
+    }
+  }
+
+  # TODO: abstract all these symlinks into a better design
+  if $overlay_a {
+    file { '/srv/www/binhost.internal.nitelite.io/nitelite-a':
+       ensure  => 'link',
+       target  => "${overlay_a}",
+       require => File["/srv/www/binhost.internal.nitelite.io"],
+    }
+  }
+
+  if $overlay_b {
+    file { '/srv/www/binhost.internal.nitelite.io/nitelite-b':
+       ensure  => 'link',
+       target  => "${overlay_b}",
        require => File["/srv/www/binhost.internal.nitelite.io"],
     }
   }

@@ -63,8 +63,11 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "binhost":
     portage_package_directory => "/srv/nfs/io/gentoo-local-packages",
     portage_tree_directory    => "/srv/nfs/io/gentoo-portage",
-    # TODO: Change to full mirror once it's available
-    gentoo_directory => "/srv/nfs/io/gentoo-stages",
+    gentoo_directory          => "/srv/nfs/io/gentoo",
+    staging_directory         => "/srv/nfs/io/overlay-nitelite-staging",
+    production_directory      => "/srv/nfs/io/overlay-nitelite-production",
+    overlay_a                 => "/srv/nfs/io/overlay-nitelite-a",
+    overlay_b                 => "/srv/nfs/io/overlay-nitelite-b",
   }
 
   class { "provision":

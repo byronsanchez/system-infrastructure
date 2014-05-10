@@ -4,6 +4,7 @@ class gentoo(
   $video_cards = '',
   $input_devices = '',
   $lowmemorybox = false,
+  $dev_environment = '',
 ) {
 
   file { "/etc/portage/make.conf":
