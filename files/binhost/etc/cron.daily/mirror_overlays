@@ -12,6 +12,7 @@ if [ ! -f /tmp/mirror_overlays ];
 then
   touch /tmp/mirror_overlays;
 
+  system_distfiles="/usr/portage/distfiles"
   workdir="/srv/nfs/io"
   overlays="nitelite-a nitelite-b nitelite-staging nitelite-production"
 
@@ -30,7 +31,7 @@ then
         --deletion-db="${overlay_dir}/info/deletion.db" \
         --distfiles-db="${overlay_dir}/info/distfiles.db" \
         --temp-dir="${overlay_dir}/tmp" \
-        --distfiles-local="${overlay_dir}/distfiles-local" \
+        --distfiles-local="${system_distfiles}" \
         --restrict-mirror-exemptions="gentoo" \
         --verify-existing-digest \
         --mirror --verbose
