@@ -49,6 +49,16 @@ class binhost(
     require => File["/etc/cron.daily"],
   }
 
+  file { "/etc/cron.daily/mirror_overlays":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/etc/cron.daily/mirror_overlays",
+    source => "puppet:///files/binhost/etc/cron.daily/mirror_overlays",
+    require => File["/etc/cron.daily"],
+  }
+
   if $portage_package_directory {
     # link portage tree (ebuilds) to be accessible via http
     file { '/srv/www/binhost.internal.nitelite.io/packages':

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+if [ ! -f /tmp/mirror_overlays ];
+then
+  touch /tmp/mirror_overlays;
+
+  workdir="/srv/nfs/io"
+  overlays="nitelite-a nitelite-b nitelite-staging nitelite-production"
+
+  for repo in ${overlays};
+  do
+    overlay_dir="${workdir}/overlay-${repo}"
+    mkdir -p "${overlay_dir}/"{distfiles,distfiles-local,info,log,tmp}
+    emirrordist \
+        --distfiles="${overlay_dir}/distfiles" \
+        --delete --jobs=10 --repo="${repo}" \
+        --deletion-delay=$((86400 * 14)) \
+        --failure-log="${overlay_dir}/log/failure.log" \
+        --success-log="${overlay_dir}/log/success.log" \
+        --scheduled-deletion-log="${overlay_dir}/log/deletion.log" \
+        --fetch-log-dir="${overlay_dir}/log" \
+        --deletion-db="${overlay_dir}/info/deletion.db" \
+        --distfiles-db="${overlay_dir}/info/distfiles.db" \
+        --temp-dir="${overlay_dir}/tmp" \
+        --distfiles-local="${overlay_dir}/distfiles-local" \
+        --restrict-mirror-exemptions="gentoo" \
+        --verify-existing-digest \
+        --mirror --verbose
+
+  done
+
+  rm /tmp/mirror_overlays;
+fi
+

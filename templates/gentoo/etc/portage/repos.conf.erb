@@ -6,13 +6,32 @@
 #                                         #
 ###########################################
 
-<% if @my_ip4address != @binhost_address -%>
 [DEFAULT]
 main-repo=gentoo
 
+<% if @my_ip4address != @binhost_address -%>
 [gentoo]
 location=/usr/portage
 sync-type=rsync
 sync-uri=rsync://binhost.internal.nitelite.io/gentoo-portage
-<% end -%>
+<% else %>
+[gentoo]
+location=/usr/portage
+sync-type=rsync
 
+[nitelite-a]
+location=/var/lib/layman/nitelite-a
+priority=100
+
+[nitelite-b]
+location=/var/lib/layman/nitelite-b
+priority=100
+
+[nitelite-staging]
+location=/var/lib/layman/nitelite-staging
+priority=100
+
+[nitelite-production]
+location=/var/lib/layman/nitelite-production
+priority=100
+<% end -%>
