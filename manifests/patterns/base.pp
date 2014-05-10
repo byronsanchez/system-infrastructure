@@ -469,8 +469,8 @@ class base (
   package { "app-misc/screen":
     ensure  => installed,
     require => [
-      Layman['niteLite-a'],
-      Layman['niteLite-b'],
+      Layman['nitelite-a'],
+      Layman['nitelite-b'],
     ],
   }
 

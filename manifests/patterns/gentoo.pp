@@ -126,7 +126,7 @@ class gentoo(
   }
 
   layman { 'niteLite-a':
-    ensure  => present,
+    ensure  => absent,
     require => [
       Package[layman],
       File['/etc/layman/layman.cfg'],
@@ -135,6 +135,42 @@ class gentoo(
   }
 
   layman { 'niteLite-b':
+    ensure  => absent,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
+  layman { 'nitelite-a':
+    ensure  => present,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
+  layman { 'nitelite-b':
+    ensure  => present,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
+  layman { 'nitelite-staging':
+    ensure  => present,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
+  layman { 'nitelite-production':
     ensure  => present,
     require => [
       Package[layman],
