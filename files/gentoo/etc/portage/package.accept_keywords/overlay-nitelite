@@ -6,5 +6,7 @@
 #                                         #
 ###########################################
 
-*/*::niteLite-a ~amd64 **
-*/*::niteLite-b ~amd64 **
+*/*::nitelite-a ~amd64 **
+*/*::nitelite-b ~amd64 **
+*/*::nitelite-staging ~amd64 **
+*/*::nitelite-production ~amd64 **
