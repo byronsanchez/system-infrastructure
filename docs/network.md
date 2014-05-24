@@ -33,6 +33,8 @@ vpn - duh, its vpn it uses different layers of encryption and also has mutual
 certs. just make sure you fully understand how you have the server and clients
 configured
 
+use nginx to terminate https connections
+
 # ssl hostnames
 system certs are defined by the service they provide (vpn, data, mail, etc)
 
