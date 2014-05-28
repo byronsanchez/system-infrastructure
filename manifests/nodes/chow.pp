@@ -19,6 +19,7 @@ node 'chow.internal.nitelite.io' inherits network {
     username => [
       "rbackup",
       "staff",
+      "root",
     ],
   }
 
@@ -44,11 +45,22 @@ node 'chow.internal.nitelite.io' inherits network {
     ca_type => "client",
   }
 
-  class { "vcs": }
+  class { "java":
+    java_type => "server",
+  }
+
+  class { "rsyncd": }
+
+  class { "webserver": }
+
+  class { "vcs":
+    vcs_type => "server",
+  }
 
   # users
   class { "root": }
   class { "rbackup": }
+  class { "deployer": }
   class { "staff": }
   class { "logger": }
 
