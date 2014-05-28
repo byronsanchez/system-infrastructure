@@ -19,6 +19,7 @@ node 'kastra.internal.nitelite.io' inherits network {
     username => [
       "rbackup",
       "staff",
+      "jenkins",
     ],
   }
 
