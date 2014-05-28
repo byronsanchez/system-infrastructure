@@ -53,6 +53,12 @@ COMMIT
 -A INPUT -p tcp --dport 443 -j ACCEPT
 <% end-%>
 
+<% if @iptables_type == "systems" -%>
+# Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+<% end-%>
+
 # DNS (for all nodes)
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 53 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 53 -j ACCEPT
@@ -158,6 +164,21 @@ COMMIT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 465 -m state --state NEW -j ACCEPT
 # SMTP-MSA (email submissons; eg. mail client to mail server)
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 587 -m state --state NEW -j ACCEPT
+<% end-%>
+
+<% if @iptables_type == "vcs" -%>
+# Cgit HTTP
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 8081 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 8081 -m state --state NEW -j ACCEPT
+# Fossil HTTP
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 4545 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 4545 -m state --state NEW -j ACCEPT
+# Fossil uwsgi
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 3128 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 3128 -m state --state NEW -j ACCEPT
+# Cgit uwsgi
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 3129 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 3129 -m state --state NEW -j ACCEPT
 <% end-%>
 
 # Drop marked packets (direct port 22 packets)
