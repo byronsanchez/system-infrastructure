@@ -82,6 +82,13 @@ class webserver {
     require => File["/etc/nginx"],
   }
 
+  file { "/etc/nginx/conf.d/nitelite":
+    ensure => "directory",
+    owner => "root",
+    group => "root",
+    require => File["/etc/nginx/conf.d"],
+  }
+
   file { "/etc/vhosts/webapp-config":
     ensure => present,
     owner => "root",
