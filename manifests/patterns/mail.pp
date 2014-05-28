@@ -2,23 +2,6 @@
 # typically, one server on the network, and as many clients as needed
 class mail($mail_type) {
 
-  define myFiles(
-    $owner,
-    $group,
-    $mode,
-    $requires,
-    $source,
-  ) {
-    file { "$name":
-      ensure  => present,
-      path    => $name,
-      owner   => $owner,
-      group   => $group,
-      require => $requires,
-      source => "puppet:///files/${source}${name}",
-    }
-  }
-
   $gmailuser = hiera('gmailuser', '')
   $gmailpw = hiera('gmailpw', '')
   $mailreaderpw = hiera('mailreaderpw', '')
@@ -212,7 +195,7 @@ class mail($mail_type) {
       "/etc/dovecot/conf.d/auth-vpopmail.conf.ext",
     ]
 
-    myFiles { $dovecot_files:
+    nl_files { $dovecot_files:
       owner    => 'dovecot',
       group    => 'dovecot',
       mode     => 0644,
