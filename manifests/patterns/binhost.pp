@@ -9,6 +9,7 @@ class binhost(
   $production_directory = '',
   $overlay_a = '',
   $overlay_b = '',
+  $external_directory = '',
 ) {
 
   file { "/etc/nginx/sites-available/binhost.internal.nitelite.io":
@@ -137,6 +138,15 @@ class binhost(
       ensure  => 'link',
       target  => "${portage_tree_directory}",
       require => File["/srv/rsync"],
+    }
+  }
+
+  # For manually retrieved files (eg. due to licenses)
+  if $external_directory {
+    file { '/srv/www/binhost.internal.nitelite.io/external':
+       ensure  => 'link',
+       target  => "${external_directory}",
+       require => File["/srv/www/binhost.internal.nitelite.io"],
     }
   }
 
