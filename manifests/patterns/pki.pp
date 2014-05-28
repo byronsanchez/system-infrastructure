@@ -201,13 +201,13 @@ class pki(
     source  => "puppet:///files/pki/etc/ca-certificates.conf",
   }
 
-  file { "/usr/local/bin/certcli.sh":
+  file { "/usr/local/bin/cert-cli":
     ensure => present,
     owner  => "root",
     group  => "root",
     mode   => 0755,
-    path   => "/usr/local/bin/certcli.sh",
-    source => "puppet:///files/pki/usr/local/bin/certcli.sh",
+    path   => "/usr/local/bin/cert-cli",
+    source => "puppet:///files/pki/usr/local/bin/cert-cli",
   }
 
   # INSTALL GLOBAL CERTS
