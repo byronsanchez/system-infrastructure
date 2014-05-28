@@ -194,6 +194,14 @@ class base (
     source => "puppet:///files/base/etc/profile.d/ids.custom.sh",
   }
 
+  file { "/etc/services":
+    ensure => present,
+    mode    => 0644,
+    owner => "root",
+    group => "root",
+    source => "puppet:///files/base/etc/services",
+  }
+
   file { "/etc/timezone":
     ensure => present,
     mode    => 0644,
@@ -292,6 +300,12 @@ class base (
     source => "puppet:///files/base/opt/screen/etc/screenrc",
   }
 
+  file { "/var/lib/nitelite":
+    ensure => "directory",
+    owner   => "root",
+    group   => "root",
+  }
+
   $packages = [
     "git",
     "rsync",
@@ -347,6 +361,7 @@ class base (
 
   $ruby_gems = [
     "bundler",
+    "rdoc",
     "librarian-puppet",
     "hiera-eyaml",
   ]
