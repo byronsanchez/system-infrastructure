@@ -19,23 +19,6 @@ class nasclient {
     require => File['/mnt/luna'],
   }
 
-  # Mail server
-
-  file { "/mnt/callisto":
-    ensure => "directory",
-    owner => "root",
-    group => "root",
-  }
-
-  mount { "/mnt/callisto":
-    ensure  => present,
-    device  => "nas.internal.nitelite.io:/srv/nfs/callisto",
-    atboot  => true,
-    fstype  => "nfs4",
-    options => "soft,timeo=30,ro",
-    require => File['/mnt/callisto'],
-  }
-  
   # Puppet manifests
 
   file { "/mnt/puppet":
