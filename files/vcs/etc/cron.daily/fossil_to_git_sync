@@ -1,0 +1,50 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# Mirror source fossil repos to git so that other devs can play with code using
+# git if they'd like
+
+fossil_dir="/srv/fossil/fossils"
+git_dir="/srv/git/repositories"
+
+for organization in $fossil_dir/*;
+do
+
+  org_name="$(basename ${organization})"
+
+  for fossil_repo_path in $organization/*;
+  do
+
+    fossil_repo="$(basename ${fossil_repo_path})"
+    git_repo="$(echo "${fossil_repo}" | sed 's/.fossil/.git/g')"
+    git_dst="${git_dir}/${org_name}/${git_repo}"
+
+    if [ ! -e "${git_dst}" ];
+    then
+      mkdir -p "${git_dst}"
+    fi
+
+    cd ${git_dst}
+
+    if [ ! -e "${git_dst}/HEAD" ];
+    then
+      git init --bare
+    fi
+
+    fossil export --git ${fossil_repo_path} | git fast-import --force
+
+    # update the description
+    description=$(sqlite3 ${fossil_repo_path} "select value from config where name='project-description';")
+    echo "${description}" > ${git_dst}/description
+
+  done
+
+done
+

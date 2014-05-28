@@ -1,0 +1,62 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# Mirrors local (centralized) git repos to external repositories (eg. github)
+
+repo_mirror_dir="/srv/git/repositories"
+org_dir="/etc/nitelite/vcs.d"
+
+if [ ! -d "$repo_mirror_dir" ]; then
+  # If there are no repos, then there is nothing to push out to external repos.
+  # Exit...
+  exit 1;
+fi
+
+for organization in $org_dir/*;
+do
+
+  org_name="$(basename ${organization})"
+
+  for conf_file in $organization/*;
+  do
+
+    repo_name="$(basename ${conf_file}).git"
+    mirror_src="${repo_mirror_dir}/${org_name}/${repo_name}"
+
+    # Strip comments and empty lines from the config file
+    DATA=$(cat $conf_file | grep -v "^#" | grep -v "^$" | sed -e 's:#.*::g');
+
+    cd "$mirror_src"
+
+    while read -r line;
+    do
+
+      remote_name=$(echo ${line} | awk -F'=' '{print $1}' )
+      remote_url=$(echo ${line} | awk -F'=' '{print $2}' )
+
+      git remote -v | grep -q ${remote_name}
+      if [ $? -ne 0 ];
+      then
+        # if the remote hasn't been added yet, add it
+        git remote add ${remote_name} ${remote_url}
+      fi
+
+      # fetch changesets from centralized repo (not needed since the source repos
+      # are fossil)
+      #git fetch -q
+      # push fetched changes to external repos
+      git push -q --mirror ${remote_name}
+
+    done <<< "$DATA"
+
+  done
+
+done
+

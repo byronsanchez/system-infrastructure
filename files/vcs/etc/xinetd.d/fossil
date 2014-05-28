@@ -1,0 +1,23 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+service fossil
+{
+        type = UNLISTED
+        socket_type = stream
+        protocol = tcp
+        wait = no
+        user = root
+        disable = no
+        server = /usr/bin/fossil
+
+        # HTTP port to listen to (the same as the one in '/etc/services')
+        port = 4545
+        # The path that the Fossil repos are stored
+        server_args = http /srv/fossil/fossils --https --host fossil.nitelite.io --notfound https://fossil.nitelite.io
+}

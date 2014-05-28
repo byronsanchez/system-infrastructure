@@ -1,0 +1,23 @@
+#
+# cgit config
+#
+
+root-title=git.nitelite.io
+root-desc=source code for the nitelite.io network
+snapshots=tar.gz tar.xz zip
+
+css=/cgit.css
+logo=/cgit.png
+
+enable-commit-graph=1
+enable-tree-linenumbers=1
+enable-log-filecount=1
+enable-log-linecount=1
+remove-suffix=1
+side-by-side-diffs=1
+section-sort=1
+enable-index-owner=0
+virtual-root=/
+
+scan-path=/srv/git/repositories
+

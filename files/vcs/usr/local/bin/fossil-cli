@@ -1,0 +1,219 @@
+#!/bin/sh
+#
+# Fossil server repository management script
+
+source /usr/local/lib/nitelite/helpers/common.lib.sh;
+
+work_dir="/srv/fossil/fossils"
+configs_dir="/srv/fossil/configs"
+
+# Initialize our own variables:
+organization=""
+action=""
+repository=""
+
+quiet=0
+
+############################
+# Argument Parsing Functions
+
+# TODO: validate action values
+
+function show_help ()
+{
+cat <<-EOM
+
+$0 [OPTION] command
+
+options:
+
+    -o --organization=NAME         Organization that owns the repo
+    -r --repository=NAME           Repository name
+
+commands:
+
+    -c --create                    Create a new repository
+    -u --update                    Update existing repository configs
+    -U --update-all                Updates configs for all existing repos
+    -d --delete                    Delete an existing repository
+
+other:
+
+    -q --quiet               do not log messages to STDOUT
+    -h --help                display this message
+
+EOM
+    exit 1
+}
+
+function get_options () {
+    argv=()
+    while [ $# -gt 0 ]
+    do
+        opt=$1
+        shift
+        case ${opt} in
+            -o|--organization)
+                organization=$1
+                shift
+                ;;
+            --organization=*)
+                organization=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -r|--repository)
+                repository=$1
+                shift
+                ;;
+            --repository=*)
+                repository=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+
+            -c|--create)
+                action="create"
+                shift
+                ;;
+            -u|--update)
+                action="update"
+                shift
+                ;;
+            -U|--update-all)
+                action="update-all"
+                shift
+                ;;
+            -d|--delete)
+                action="delete"
+                shift
+                ;;
+
+            -q|--quiet)
+                quiet=1
+                ;;
+            -h|--help)
+                show_help
+                ;;
+            *)
+                if [ "${opt:0:1}" = "-" ]; then
+                    fail "${opt}: unknown option."
+                fi
+                argv+=(${opt})
+                ;;
+        esac
+    done 
+}
+
+##################
+# GLOBAL VALIDATION
+
+# Parse options if they were passed
+get_options $*
+
+if [ ! -n "$action" ];
+then
+  fail "please provide a valid command to execute"
+fi
+
+#############
+# MAIN SCRIPT
+
+case "$action" in
+create)
+
+  if [ ! -n "$organization" ];
+  then
+    fail "please provide a valid organization name"
+  fi
+
+  if [ ! -n "$repository" ];
+  then
+    fail "please provide a valid repository name"
+  fi
+
+  info "creating repository with name ${repository} under organization ${organization}..."
+
+  dst_dir="${work_dir}/${organization}"
+
+  mkdir -p "${dst_dir}"
+  cd "${dst_dir}"
+  fossil init "${repository}.fossil"
+
+  /usr/local/bin/fossil-cli -o "${organization}" -r "${repository}" --update
+
+  ;;
+
+delete)
+
+  if [ ! -n "$organization" ];
+  then
+    fail "please provide a valid organization name"
+  fi
+
+  if [ ! -n "$repository" ];
+  then
+    fail "please provide a valid repository name"
+  fi
+
+  info "deleting repository with name ${repository} under organization ${organization}..."
+
+  fossil_repo="${work_dir}/${organization}/${repository}.fossil"
+
+  rm -rf "${fossil_repo}"
+
+  ;;
+
+update)
+
+  if [ ! -n "$organization" ];
+  then
+    fail "please provide a valid organization name"
+  fi
+
+  if [ ! -n "$repository" ];
+  then
+    fail "please provide a valid repository name"
+  fi
+
+  info "updating configs for ${repository} under organization ${organization}..."
+
+  dst_dir="${work_dir}/${organization}"
+
+  cd "${dst_dir}"
+  rm -rf "tmp"
+  mkdir "tmp"
+  cd "tmp"
+
+  fossil open "${dst_dir}/${repository}.fossil"
+
+  for f in ${configs_dir}/*;
+  do
+    fossil config import "${f}"
+  done
+
+  fossil close
+
+  cd "${dst_dir}"
+  rm -rf "tmp"
+
+  ;;
+
+update-all)
+
+  info "updating configuration settings for all repositories..."
+
+  for organization in $work_dir/*;
+  do
+    org_name="$(basename ${organization})"
+
+    for fossil_repo_path in $organization/*;
+    do
+      fossil_repo="$(basename ${fossil_repo_path} .fossil)"
+      /usr/local/bin/fossil-cli -o "${org_name}" -r "${fossil_repo}" --update
+    done
+  done
+
+  ;;
+
+*)
+  fail "${action}: unknown command."
+  ;;
+esac
+
