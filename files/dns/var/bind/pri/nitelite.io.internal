@@ -22,6 +22,11 @@ www.nitelite.io. IN CNAME nitelite.io.
 feeds.nitelite.io. IN CNAME nitelite.io.
 feedburner.nitelite.io. IN CNAME 1t5jdoq.feedproxy.ghs.google.com.
 systems.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+mail.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+media.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+ci.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+git.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+fossil.nitelite.io. IN CNAME zosma.internal.nitelite.io.
 
 ;; A Records (IPv4 addresses)
 nitelite.io. IN A 198.98.51.148
@@ -55,6 +60,8 @@ my2.internal.nitelite.io. IN CNAME atlas2.internal.nitelite.io.
 pki.internal.nitelite.io. IN CNAME vega.internal.nitelite.io.
 vpn.internal.nitelite.io. IN CNAME bellatrix.internal.nitelite.io.
 git.internal.nitelite.io. IN CNAME chow.internal.nitelite.io.
+cgit.internal.nitelite.io. IN CNAME chow.internal.nitelite.io.
+fossil.internal.nitelite.io. IN CNAME chow.internal.nitelite.io.
 build.internal.nitelite.io. IN CNAME kastra.internal.nitelite.io.
 jenkins.internal.nitelite.io. IN CNAME kastra.internal.nitelite.io.
 
