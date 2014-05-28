@@ -24,6 +24,7 @@ node 'sol.internal.nitelite.io' inherits network {
       "root",
       "rbackup",
       "staff",
+      "deployer",
       "byronsanchez",
     ],
   }
@@ -68,6 +69,7 @@ node 'sol.internal.nitelite.io' inherits network {
     production_directory      => "/srv/nfs/io/overlay-nitelite-production",
     overlay_a                 => "/srv/nfs/io/overlay-nitelite-a",
     overlay_b                 => "/srv/nfs/io/overlay-nitelite-b",
+    external_directory        => "/srv/nfs/io/external",
   }
 
   class { "provision":
