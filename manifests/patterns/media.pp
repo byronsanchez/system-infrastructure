@@ -82,6 +82,15 @@ class media {
     source => "puppet:///files/media/usr/local/bin/playlist-scan",
   }
 
+  file { "/usr/local/bin/playlist-checkout":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/local/bin/playlist-checkout",
+    source => "puppet:///files/media/usr/local/bin/playlist-checkout",
+  }
+
   $packages = [
     "mpd",
     "media-sound/mpc",
