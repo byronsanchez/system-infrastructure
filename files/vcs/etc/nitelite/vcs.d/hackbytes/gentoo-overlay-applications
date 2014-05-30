@@ -1,0 +1,11 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+github=git@github.com:hackbytes/gentoo-overlay-applications.git
+bitbucket=git@bitbucket.com:hackbytes/gentoo-overlay-applications.git
+

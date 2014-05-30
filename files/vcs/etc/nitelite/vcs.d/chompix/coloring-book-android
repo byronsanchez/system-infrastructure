@@ -1,0 +1,10 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+github=git@github.com:chompix/coloring-book-android.git
+bitbucket=git@bitbucket.com:chompix/coloring-book-android.git
