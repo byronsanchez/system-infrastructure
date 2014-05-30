@@ -4,7 +4,6 @@ class gentoo(
   $video_cards = '',
   $input_devices = '',
   $lowmemorybox = false,
-  $dev_environment = '',
 ) {
 
   file { "/etc/portage/make.conf":
@@ -169,7 +168,7 @@ class gentoo(
   }
 
   layman { 'nitelite-staging':
-    ensure  => present,
+    ensure  => absent,
     require => [
       Package[layman],
       File['/etc/layman/layman.cfg'],
@@ -178,6 +177,15 @@ class gentoo(
   }
 
   layman { 'nitelite-production':
+    ensure  => absent,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
+  layman { 'nitelite-applications':
     ensure  => present,
     require => [
       Package[layman],
