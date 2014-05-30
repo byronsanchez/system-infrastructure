@@ -1,5 +1,23 @@
 class ci {
 
+  file { "/var/lib/jenkins/.ssh/jenkins_rsa":
+    ensure => present,
+    owner => "jenkins",
+    group => "jenkins",
+    mode => 0600,
+    path => "/var/lib/jenkins/.ssh/jenkins_rsa",
+    source => "puppet:///secure/ssh/jenkins_rsa",
+  }
+
+  file { "/var/lib/jenkins/.ssh/jenkins_rsa.pub":
+    ensure => present,
+    owner => "jenkins",
+    group => "jenkins",
+    mode => 0644,
+    path => "/var/lib/jenkins/.ssh/jenkins_rsa.pub",
+    source => "puppet:///secure/ssh/jenkins_rsa.pub",
+  }
+
   file { '/var/lib/jenkins/.bashrc':
     ensure  => present,
     path => "/var/lib/jenkins/.bashrc",
