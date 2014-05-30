@@ -1,0 +1,13 @@
+# description: The git server offers access to git repositories
+service git
+{
+        disable = no
+        type            = UNLISTED
+        port            = 9418
+        socket_type     = stream
+        wait            = no
+        user            = nobody
+        server          = /usr/bin/git
+        server_args     = daemon --inetd --export-all --base-path=/srv/git/repositories
+        log_on_failure  += USERID
+}
