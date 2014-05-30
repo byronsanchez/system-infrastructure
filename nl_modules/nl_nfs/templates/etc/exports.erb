@@ -1,0 +1,14 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+<% if @exports -%>
+<% @exports.each do |export| -%>
+<%= export %>
+<% end -%>
+<% end -%>
+
