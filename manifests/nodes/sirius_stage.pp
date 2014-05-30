@@ -9,7 +9,6 @@ node 'sirius.internal.nitelite.io' inherits network {
     use_flags       => "mysql",
     linguas         => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
     lowmemorybox    => false,
-    dev_environment => "staging",
   }
 
   class { "security":
@@ -23,6 +22,8 @@ node 'sirius.internal.nitelite.io' inherits network {
       "staff",
     ],
   }
+
+  class { "vcs": }
 
   class { "data":
     data_type => "client",
