@@ -13,10 +13,10 @@ module MCollective
         reply[:stderr] = cmd_error
       end
 
-      action "puppet" do
+      action "emerge-app" do
         cmd_output = []
         cmd_error = ""
-        reply[:exitcode] = run("/usr/local/bin/update-puppet",
+        reply[:exitcode] = run("/usr/bin/emerge -uv #{request[:application]}::#{request[:overlay]}",
             :stdout => cmd_output,
             :stderr => cmd_error,
            )

@@ -45,6 +45,44 @@ action "update-nodes", :description => "Updates kernel and initramfs" do
 
 end
 
+action "emerge-app", :description => "Emerges the latest version of an app" do
+
+    display :always
+
+    input :application,
+          :prompt      => "Application",
+          :description => "The application to install",
+          :type        => :string,
+          :validation  => '^.+$',
+          :optional    => false,
+          :maxlength   => 150
+
+    input :overlay,
+          :prompt      => "Overlay",
+          :description => "The overlay from which to install the package",
+          :type        => :string,
+          :validation  => '^.+$',
+          :optional    => false,
+          :maxlength   => 150
+
+    output :stdout,
+           :description => "The STDOUT}",
+           :display_as  => "Command Standard Output"
+
+    output :stderr,
+           :description => "The STDERR",
+           :display_as  => "Command Standard Error"
+
+    output :exitcode,
+           :description => "The exit code from running the command",
+           :display_as  => "Exit Code"
+
+    summarize do
+      aggregate summary(:stderr)
+    end
+
+end
+
 action "eix-remote-update", :description => "Adds overlays to the eix cache" do
 
     display :failed

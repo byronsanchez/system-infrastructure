@@ -7,13 +7,14 @@ mco nitelite [OPTIONS] <ACTION>
 
 The ACTION can be one of the following:
 
-    update-nodes         - updates kernel and initramfs
-    eix-remote-update    - adds overlays to the eix cache
-    eix-sync             - updates eix caches and indexes packages
-    emerge-world         - updates all packages
-    revdep-rebuild       - rebuilds reverse dependencies
-    perl-cleaner-all     - rebuilds perl dependent packages
-    python-updater       - rebuilds python dependent packages
+    update-nodes            - updates kernel and initramfs
+    eix-remote-update       - adds overlays to the eix cache
+    eix-sync                - updates eix caches and indexes packages
+    emerge-world            - updates all packages
+    revdep-rebuild          - rebuilds reverse dependencies
+    perl-cleaner-all        - rebuilds perl dependent packages
+    python-updater          - rebuilds python dependent packages
+    emerge-app              - emerges the latest version of an application
 END_OF_USAGE
 
     option :yes,
@@ -31,10 +32,21 @@ END_OF_USAGE
            :description => "Name of initramfs file to install",
            :type        => String
 
+    option :application,
+           :arguments   => ["--application APPLICATION"],
+           :description => "The application to install",
+           :type        => String
+
+    option :overlay,
+           :arguments   => ["--overlay OVERLAY"],
+           :description => "The overlay from which to install the package",
+           :type        => String
+
     def handle_message(action, message, *args)
       messages = {1 => "Please specify a valid action",
                   2 => "Do you really want to operate on nodes unfiltered? (y/n): ",
-                  3 => "Please supply a kernel filename and an initramfs filename"}
+                  3 => "Please supply a kernel filename and an initramfs filename",
+                  4 => "Please supply an application name and an overlay name"}
 
       send(action, messages[message] % args)
     end
@@ -43,7 +55,7 @@ END_OF_USAGE
       if ARGV.size < 1
         handle_message(:raise, 1)
       else
-        valid_actions = ['update-nodes', 'eix-remote-update', 'eix-sync', 'emerge-world', 'revdep-rebuild', 'perl-cleaner-all', 'python-updater']
+        valid_actions = ['update-nodes', 'eix-remote-update', 'eix-sync', 'emerge-world', 'revdep-rebuild', 'perl-cleaner-all', 'python-updater', 'emerge-app']
 
         if valid_actions.include?(ARGV[0])
           configuration[:action] = ARGV.shift
@@ -59,6 +71,18 @@ END_OF_USAGE
               handle_message(:raise, 3)
             end
           end
+
+          # If emerge-app, make sure overlay and app name are passed
+          if configuration[:action] == 'emerge-app'
+            if configuration[:application].nil?
+              handle_message(:raise, 4)
+            end
+
+            if configuration[:overlay].nil?
+              handle_message(:raise, 4)
+            end
+          end
+
         else
           handle_message(:raise, 1)
         end
@@ -85,10 +109,19 @@ END_OF_USAGE
 
       nitelite = rpcclient('nitelite')
       nitelite.progress = false
+
       if configuration[:action] == 'update-nodes'
+
         nitelite_result = nitelite.send(configuration[:action], :nitelite => configuration[:nitelite], :kernel => configuration[:kernel], :initramfs => configuration[:initramfs])
+
+      elsif configuration[:action] == 'emerge-app'
+
+        nitelite_result = nitelite.send(configuration[:action], :nitelite => configuration[:nitelite], :application => configuration[:application], :overlay => configuration[:overlay])
+
       else
+
         nitelite_result = nitelite.send(configuration[:action], :nitelite => configuration[:nitelite])
+
       end
 
       sender_width = nitelite_result.map{|s| s[:sender]}.map{|s| s.length}.max + 3
