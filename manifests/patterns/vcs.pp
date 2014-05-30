@@ -38,20 +38,29 @@ class vcs(
       require => File['/srv/fossil/cgi-bin'],
     }
 
-    file { "/srv/fossil/exports":
+    file { "/srv/fossil/configs":
       ensure => directory,
       owner => "root",
       group => "root",
       require => File['/srv/fossil'],
     }
 
-    file { "/srv/fossil/exports/blackwhitealt.txt":
+    file { "/srv/fossil/configs/blackwhitealt.txt":
       ensure => present,
       owner => "root",
       group => "root",
-      path => "/srv/fossil/exports/blackwhitealt.txt",
-      source => "puppet:///files/vcs/srv/fossil/exports/blackwhitealt.txt",
-      require => File['/srv/fossil/exports'],
+      path => "/srv/fossil/configs/blackwhitealt.txt",
+      source => "puppet:///files/vcs/srv/fossil/configs/blackwhitealt.txt",
+      require => File['/srv/fossil/configs'],
+    }
+
+    file { "/srv/fossil/configs/googlecode.txt":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      path => "/srv/fossil/configs/googlecode.txt",
+      source => "puppet:///files/vcs/srv/fossil/configs/googlecode.txt",
+      require => File['/srv/fossil/configs'],
     }
 
     file { "/srv/fossil/fossils":
@@ -188,20 +197,6 @@ class vcs(
       require => File['/etc/nitelite'],
     }
 
-    file { "/etc/nitelite/vcs.d/byronsanchez":
-      ensure => directory,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nitelite/vcs.d'],
-    }
-
-    file { "/etc/nitelite/vcs.d/hackbytes":
-      ensure => directory,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nitelite/vcs.d'],
-    }
-
     file { "/etc/cron.daily/fossil_to_git_sync":
       ensure => present,
       owner  => "root",
@@ -231,19 +226,82 @@ class vcs(
       source => "puppet:///files/vcs/usr/local/bin/fossil-cli",
     }
 
-    $vcs_source_files_hackbytes = [
-      '/etc/nitelite/vcs.d/hackbytes/hackbytes.com',
-      '/etc/nitelite/vcs.d/hackbytes/nitelite.io',
-      '/etc/nitelite/vcs.d/hackbytes/puppet-nitelite',
-    ]
+    file { "/etc/nitelite/vcs.d/byronsanchez":
+      ensure => directory,
+      owner => "root",
+      group => "root",
+      require => File['/etc/nitelite/vcs.d'],
+    }
+
+    file { "/etc/nitelite/vcs.d/chompix":
+      ensure => directory,
+      owner => "root",
+      group => "root",
+      require => File['/etc/nitelite/vcs.d'],
+    }
+
+    file { "/etc/nitelite/vcs.d/hackbytes":
+      ensure => directory,
+      owner => "root",
+      group => "root",
+      require => File['/etc/nitelite/vcs.d'],
+    }
+
+    file { "/etc/nitelite/vcs.d/tehpotatoking":
+      ensure => directory,
+      owner => "root",
+      group => "root",
+      require => File['/etc/nitelite/vcs.d'],
+    }
 
     $vcs_source_files_byronsanchez = [
       '/etc/nitelite/vcs.d/byronsanchez/dotfiles',
     ]
 
+    $vcs_source_files_chompix = [
+      '/etc/nitelite/vcs.d/chompix/coloring-book-android',
+      '/etc/nitelite/vcs.d/chompix/coloring-book-ios',
+    ]
+
+    $vcs_source_files_hackbytes = [
+      '/etc/nitelite/vcs.d/hackbytes/gentoo-bootmodder',
+      '/etc/nitelite/vcs.d/hackbytes/gentoo-overlay-a',
+      '/etc/nitelite/vcs.d/hackbytes/gentoo-overlay-b',
+      '/etc/nitelite/vcs.d/hackbytes/gentoo-overlay-applications',
+      '/etc/nitelite/vcs.d/hackbytes/gentoo-provision',
+      '/etc/nitelite/vcs.d/hackbytes/hackbytes.com',
+      '/etc/nitelite/vcs.d/hackbytes/nitelite.io',
+      '/etc/nitelite/vcs.d/hackbytes/puppet-nitelite',
+      '/etc/nitelite/vcs.d/hackbytes/wintersmith-articles-helper',
+      '/etc/nitelite/vcs.d/hackbytes/wintersmith-handleize-helper',
+      '/etc/nitelite/vcs.d/hackbytes/wintersmith-robotskirt',
+      '/etc/nitelite/vcs.d/hackbytes/wintersmith-tag-pages',
+    ]
+
+    $vcs_source_files_tehpotatoking = [
+      '/etc/nitelite/vcs.d/tehpotatoking/creepypasta-files-android',
+      '/etc/nitelite/vcs.d/tehpotatoking/creepypasta-files-ios',
+    ]
+
     # TODO: rewrite the git_push script to read a single config file instead of
     # the way it's currently implemented (multiple config files in different org
     # dirs)
+
+    nl_files { $vcs_source_files_byronsanchez:
+      owner    => 'root',
+      group    => 'root',
+      mode     => 0644,
+      requires  => File["/etc/nitelite/vcs.d/byronsanchez"],
+      source => 'vcs',
+    }
+
+    nl_files { $vcs_source_files_chompix:
+      owner    => 'root',
+      group    => 'root',
+      mode     => 0644,
+      requires  => File["/etc/nitelite/vcs.d/chompix"],
+      source => 'vcs',
+    }
 
     nl_files { $vcs_source_files_hackbytes:
       owner    => 'root',
@@ -253,11 +311,11 @@ class vcs(
       source => 'vcs',
     }
 
-    nl_files { $vcs_source_files_byronsanchez:
+    nl_files { $vcs_source_files_tehpotatoking:
       owner    => 'root',
       group    => 'root',
       mode     => 0644,
-      requires  => File["/etc/nitelite/vcs.d/byronsanchez"],
+      requires  => File["/etc/nitelite/vcs.d/tehpotatoking"],
       source => 'vcs',
     }
 
@@ -277,6 +335,16 @@ class vcs(
       mode    => 0644,
       path    => "/etc/xinetd.d/fossil",
       source  => "puppet:///files/vcs/etc/xinetd.d/fossil",
+      require => File["/etc/xinetd.d"],
+    }
+
+    file { "/etc/xinetd.d/git":
+      ensure  => present,
+      owner   => "root",
+      group   => "root",
+      mode    => 0644,
+      path    => "/etc/xinetd.d/git",
+      source  => "puppet:///files/vcs/etc/xinetd.d/git",
       require => File["/etc/xinetd.d"],
     }
 
@@ -383,8 +451,17 @@ class vcs(
 
   }
 
+  file { "/etc/portage/package.use/git":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/git",
+    source => "puppet:///files/vcs/etc/portage/package.use/git",
+  }
+
   $packages = [
-    #"git",
+    "git",
     "fossil",
     "mercurial",
     "subversion",
