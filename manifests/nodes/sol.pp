@@ -29,6 +29,8 @@ node 'sol.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "vcs": }
+
   class { "data":
     data_type => "client",
   }
@@ -53,8 +55,6 @@ node 'sol.internal.nitelite.io' inherits network {
     ca_type => "puppet",
   }
 
-  class { "vcs": }
-
   class { "backup": }
 
   class { "rsyncd": }
@@ -65,8 +65,7 @@ node 'sol.internal.nitelite.io' inherits network {
     portage_package_directory => "/srv/nfs/io/gentoo-local-packages",
     portage_tree_directory    => "/srv/nfs/io/gentoo-portage",
     gentoo_directory          => "/srv/nfs/io/gentoo",
-    staging_directory         => "/srv/nfs/io/overlay-nitelite-staging",
-    production_directory      => "/srv/nfs/io/overlay-nitelite-production",
+    application_directory     => "/srv/nfs/io/overlay-nitelite-applications",
     overlay_a                 => "/srv/nfs/io/overlay-nitelite-a",
     overlay_b                 => "/srv/nfs/io/overlay-nitelite-b",
     external_directory        => "/srv/nfs/io/external",
@@ -76,7 +75,7 @@ node 'sol.internal.nitelite.io' inherits network {
     boot_pxe_path    => "/srv/nfs/luna/Projects/hackbytes/gentoo-bootmodder/profiles/internal.nitelite.io/devices/pxe",
     boot_update_path => "/srv/nfs/luna/Projects/hackbytes/gentoo-provision/kernel",
     # Used by puppet pattern to build link to puppet path for nfs share
-    puppet_path => "/srv/nfs/luna/Projects/hackbytes/puppet",
+    puppet_path => "/srv/nfs/luna/Projects/hackbytes/puppet-nitelite",
     # Used for remotes so that they may download the autoinstall script
     rsync_provision_directory => "/srv/nfs/luna/Projects/hackbytes/gentoo-provision",
   }
