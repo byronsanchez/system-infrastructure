@@ -37,11 +37,7 @@ CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"
 
 # Use localnet distfiles for application ebuilds
-<% if @dev_environment == "staging" %>
-GENTOO_MIRRORS="http://binhost.internal.nitelite.io/nitelite-staging"
-<% elsif @dev_environment == "production" %>
-GENTOO_MIRRORS="http://binhost.internal.nitelite.io/nitelite-production"
-<% end %>
+GENTOO_MIRRORS="http://binhost.internal.nitelite.io/nitelite-applications"
 
 # Use localnet distfiles for overlay ebuilds if possible
 GENTOO_MIRRORS="${GENTOO_MIRRORS} http://binhost.internal.nitelite.io/nitelite-a"
@@ -89,6 +85,11 @@ FEATURES="buildpkg"
 #   euses and ufed - bug #478318
 <% end -%>
 
+# Portage will mercilessly update all files in the following directories. This
+# is useful since all puppet files are being distributed via tarball and so
+# there is no reason to preserve the foles as they will be completed replaced on
+# each update.
+CONFIG_PROTECT_MASK="/etc/puppet"
 POLICY_TYPES="strict mcs"
 PORT_LOGDIR="/var/log/portage/builds"
 MAKEOPTS="-j<%= @processorcount %>"
