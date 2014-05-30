@@ -4,7 +4,6 @@
 class provision (
   $boot_pxe_path = '',
   $boot_update_path = '',
-  $puppet_path = '',
   $rsync_provision_directory = '',
 ){
 
@@ -16,25 +15,6 @@ class provision (
     path    => "/etc/xinetd.d/tftpd",
     source  => "puppet:///files/provision/etc/xinetd.d/tftpd",
     require => File["/etc/xinetd.d"],
-  }
-
-  if $puppet_path {
-
-    file { "/srv/nfs/puppet":
-      ensure  => "directory",
-      owner   => "root",
-      group   => "root",
-      require => File["/srv/nfs"],
-    }
-
-    # Need to bind mount as symlinks will not work with nfs
-    mount { "/srv/nfs/puppet":
-      ensure  => mounted,
-      device  => "${puppet_path}",
-      fstype  => "none",
-      options => "rw,bind",
-      require => File["/srv/nfs/puppet"],
-    }
   }
 
   file { "/srv/tftp":
