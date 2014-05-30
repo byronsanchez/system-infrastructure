@@ -59,7 +59,6 @@ make your dev environments public
 luna = main file share
 io = backup
 europa = mirrors
-callisto = mail
 rhea = kvm guest images
 phobos = bootable usb install or recovery
 deimos = 
