@@ -5,8 +5,7 @@ class binhost(
   $portage_package_directory = '',
   $portage_tree_directory = '',
   $gentoo_directory = '',
-  $staging_directory = '',
-  $production_directory = '',
+  $application_directory = '',
   $overlay_a = '',
   $overlay_b = '',
   $external_directory = '',
@@ -98,20 +97,19 @@ class binhost(
     }
   }
 
-  # Make the development environment distfiles available over http
-  if $staging_directory {
-    file { '/srv/www/binhost.internal.nitelite.io/nitelite-staging':
+  # Make the application distfiles available over http
+  if $application_directory {
+    file { '/srv/www/binhost.internal.nitelite.io/nitelite-applications':
        ensure  => 'link',
-       target  => "${staging_directory}",
+       target  => "${application_directory}",
        require => File["/srv/www/binhost.internal.nitelite.io"],
     }
-  }
 
-  if $production_directory {
-    file { '/srv/www/binhost.internal.nitelite.io/nitelite-production':
-       ensure  => 'link',
-       target  => "${production_directory}",
-       require => File["/srv/www/binhost.internal.nitelite.io"],
+    file { $application_directory:
+      ensure  => directory,
+      owner   => "deployer",
+      group   => "nginx",
+      recurse => true,
     }
   }
 
