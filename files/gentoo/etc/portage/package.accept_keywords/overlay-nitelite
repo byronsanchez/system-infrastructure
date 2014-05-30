@@ -8,5 +8,4 @@
 
 */*::nitelite-a ~amd64 **
 */*::nitelite-b ~amd64 **
-*/*::nitelite-staging ~amd64 **
-*/*::nitelite-production ~amd64 **
+*/*::nitelite-applications ~amd64 **
