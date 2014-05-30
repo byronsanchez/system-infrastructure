@@ -152,15 +152,6 @@ class base (
     source => "puppet:///files/base/etc/portage/package.use/cairo",
   }
 
-  file { "/etc/portage/package.use/git":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/git",
-    source => "puppet:///files/base/etc/portage/package.use/git",
-  }
-
   file { "/etc/portage/package.use/vim":
     ensure => present,
     owner => "root",
@@ -307,7 +298,6 @@ class base (
   }
 
   $packages = [
-    "git",
     "rsync",
     "openssh",
     "linux-firmware",
