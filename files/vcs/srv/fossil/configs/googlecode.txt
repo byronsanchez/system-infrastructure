@@ -1,0 +1,790 @@
+# The "skin" configuration exported from
+# repository "hackbytes/nitelite.io.fossil"
+# on 2014-05-28 21:10:05
+config /config 10127
+1401260477 'css' value '.container-12 {
+width:92%;
+max-width:960px;
+margin-left:4%;
+margin-right:4%;
+}
+
+.clear {
+clear:both;
+display:block;
+overflow:hidden;
+visibility:hidden;
+width:0;
+height:0;
+}
+
+.clearfix:after {
+clear:both;
+content:'' '';
+display:block;
+font-size:0;
+line-height:0;
+visibility:hidden;
+width:0;
+height:0;
+}
+
+.clearfix {
+display:inline-block;
+}
+
+* html .clearfix {
+height:1%;
+}
+
+.clearfix {
+display:block;
+}
+
+.grid-1, .grid-2, .grid-3, .grid-4, .grid-5, .grid-6, .grid-7, .grid-8, .grid-9, .grid-10, .grid-11, .grid-12 {
+display:inline;
+float:left;
+position:relative;
+margin-left:1%;
+margin-right:1%;
+}
+
+.container-12 .grid-1 {
+width:6.333%;
+}
+
+.container-12 .grid-2 {
+width:14.667%;
+}
+
+.container-12 .grid-3 {
+width:23.000%;
+}
+
+.container-12 .grid-4 {
+width:31.333%;
+}
+
+.container-12 .grid-5 {
+width:39.667%;
+}
+
+.container-12 .grid-6 {
+width:48.000%;
+}
+
+.container-12 .grid-7 {
+width:56.333%;
+}
+
+.container-12 .grid-8 {
+width:64.667%;
+}
+
+.container-12 .grid-9 {
+width:73.000%;
+}
+
+.container-12 .grid-10 {
+width:81.333%;
+}
+
+.container-12 .grid-11 {
+width:89.667%;
+}
+
+.container-12 .grid-12 {
+width:98.000%;
+}
+
+.container-12 .prefix-1 {
+padding-left:8.333%;
+}
+
+.container-12 .suffix-1 {
+padding-right:8.333%;
+}
+
+.container-12 .push-1 {
+left:8.333%;
+}
+
+.container-12 .pull-1 {
+left:-8.333%;
+}
+
+.container-12 .prefix-2 {
+padding-left:16.667%;
+}
+
+.container-12 .suffix-2 {
+padding-right:16.667%;
+}
+
+.container-12 .push-2 {
+left:16.667%;
+}
+
+.container-12 .pull-2 {
+left:-16.667%;
+}
+
+.container-12 .prefix-3 {
+padding-left:25.000%;
+}
+
+.container-12 .suffix-3 {
+padding-right:25.000%;
+}
+
+.container-12 .push-3 {
+left:25.000%;
+}
+
+.container-12 .pull-3 {
+left:-25.000%;
+}
+
+.container-12 .prefix-4 {
+padding-left:33.333%;
+}
+
+.container-12 .suffix-4 {
+padding-right:33.333%;
+}
+
+.container-12 .push-4 {
+left:33.333%;
+}
+
+.container-12 .pull-4 {
+left:-33.333%;
+}
+
+.container-12 .prefix-5 {
+padding-left:41.667%;
+}
+
+.container-12 .suffix-5 {
+padding-right:41.667%;
+}
+
+.container-12 .push-5 {
+left:41.667%;
+}
+
+.container-12 .pull-5 {
+left:-41.667%;
+}
+
+.container-12 .prefix-6 {
+padding-left:50.000%;
+}
+
+.container-12 .suffix-6 {
+padding-right:50.000%;
+}
+
+.container-12 .push-6 {
+left:50.000%;
+}
+
+.container-12 .pull-6 {
+left:-50.000%;
+}
+
+.container-12 .prefix-7 {
+padding-left:58.333%;
+}
+
+.container-12 .suffix-7 {
+padding-right:58.333%;
+}
+
+.container-12 .push-7 {
+left:58.333%;
+}
+
+.container-12 .pull-7 {
+left:-58.333%;
+}
+
+.container-12 .prefix-8 {
+padding-left:66.667%;
+}
+
+.container-12 .suffix-8 {
+padding-right:66.667%;
+}
+
+.container-12 .push-8 {
+left:66.667%;
+}
+
+.container-12 .pull-8 {
+left:-66.667%;
+}
+
+.container-12 .prefix-9 {
+padding-left:75.000%;
+}
+
+.container-12 .suffix-9 {
+padding-right:75.000%;
+}
+
+.container-12 .push-9 {
+left:75.000%;
+}
+
+.container-12 .pull-9 {
+left:-75.000%;
+}
+
+.container-12 .prefix-10 {
+padding-left:83.333%;
+}
+
+.container-12 .suffix-10 {
+padding-right:83.333%;
+}
+
+.container-12 .push-10 {
+left:83.333%;
+}
+
+.container-12 .pull-10 {
+left:-83.333%;
+}
+
+.container-12 .prefix-11 {
+padding-left:91.667%;
+}
+
+.container-12 .suffix-11 {
+padding-right:91.667%;
+}
+
+.container-12 .push-11 {
+left:91.667%;
+}
+
+.container-12 .pull-11 {
+left:-91.667%;
+}
+
+body {
+margin:0;
+font:10pt/1.35 Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .title {
+margin-bottom:0.5em;
+margin-top:0.5em;
+}
+
+h1 {
+font-size:1.5em;
+color:#333433;
+}
+
+h2, .section {
+font-size:1.2em;
+margin:1em 0;
+/*
+padding:0.1em 0.3em;
+background-color:#f0f3f0;
+border-top:1px solid #cccfcc;
+border-bottom:1px solid #e4e6e4;
+*/
+}
+
+.light {
+font-weight:100;
+}
+
+.heading, .section {
+margin:1em 0;
+padding:0.1em 0.3em;
+background-color:#F3F3F3;
+border-top:1px solid #D6D6D6;
+/*border-bottom:1px solid #e4e4e4;*/
+}
+
+hr {
+margin:2em 0;
+border:0;
+height:1px;
+color:#ccd4cc;
+background-color:#ccd4cc;
+}
+
+sup, sub {
+line-height:0;
+}
+
+p {
+margin-top:1em;
+margin-bottom:1em;
+}
+
+.with-under {
+margin-bottom:0;
+}
+
+.under {
+margin-top:0;
+}
+
+.gray {
+color:#666866;
+}
+
+.green {
+color:#337700;
+}
+
+.red {
+color:#cc0000;
+}
+
+.violet {
+color:44400aa;
+}
+
+.highlight {
+background-color:#fffdcc;
+}
+
+a:link {
+color:#0044c0;
+}
+
+a:active {
+color:#cc0000;
+}
+
+a:visited {
+color:#553399;
+}
+
+blockquote {
+margin-top:1em;
+margin-bottom:1em;
+margin-left:0;
+padding-left:20px;
+border-left:2px solid #ccd4cc;
+color:#111;
+}
+
+a.button {
+padding:8px 0;
+font-size:11pt;
+background:#0044c0;
+color:#fff;
+border-radius:5px;
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+text-decoration:none;
+border:1px solid #001180;
+}
+
+a.button span {
+padding:7px 20px;
+border-radius:4px;
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+border-top:1px solid #8eb4f9;
+border-bottom:1px solid #113390;
+text-shadow:#000 0 0 2px;
+font-weight:600;
+background:-webkit-gradient(linear, left bottom, left top,
+    color-stop(0.05, rgba(255, 255, 255, 0)),
+    color-stop(1, rgba(255, 255, 255, 0.4))
+);
+background: -moz-linear-gradient( center bottom,
+    rgba(255, 255, 255, 0) 5%,
+    rgba(255, 255, 255, 0.4) 100%
+);;
+}
+
+a.button:hover {
+background:#1155c1;
+}
+
+a.button:hover span {
+border-top-color:#9ec4ff;
+}
+
+a.button:active {
+background:#113390;
+}
+
+a.button:active span {
+border-top:1px solid #112290;
+border-bottom:1px solid #1155c1;
+background:#113390;
+}
+
+a.timelineHistLink {
+ font-family: monospace;
+}
+
+.top-space {
+margin-top:2em;
+}
+
+.bottom-space {
+margin-bottom:2em;
+}
+
+.logo {
+float: left;
+margin: 0 2em;
+vertical-align:text-top;
+border: none;
+}
+
+.mainmenu {
+  background-color: #E6EBF6;
+/*  background-color: #D7E8F1;*/
+  border-bottom: 1px solid #5980CC;
+  padding: 10px 15px 6px 10px;
+}
+
+.mainmenu a {
+ padding-left: 15px;
+ padding-right: 15px;
+ margin-left: 2px;
+ margin-right: 2px;
+ border-left: 1px solid #E6EBF6;
+ border-right: 1px solid #E6EBF6;
+ text-decoration: none;
+}
+
+.mainmenu a:visited, .submenu a:visited {
+  color:#0044c0;
+}
+
+.mainmenu a.active {
+  padding-top: 6px;
+  padding-bottom: 8px;
+  margin-top: 3px;
+  border-top: 1px solid #5980CC;
+  border-left: 1px solid #5980CC;
+  border-right: 1px solid #5980CC;
+  font-weight: bold;
+  color: #000;
+  background-color: #fff;
+}
+
+.mainmenu a:hover {
+    background-color: #CED9EF;
+    border-left: 1px solid #5980CC;
+    border-right: 1px solid #5980CC;
+    border-top: 1px solid #5980CC;
+    margin-top: 3px;
+    padding-bottom: 8px;
+    padding-top: 6px;
+}
+
+.submenu {
+  background-color: #fff;
+  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, #EEEEEE),
+      color-stop(1, #FFFFFF)
+  );
+  background-image: -moz-linear-gradient(
+      center bottom,
+      #EEEEEE 0%,
+      #FFFFFF 100%
+  );
+  border-bottom: 1px solid #C0C0C0;
+  padding: 8px 15px 6px 10px;
+}
+
+.submenu a {
+  padding-left: 15px;
+  padding-right: 15px;
+  text-decoration: none;
+}
+
+table.report {
+width: 100%;
+border: 1px solid #ccd4cc;
+border-collapse: collapse;
+margin-top: 1em;
+}
+
+table.report th, table.report td {
+}
+
+.footer {
+margin:1em 0;
+padding:15px;
+color:#666866;
+/*border-top: 1px solid #ccd4cc;*/
+text-align: right;
+}
+.footer a {
+color:#666866;
+}
+
+.status {
+float: right;
+color: #666866;
+margin-right: 10px;
+}
+
+.status a {
+padding: 0;
+}
+
+div.sidebox{
+padding-left: 10px !important;
+border: none !important;
+border-left:1px solid #cccfcc !important;
+float:right;
+background-color: #fff !important;
+}
+
+div.sideboxTitle{
+width: 100% !important;
+padding: 3px !important;
+font-weight: 600;
+}
+
+.label-value th {
+text-align: right;
+}
+
+.divider {
+color: #666866;
+border-bottom: 1px solid #cccfcc;
+white-space: nowrap;
+}
+
+.timelineTime {
+color: #666866;
+}
+
+.header {
+  margin-top: 1em;
+  overflow: auto;
+  margin-bottom: 1em;
+}
+
+.title-header {
+  float: left;
+}
+
+.title {
+font-size:2em;
+color:#333433;
+margin-bottom: 0;
+margin-top: 0;
+}
+
+.title a {
+  color: #000;
+  text-decoration: none;
+}
+
+.page-title {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #666866;
+}
+
+.content {
+  padding-top: 1em;
+  padding-left: 15px;
+  width: 92%;
+}
+
+.tktDspLabel {
+  color: #666866;
+}
+
+.tktDspValue {
+  background-color: #fff !important;
+  border-bottom: 1px solid #eee;
+}
+
+.timelineTableCell {
+  padding: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 6px;
+/*  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0.5, rgba(255,255,255,0)),
+      color-stop(1, #FFFFFF)
+  );
+  background-image: -moz-linear-gradient(
+      center bottom,
+      rgba(255,255,255,0) 50%,
+      #FFFFFF 100%
+  );  
+*/}
+
+li { 
+  margin-top: 0.5em; 
+  margin-bottom: 0.5em;
+}
+
+table.browser {
+  width: none;
+}
+
+.browser ul {
+  margin-left: 2em;
+  margin-right: 2em;
+  list-style-type: square;
+  color: #D2A24A;
+}
+
+.browser li a {
+text-decoration:none;
+}
+
+.browser li a:hover {
+text-decoration:underline;
+}
+
+textarea, pre, code {
+  font: 9pt "Droid Sans Mono", Menlo, "DejaVu Sans Mono", Inconsolata, "Bitstream Vera Sans Mono", "Lucida Console", monospace;
+}
+
+pre {
+  color: #111;
+  overflow: auto;
+}
+
+pre.diff {
+  overflow: none;
+}
+
+pre.diff {
+  color: #000;
+}
+
+pre .diff-position {
+  display:-moz-inline-stack;
+  display:inline-block;
+  zoom:1;
+  *display:block;
+  width: 100%;
+  font-style: italic;
+  padding: 0.5em 0;
+  margin: 0.5em 0;
+  border-top: 1px dotted #A2B5CD;
+  border-bottom: 1px dotted #A2B5CD;
+  color: #A2B5CD;
+}
+
+pre .diff-added {
+  background-color: #CEFBC3 !important;
+}
+
+pre .diff-removed {
+  background-color: #F5C2C1 !important;
+}
+
+/* verbatim blocks */
+pre.verbatim {
+  padding: 0.5em;
+  white-space: pre-wrap;
+}
+'
+config /config 2376
+1401311347 'header' value '<html>
+<head>
+<base href="$baseurl/$current_page">
+<title>$<project_name>: $<title></title>
+<link rel="alternate" type="application/rss+xml" title="RSS Feed"
+      href="$home/timeline.rss" />
+<link rel="stylesheet" href="$home/style.css?default" type="text/css"
+      media="screen" />
+</head>
+<body>
+  <div class="header"> 
+    <a href="$home$index_page"><img src="$home/logo" alt="logo" class="logo" /></a>
+    <div class="title-header">
+      <div class="title"><small><a href="https://fossil.nitelite.io">fossil.nitelite.io</a> &#8250; <a href="$home$index_page">$<project_name></a></small></div>
+        <div class="page-title">
+      <th1>
+        if {$current_page eq [string range $index_page 1 end] || 
+            $current_page eq "index"} {
+          puts Home
+        } else {
+          puts $title
+        }
+      </th1>
+      </div>
+    </div>
+  </div>
+    
+  <div class="mainmenu">
+    <div class="status"><th1>
+       if {[info exists login]} {
+         html "$login (<a href=''$home/login''>Logout</a>)"
+       } else {
+         html "<a href=''$home/login''>Login</a> "
+       }
+    </th1></div>
+    <th1>
+        proc menulink {pagename url name} {
+          upvar current_page current
+          upvar home h
+          upvar index_page ind
+          set ind [string range $ind 1 end]
+          html "<a href=''$h$url''"
+
+          if {$pagename eq $current || $current eq $ind ||
+              ($pagename eq "home" && $current eq "index")} {
+             html " class=''active'' "
+          }
+          html ">$name</a>"
+        }
+
+        menulink "home" $index_page Home
+
+        if {[anycap jor]} {
+           menulink "timeline" "/timeline" Timeline
+        }
+        if {[hascap oh]} {
+           menulink "dir" "/dir?ci=tip" Files
+        }
+        if {[hascap o]} {
+           menulink "brlist" "/brlist" Branches
+           menulink "taglist" "/taglist" Tags
+        }
+        if {[hascap r]} {
+           menulink "reportlist" "/reportlist" Tickets
+        }
+        if {[hascap j]} {
+           menulink "wiki" "/wiki" Wiki
+        }
+        if {[hascap s]} {
+           menulink "setup" "/setup" Admin
+        } elseif {[hascap a]} {
+           menulink "setup_ulist" "/setup_ulist" Users
+        }
+    </th1>
+  </div>
+<div class="container">'
+config /config 245
+1306077990 'footer' value '</div>
+<div class="footer grid-12">
+Powered by <a href="http://fossil-scm.org" title="Fossil version $manifest_version $manifest_date">Fossil</a> &#183; <a href="$home/timeline.rss">RSS</a>
+</div>
+</body></html>
+'
+config /config 41
+1400977875 'timeline-plaintext' value '1'
