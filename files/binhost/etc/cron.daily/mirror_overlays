@@ -14,9 +14,10 @@ then
 
   system_distfiles="/usr/portage/distfiles"
   workdir="/srv/nfs/io"
-  overlays="nitelite-a nitelite-b nitelite-staging nitelite-production"
+  system_overlays="nitelite-a nitelite-b"
+  application_overlays="nitelite-applications"
 
-  for repo in ${overlays};
+  for repo in ${system_overlays};
   do
     overlay_dir="${workdir}/overlay-${repo}"
     mkdir -p "${overlay_dir}/"{distfiles,distfiles-local,info,log,tmp}
@@ -36,6 +37,27 @@ then
         --verify-existing-digest \
         --mirror --verbose
 
+  done
+
+  for repo in ${application_overlays};
+  do
+    overlay_dir="${workdir}/overlay-${repo}"
+    mkdir -p "${overlay_dir}/"{distfiles,distfiles-local,info,log,tmp}
+    emirrordist \
+        --distfiles="${overlay_dir}/distfiles" \
+        --delete --jobs=10 --repo="${repo}" \
+        --deletion-delay=$((86400 * 14)) \
+        --failure-log="${overlay_dir}/log/failure.log" \
+        --success-log="${overlay_dir}/log/success.log" \
+        --scheduled-deletion-log="${overlay_dir}/log/deletion.log" \
+        --fetch-log-dir="${overlay_dir}/log" \
+        --deletion-db="${overlay_dir}/info/deletion.db" \
+        --distfiles-db="${overlay_dir}/info/distfiles.db" \
+        --temp-dir="${overlay_dir}/tmp" \
+        --distfiles-local="${overlay_dir}/distfiles-local" \
+        --restrict-mirror-exemptions="gentoo" \
+        --verify-existing-digest \
+        --mirror --verbose
   done
 
   rm /tmp/mirror_overlays;

@@ -12,10 +12,6 @@ if [ ! -f /tmp/mirror_gentoo_local ];
 then
   touch /tmp/mirror_gentoo_local;
 
-  # sync local distfiles
-  rsync -aqvz --delete --delete-during /usr/portage/distfiles/ \
-  /srv/nfs/io/gentoo-local-distfiles;
-
   # sync local packages
   rsync -aqvz --delete --delete-during /usr/portage/packages/ \
   /srv/nfs/io/gentoo-local-packages;
