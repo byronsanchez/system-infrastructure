@@ -41,6 +41,16 @@ class hypervisor {
     source => "puppet:///files/hypervisor/etc/libvirt/libvirt.conf",
   }
 
+  file { '/etc/cron.daily/backup_virtdomains':
+    ensure  => present,
+    path    => "/etc/cron.daily/backup_virtdomains",
+    source  => 'puppet:///files/hypervisor/etc/cron.daily/backup_virtdomains',
+    group   => '0',
+    owner   => '0',
+    mode    => 0755,
+    require => File['/etc/cron.daily'],
+  }
+
   $packages = [
     "libvirt",
     "virt-manager",
