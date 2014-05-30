@@ -19,57 +19,6 @@ class nasclient {
     require => File['/mnt/luna'],
   }
 
-  # Puppet manifests
-
-  file { "/mnt/puppet":
-    ensure => "directory",
-    owner => "root",
-    group => "root",
-  }
-
-  mount { "/mnt/puppet":
-    ensure  => present,
-    device  => "nas.internal.nitelite.io:/srv/nfs/puppet",
-    atboot  => true,
-    fstype  => "nfs4",
-    options => "soft,timeo=30,ro",
-    require => File['/mnt/puppet'],
-  }
-
-  # Gentoo binaries
-
-  file { "/mnt/gentoo-local-packages":
-    ensure => "directory",
-    owner => "root",
-    group => "root",
-  }
-
-  mount { "/mnt/gentoo-local-packages":
-    ensure  => present,
-    device  => "nas.internal.nitelite.io:/srv/nfs/gentoo-local-packages",
-    atboot  => true,
-    fstype  => "nfs4",
-    options => "soft,timeo=30,ro",
-    require => File['/mnt/gentoo-local-packages'],
-  }
-
-  # Gentoo portage tree
-
-  file { "/mnt/gentoo-portage":
-    ensure => "directory",
-    owner => "root",
-    group => "root",
-  }
-
-  mount { "/mnt/gentoo-portage":
-    ensure  => present,
-    device  => "nas.internal.nitelite.io:/srv/nfs/gentoo-portage",
-    atboot  => true,
-    fstype  => "nfs4",
-    options => "soft,timeo=30,ro",
-    require => File['/mnt/gentoo-portage'],
-  }
-
   # byronsanchez home directory
 
   file { "/mnt/byronsanchez":
