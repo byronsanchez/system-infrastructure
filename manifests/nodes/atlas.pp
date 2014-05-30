@@ -22,6 +22,8 @@ node 'atlas.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "vcs": }
+
   class { "data":
     data_type => "client",
   }

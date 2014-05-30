@@ -26,6 +26,8 @@ node 'mira.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "vcs": }
+
   class { "nasclient": }
 
   class { "ldap":
@@ -35,8 +37,6 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "pki":
     ca_type => "client",
   }
-
-  class { "vcs": }
 
   class { "rsyncd": }
 

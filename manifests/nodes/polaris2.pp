@@ -22,6 +22,8 @@ node 'polaris2.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "vcs": }
+
   class { "data":
     data_type => "client",
   }

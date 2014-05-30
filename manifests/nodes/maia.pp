@@ -22,6 +22,8 @@ node 'maia.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "vcs": }
+
   class { "data":
     data_type => "server",
   }
