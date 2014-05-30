@@ -9,4 +9,4 @@
 ##
 ## User privilege specification
 ##
-jenkins	ALL=NOPASSWD: /var/lib/jenkins/.rvm/bin/rvm, /usr/bin/emerge, /usr/bin/npm
+jenkins	ALL=NOPASSWD: /var/lib/jenkins/.rvm/bin/rvm, /usr/bin/emerge, /usr/bin/ebuild, /usr/bin/npm
