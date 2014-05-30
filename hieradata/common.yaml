@@ -2,3 +2,70 @@
 rootpw: secret
 exports:
 
+# WORKSTATION
+ssh_configs:
+
+  byronsanchez:
+
+    - |
+      Host deployer production.hackbytes.com
+      ForwardAgent yes
+      Hostname production.hackbytes.com
+      IdentityFile ~/.ssh/deployer_rsa
+      User deployer
+      Port 1224
+
+    - |
+      Host deployer production.nitelite.io
+      ForwardAgent yes
+      Hostname production.nitelite.io
+      IdentityFile ~/.ssh/deployer_rsa
+      User deployer
+      Port 1224
+
+    - |
+      Host byronsanchez production.hackbytes.com
+      ForwardAgent yes
+      Hostname production.hackbytes.com
+      IdentityFile ~/.ssh/byronsanchez_rsa
+      User byronsanchez
+      Port 1224
+
+    - |
+      Host deployer stage.hackbytes.com
+      ForwardAgent yes
+      Hostname stage.hackbytes.com
+      IdentityFile ~/.ssh/deployer_rsa
+      User deployer
+      Port 1224
+
+    - |
+      Host deployer stage.nitelite.io
+      ForwardAgent yes
+      Hostname stage.nitelite.io
+      IdentityFile ~/.ssh/deployer_rsa
+      User deployer
+      Port 1224
+
+    - |
+      Host byronsanchez stage.hackbytes.com
+      ForwardAgent yes
+      Hostname stage.hackbytes.com
+      IdentityFile ~/.ssh/byronsanchez_rsa
+      User byronsanchez
+      Port 1224
+
+    - |
+      Host *.internal.nitelite.io
+      ForwardAgent yes
+      IdentityFile ~/.ssh/byronsanchez_rsa
+      User byronsanchez
+      Port 1224
+
+    - |
+      Host github.com
+      HostName github.com
+      IdentityFile ~/.ssh/byronsanchez_rsa
+      Port 22
+
+
