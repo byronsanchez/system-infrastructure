@@ -14,4 +14,5 @@ command -v bundle >/dev/null 2>&1 || {
 
 # Initialization to setup a buildable application
 bundle install
+librarian-puppet update
 
