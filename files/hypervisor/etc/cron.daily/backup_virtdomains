@@ -1,0 +1,14 @@
+#!/bin/sh
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+
+# TODO:
+#virsh dumpxml myvm > foo.xml
+
