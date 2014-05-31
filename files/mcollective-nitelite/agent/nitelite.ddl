@@ -4,7 +4,7 @@ metadata :name        => "nitelite",
          :license     => "GPL-2",
          :version     => "0.0.1",
          :url         => "http://hackbytes.com",
-         :timeout     => 180
+         :timeout     => 3600 
 
 requires :mcollective => "2.2.1"
 
@@ -214,3 +214,34 @@ action "python-updater", :description => "Rebuilds python dependent packages" do
     end
 
 end
+
+action "run-command", :description => "Runs a specified command" do
+
+    display :always
+
+    input :command,
+          :prompt      => "Command",
+          :description => "The command to execute",
+          :type        => :string,
+          :validation  => '^.+$',
+          :optional    => false,
+          :maxlength   => 512
+
+    output :stdout,
+           :description => "The STDOUT}",
+           :display_as  => "Command Standard Output"
+
+    output :stderr,
+           :description => "The STDERR",
+           :display_as  => "Command Standard Error"
+
+    output :exitcode,
+           :description => "The exit code from running the command",
+           :display_as  => "Exit Code"
+
+    summarize do
+      aggregate summary(:stderr)
+    end
+
+end
+

@@ -42,11 +42,17 @@ END_OF_USAGE
            :description => "The overlay from which to install the package",
            :type        => String
 
+    option :command,
+           :arguments   => ["--command COMMAND"],
+           :description => "The command to execute",
+           :type        => String
+
     def handle_message(action, message, *args)
       messages = {1 => "Please specify a valid action",
                   2 => "Do you really want to operate on nodes unfiltered? (y/n): ",
                   3 => "Please supply a kernel filename and an initramfs filename",
-                  4 => "Please supply an application name and an overlay name"}
+                  4 => "Please supply an application name and an overlay name",
+                  5 => "Please supply a command to run"}
 
       send(action, messages[message] % args)
     end
@@ -80,6 +86,12 @@ END_OF_USAGE
 
             if configuration[:overlay].nil?
               handle_message(:raise, 4)
+            end
+          end
+
+          if configuration[:action] == 'run-command'
+            if configuration[:command].nil?
+              handle_message(:raise, 5)
             end
           end
 
@@ -117,6 +129,10 @@ END_OF_USAGE
       elsif configuration[:action] == 'emerge-app'
 
         nitelite_result = nitelite.send(configuration[:action], :nitelite => configuration[:nitelite], :application => configuration[:application], :overlay => configuration[:overlay])
+
+      elsif configuration[:action] == 'run-command'
+
+        nitelite_result = nitelite.send(configuration[:action], :nitelite => configuration[:nitelite], :command => configuration[:command])
 
       else
 

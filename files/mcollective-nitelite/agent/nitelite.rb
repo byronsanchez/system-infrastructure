@@ -90,6 +90,17 @@ module MCollective
         reply[:stderr] = cmd_error
       end
 
+      action "run-command" do
+        cmd_output = []
+        cmd_error = ""
+        reply[:exitcode] = run("#{request[:command]}",
+            :stdout => cmd_output,
+            :stderr => cmd_error,
+           )
+        reply[:stdout] = cmd_output
+        reply[:stderr] = cmd_error
+      end
+
     end
   end
 end
