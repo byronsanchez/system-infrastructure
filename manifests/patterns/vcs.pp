@@ -9,7 +9,6 @@ class vcs(
       owner   => "root",
       group   => "root",
       mode    => "0755",
-      recurse => true,
       require => File['/srv/fossil'],
     }
 
@@ -17,6 +16,7 @@ class vcs(
       ensure => present,
       owner => "root",
       group => "root",
+      mode    => "0755",
       path => "/srv/fossil/cgi-bin/index.cgi",
       source => "puppet:///files/vcs/srv/fossil/cgi-bin/index.cgi",
       require => File['/srv/fossil/cgi-bin'],
@@ -26,6 +26,7 @@ class vcs(
       ensure => present,
       owner => "root",
       group => "root",
+      mode    => "0755",
       path => "/srv/fossil/cgi-bin/opml.cgi",
       source => "puppet:///files/vcs/srv/fossil/cgi-bin/opml.cgi",
       require => File['/srv/fossil/cgi-bin'],
@@ -35,6 +36,7 @@ class vcs(
       ensure => present,
       owner => "root",
       group => "root",
+      mode    => "0755",
       path => "/srv/fossil/cgi-bin/list.cgi",
       source => "puppet:///files/vcs/srv/fossil/cgi-bin/list.cgi",
       require => File['/srv/fossil/cgi-bin'],
