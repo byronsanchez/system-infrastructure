@@ -62,7 +62,7 @@ END_OF_USAGE
       if ARGV.size < 1
         handle_message(:raise, 1)
       else
-        valid_actions = ['update-nodes', 'eix-remote-update', 'eix-sync', 'emerge-world', 'revdep-rebuild', 'perl-cleaner-all', 'python-updater', 'emerge-app']
+        valid_actions = ['update-nodes', 'eix-remote-update', 'eix-sync', 'emerge-world', 'revdep-rebuild', 'perl-cleaner-all', 'python-updater', 'emerge-app', 'run-command']
 
         if valid_actions.include?(ARGV[0])
           configuration[:action] = ARGV.shift
