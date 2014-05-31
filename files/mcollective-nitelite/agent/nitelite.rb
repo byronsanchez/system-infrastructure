@@ -16,7 +16,7 @@ module MCollective
       action "emerge-app" do
         cmd_output = []
         cmd_error = ""
-        reply[:exitcode] = run("/usr/bin/emerge -uv =#{request[:application]}::#{request[:overlay]}",
+        reply[:exitcode] = run("/usr/bin/emerge -uv #{request[:application]}::#{request[:overlay]}",
             :stdout => cmd_output,
             :stderr => cmd_error,
            )
