@@ -15,6 +15,7 @@ The ACTION can be one of the following:
     perl-cleaner-all        - rebuilds perl dependent packages
     python-updater          - rebuilds python dependent packages
     emerge-app              - emerges the latest version of an application
+    run-command             - runs the specified command
 END_OF_USAGE
 
     option :yes,
