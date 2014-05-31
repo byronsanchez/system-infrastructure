@@ -93,7 +93,10 @@ module MCollective
       action "run-command" do
         cmd_output = []
         cmd_error = ""
-        reply[:exitcode] = run("#{request[:command]}",
+        # The "cd ~" prefixes the command because mco will try to invoke "sh -c
+        # [command]" and we don't want that (quoting the entire command and
+        # passing it to sh results in a directory not exists error.
+        reply[:exitcode] = run("cd ~ && #{request[:command]}",
             :stdout => cmd_output,
             :stderr => cmd_error,
            )
