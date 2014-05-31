@@ -5,9 +5,11 @@ class vcs(
   if $vcs_type == "server" {
 
     file { "/srv/fossil/cgi-bin":
-      ensure => directory,
-      owner => "root",
-      group => "root",
+      ensure  => directory,
+      owner   => "root",
+      group   => "root",
+      mode    => "0755",
+      recurse => true,
       require => File['/srv/fossil'],
     }
 
