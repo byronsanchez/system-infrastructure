@@ -5,7 +5,7 @@ class nitelite($environment) {
   nl_nginx::website { "hackbytes.com":
     websiteName     => "hackbytes.com",
     environmentName => "${environment}",
-    root_path       => "/current/_site",
+    root_path       => "/htdocs",
     enable_php      => true,
     enable_feed     => true,
     feed_path       => "hackbytes",
@@ -14,6 +14,7 @@ class nitelite($environment) {
   nl_nginx::website { "chompix.com":
     websiteName     => "chompix.com",
     environmentName => "${environment}",
+    root_path       => "/htdocs",
     enable_php      => true,
     enable_feed     => true,
     feed_path       => "byronsanchez",
@@ -22,7 +23,7 @@ class nitelite($environment) {
   nl_nginx::website { "nitelite.io":
     websiteName     => "nitelite.io",
     environmentName => "${environment}",
-    root_path       => "/current/build",
+    root_path       => "/htdocs",
     enable_php      => true,
     enable_feed     => true,
     feed_path       => "nitelite",
@@ -31,6 +32,7 @@ class nitelite($environment) {
   nl_nginx::website { "tehpotatoking.com":
     websiteName     => "tehpotatoking.com",
     environmentName => "${environment}",
+    root_path       => "/htdocs",
     enable_php      => true,
     enable_feed     => true,
     feed_path       => "tehpotatoking",
