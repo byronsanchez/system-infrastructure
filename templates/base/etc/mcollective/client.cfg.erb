@@ -26,7 +26,7 @@ plugin.rabbitmq.randomize = false
 plugin.rabbitmq.timeout = -1
 
 # Puppet plugin
-plugin.puppet.command = puppet apply /etc/puppet/manifests/site.pp
+plugin.puppet.command = puppet apply /etc/puppet/manifests/site.pp --write-catalog-summary
 plugin.puppet.masterless = true
 plugin.puppet.splay = true
 plugin.puppet.splaylimit = 30
