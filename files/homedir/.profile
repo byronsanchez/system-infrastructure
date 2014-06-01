@@ -6,8 +6,11 @@
 #                                         #
 ###########################################
 
+# nodejs for users using nodejs
+[ -e "$HOME/.nodejs/bin" ] && export PATH="$PATH:$HOME/.nodejs/bin"
+
 # Load NVM
-source ${HOME}/.nvm/nvm.sh
+[ -e "${HOME}/.nvm/nvm.sh" ] && source ${HOME}/.nvm/nvm.sh
 
 # Add RVM to PATH for scripting
-export PATH="$PATH:$HOME/.rvm/bin"
+[ -e "$HOME/.rvm/bin" ] && export PATH="$PATH:$HOME/.rvm/bin"

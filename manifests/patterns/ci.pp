@@ -18,31 +18,36 @@ class ci {
     source => "puppet:///secure/ssh/jenkins_rsa.pub",
   }
 
-  file { '/var/lib/jenkins/.bashrc':
-    ensure  => present,
-    path => "/var/lib/jenkins/.bashrc",
-    source => 'puppet:///files/ci/var/lib/jenkins/.bashrc',
-    owner   => 'jenkins',
-    group   => 'jenkins',
-    mode    => 0644,
+  nl_homedir::files { "jenkins_bashrc":
+    file  => ".bashrc",
+    user  => "jenkins",
+    mode  => 0644,
+    owner => 'jenkins',
+    group => 'jenkins',
   }
 
-  file { '/var/lib/jenkins/.profile':
-    ensure  => present,
-    path => "/var/lib/jenkins/.profile",
-    source => 'puppet:///files/ci/var/lib/jenkins/.profile',
+  nl_homedir::files { "jenkins_profile":
+    file  => ".profile",
+    user => "jenkins",
+    mode => 0644,
     owner   => 'jenkins',
     group   => 'jenkins',
-    mode    => 0644,
   }
 
-  file { '/var/lib/jenkins/.zshrc':
-    ensure  => present,
-    path => "/var/lib/jenkins/.zshrc",
-    source => 'puppet:///files/ci/var/lib/jenkins/.zshrc',
+  nl_homedir::files { "jenkins_zshrc":
+    file  => ".zshrc",
+    user => "jenkins",
+    mode => 0644,
     owner   => 'jenkins',
     group   => 'jenkins',
-    mode    => 0644,
+  }
+
+  nl_homedir::files { "jenkins_npmrc":
+    file  => ".npmrc",
+    user => "jenkins",
+    mode => 0644,
+    owner   => 'jenkins',
+    group   => 'jenkins',
   }
 
   # TODO: require nitelite overlays

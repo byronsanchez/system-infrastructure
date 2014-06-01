@@ -1,21 +1,19 @@
 class nodejs {
 
-  file { '/home/deployer/.npmrc':
-    ensure  => present,
-    path => "/home/deployer/.npmrc",
-    source => 'puppet:///files/nodejs/home/deployer/.npmrc',
+  nl_homedir::files { "deployer_npmrc":
+    file  => ".npmrc",
+    user => "deployer",
+    mode => 0644,
     owner   => 'deployer',
-    group   => 'deployer',
-    mode    => 0644,
+    group   => 'nginx',
   }
 
-  file { '/home/deployer/.profile':
-    ensure  => present,
-    path => "/home/deployer/.profile",
-    source => 'puppet:///files/nodejs/home/deployer/.profile',
+  nl_homedir::files { "deployer_profile":
+    file  => ".profile",
+    user => "deployer",
+    mode => 0644,
     owner   => 'deployer',
-    group   => 'deployer',
-    mode    => 0644,
+    group   => 'nginx',
   }
 
   $packages = [
