@@ -3,6 +3,7 @@ node 'kastra.internal.nitelite.io' inherits network {
   class { "base":
     hostname          => "kastra",
     network_interface => "eth0",
+    mcollective_type  => "client",
   }
 
   class { "gentoo":
