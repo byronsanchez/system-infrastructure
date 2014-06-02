@@ -111,3 +111,9 @@ and then, there are services that would only be useful in-house:
 - PKI Server
 - Internal webserver (to provide web interfaces for different administration nodes, like ldap)
 
+another thing to think about is the implementation of a DMZ for public-facing
+hosts. this will influence the design of the overall network infrastructure. eg.
+hardware seperation is simpler but more costly. logic seperation is definitely
+possible, but more care is necessary to ensure the vms are segmented properly
+with one way access TO the dmz but not FROM the dmz
+
