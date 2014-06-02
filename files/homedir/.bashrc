@@ -10,4 +10,7 @@
 [ -e "${HOME}/.nvm/nvm.sh" ] && source ${HOME}/.nvm/nvm.sh
 
 # Add RVM to PATH for scripting
-[ -e "$HOME/.rvm/bin" ] && export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# nodejs for users using nodejs
+export PATH="$PATH:$HOME/.nodejs/bin"
