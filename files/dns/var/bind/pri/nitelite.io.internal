@@ -30,7 +30,7 @@ fossil.nitelite.io. IN CNAME zosma.internal.nitelite.io.
 
 ;; A Records (IPv4 addresses)
 nitelite.io. IN A 198.98.51.148
-stage.nitelite.io. IN A 10.66.77.108
+stage.nitelite.io. IN A 10.66.77.112
 
 $ORIGIN internal.nitelite.io.
 

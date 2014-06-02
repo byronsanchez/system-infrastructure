@@ -17,5 +17,5 @@ www.byronsanchez.net. IN CNAME byronsanchez.net.
 
 ;; A Records (IPv4 addresses)
 byronsanchez.net. IN A 198.98.51.148
-stage.byronsanchez.net. IN A 10.66.77.108
+stage.byronsanchez.net. IN A 10.66.77.112
 

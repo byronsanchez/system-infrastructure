@@ -22,5 +22,5 @@ feeds.hackbytes.com. IN CNAME 1t5jdoq.feedproxy.ghs.google.com.
 
 ;; A Records (IPv4 addresses)
 hackbytes.com. IN A 198.98.51.148
-stage.hackbytes.com. IN A 10.66.77.108
+stage.hackbytes.com. IN A 10.66.77.112
 

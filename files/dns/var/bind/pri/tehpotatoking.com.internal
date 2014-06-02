@@ -17,5 +17,5 @@ www.tehpotatoking.com. IN CNAME tehpotatoking.com.
 
 ;; A Records (IPv4 addresses)
 tehpotatoking.com. IN A 198.98.51.148
-stage.tehpotatoking.com. IN A 10.66.77.108
+stage.tehpotatoking.com. IN A 10.66.77.112
 
