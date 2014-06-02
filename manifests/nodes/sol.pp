@@ -25,6 +25,8 @@ node 'sol.internal.nitelite.io' inherits network {
       "rbackup",
       "staff",
       "deployer",
+      # this is an ldap user. placing it on the nfs server with the nfs homedir 
+      # means all node access!
       "byronsanchez",
     ],
   }
@@ -95,10 +97,10 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "rbackup": }
   class { "deployer": }
   class { "staff": }
-  class { "byronsanchez":
-    #groups    => ['plugdev', 'android'],
-    groups => ['audio', 'cdrom', 'kvm', 'usb', 'wheel',],
-  }
+  # TODO: ldap this if possible
+  #class { "byronsanchez":
+  #groups    => ['plugdev', 'android'],
+  #}
   class { "logger": }
 
 }
