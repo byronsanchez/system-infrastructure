@@ -18,7 +18,7 @@ class ci {
     source => "puppet:///secure/ssh/jenkins_rsa.pub",
   }
 
-  nl_homedir::files { "jenkins_bashrc":
+  nl_homedir::file { "jenkins_bashrc":
     file  => ".bashrc",
     user  => "jenkins",
     mode  => 0644,
@@ -26,7 +26,7 @@ class ci {
     group => 'jenkins',
   }
 
-  nl_homedir::files { "jenkins_profile":
+  nl_homedir::file { "jenkins_profile":
     file  => ".profile",
     user => "jenkins",
     mode => 0644,
@@ -34,7 +34,7 @@ class ci {
     group   => 'jenkins',
   }
 
-  nl_homedir::files { "jenkins_zshrc":
+  nl_homedir::file { "jenkins_zshrc":
     file  => ".zshrc",
     user => "jenkins",
     mode => 0644,
@@ -42,7 +42,7 @@ class ci {
     group   => 'jenkins',
   }
 
-  nl_homedir::files { "jenkins_npmrc":
+  nl_homedir::file { "jenkins_npmrc":
     file  => ".npmrc",
     user => "jenkins",
     mode => 0644,

@@ -1,6 +1,6 @@
 class nodejs {
 
-  nl_homedir::files { "deployer_npmrc":
+  nl_homedir::file { "deployer_npmrc":
     file  => ".npmrc",
     user => "deployer",
     mode => 0644,
@@ -8,7 +8,7 @@ class nodejs {
     group   => 'nginx',
   }
 
-  nl_homedir::files { "deployer_profile":
+  nl_homedir::file { "deployer_profile":
     file  => ".profile",
     user => "deployer",
     mode => 0644,
