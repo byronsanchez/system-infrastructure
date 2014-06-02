@@ -2,7 +2,7 @@ class nl_homedir {
 
   define file (
     $user,
-    $path,
+    $file,
     $mode = 0644,
     $owner = $user,
     $group = $user,
