@@ -5,9 +5,17 @@ ssh_configs:
   jenkins:
 
     - |
-      Host deployer binhost.internal.nitelite.io
+      Host binhost.internal.nitelite.io
       ForwardAgent yes
       Hostname binhost.internal.nitelite.io
       IdentityFile ~/.ssh/jenkins_rsa
       User deployer
       Port 1224
+
+    - |
+      Host production.*
+      ForwardAgent yes
+      IdentityFile ~/.ssh/jenkins_rsa
+      User deployer
+      Port 1224
+

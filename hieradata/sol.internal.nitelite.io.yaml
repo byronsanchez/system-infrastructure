@@ -10,39 +10,21 @@ ssh_configs:
   root:
 
     - |
-      Host rbackup production.hackbytes.com
+      Host production.*
       ForwardAgent yes
-      Hostname production.hackbytes.com
       IdentityFile ~/.ssh/rbackup_rsa
       User rbackup
       Port 1224
 
     - |
-      Host rbackup production.nitelite.io
+      Host stage.*
       ForwardAgent yes
-      Hostname production.nitelite.io
       IdentityFile ~/.ssh/rbackup_rsa
       User rbackup
       Port 1224
 
     - |
-      Host rbackup stage.hackbytes.com
-      ForwardAgent yes
-      Hostname stage.hackbytes.com
-      IdentityFile ~/.ssh/rbackup_rsa
-      User rbackup
-      Port 1224
-
-    - |
-      Host rbackup stage.nitelite.io
-      ForwardAgent yes
-      Hostname stage.nitelite.io
-      IdentityFile ~/.ssh/rbackup_rsa
-      User rbackup
-      Port 1224
-
-    - |
-      Host byronsanchez mira.internal.nitelite.io
+      Host mira.internal.nitelite.io
       ForwardAgent yes
       Hostname mira.internal.nitelite.io
       IdentityFile ~/.ssh/rbackup_rsa
