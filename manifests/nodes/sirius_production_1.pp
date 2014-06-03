@@ -27,6 +27,10 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
 
   class { "vcs": }
 
+  class { "data":
+    data_type => "client",
+  }
+
   class { "mysql": 
     db_type => "client",
   }
@@ -37,6 +41,10 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
 
   class { "ldap":
     ldap_type => "client"
+  }
+
+  class { "pki":
+    ca_type => "client",
   }
 
   class { "rsyncd": }

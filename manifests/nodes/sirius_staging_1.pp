@@ -37,8 +37,6 @@ node 'sirius-staging-1.internal.nitelite.io' inherits network {
     mail_type => "client",
   }
 
-  class { "nasclient": }
-
   class { "ldap":
     ldap_type => "client"
   }
