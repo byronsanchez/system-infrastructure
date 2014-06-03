@@ -3,6 +3,7 @@ collectives = mcollective
 libdir = /usr/share/mcollective/plugins
 logger_type = syslog
 loglevel = warn
+identity = <%= @fqdn %>
 
 # Security Plugin
 securityprovider = psk
