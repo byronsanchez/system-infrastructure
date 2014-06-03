@@ -31,3 +31,10 @@ ssh_configs:
       User byronsanchez
       Port 1224
 
+    - |
+      Host *.internal.nitelite.io
+      ForwardAgent yes
+      IdentityFile ~/.ssh/rbackup_rsa
+      User rbackup
+      Port 1224
+
