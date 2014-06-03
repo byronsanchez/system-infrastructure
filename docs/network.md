@@ -2,6 +2,8 @@
 
 notes regarding network infratstructure
 
+MAKE SURE TO HAVE YOUR DHCP SERVER PASS THE IPS TO THE LOCAL NAMESERVERS!
+
 DMZ containing public facing hosts. anything exposed to the internet goes here
 internal local subnet that does not communicate with hosts on the DMZ
 within the internal local subnet, further subdivisions can occur as necessary:
