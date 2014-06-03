@@ -77,14 +77,6 @@ class base (
     content => template("base/etc/sysctl.conf.erb"),
   }
 
-  file { "/etc/resolv.conf":
-    ensure => present,
-    mode => 0644,
-    owner => "root",
-    group => "root",
-    content => template("base/etc/resolv.conf.erb"),
-  }
-
   file { "/etc/conf.d/keymaps":
     ensure => present,
     mode => 0644,
