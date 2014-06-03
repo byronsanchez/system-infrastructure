@@ -63,6 +63,13 @@ ssh_configs:
       Port 1224
 
     - |
+      Host deployer *.internal.nitelite.io
+      ForwardAgent yes
+      IdentityFile ~/.ssh/deployer_rsa
+      User deployer
+      Port 1224
+
+    - |
       Host github.com
       HostName github.com
       IdentityFile ~/.ssh/byronsanchez_rsa
