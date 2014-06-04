@@ -12,7 +12,16 @@ class webserver {
     ensure  => 'directory',
     owner   => 'deployer',
     group   => 'nginx',
-    mode    => 0640,
+    mode    => 0750,
+    require => File["/srv"],
+  }
+
+  file { "/var/lib/nitelite/webserver":
+    ensure => 'directory',
+    owner  => 'deployer',
+    group  => 'nginx',
+    mode    => 0750,
+    require => File["/var/lib/nitelite"],
   }
 
   file { "/etc/nginx":
