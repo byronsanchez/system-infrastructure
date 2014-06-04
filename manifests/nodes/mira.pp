@@ -85,6 +85,4 @@ node 'mira.internal.nitelite.io' inherits network {
   }
   class { "logger": }
 
-
-
 }
