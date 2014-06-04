@@ -3,7 +3,7 @@ class deployer {
   user { 'deployer':
     ensure           => 'present',
     managehome => true,
-    gid              => 'nginx',
+    gid              => 'www-data',
     home             => '/home/deployer',
     shell            => '/bin/sh',
     uid              => '1002',

@@ -27,7 +27,7 @@ class systems(
     file { "/srv/www/systems.nitelite.io/htdocs/phpmyadmin/config.inc.php":
       ensure => present,
       owner => "deployer",
-      group => "nginx",
+      group => "www-data",
       require => [
         Package[phpmyadmin],
         Exec[webapp_config_phpmyadmin],
@@ -59,7 +59,7 @@ class systems(
     file { "/srv/www/systems.nitelite.io/htdocs/phppgadmin/conf/config.inc.php":
       ensure => present,
       owner => "deployer",
-      group => "nginx",
+      group => "www-data",
       require => [
         Package[phppgadmin],
         Exec[webapp_config_phppgadmin],
@@ -100,7 +100,7 @@ class systems(
     file { "/srv/www/systems.nitelite.io/htdocs/phpldapadmin/config/config.php":
       ensure => present,
       owner => "deployer",
-      group => "nginx",
+      group => "www-data",
       require => [
         Package[phpldapadmin],
         Exec[webapp_config_phpldapadmin],
@@ -143,7 +143,7 @@ class systems(
     file { "/srv/www/systems.nitelite.io/htdocs/postfixadmin/config.inc.php":
       ensure => present,
       owner => "deployer",
-      group => "nginx",
+      group => "www-data",
       require => [
         Package[postfixadmin],
         Exec[webapp_config_postfixadmin],
@@ -177,7 +177,7 @@ class systems(
     file { "/srv/www/systems.nitelite.io/htdocs/roundcube/config/db.inc.php":
       ensure => present,
       owner => "deployer",
-      group => "nginx",
+      group => "www-data",
       require => [
         Package[roundcube],
         Exec[webapp_config_roundcube],
@@ -189,7 +189,7 @@ class systems(
     file { "/srv/www/systems.nitelite.io/htdocs/roundcube/config/main.inc.php":
       ensure => present,
       owner => "deployer",
-      group => "nginx",
+      group => "www-data",
       require => [
         Package[roundcube],
         Exec[webapp_config_roundcube],
@@ -223,7 +223,7 @@ class systems(
     file { "/srv/www/systems.nitelite.io/htdocs/ampache/config/ampache.cfg.php":
       ensure => present,
       owner => "deployer",
-      group => "nginx",
+      group => "www-data",
       require => [
         Package[ampache],
         Exec[webapp_config_ampache],

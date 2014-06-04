@@ -5,7 +5,7 @@ class nodejs {
     user => "deployer",
     mode => 0644,
     owner   => 'deployer',
-    group   => 'nginx',
+    group   => 'www-data',
   }
 
   nl_homedir::file { "deployer_profile":
@@ -13,7 +13,7 @@ class nodejs {
     user => "deployer",
     mode => 0644,
     owner   => 'deployer',
-    group   => 'nginx',
+    group   => 'www-data',
   }
 
   $packages = [

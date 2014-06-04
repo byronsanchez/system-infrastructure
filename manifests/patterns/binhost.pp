@@ -108,7 +108,7 @@ class binhost(
     file { $application_directory:
       ensure  => directory,
       owner   => "deployer",
-      group   => "nginx",
+      group   => "www-data",
       recurse => true,
     }
   }
