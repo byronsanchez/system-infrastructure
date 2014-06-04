@@ -1,6 +1,7 @@
 class php(
   $php_timezone = '',
   $php_version = '',
+  $environment = '',
 ) {
 
   if $php_version {
