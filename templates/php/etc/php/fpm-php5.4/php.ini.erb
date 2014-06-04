@@ -83,7 +83,11 @@
 ; development version only in development environments as errors shown to
 ; application users can inadvertently leak otherwise secure information.
 
+<% if @environment == "production" %>
+; This is php.ini-production INI file.
+<% else %>
 ; This is php.ini-development INI file.
+<% end %>
 
 ;;;;;;;;;;;;;;;;;;;
 ; Quick Reference ;
@@ -449,7 +453,12 @@ memory_limit = 128M
 ; Development Value: E_ALL
 ; Production Value: E_ALL & ~E_DEPRECATED & ~E_STRICT
 ; http://php.net/error-reporting
+
+<% if @environment == "production" %>
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+<% else %>
 error_reporting = E_ALL
+<% end %>
 
 ; This directive controls whether or not and where PHP will output errors,
 ; notices and warnings too. Error output is very useful during development, but
@@ -466,7 +475,12 @@ error_reporting = E_ALL
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/display-errors
+
+<% if @environment == "production" %>
+display_errors = Off
+<% else %>
 display_errors = On
+<% end %>
 
 ; The display of errors which occur during PHP's startup sequence are handled
 ; separately from display_errors. PHP's default behavior is to suppress those
@@ -477,7 +491,12 @@ display_errors = On
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/display-startup-errors
+
+<% if @environment == "production" %>
+display_startup_errors = Off
+<% else %>
 display_startup_errors = On
+<% end %>
 
 ; Besides displaying errors, PHP can also log errors to locations such as a
 ; server-specific log, STDERR, or a location specified by the error_log
@@ -521,7 +540,12 @@ report_memleaks = On
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/track-errors
+
+<% if @environment == "production" %>
+track_errors = Off
+<% else %>
 track_errors = On
+<% end %>
 
 ; Turn off normal error reporting and emit XML-RPC error XML
 ; http://php.net/xmlrpc-errors
@@ -573,7 +597,7 @@ html_errors = On
 ; http://php.net/error-log
 ; Example:
 ;error_log = php_errors.log
-; Log errors to syslog (Event Log on NT, not valid in Windows 95).
+; Log errors to syslog (Event Log on Windows).
 ;error_log = syslog
 
 ;windows.show_crt_warning
@@ -742,7 +766,7 @@ enable_dl = Off
 ; will look for to know it is OK to continue execution.  Setting this variable MAY
 ; cause security issues, KNOW WHAT YOU ARE DOING FIRST.
 ; http://php.net/cgi.redirect-status-env
-;cgi.redirect_status_env = 
+;cgi.redirect_status_env =
 
 ; cgi.fix_pathinfo provides *real* PATH_INFO/PATH_TRANSLATED support for CGI.  PHP's
 ; previous behaviour was to set PATH_TRANSLATED to SCRIPT_FILENAME, and to not grok
@@ -1012,7 +1036,7 @@ mail.add_x_header = On
 ; The path to a log file that will log all mail() calls. Log entries include
 ; the full path of the script, line number, To address and headers.
 ;mail.log =
-; Log mail to syslog (Event Log on NT, not valid in Windows 95).
+; Log mail to syslog (Event Log on Windows).
 ;mail.log = syslog
 
 [SQL]
@@ -1213,7 +1237,12 @@ mysqlnd.collect_statistics = On
 ; Enable / Disable collection of memory usage statistics by mysqlnd which can be
 ; used to tune and monitor MySQL operations.
 ; http://php.net/mysqlnd.collect_memory_statistics
+
+<% if @environment == "production" %>
+mysqlnd.collect_memory_statistics = Off
+<% else %>
 mysqlnd.collect_memory_statistics = On
+<% end %>
 
 ; Size of a pre-allocated buffer used when sending commands to MySQL in bytes.
 ; http://php.net/mysqlnd.net_cmd_buffer_size

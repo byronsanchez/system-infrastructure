@@ -1,16 +1,19 @@
 node 'sirius-production-1.internal.nitelite.io' inherits network {
 
+  $environment = "production"
+
   class { "base":
-    hostname          => "sirius-production-1",
+    hostname          => "sirius-${environment}-1",
     # TODO: make sure all nodes use eth[n] interface names for consistency
     # across all nodes
     network_interface => "enp0s3",
   }
 
   class { "gentoo":
-    use_flags       => "mysql",
-    linguas         => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
-    lowmemorybox    => false,
+    use_flags    => "mysql",
+    linguas      => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
+    lowmemorybox => false,
+    environment  => "${environment}",
   }
 
   class { "security":
@@ -36,7 +39,7 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
   }
 
   class { "mail":
-    mail_type => "client",
+    mail_type => "standalone",
   }
 
   class { "ldap":
@@ -51,12 +54,14 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
 
   class { "webserver": }
 
-  class { "php": }
+  class { "php":
+    environment => "{environment}"
+  }
 
   class { "nodejs": }
 
   class { "nitelite":
-    environment => "production",
+    environment => "${environment}",
   }
 
   # users

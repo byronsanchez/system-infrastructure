@@ -169,12 +169,12 @@ myorigin = $myhostname
 # the server is the final mail destination for the "nitelite.io"
 # domain, in addition to the names of the machine itself.
 mydestination = $myhostname localhost.$mydomain localhost $mydomain
-<% elsif @mail_type == "client" %>
+<% else %>
 # Since we are not going to receive emails, set this to blank to disable local
 # mail deilvery; this is only needed for the server since it's going to be the
 # exposed one
 mydestination =
-<% end%>
+<% end %>
 
 # REJECTING MAIL FOR UNKNOWN LOCAL USERS
 #
@@ -275,7 +275,11 @@ mynetworks_style = host
 #mynetworks = 168.100.189.0/28, 127.0.0.0/8
 #mynetworks = $config_directory/mynetworks
 #mynetworks = hash:/etc/postfix/network_table
+<% if @mail_type == "standalone" %>
+mynetworks = 127.0.0.0/8
+<% else %>
 mynetworks = 10.66.77.0/24, 127.0.0.0/8
+<% end %>
 
 # The relay_domains parameter restricts what destinations this system will
 # relay mail to.  See the smtpd_recipient_restrictions description in
@@ -359,6 +363,9 @@ smtp_sasl_security_options =
 <% elsif @mail_type == "client" %>
 # Optional: forward all non-local mail to mailhost
 relayhost = [mx.internal.nitelite.io]
+<% elsif @mail_type == "standalone" %>
+# forward mail directly to address
+relayhost =
 <% end -%>
 
 # REJECTING UNKNOWN RELAY USERS

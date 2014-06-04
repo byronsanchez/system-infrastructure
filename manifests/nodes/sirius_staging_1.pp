@@ -1,14 +1,17 @@
 node 'sirius-staging-1.internal.nitelite.io' inherits network {
 
+  $environment = "staging"
+
   class { "base":
-    hostname          => "sirius-staging-1",
+    hostname          => "sirius-${environment}-1",
     network_interface => "eth0",
   }
 
   class { "gentoo":
-    use_flags       => "mysql",
-    linguas         => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
-    lowmemorybox    => false,
+    use_flags    => "mysql",
+    linguas      => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
+    lowmemorybox => false,
+    environment  => "${environment}",
   }
 
   class { "security":
@@ -34,7 +37,7 @@ node 'sirius-staging-1.internal.nitelite.io' inherits network {
   }
 
   class { "mail":
-    mail_type => "client",
+    mail_type => "standalone",
   }
 
   class { "ldap":
@@ -49,7 +52,9 @@ node 'sirius-staging-1.internal.nitelite.io' inherits network {
 
   class { "webserver": }
 
-  class { "php": }
+  class { "php":
+    environment => "${environment}",
+  }
 
   class { "nodejs": }
 
