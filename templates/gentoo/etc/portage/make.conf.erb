@@ -106,5 +106,13 @@ VIDEO_CARDS="<%= @video_cards %>"
 INPUT_DEVICES="<%= @input_devices %>"
 <% end -%>
 
+<% if @environment == "production" %>
+PHP_INI_VERSION="production"
+<% else %>
+PHP_INI_VERSION="development"
+<% end -%>
+
+PHP_TARGETS="php5-5 php5-4"
+
 source /var/lib/layman/make.conf
 
