@@ -31,6 +31,10 @@ node 'sol.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "backup":
+    backup_type => "server",
+  }
+
   class { "vcs": }
 
   class { "data":
@@ -56,8 +60,6 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "pki":
     ca_type => "puppet",
   }
-
-  class { "backup": }
 
   class { "rsyncd": }
 

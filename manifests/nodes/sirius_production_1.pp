@@ -28,6 +28,8 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "backup": }
+
   class { "vcs": }
 
   class { "data":

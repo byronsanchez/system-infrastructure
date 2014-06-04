@@ -23,6 +23,8 @@ node 'zosma.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "backup": }
+
   class { "vcs": }
 
   class { "data":

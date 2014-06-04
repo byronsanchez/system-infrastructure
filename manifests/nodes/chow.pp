@@ -23,6 +23,8 @@ node 'chow.internal.nitelite.io' inherits network {
     ],
   }
 
+  class { "backup": }
+
   class { "data":
     data_type => "client",
   }
