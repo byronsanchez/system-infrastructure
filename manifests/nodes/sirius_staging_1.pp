@@ -56,6 +56,7 @@ node 'sirius-staging-1.internal.nitelite.io' inherits network {
 
   class { "php":
     environment => "${environment}",
+    php_timezone => 'America/New_York',
   }
 
   class { "nodejs": }
