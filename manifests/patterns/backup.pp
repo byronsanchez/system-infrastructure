@@ -40,6 +40,16 @@ class backup(
       owner   => '0',
     }
 
+    file { '/etc/cron.daily/backup_mirror':
+      ensure  => present,
+      path    => "/etc/cron.daily/backup_mirror",
+      source  => 'puppet:///files/backup/etc/cron.daily/backup_mirror',
+      group   => '0',
+      owner   => '0',
+      mode    => 0755,
+      require => File['/etc/cron.daily'],
+    }
+
     file { '/etc/cron.daily/rsnapshot':
       ensure  => present,
       path    => "/etc/cron.daily/rsnapshot",
