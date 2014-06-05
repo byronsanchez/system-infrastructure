@@ -9,12 +9,12 @@ absolutely required, use the following as a guide.**
 
 1024MB
 
-centralized vcs if running gitlab
 ci server
 
 512MB 2 cores, 50GB
 
 webserver
+vcs
 
 256MB 1 core, 20GB
 

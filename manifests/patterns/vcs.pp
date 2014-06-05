@@ -445,14 +445,6 @@ class vcs(
       source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/cgit.internal.nitelite.io",
     }
 
-    # TODO: consider removing gitbucket in favor of cgit
-    #exec { "download_gitbucket":
-    #  command => "/usr/bin/wget -P /var/lib/tomcat-7/webapps 
-    #  http://binhost.internal.nitelite.io/external/distfiles/gitbucket-1.13.war 
-    #  -O gitbucket.war",
-    #  creates => "/var/lib/tomcat-7/webapps/gitbucket.war"
-    #}
-
   }
 
   file { "/etc/portage/package.use/git":
