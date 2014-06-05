@@ -447,6 +447,15 @@ class vcs(
 
   }
 
+  file { "/etc/portage/package.use/fossil":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/fossil",
+    source => "puppet:///files/vcs/etc/portage/package.use/fossil",
+  }
+
   file { "/etc/portage/package.use/git":
     ensure => present,
     owner => "root",
