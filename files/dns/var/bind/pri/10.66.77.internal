@@ -26,4 +26,5 @@ $TTL 1200
 115.77.66.10.in-addr.arpa.  IN  PTR bellatrix.internal.nitelite.io.
 116.77.66.10.in-addr.arpa.  IN  PTR chow.internal.nitelite.io.
 117.77.66.10.in-addr.arpa.  IN  PTR kastra.internal.nitelite.io.
+121.77.66.10.in-addr.arpa.  IN  PTR mira.internal.nitelite.io.
 
