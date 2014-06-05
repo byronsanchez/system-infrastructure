@@ -23,9 +23,9 @@ HOME=/
 # *  *  *  *  * user-name command to be executed
 
 # check scripts in cron.hourly, cron.daily, cron.weekly and cron.monthly
-59  *  * * *	root	rm -f /var/spool/cron/lastrun/cron.hourly
-9  3  * * *	root	rm -f /var/spool/cron/lastrun/cron.daily
-19 4  * * 6	root	rm -f /var/spool/cron/lastrun/cron.weekly
-29 5  1 * *	root	rm -f /var/spool/cron/lastrun/cron.monthly
-*/10  *  * * *	root	test -x /usr/sbin/run-crons && /usr/sbin/run-crons
+<%= @random_minute %> * * * *	root	rm -f /var/spool/cron/lastrun/cron.hourly
+<%= @random_minute + 10 %> <%= @random_hour %> * * *	root	rm -f /var/spool/cron/lastrun/cron.daily
+<%= @random_minute + 20 %> <%= @random_hour + 1 %> * * 6	root	rm -f /var/spool/cron/lastrun/cron.weekly
+<%= @random_minute + 30 %> <%= @random_hour + 2 %> 1 * *	root	rm -f /var/spool/cron/lastrun/cron.monthly
+*/10 * * * *	root	test -x /usr/sbin/run-crons && /usr/sbin/run-crons
 

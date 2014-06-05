@@ -57,6 +57,27 @@ class base (
     content => template("base/etc/mcollective/server.cfg.erb"),
   }
 
+  # generate random values that will persist for each node, but be totally
+  # different across nodes. these values will change if the fqdn changes
+  # Max value is padded to allow for addition to the random number for
+  # time seperation between each crontab task
+  # minutes needs at least 30 min of padding
+  $random_minute = fqdn_rand(30, 'cron') - 1
+  # hour needs at least two hours of padding
+  $random_hour = fqdn_rand(22, 'cron') - 1
+  # day of week will be 6 for all nodes. only difference (between nodes) is which hour
+  # and minute
+  # day of month will be the first for all nodes. only difference (between
+  # nodes) is which hour and minute
+
+  file { "/etc/crontab":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/crontab",
+    content => template("base/etc/crontab.erb"),
+  }
+
   if $mcollective_type == "client" {
 
     file { "/etc/mcollective/client.cfg":
@@ -99,6 +120,13 @@ class base (
     owner => "root",
     group => "root",
     source => "puppet:///files/base/etc/crontab",
+  }
+
+  file { "/etc/cron.d":
+    ensure => "directory",
+    owner  => "root",
+    group  => "root",
+    mode   => 0750,
   }
 
   file { "/etc/cron.hourly":

@@ -183,7 +183,9 @@ exclude_file	/etc/rsnapshot.exclude
 # and all interval calls simply rotate files. See the man page for more
 # details. The default is 0 (off).
 #
-sync_first	0
+# if the backup fails, we don't want rotation happening. enough failures =
+# eventually all backups will get rotated out
+sync_first	1
 
 # If enabled, rsnapshot will move the oldest directory for each interval
 # to [interval_name].delete, then it will remove the lockfile and delete
@@ -218,22 +220,17 @@ backup	/var/	sol/	+rsync_short_args=-aHAX
 backup	/root/	sol/	+rsync_short_args=-aHAX
 backup	/home/	sol/	+rsync_short_args=-aHAX
 
-#sirius
-#backup	rbackup@198.98.51.148:/etc/	sirius/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
-#backup	rbackup@198.98.51.148:/var/	sirius/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
-#backup	rbackup@198.98.51.148:/root/	sirius/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
-#backup	rbackup@198.98.51.148:/home/	sirius/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
+# osx
+backup	byronsanchez@mira.internal.nitelite.io:/private/etc/	byronsanchez-osx/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
+backup	byronsanchez@mira.internal.nitelite.io:/private/var/	byronsanchez-osx/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
+backup	byronsanchez@mira.internal.nitelite.io:/Users/	byronsanchez-osx/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
 
-# byronsanchez-imac
-backup	byronsanchez@10.66.77.121:/private/etc/	byronsanchez-imac/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
-backup	byronsanchez@10.66.77.121:/private/var/	byronsanchez-imac/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
-backup	byronsanchez@10.66.77.121:/Users/	byronsanchez-imac/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
-
-# nitelite-gen
-#backup	rbackup@10.66.77.100:/etc/	nitelite-gen/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHA
-#backup	rbackup@10.66.77.100:/var/	nitelite-gen/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHA
-#backup	rbackup@10.66.77.100:/root/	nitelite-gen/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHA
-#backup	rbackup@10.66.77.100:/home/	nitelite-gen/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHA
+<% @exports.each do |export| -%>
+backup	rbackup@<%= export %>:/etc/	sirius-staging-1/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
+backup	rbackup@<%= export %>:/var/	sirius-staging-1/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
+backup	rbackup@<%= export %>:/root/	sirius-staging-1/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
+backup	rbackup@<%= export %>:/home/	sirius-staging-1/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
+<% end -%>
 
 # EXAMPLE.COM
 #backup_script	/bin/date "+ backup of example.com started at %c"	unused1

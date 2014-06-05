@@ -2,6 +2,8 @@ class backup(
   $backup_type = '',
 ) {
 
+  $backups = hiera('backups', '')
+
   if $vcs_type == "server" {
 
     file { "/home/rbackup/.ssh/rbackup_rsa":
@@ -40,6 +42,15 @@ class backup(
       owner   => '0',
     }
 
+    file { '/etc/cron.d/rsnapshot':
+      ensure  => present,
+      path    => "/etc/cron.d/rsnapshot",
+      source  => 'puppet:///files/backup/etc/cron.d/rsnapshot',
+      group   => '0',
+      owner   => '0',
+      require => File['/etc/cron.d'],
+    }
+
     file { '/etc/cron.daily/backup_mirror':
       ensure  => present,
       path    => "/etc/cron.daily/backup_mirror",
@@ -48,36 +59,6 @@ class backup(
       owner   => '0',
       mode    => 0755,
       require => File['/etc/cron.daily'],
-    }
-
-    file { '/etc/cron.daily/rsnapshot':
-      ensure  => present,
-      path    => "/etc/cron.daily/rsnapshot",
-      source  => 'puppet:///files/backup/etc/cron.daily/rsnapshot',
-      group   => '0',
-      owner   => '0',
-      mode    => 0755,
-      require => File['/etc/cron.daily'],
-    }
-
-    file { '/etc/cron.weekly/rsnapshot':
-      ensure  => present,
-      path    => "/etc/cron.weekly/rsnapshot",
-      source  => 'puppet:///files/backup/etc/cron.weekly/rsnapshot',
-      group   => '0',
-      owner   => '0',
-      mode    => 0755,
-      require => File['/etc/cron.weekly'],
-    }
-
-    file { '/etc/cron.monthly/rsnapshot':
-      ensure  => present,
-      path    => "/etc/cron.monthly/rsnapshot",
-      source  => 'puppet:///files/backup/etc/cron.monthly/rsnapshot',
-      group   => '0',
-      owner   => '0',
-      mode    => 0755,
-      require => File['/etc/cron.monthly'],
     }
 
     $server_packages = [

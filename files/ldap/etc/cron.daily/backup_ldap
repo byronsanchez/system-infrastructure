@@ -21,8 +21,9 @@ then
   mkdir -p $DEST_DIR;
   cd $WORKDIR;
 
-  /usr/sbin/slapcat -v -n 0 -l $WORKDIR/$BACKUP_FILE-config.ldif;
-  /usr/sbin/slapcat -v -b "dc=nitelite,dc=io" -l $WORKDIR/$BACKUP_FILE.ldif;
+  # the config database. not currently used in favor of slapd.conf
+  #/usr/sbin/slapcat -v -n 0 -l $WORKDIR/$BACKUP_FILE-config.ldif;
+  /usr/sbin/slapcat -v -n 1 -l $WORKDIR/$BACKUP_FILE.ldif;
   rsync -aqvz --delete --delete-after $WORKDIR/ $DEST_DIR;
 
   cd "/tmp";
