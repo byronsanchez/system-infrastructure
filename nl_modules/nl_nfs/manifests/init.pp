@@ -1,6 +1,6 @@
 class nl_nfs {
 
-  $exports = hiera('exports')
+  $exports = hiera('exports', '')
 
   file { "/srv/nfs":
     ensure  => "directory",
