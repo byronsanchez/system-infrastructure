@@ -25,7 +25,7 @@ class mysql($db_type) {
         group   => "root",
         mode    => 0600,
         path    => "/root/.my.cnf",
-        content => template("pgsql/root/.my.cnf.erb"),
+        content => template("mysql/root/.my.cnf.erb"),
       }
 
       # USE = extraengine
