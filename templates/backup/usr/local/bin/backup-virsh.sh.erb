@@ -10,4 +10,6 @@
 
 
 umask 0077
-virsh dumpxml <%= @backup %>
+<% @nodes.each do |node| -%>
+virsh dumpxml <%= node %>
+<% end -%>

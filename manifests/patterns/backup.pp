@@ -4,7 +4,7 @@ class backup(
 
   $backups = hiera('backups', '')
 
-  if $vcs_type == "server" {
+  if $backup_type == "server" {
 
     file { "/home/rbackup/.ssh/rbackup_rsa":
       ensure => present,
@@ -26,8 +26,8 @@ class backup(
 
     file { '/etc/rsnapshot.conf':
       ensure  => present,
-      path => "/etc/rsnapshot.conf",
-      source => 'puppet:///files/backup/etc/rsnapshot.conf',
+      path    => "/etc/rsnapshot.conf",
+      content => template('backup/etc/rsnapshot.conf.erb'),
       group   => '0',
       mode    => '644',
       owner   => '0',
