@@ -232,6 +232,10 @@ backup	rbackup@<%= export %>:/root/	sirius-staging-1/	+rsync_long_args=--rsync-p
 backup	rbackup@<%= export %>:/home/	sirius-staging-1/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 <% end -%>
 
+backup_script	/usr/local/bin/backup-pgsql.sh	pgsql/
+backup_script	/usr/local/bin/backup-mysql.sh	mysql/
+backup_script	/usr/local/bin/backup-ldap.sh	ldap/
+
 # EXAMPLE.COM
 #backup_script	/bin/date "+ backup of example.com started at %c"	unused1
 #backup	root@example.com:/home/	example.com/	+rsync_long_args=--bwlimit=16,exclude=core
