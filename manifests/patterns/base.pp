@@ -31,11 +31,12 @@ class base (
   # set the client USE flag on nodes that will be used to administer mco
   # commands
   file { "/etc/portage/package.use/mcollective":
-    ensure => present,
-    owner => "root",
-    group => "root",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
     require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/mcollective",
+    path    => "/etc/portage/package.use/mcollective",
     content => template("base/etc/portage/package.use/mcollective.erb"),
   }
 
@@ -337,6 +338,7 @@ class base (
     "unrar",
     "mutt",
     "netkit-telnetd",
+    "pigz",
     "tcpdump",
     "strace",
     "cowsay",

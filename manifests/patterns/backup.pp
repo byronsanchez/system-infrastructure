@@ -61,6 +61,33 @@ class backup(
       require => File['/etc/cron.daily'],
     }
 
+    file { '/usr/local/bin/backup-pgsql.sh':
+      ensure  => present,
+      path => "/usr/local/bin/backup-pgsql.sh",
+      source => 'puppet:///files/backup/usr/local/bin/backup-pgsql.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '755',
+    }
+
+    file { '/usr/local/bin/backup-mysql.sh':
+      ensure  => present,
+      path => "/usr/local/bin/backup-mysql.sh",
+      source => 'puppet:///files/backup/usr/local/bin/backup-mysql.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '755',
+    }
+
+    file { '/usr/local/bin/backup-ldap.sh':
+      ensure  => present,
+      path => "/usr/local/bin/backup-ldap.sh",
+      source => 'puppet:///files/backup/usr/local/bin/backup-ldap.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '755',
+    }
+
     $server_packages = [
       "rsnapshot",
     ]
@@ -87,6 +114,15 @@ class backup(
     owner   => 'rbackup',
     group   => 'rbackup',
     mode    => '755',
+  }
+
+  # every node gets a backup dir for dumpfiles. These files will then be
+  # downloaded to the backup server, while retaining a copy in the var dir for
+  # the target node.
+  file { "/var/lib/nitelite/backup":
+    ensure => 'directory',
+    mode    => 0755,
+    require => File["/var/lib/nitelite"],
   }
 
 }

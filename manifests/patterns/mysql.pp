@@ -19,11 +19,12 @@ class mysql($db_type) {
 
       # USE = extraengine
       file { "/etc/portage/package.use/mariadb":
-        ensure => present,
-        owner => "root",
-        group => "root",
+        ensure  => present,
+        owner   => "root",
+        group   => "root",
         require => File['/etc/portage/package.use'],
-        path => "/etc/portage/package.use/mariadb",
+        path    => "/etc/portage/package.use/mariadb",
+        mode    => 0644,
         content => template("mysql/etc/portage/package.use/mariadb.erb"),
       }
 

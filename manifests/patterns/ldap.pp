@@ -166,16 +166,6 @@ class ldap($ldap_type) {
     source => "puppet:///files/ldap/var/lib/openldap-ldbm/DB_CONFIG",
   }
 
-  file { "/etc/cron.daily/backup_ldap":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode    => 0755,
-    path   => "/etc/cron.daily/backup_ldap",
-    source => "puppet:///files/ldap/etc/cron.daily/backup_ldap",
-    require => File["/etc/cron.daily"],
-  }
-
   $packages = [
     "openldap",
     "pam_ldap",
