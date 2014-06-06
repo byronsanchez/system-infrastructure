@@ -116,10 +116,10 @@ class backup(
     mode    => '755',
   }
 
-  file { '/usr/local/bin/rsync_wrapper.sh':
+  file { '/usr/bin/rsync_wrapper.sh':
     ensure  => present,
-    path => "/usr/local/bin/rsync_wrapper.sh",
-    source => 'puppet:///files/backup/usr/local/bin/rsync_wrapper.sh',
+    path => "/usr/bin/rsync_wrapper.sh",
+    source => 'puppet:///files/backup/usr/bin/rsync_wrapper.sh',
     owner   => 'rbackup',
     group   => 'rbackup',
     mode    => '755',

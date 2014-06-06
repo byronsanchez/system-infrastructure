@@ -6,6 +6,6 @@
 #                                         #
 ###########################################
 
-9  6 * * *	root	/usr/bin/rsnapshot -c /etc/rsnapshot.conf days_ago
-19 5 * * 6	root	/usr/bin/rsnapshot -c /etc/rsnapshot.conf weeks_ago
-29 4 1 * *	root	/usr/bin/rsnapshot -c /etc/rsnapshot.conf months_ago
+9  6 * * *	root	/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf days_ago
+19 5 * * 6	root	/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf weeks_ago
+29 4 1 * *	root	/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf months_ago

@@ -19,7 +19,7 @@ case "$SSH_ORIGINAL_COMMAND" in
   echo "Rejected"
 ;;
 rsync*)
-  bash -c "sudo $SSH_ORIGINAL_COMMAND"
+  bash -c "$SSH_ORIGINAL_COMMAND"
   ;;
 mysqldump*)
   bash -c "sudo $SSH_ORIGINAL_COMMAND"
