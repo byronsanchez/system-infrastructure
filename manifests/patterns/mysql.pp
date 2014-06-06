@@ -2,6 +2,8 @@
 # if mysql is needed as a dependency for another program (eg. php or postfix)
 class mysql($db_type) {
 
+  $mybackuppw = hiera('mybackuppw', '')
+
   # mask mysql in case it gets pulled in via the USE flag; we want mariadb
   # instead
   file { "/etc/portage/package.mask/mysql":
@@ -16,6 +18,15 @@ class mysql($db_type) {
   case $db_type {
 
     "master", "slave": {
+
+      file { "/root/.my.cnf":
+        ensure  => present,
+        owner   => "root",
+        group   => "root",
+        mode    => 0600,
+        path    => "/root/.my.cnf",
+        content => template("pgsql/root/.my.cnf.erb"),
+      }
 
       # USE = extraengine
       file { "/etc/portage/package.use/mariadb":

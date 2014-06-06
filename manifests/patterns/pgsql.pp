@@ -5,6 +5,7 @@ class pgsql(
 ) {
 
   $pgreaderpw = hiera('pgreaderpw', '')
+  $pgbackuppw = hiera('pgbackuppw', '')
 
   file { "/etc/conf.d/postgresql-9.3":
     ensure  => present,
@@ -37,6 +38,24 @@ class pgsql(
     path    => "/etc/postgresql-9.3/pg_hba.conf",
     content => template("pgsql/etc/postgresql-9.3/pg_hba.conf.erb"),
   }
+
+  case $db_type {
+
+    "master", "slave": {
+
+      file { "/root/.pgpass":
+        ensure  => present,
+        owner   => "root",
+        group   => "root",
+        mode    => 0600,
+        path    => "/root/.pgpass",
+        content => template("pgsql/root/.pgpass.erb"),
+      }
+
+    }
+
+  }
+
 
   if $db_type == "slave" {
 
