@@ -9,6 +9,5 @@
 ###########################################
 
 
-# TODO:
-#virsh dumpxml myvm > foo.xml
-
+umask 0077
+virsh dumpxml <%= @backup %>

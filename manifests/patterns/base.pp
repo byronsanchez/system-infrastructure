@@ -115,14 +115,6 @@ class base (
     content => template("base/etc/conf.d/net.erb"),
   }
 
-  file { "/etc/crontab":
-    ensure => present,
-    mode    => 0644,
-    owner => "root",
-    group => "root",
-    source => "puppet:///files/base/etc/crontab",
-  }
-
   file { "/etc/cron.d":
     ensure => "directory",
     owner  => "root",

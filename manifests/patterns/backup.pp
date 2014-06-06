@@ -88,6 +88,15 @@ class backup(
       mode    => '755',
     }
 
+    file { '/usr/local/bin/backup-virsh.sh':
+      ensure  => present,
+      path    => "/usr/local/bin/backup-virsh.sh",
+      content => template('backup/usr/local/bin/backup-virsh.sh'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '755',
+    }
+
     $server_packages = [
       "rsnapshot",
     ]
