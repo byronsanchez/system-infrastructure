@@ -2,7 +2,7 @@ class backup(
   $backup_type = '',
 ) {
 
-  $backups = hiera('backups', '')
+  $nodes = hiera('nodes', '')
 
   if $backup_type == "server" {
 
@@ -91,7 +91,7 @@ class backup(
     file { '/usr/local/bin/backup-virsh.sh':
       ensure  => present,
       path    => "/usr/local/bin/backup-virsh.sh",
-      content => template('backup/usr/local/bin/backup-virsh.sh'),
+      content => template('backup/usr/local/bin/backup-virsh.sh.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '755',

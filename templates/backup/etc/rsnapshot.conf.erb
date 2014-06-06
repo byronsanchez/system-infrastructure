@@ -230,6 +230,7 @@ backup	rbackup@<%= node %>:/etc/	<%= node %>/	+rsync_long_args=--rsync-path=rsyn
 backup	rbackup@<%= node %>:/var/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 backup	rbackup@<%= node %>:/root/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 backup	rbackup@<%= node %>:/home/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
+
 <% end -%>
 
 backup_script	/usr/local/bin/backup-pgsql.sh	pgsql/
