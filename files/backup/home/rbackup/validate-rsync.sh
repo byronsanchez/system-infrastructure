@@ -19,22 +19,22 @@ case "$SSH_ORIGINAL_COMMAND" in
   echo "Rejected"
 ;;
 rsync*)
-  bash -c "$SSH_ORIGINAL_COMMAND"
+  bash -c "sudo $SSH_ORIGINAL_COMMAND"
   ;;
 mysqldump*)
-  bash -c "$SSH_ORIGINAL_COMMAND"
+  bash -c "sudo $SSH_ORIGINAL_COMMAND"
   ;;
 pg_dumpall*)
-  bash -c "$SSH_ORIGINAL_COMMAND"
+  bash -c "sudo $SSH_ORIGINAL_COMMAND"
   ;;
 pg_dump*)
-  bash -c "$SSH_ORIGINAL_COMMAND"
+  bash -c "sudo $SSH_ORIGINAL_COMMAND"
   ;;
 slapcat*)
-  bash -c "$SSH_ORIGINAL_COMMAND"
+  bash -c "sudo $SSH_ORIGINAL_COMMAND"
   ;;
 virsh\ dumpxml*)
-  bash -c $SSH_ORIGINAL_COMMAND
+  bash -c "sudo $SSH_ORIGINAL_COMMAND"
   ;;
 *true*)
   echo "$SSH_ORIGINAL_COMMAND"
