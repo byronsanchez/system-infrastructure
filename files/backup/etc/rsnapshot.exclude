@@ -24,6 +24,13 @@
 - /home/*/Downloads/*
 - /home/*/downloads/*
 - /home/scratch/**
+# mirrors get mirrored
+- /srv/nfs/io/**
+# the gentoo modules are just symlinks to other directories that get backed up
+# elsewhere
+- /srv/rsync/gentoo*
+- /srv/tftp/boot-pxe/*
+- /srv/www/binhost.internal.nitelite.io/*
 - /var/lib/libvirt/images/**
 - /var/tmp/ccache/**
 - /var/lib/nfs/**

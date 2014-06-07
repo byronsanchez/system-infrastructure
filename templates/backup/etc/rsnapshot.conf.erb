@@ -204,21 +204,16 @@ use_lazy_deletes	1
 ### BACKUP POINTS / SCRIPTS ###
 ###############################
 
-####################
-# Backups of volumes
-####################
-
-backup	/srv/nfs/luna	luna/	+rsync_short_args=-aHAX
-
 ######################################
 # Selective backup of all workstations
 ######################################
 
 # sol
-backup	/etc/	sol/	+rsync_short_args=-aHAX
-backup	/var/	sol/	+rsync_short_args=-aHAX
-backup	/root/	sol/	+rsync_short_args=-aHAX
-backup	/home/	sol/	+rsync_short_args=-aHAX
+backup	/etc/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
+backup	/var/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
+backup	/root/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
+backup	/home/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
+backup	/srv/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
 
 # osx
 backup	byronsanchez@mira.internal.nitelite.io:/private/etc/	mira.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
@@ -230,6 +225,7 @@ backup	rbackup@<%= node %>:/etc/	<%= node %>/	+rsync_long_args=--rsync-path=rsyn
 backup	rbackup@<%= node %>:/var/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 backup	rbackup@<%= node %>:/root/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 backup	rbackup@<%= node %>:/home/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
+backup	rbackup@<%= node %>:/srv/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 
 <% end -%>
 
