@@ -221,9 +221,9 @@ backup	/root/	sol/	+rsync_short_args=-aHAX
 backup	/home/	sol/	+rsync_short_args=-aHAX
 
 # osx
-backup	byronsanchez@mira.internal.nitelite.io:/private/etc/	byronsanchez-osx/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
-backup	byronsanchez@mira.internal.nitelite.io:/private/var/	byronsanchez-osx/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
-backup	byronsanchez@mira.internal.nitelite.io:/Users/	byronsanchez-osx/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
+backup	byronsanchez@mira.internal.nitelite.io:/private/etc/	mira.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
+backup	byronsanchez@mira.internal.nitelite.io:/private/var/	mira.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
+backup	byronsanchez@mira.internal.nitelite.io:/Users/	mira.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
 
 <% @nodes.each do |node| -%>
 backup	rbackup@<%= node %>:/etc/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
@@ -236,6 +236,7 @@ backup	rbackup@<%= node %>:/home/	<%= node %>/	+rsync_long_args=--rsync-path=rsy
 backup_script	/usr/local/bin/backup-pgsql.sh	pgsql/
 backup_script	/usr/local/bin/backup-mysql.sh	mysql/
 backup_script	/usr/local/bin/backup-ldap.sh	ldap/
+backup_script	/usr/local/bin/backup-virsh.sh	virsh/
 
 # EXAMPLE.COM
 #backup_script	/bin/date "+ backup of example.com started at %c"	unused1

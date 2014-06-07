@@ -10,6 +10,12 @@
 
 
 umask 0077
+
+DATE="$( date +%Y%m%d%H%M )"
+
 <% @nodes.each do |node| -%>
-virsh dumpxml <%= node %>
+virsh dumpxml <%= node %> | pigz --rsyncable > virsh-<%= node %>-${DATE}.xml.gz
 <% end -%>
+
+chmod 600 *.xml.gz
+
