@@ -17,10 +17,6 @@ then
   # sync local packages
   rsync -aqvz --delete --delete-during /srv/nfs/io/ /vol/europa/io;
 
-  # sync local packages
-  rsync -aqvz --delete --delete-during /srv/nfs/byronsanchez/ \
-  /vol/europa/byronsanchez;
-
   rm /tmp/backup_mirror;
 fi
 

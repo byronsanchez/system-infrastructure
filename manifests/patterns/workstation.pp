@@ -1,15 +1,5 @@
 class workstation {
 
-  file { "/etc/cron.daily/mirror_mail":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0755,
-    path   => "/etc/cron.daily/mirror_mail",
-    source => "puppet:///files/workstation/etc/cron.daily/mirror_mail",
-    require => File["/etc/cron.daily"],
-  }
-
   file { "/etc/irssi.conf":
     ensure => present,
     owner  => "root",
@@ -44,15 +34,6 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/rtorrent",
   }
 
-  file { "/etc/portage/package.accept_keywords/truecrypt":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/truecrypt",
-    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/truecrypt",
-  }
-
   $packages = [
     "conky",
     "elinks",
@@ -77,7 +58,6 @@ class workstation {
     "lxml",
     "festival",
     "keepassx",
-    "truecrypt",
     "sshfs-fuse",
     "offlineimap",
     "msmtp",
