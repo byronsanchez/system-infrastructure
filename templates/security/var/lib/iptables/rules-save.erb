@@ -117,10 +117,6 @@ COMMIT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 32803 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 32803 -j ACCEPT
 
-# Puppet Communications
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 8140 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 8140 -j ACCEPT
-
 # MPD
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 6600 -m state --state NEW -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 6600 -m state --state NEW -j ACCEPT
