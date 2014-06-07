@@ -26,6 +26,7 @@
 - /home/scratch/**
 - /var/lib/libvirt/images/**
 - /var/tmp/ccache/**
+- /var/lib/nfs/**
 - /usr/portage/**
 # mac stuff
 - /Users/byronsanchez/mnt/*
@@ -36,6 +37,8 @@
 - /private/var/tmp/*
 - /private/var/tmp*
 - /Users/byronsanchez/Library/Caches/*
+- /Users/byronsanchez/Library/Preferences/Macromedia/Flash Player/*
+- /Users/byronsanchez/Desktop/Trash It!.app/*
 - /Users/*/.Trash/*
 - /Users/*/VirtualBox\ VMs/*
 # luna
