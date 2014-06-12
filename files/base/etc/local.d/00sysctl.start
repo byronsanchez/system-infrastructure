@@ -3,5 +3,5 @@
 # Temporary workaround since sysctl isn't loading sysctl.conf at boot
 
 /sbin/sysctl --system
-/sbin/sysctl -p /etc/sysctl.confl
+/sbin/sysctl -p /etc/sysctl.conf
 
