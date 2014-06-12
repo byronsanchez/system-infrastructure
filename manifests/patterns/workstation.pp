@@ -34,7 +34,19 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/rtorrent",
   }
 
+  file { "/etc/portage/package.use/bitlbee":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/bitlbee",
+    source => "puppet:///files/workstation/etc/portage/package.use/bitlbee",
+  }
+
   $packages = [
+    "virtualbox",
+    "docker",
+    "grc",
     "conky",
     "elinks",
     "lynx",
@@ -46,7 +58,6 @@ class workstation {
     "clockywock",
     "tty-clock",
     "cmatrix",
-    #"tesseract"
     "rtorrent",
     "axel",
     "imagemagick",
@@ -54,10 +65,11 @@ class workstation {
     "exiftool",
     "irssi",
     "weechat",
+    "bitlbee",
+    "skype",
     "pyyaml",
     "lxml",
     "festival",
-    "keepassx",
     "sshfs-fuse",
     "offlineimap",
     "msmtp",
@@ -65,6 +77,13 @@ class workstation {
     "urlview",
     "vagrant",
     "dev-python/keyring",
+    "vlc",
+    "filezilla",
+    "go",
+    "sbcl",
+    #"scala",
+    "lua",
+    #"haskell-platform",
   ]
 
   package { $packages: ensure => installed }

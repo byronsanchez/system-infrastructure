@@ -311,6 +311,7 @@ class base (
   }
 
   $packages = [
+    "the_silver_searcher",
     "rsync",
     "openssh",
     "linux-firmware",
@@ -330,7 +331,9 @@ class base (
     "unrar",
     "mutt",
     "netkit-telnetd",
+    "p7zip",
     "pigz",
+    "pv",
     "tcpdump",
     "strace",
     "cowsay",
