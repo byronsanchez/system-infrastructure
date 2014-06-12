@@ -7,6 +7,7 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
     # TODO: make sure all nodes use eth[n] interface names for consistency
     # across all nodes
     network_interface => "enp0s3",
+    enable_docker     => true,
   }
 
   class { "gentoo":

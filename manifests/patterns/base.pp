@@ -10,7 +10,8 @@ class base (
   $hostname,
   $network_type = '',
   $mcollective_type = 'server',
-  $network_interface = 'eth0'
+  $network_interface = 'eth0',
+  $enable_docker = false,
 ) {
 
   $rabbitmq_mcollective_password = hiera('rabbitmq_mcollective_password', '')
@@ -97,6 +98,15 @@ class base (
     group => "root",
     path => "/etc/sysctl.conf",
     content => template("base/etc/sysctl.conf.erb"),
+  }
+
+  file { "/etc/local.d/00sysctl.start":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0755,
+    path   => "/etc/local.d/00sysctl.start",
+    source => "puppet:///files/base/etc/local.d/00sysctl.start",
   }
 
   file { "/etc/conf.d/keymaps":

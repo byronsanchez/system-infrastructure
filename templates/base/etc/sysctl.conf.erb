@@ -99,3 +99,14 @@ net.bridge.bridge-nf-call-arptables = 0
 ## disable ALL packet forwarding (not a router, disable it) (default)
 #net.ipv4.ip_forward = 0
 <% end -%>
+
+<% if @enable_docker %>
+kernel.grsecurity.chroot_caps = 0
+kernel.grsecurity.chroot_deny_chmod = 0
+kernel.grsecurity.chroot_deny_chroot = 0
+kernel.grsecurity.chroot_deny_mount = 0
+kernel.grsecurity.chroot_deny_pivot = 0
+#kernel.grsecurity.chroot_deny_mknod = 0
+#kernel.grsecurity.chroot_findtask = 0
+<% end %>
+

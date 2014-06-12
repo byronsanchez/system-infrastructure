@@ -5,6 +5,7 @@ node 'sirius-staging-1.internal.nitelite.io' inherits network {
   class { "base":
     hostname          => "sirius-${environment}-1",
     network_interface => "eth0",
+    enable_docker     => true,
   }
 
   class { "gentoo":
