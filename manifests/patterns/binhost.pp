@@ -3,12 +3,14 @@
 
 class binhost(
   $portage_package_directory = '',
+  $portage_directory = '',
   $portage_tree_directory = '',
   $gentoo_directory = '',
   $application_directory = '',
   $overlay_a = '',
   $overlay_b = '',
   $external_directory = '',
+  $boxes_directory = '',
 ) {
 
   file { "/etc/nginx/sites-available/binhost.internal.nitelite.io":
@@ -43,16 +45,6 @@ class binhost(
     require => File["/etc/cron.daily"],
   }
 
-  file { "/etc/cron.daily/mirror_gentoo_local":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode    => 0755,
-    path   => "/etc/cron.daily/mirror_gentoo_local",
-    source => "puppet:///files/binhost/etc/cron.daily/mirror_gentoo_local",
-    require => File["/etc/cron.daily"],
-  }
-
   file { "/etc/cron.daily/mirror_overlays":
     ensure => present,
     owner  => "root",
@@ -63,8 +55,16 @@ class binhost(
     require => File["/etc/cron.daily"],
   }
 
+  file { "/usr/local/bin/publish-gentoo-updates":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/publish-gentoo-updates",
+    source => "puppet:///files/binhost/usr/local/bin/publish-gentoo-updates",
+  }
+
   if $portage_package_directory {
-    # link portage tree (ebuilds) to be accessible via http
     file { '/srv/www/binhost.internal.nitelite.io/packages':
        ensure  => 'link',
        target  => "${portage_package_directory}",
@@ -130,6 +130,15 @@ class binhost(
     }
   }
 
+  # Make the local portage tree available via rsync
+  if $portage_directory {
+    file { "/srv/rsync/gentoo-local-portage":
+      ensure  => 'link',
+      target  => "${portage_directory}",
+      require => File["/srv/rsync"],
+    }
+  }
+
   # Make the portage tree available via rsync
   if $portage_tree_directory {
     file { "/srv/rsync/gentoo-portage":
@@ -144,6 +153,15 @@ class binhost(
     file { '/srv/www/binhost.internal.nitelite.io/external':
        ensure  => 'link',
        target  => "${external_directory}",
+       require => File["/srv/www/binhost.internal.nitelite.io"],
+    }
+  }
+
+  # For provisioned boxes/images
+  if $boxes_directory {
+    file { '/srv/www/binhost.internal.nitelite.io/boxes':
+       ensure  => 'link',
+       target  => "${boxes_directory}",
        require => File["/srv/www/binhost.internal.nitelite.io"],
     }
   }

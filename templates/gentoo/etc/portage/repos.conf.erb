@@ -9,15 +9,16 @@
 [DEFAULT]
 main-repo=gentoo
 
-<% if @my_ip4address != @binhost_address -%>
+<% if @ipaddress != @binhost_address -%>
 [gentoo]
 location=/usr/portage
 sync-type=rsync
-sync-uri=rsync://binhost.internal.nitelite.io/gentoo-portage
+sync-uri=rsync://binhost.internal.nitelite.io/gentoo-local-portage
 <% else %>
 [gentoo]
 location=/usr/portage
 sync-type=rsync
+sync-uri=rsync://binhost.internal.nitelite.io/gentoo-portage
 
 [nitelite-a]
 location=/var/lib/layman/nitelite-a

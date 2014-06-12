@@ -8,14 +8,18 @@
 #                                         #
 ###########################################
 
-if [ ! -f /tmp/mirror_gentoo_local ];
+if [ ! -f /tmp/publish_gentoo_updates ];
 then
-  touch /tmp/mirror_gentoo_local;
+  touch /tmp/publish_gentoo_updates;
 
-  # sync local packages
+  # sync local binary packages
   rsync -aqvz --delete --delete-during /usr/portage/packages/ \
   /srv/nfs/io/gentoo-local-packages;
 
-  rm /tmp/mirror_gentoo_local;
+  # sync local portage tree
+  rsync -aqvz --delete --delete-during /usr/portage/ \
+  /srv/nfs/io/gentoo-local-portage --exclude=packages --exclude=distfiles;
+
+  rm /tmp/publish_gentoo_updates;
 fi
 
