@@ -49,15 +49,6 @@ class xorgserver {
     source => "puppet:///files/xorg-server/etc/portage/package.use/rxvt-unicode",
   }
 
-  file { "/etc/portage/package.use/fonts":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/fonts",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/fonts",
-  }
-
   file { "/etc/portage/package.use/firefox":
     ensure => present,
     owner => "root",
@@ -120,8 +111,6 @@ class xorgserver {
     "rxvt-unicode",
     # lib for fonts
     "libXft",
-    "terminus-font",
-    "ubuntu-font-family",
     "firefox",
     "dwb",
     "hsetroot",
