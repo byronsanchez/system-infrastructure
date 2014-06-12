@@ -17,6 +17,10 @@ based on the information you see.
 #
 # source: http://forums.gentoo.org/viewtopic-t-976032-start-0.html
 
+Start by syncing from external mirrors to local mirrors:
+
+    /etc/cron.daily/mirror_gentoo
+
 When rebuilding @preserved-rebuild:
 
     emerge --usepkg=n @preserved-rebuild

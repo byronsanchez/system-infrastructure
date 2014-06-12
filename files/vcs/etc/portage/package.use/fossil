@@ -6,4 +6,4 @@
 #                                         #
 ###########################################
 
-dev-vcs/fossil json
+dev-vcs/fossil json tcl

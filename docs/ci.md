@@ -29,6 +29,11 @@ committed by multiple developers. it is rapidly updated and has the most recent
 changes. this centralized version is sometimes called an integration environment
 too. yea, these terms aren't exactly used the same way by every person.
 
+back to how i intend to use dev envs. vagrant will be used to create dev envs
+that match staging and production (use the same os, configs, etc.).
+
+docker MAY be used, more research ongoing
+
 uses test databases
 
 ### Env: staging

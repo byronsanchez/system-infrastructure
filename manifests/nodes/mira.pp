@@ -40,10 +40,6 @@ node 'mira.internal.nitelite.io' inherits network {
     ca_type => "client",
   }
 
-  class { "rsyncd": }
-
-  class { "webserver": }
-
   class { "vpn":
     vpn_type => "client",
   }
