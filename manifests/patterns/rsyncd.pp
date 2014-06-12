@@ -69,4 +69,10 @@ class rsyncd {
     ],
   }
 
+  # disable rsync daemon via standard distro service. xinetd will handle this.
+  service { 'rsyncd':
+    ensure => stopped,
+    enable => false,
+  }
+
 }

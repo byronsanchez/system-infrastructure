@@ -16,6 +16,6 @@ service rsync
 	wait        = no
 	user        = root
 	server      = /usr/bin/rsync
-	server_args     = --daemon --config=/etc/rsync.conf
+	server_args     = --daemon --config=/etc/rsyncd.conf
 	disable     = no
 }
