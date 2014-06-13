@@ -45,7 +45,7 @@ class workstation {
 
   $packages = [
     "virtualbox",
-    "docker",
+    "app-emulation/docker",
     "grc",
     "conky",
     "elinks",
