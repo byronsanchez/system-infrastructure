@@ -2,7 +2,7 @@
 
 ##Main Docs:
 
-  - [License](../LICENSE.md)
+  - [License](../COPYRIGHT.md)
 
 ##Regular Index:
 
