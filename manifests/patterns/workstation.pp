@@ -9,6 +9,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/irssi.conf",
   }
 
+  file { "/etc/redshift.conf":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0644,
+    path   => "/etc/redshift.conf",
+    source => "puppet:///files/workstation/etc/redshift.conf",
+  }
+
   file { "/etc/elinks":
     ensure => "directory",
     owner => "root",
@@ -23,6 +32,15 @@ class workstation {
     path    => "/etc/elinks/elinks.conf",
     source  => "puppet:///files/workstation/etc/elinks/elinks.conf",
     require => File["/etc/elinks"],
+  }
+
+  file { "/etc/portage/package.use/fortune-mod":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/fortune-mod",
+    source => "puppet:///files/base/etc/portage/package.use/fortune-mod",
   }
 
   file { "/etc/portage/package.use/rtorrent":
@@ -43,11 +61,13 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/bitlbee",
   }
 
+  # TODO: install packer
+  # TODO: find way to install centralized workstation packages (?)
   $packages = [
-    "virtualbox",
+    "app-office/ledger",
+    "app-emulation/virtualbox",
     "app-emulation/docker",
     "grc",
-    "conky",
     "elinks",
     "lynx",
     "aview",
@@ -84,6 +104,11 @@ class workstation {
     #"scala",
     "lua",
     #"haskell-platform",
+    "pwgen",
+    "fortune-mod",
+    "cowsay",
+    "zsh",
+    "zsh-completion",
   ]
 
   package { $packages: ensure => installed }

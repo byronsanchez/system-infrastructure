@@ -7,6 +7,7 @@
 #  will be used to administer things are clients. this is why the default is
 #  server
 class base (
+  $environment = 'development',
   $hostname,
   $network_type = '',
   $mcollective_type = 'server',
@@ -28,6 +29,14 @@ class base (
   }
 
   class { "::ntp": }
+
+  file { "/etc/profile.d/env.custom.sh":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    path    => "/etc/profile.d/env.custom.sh",
+    content => template('base/etc/profile.d/env.custom.sh.erb'),
+  }
 
   # set the client USE flag on nodes that will be used to administer mco
   # commands
@@ -59,14 +68,16 @@ class base (
     content => template("base/etc/mcollective/server.cfg.erb"),
   }
 
+  # the random number will be >= 0 and less than MAX
+  #
   # generate random values that will persist for each node, but be totally
   # different across nodes. these values will change if the fqdn changes
   # Max value is padded to allow for addition to the random number for
   # time seperation between each crontab task
   # minutes needs at least 30 min of padding
-  $random_minute = fqdn_rand(30, 'cron') - 1
+  $random_minute = fqdn_rand(30, 'cron') + 0
   # hour needs at least two hours of padding
-  $random_hour = fqdn_rand(22, 'cron') - 1
+  $random_hour = fqdn_rand(22, 'cron') + 0
   # day of week will be 6 for all nodes. only difference (between nodes) is which hour
   # and minute
   # day of month will be the first for all nodes. only difference (between
@@ -257,17 +268,8 @@ class base (
     source => "puppet:///files/base/etc/puppet/puppet.conf",
   }
 
-  file { "/etc/portage/package.use/fortune-mod":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/fortune-mod",
-    source => "puppet:///files/base/etc/portage/package.use/fortune-mod",
-  }
-
   file { "/etc/profile.d/fortune.custom.sh":
-    ensure => present,
+    ensure => absent,
     owner => "root",
     group => "root",
     require => File['/etc/profile.d'],
@@ -346,10 +348,6 @@ class base (
     "pv",
     "tcpdump",
     "strace",
-    "cowsay",
-    "fortune-mod",
-    "zsh",
-    "zsh-completion",
   ]
 
   package {
