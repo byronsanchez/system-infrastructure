@@ -99,5 +99,13 @@ tar xjf ${WORKDIR}/linux-binary.tar.bz2 -C /;
 mv -f /boot/vmlinuz-* /boot/kernel;
 mv -f ${WORKDIR}/$initramfs /boot/initramfs;
 
+# Rename files so there is only one of them in the directory.
+mv -f /boot/System.map-* /boot/System.map;
+mv -f /boot/config-* /boot/config;
+mv -f /boot/vmlinux-* /boot/vmlinux;
+# place a copy of the new config in the sources directory so portage packages
+# can use the config information.
+cp -f /boot/config /usr/src/linux/.config
+
 rm -rf ${WORKDIR};
 
