@@ -47,6 +47,12 @@ class gentoo(
     group => "root",
   }
 
+  file { "/etc/portage/package.unmask":
+    ensure => "directory",
+    owner => "root",
+    group => "root",
+  }
+
   file { "/etc/portage/package.use/layman":
     ensure => present,
     owner => "root",
