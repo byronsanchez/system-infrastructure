@@ -8,7 +8,7 @@
 #                                         #
 ###########################################
 
-if [ -f "$HOME/.redshift.conf" ];
+if [ -f "/etc/redshift.conf" ];
 then
-  redshift -c $HOME/.redshift.conf &
+  redshift -c /etc/redshift.conf &
 fi
