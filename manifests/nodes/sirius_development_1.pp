@@ -3,10 +3,11 @@ node 'sirius-development-1.internal.nitelite.io' inherits network {
   $environment = "development"
 
   class { "base":
+    environment       => "${environment}",
     hostname          => "sirius-${environment}-1",
     # TODO: make sure all nodes use eth[n] interface names for consistency
     # across all nodes
-    network_interface => "enp0s3",
+    network_interface => "eth0",
     enable_docker     => true,
   }
 
@@ -37,10 +38,6 @@ node 'sirius-development-1.internal.nitelite.io' inherits network {
     data_type => "client",
   }
 
-  class { "mysql": 
-    db_type => "client",
-  }
-
   class { "mail":
     mail_type => "standalone",
   }
@@ -53,20 +50,29 @@ node 'sirius-development-1.internal.nitelite.io' inherits network {
     ca_type => "client",
   }
 
-  class { "rsyncd": }
+  class { "deploy": }
+
+  # currently not containerizing the db portion, so this is still outside of
+  # scope of docker
+  class { "mysql": 
+    db_type => "client",
+  }
 
   class { "webserver": }
 
-  class { "php":
-    environment => "{environment}",
-    php_timezone => 'America/New_York',
-  }
+  # from this point on, we have moved on from the host patterns to application
+  # level patterns
 
-  class { "nodejs": }
+  #class { "php":
+  #  environment => "{environment}",
+  #  php_timezone => 'America/New_York',
+  #}
 
-  class { "nitelite":
-    environment => "${environment}",
-  }
+  #class { "nodejs": }
+
+  #class { "nitelite":
+  #  environment => "${environment}",
+  #}
 
   # users
   class { "root": }
