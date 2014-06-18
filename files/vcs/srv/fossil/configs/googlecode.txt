@@ -1,8 +1,8 @@
 # The "skin" configuration exported from
-# repository "hackbytes/nitelite.io.fossil"
-# on 2014-05-28 21:10:05
+# repository "fossils/hackbytes/puppet-nitelite.fossil"
+# on 2014-06-16 23:54:12
 config /config 10127
-1401260477 'css' value '.container-12 {
+1402962583 'css' value '.container-12 {
 width:92%;
 max-width:960px;
 margin-left:4%;
@@ -453,8 +453,8 @@ border: none;
 }
 
 .mainmenu a {
- padding-left: 15px;
- padding-right: 15px;
+ padding-left: 10px;
+ padding-right: 10px;
  margin-left: 2px;
  margin-right: 2px;
  border-left: 1px solid #E6EBF6;
@@ -702,8 +702,8 @@ pre.verbatim {
   white-space: pre-wrap;
 }
 '
-config /config 2376
-1401311347 'header' value '<html>
+config /config 2541
+1402962759 'header' value '<html>
 <head>
 <base href="$baseurl/$current_page">
 <title>$<project_name>: $<title></title>
@@ -758,8 +758,14 @@ config /config 2376
         if {[anycap jor]} {
            menulink "timeline" "/timeline" Timeline
         }
+
+        menulink "download" "/download.html" Download
+
         if {[hascap oh]} {
-           menulink "dir" "/dir?ci=tip" Files
+           menulink "code" "/tree?ci=trunk" Code
+        }
+        if {[hascap oh]} {
+           menulink "docs" "/doc/trunk/docs/doc-index.md" Docs
         }
         if {[hascap o]} {
            menulink "brlist" "/brlist" Branches
@@ -786,5 +792,7 @@ Powered by <a href="http://fossil-scm.org" title="Fossil version $manifest_versi
 </div>
 </body></html>
 '
+config /config 56
+1402953405 'index-page' value '/doc/trunk/docs/index.md'
 config /config 41
-1400977875 'timeline-plaintext' value '1'
+1402952115 'timeline-plaintext' value '0'
