@@ -61,6 +61,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/bitlbee",
   }
 
+  file { "/etc/portage/package.use/libreoffice":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/libreoffice",
+    source => "puppet:///files/workstation/etc/portage/package.use/libreoffice",
+  }
+
   file { "/etc/portage/package.use/mupdf":
     ensure => present,
     owner => "root",
