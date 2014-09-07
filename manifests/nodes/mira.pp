@@ -2,7 +2,7 @@ node 'mira.internal.nitelite.io' inherits network {
 
   class { "base":
     hostname          => "mira",
-    network_interface => "eth0",
+    network_interface => "wlan0",
   }
 
   class { "gentoo":
@@ -31,10 +31,6 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "vcs": }
 
   class { "nasclient": }
-
-  class { "ldap":
-    ldap_type => "client"
-  }
 
   class { "pki":
     ca_type => "client",
@@ -77,7 +73,7 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "staff": }
   class { "byronsanchez":
     #groups    => ['plugdev', 'android'],
-    groups => ['audio', 'cdrom', 'kvm', 'usb', 'wheel',],
+    groups => ['audio', 'cdrom', 'usb', 'wheel',],
   }
   class { "logger": }
 
