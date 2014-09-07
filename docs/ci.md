@@ -182,3 +182,6 @@ making this sort of decision, so I'll study a lot more on the topic and figure
 out whether or not this is a solution I am willing to use. For now, I just
 manually scp the sensitive data files to the necessary servers.
 
+TODO: compiling binaries for different OSes/platforms will require slave nodes
+capable of compiling to that platform. start designing this infratructure
+
