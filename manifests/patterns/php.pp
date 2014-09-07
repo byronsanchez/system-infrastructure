@@ -155,6 +155,11 @@ class php(
 
   package { $packages: ensure => installed }
 
+  package { "dev-php/composer":
+    ensure  => installed,
+    require => Layman[nitelite-a],
+  }
+
   service { 'php-fpm':
     ensure => running,
     enable => true,
