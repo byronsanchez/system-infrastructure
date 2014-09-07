@@ -6,9 +6,9 @@ node 'mira.internal.nitelite.io' inherits network {
   }
 
   class { "gentoo":
-    use_flags     => "mysql",
+    use_flags     => "mysql bluetooth",
     linguas       => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
-    video_cards   => "",
+    video_cards   => "nouveau",
     input_devices => "evdev",
     lowmemorybox  => false,
   }
