@@ -27,7 +27,6 @@ https://github.com/aaronsw/html2text.git
 https://github.com/eraserhd/vim-kiwi
 https://github.com/benmills/robotskirt.git
 https://github.com/robolectric/RobolectricSample.git
-https://github.com/propercursive/grunt-wintersmith-boilerplate.git
 https://github.com/qharley/Morgan.git
 https://github.com/discourse/discourse.git
 https://github.com/gitlabhq/gitlabhq.git
@@ -43,7 +42,6 @@ https://github.com/http2/http2-spec.git
 https://github.com/zendframework/zf2.git
 https://github.com/facebook/three20.git
 https://github.com/kgn/KGModal.git
-https://github.com/mrrrgn/qaw.git
 https://github.com/scalessec/Toast.git
 https://github.com/plexinc-plugins/FuzionRadio.bundle.git
 https://github.com/gitlabhq/gitlab-recipes.git
@@ -78,6 +76,7 @@ https://github.com/sstephenson/execjs.git
 https://github.com/douglascrockford/JSLint.git
 https://github.com/mdo/github-buttons.git
 https://github.com/robbyrussell/oh-my-zsh.git
+https://github.com/sorin-ionescu/prezto.git
 https://github.com/revans/bash-it.git
 https://github.com/captaincanine/marran.com.git
 https://github.com/h5bp/html5-boilerplate.git
