@@ -181,7 +181,6 @@ class workstation {
     "urlview",
     "vagrant",
     "dev-python/keyring",
-    "vlc",
     "filezilla",
     "go",
     "sbcl",
