@@ -1,0 +1,25 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# required by app-text/calibre-1.20
+# required by calibre (argument)
+app-text/poppler qt4
+# required by virtual/libgudev-208
+# required by sys-fs/udisks-2.1.3
+# required by app-text/calibre-1.20[udisks]
+# required by calibre (argument)
+sys-fs/udev5 gudev
+# required by app-text/calibre-1.20
+# required by calibre (argument)
+dev-python/PyQt4 webkit svg
+# required by sys-auth/polkit-0.112-r1[-systemd]
+# required by sys-fs/udisks-2.1.3
+# required by app-text/calibre-1.20[udisks]
+# required by calibre (argument)
+sys-auth/consolekit policykit
+
