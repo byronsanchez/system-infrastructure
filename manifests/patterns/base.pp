@@ -339,6 +339,7 @@ class base (
     "app-text/tree",
     "sudo",
     "htop",
+    "iotop",
     "curl",
     "unrar",
     "mutt",
@@ -348,6 +349,7 @@ class base (
     "pv",
     "tcpdump",
     "strace",
+    "traceroute",
   ]
 
   package {
@@ -425,6 +427,14 @@ class base (
       ensure => running,
       enable => true,
     }
+  }
+
+  service { acpid:
+    ensure    => running,
+    enable => true,
+    require   => [
+      Package[acpid],
+    ],
   }
 
   service { sshd:
