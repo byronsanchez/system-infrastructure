@@ -79,6 +79,16 @@ class webserver {
     require => File["/etc/nginx/conf.d"],
   }
 
+  file { "/etc/nginx/conf.d/types.conf":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0644,
+    path   => "/etc/nginx/conf.d/types.conf",
+    source => "puppet:///files/webserver/etc/nginx/conf.d/types.conf",
+    require => File["/etc/nginx/conf.d"],
+  }
+
   file { "/etc/nginx/sites-available":
     ensure  => "directory",
     owner   => "root",
