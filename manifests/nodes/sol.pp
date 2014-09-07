@@ -79,7 +79,7 @@ node 'sol.internal.nitelite.io' inherits network {
 
   class { "provision":
     boot_pxe_path    => "/srv/nfs/luna/Projects/hackbytes/gentoo-bootmodder/profiles/internal.nitelite.io/devices/pxe",
-    boot_update_path => "/srv/nfs/luna/Projects/hackbytes/gentoo-provision/kernel",
+    boot_update_path => "/srv/nfs/luna/Projects/hackbytes/gentoo-provision/kernel/build",
     # Used for remotes so that they may download the autoinstall script
     rsync_provision_directory => "/srv/nfs/luna/Projects/hackbytes/gentoo-provision",
   }
