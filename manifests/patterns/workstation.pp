@@ -61,18 +61,99 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/bitlbee",
   }
 
+  file { "/etc/portage/package.use/mupdf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/mupdf",
+    source => "puppet:///files/workstation/etc/portage/package.use/mupdf",
+  }
+
+  file { "/etc/portage/package.use/imagemagick":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/imagemagick",
+    source => "puppet:///files/workstation/etc/portage/package.use/imagemagick",
+  }
+
+  file { "/etc/portage/package.use/calibre":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/calibre",
+    source => "puppet:///files/workstation/etc/portage/package.use/calibre",
+  }
+
+  file { "/etc/portage/package.use/laptop-mode-tools":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/laptop-mode-tools",
+    source =>
+    "puppet:///files/workstation/etc/portage/package.use/laptop-mode-tools",
+  }
+
+  file { "/etc/portage/package.use/vlc":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/vlc",
+    source => "puppet:///files/workstation/etc/portage/package.use/vlc",
+  }
+
+  file { "/etc/portage/package.license/adobe-flash":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.license'],
+    path => "/etc/portage/package.license/adobe-flash",
+    source =>
+    "puppet:///files/workstation/etc/portage/package.license/adobe-flash",
+  }
+
+  file { "/etc/acpi/events/default":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/acpi/events/default",
+    source => "puppet:///files/workstation/etc/acpi/events/default",
+  }
+
+  file { "/usr/local/bin/toggle-bluetooth":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/toggle-bluetooth",
+    source => "puppet:///files/workstation/usr/local/bin/toggle-bluetooth",
+  }
+
   # TODO: install packer
-  # TODO: find way to install centralized workstation packages (?)
   $packages = [
+    "app-laptop/laptop-mode-tools",
     "app-office/ledger",
     "app-emulation/virtualbox",
     "app-emulation/docker",
+    "app-text/calibre",
+    "net-wireless/bluez",
+    "sys-apps/dbus",
+    "sys-auth/libfprint",
+    "sys-auth/fprint_demo",
+    "sys-auth/pam_fprint",
+    "adobe-flash",
     "grc",
     "elinks",
     "lynx",
     "aview",
     "fbida",
     "fim",
+    "feh",
     "libcaca",
     "aalib",
     "clockywock",
@@ -83,6 +164,7 @@ class workstation {
     "imagemagick",
     "optipng",
     "exiftool",
+    "fbreader",
     "irssi",
     "weechat",
     "bitlbee",
@@ -90,7 +172,9 @@ class workstation {
     "pyyaml",
     "lxml",
     "festival",
-    "sshfs-fuse",
+    "espeak",
+    "mupdf",
+    "libreoffice",
     "offlineimap",
     "msmtp",
     "notmuch",
@@ -107,10 +191,20 @@ class workstation {
     "pwgen",
     "fortune-mod",
     "cowsay",
+    "vlc",
     "zsh",
     "zsh-completion",
+    "wpa_supplicant",
   ]
 
   package { $packages: ensure => installed }
+
+  service { dbus:
+    ensure    => running,
+    enable => true,
+    require   => [
+      Package['sys-apps/dbus'],
+    ],
+  }
 
 }
