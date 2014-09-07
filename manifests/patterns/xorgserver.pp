@@ -67,15 +67,6 @@ class xorgserver {
     source => "puppet:///files/xorg-server/etc/portage/package.use/hsetroot",
   }
 
-  file { "/etc/portage/package.use/dwb":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/dwb",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/dwb",
-  }
-
   file { "/etc/portage/package.use/freetype":
     ensure => present,
     owner => "root",
@@ -123,7 +114,6 @@ class xorgserver {
     # lib for fonts
     "libXft",
     "firefox",
-    "dwb",
     "hsetroot",
     "x11-misc/xclip",
     "freetype",
