@@ -5,7 +5,8 @@ class ldap($ldap_type) {
   $rootpw = hiera('rootpw', '')
   $ldapreaderpw = hiera('ldapreaderpw', '')
 
-  # TODO: sudoers in ldap to remind myself to migrate to ldap!
+  # TODO: Determine if it makes sense to have sudo read from ldap
+
   file { "/etc/sudoers":
     ensure => present,
     owner => "root",
@@ -20,16 +21,6 @@ class ldap($ldap_type) {
     owner => "root",
     group => "root",
     mode   => '750',
-  }
-
-  file { "/etc/sudoers.d/byronsanchez":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => '440',
-    require => File['/etc/sudoers.d'],
-    path => "/etc/sudoers.d/byronsanchez",
-    source => "puppet:///files/ldap/etc/sudoers.d/byronsanchez",
   }
 
   file { "/etc/sudoers.d/staff":
