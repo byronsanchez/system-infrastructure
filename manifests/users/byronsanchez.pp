@@ -19,4 +19,14 @@ class byronsanchez ($groups = ['audio', 'cdrom', 'usb',]) {
     gid    => '1000',
   }
 
+  file { "/etc/sudoers.d/byronsanchez":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    require => File['/etc/sudoers.d'],
+    path => "/etc/sudoers.d/byronsanchez",
+    source => "puppet:///files/users/etc/sudoers.d/byronsanchez",
+  }
+
 }
