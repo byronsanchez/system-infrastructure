@@ -3,6 +3,7 @@ node 'bellatrix.internal.nitelite.io' inherits network {
   class { "base":
     hostname          => "bellatrix",
     network_interface => "eth0",
+    network_type => "vpn",
   }
 
   class { "gentoo":

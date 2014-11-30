@@ -9,15 +9,15 @@
 <% if @vpn_type == "server" %>
 port 443
 proto udp
-dev tun
+dev tap
 
-ca /etc/ssl/nitelite/systemcert.pem
+ca /etc/ssl/certs/ca-certificates.crt
 cert /etc/ssl/vpn/cacert.pem
 key /etc/ssl/vpn/private/cakey.pem.unencrypted
-dh /etc/ssl/vpn/dh4096.pem
-tls-auth /etc/ssl/vpn/ta.key 0
+dh /etc/openvpn/dh4096.pem
+tls-auth /etc/openvpn/ta.key 0
 
-server 10.66.78.0 255.255.255.0
+server-bridge 10.66.77.4 255.255.255.0 10.66.77.121 10.66.77.150
 ifconfig-pool-persist /var/lib/openvpn/ipp.txt
 #push "redirect-gateway def1 bypass-dhcp"
 #push "dhcp-option DNS 8.8.8.8"
@@ -26,49 +26,50 @@ ifconfig-pool-persist /var/lib/openvpn/ipp.txt
 client-to-client
 keepalive 1800 4000
 
-
-comp-lzo
-
 max-clients 10
-
-log        /var/log/openvpn/openvpn.log
-status     /var/log/openvpn/openvpn-status.log
-verb 3
 
 user nobody
 group nobody
 
-#mute 20
-
 #topology subnet
-#client-to-client
 <% elsif @vpn_type == "client" %>
 
 client
 remote vpn.internal.nitelite.io 443
 proto udp
-dev tun
+dev tap
 
-ca /etc/ssl/nitelite/systemcert.pem
-cert /etc/ssl/<%= @hostname %>/<%= @hostname %>cert.pem
+ca /etc/ssl/certs/ca-certificates.crt
+cert /etc/ssl/<%= @hostname %>/cacert.pem
 key /etc/ssl/<%= @hostname %>/private/cakey.pem.unencrypted
-tls-auth /etc/ssl/<%= @hostname %>/ta.key 1
+tls-auth /etc/openvpn/ta.key 1
 
 resolv-retry infinite
 nobind
 
-comp-lzo yes
-
 auth-nocache
 script-security 2
 
-user openvpn
-group openvpn
+user nobody
+group nobody
+
+# Wireless networks often produce a lot
+# of duplicate packets.  Set this flag
+# to silence duplicate packet warnings.
+mute-replay-warnings
 
 <% end %>
+
+comp-lzo
 
 cipher DES-EDE3-CBC # Triple-DES
 
 persist-key
 persist-tun
+
+log        /var/log/openvpn/openvpn.log
+status     /var/log/openvpn/openvpn-status.log
+verb 3
+
+mute 20
 

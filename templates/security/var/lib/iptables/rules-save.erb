@@ -63,6 +63,15 @@ COMMIT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 53 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 53 -j ACCEPT
 
+<% if @iptables_type == "workstation" -%>
+# MPD
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 6600 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 6600 -m state --state NEW -j ACCEPT
+# MPD HTTP Stream
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 12000 -m state --state NEW -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 12000 -m state --state NEW -j ACCEPT
+<% end-%>
+
 <% if @iptables_type == "hypervisor" -%>
 # BOOTP
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 67 -j ACCEPT
@@ -116,13 +125,6 @@ COMMIT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 32769 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 32803 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 32803 -j ACCEPT
-
-# MPD
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 6600 -m state --state NEW -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 6600 -m state --state NEW -j ACCEPT
-# MPD HTTP Stream
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 12000 -m state --state NEW -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 12000 -m state --state NEW -j ACCEPT
 <% end-%>
 
 <% if @iptables_type == "ci" -%>
@@ -196,6 +198,13 @@ COMMIT
 # Git Daemon
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 9418 -m state --state NEW -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 9418 -m state --state NEW -j ACCEPT
+<% end-%>
+
+<% if @iptables_type == "vpn" -%>
+# permit packets to flow freely over tap0 and br0
+iptables -A INPUT -i tap0 -j ACCEPT
+iptables -A INPUT -i br0 -j ACCEPT
+iptables -A FORWARD -i br0 -j ACCEPT
 <% end-%>
 
 # Drop marked packets (direct port 22 packets)

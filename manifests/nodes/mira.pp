@@ -26,14 +26,16 @@ node 'mira.internal.nitelite.io' inherits network {
     ],
   }
 
-  class { "backup": }
+  class { "backup":
+    backup_type => "workstation",
+  }
 
   class { "vcs": }
 
   class { "nasclient": }
 
   class { "pki":
-    ca_type => "client",
+    ca_type => "mira",
   }
 
   class { "vpn":

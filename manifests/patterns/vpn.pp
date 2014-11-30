@@ -4,8 +4,27 @@ class vpn(
 
   if $vpn_type == "server" {
 
+    file { "/etc/openvpn/dh4096.pem":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      mode => 0644,
+      path => "/etc/openvpn/dh4096.pem",
+      source => "puppet:///secure/vpn/dh4096.pem",
+    }
+
+    file { "/etc/openvpn/ta.key":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      mode => 0644,
+      path => "/etc/openvpn/ta.key",
+      source => "puppet:///secure/vpn/ta.key",
+    }
+
     $server_packages = [
       "noip-updater",
+      "bridge-utils",
     ]
 
     package { $server_packages: ensure => installed }

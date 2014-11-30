@@ -172,6 +172,7 @@ class pki(
       "niteliteCA-root",
       "niteliteCA-system",
       "niteliteCA-user",
+      "mira",
       "my",
       "pg",
       "puppet",

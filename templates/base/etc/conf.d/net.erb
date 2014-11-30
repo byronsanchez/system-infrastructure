@@ -10,7 +10,19 @@
 bridge_br0="<%= @network_interface %>"
 config_br0="dhcp"
 config_<%= @network_interface %>="null"
+<% elsif @network_type == "vpn" -%>
+config_<%= @network_interface %>=( "null" )
+ 
+tuntap_tap0="tap"
+config_tap0="null"
+ 
+bridge_br0=( "<%= @network_interface %> tap0" )
+brctl_br0=( "setfd 0" "sethello 10" "stp on" )
+config_br0=( "dhcp" )
+ 
+depend_br0() {
+        need net.<%= @network_interface %> net.tap0
+}
 <% else %>
 config_<%= @network_interface %>="dhcp"
 <% end -%>
-

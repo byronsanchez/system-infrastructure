@@ -204,6 +204,15 @@ class base (
     source => "puppet:///files/base/etc/portage/package.use/mutt",
   }
 
+  file { "/etc/portage/package.use/python":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/python",
+    source => "puppet:///files/base/etc/portage/package.use/python",
+  }
+
   file { "/etc/profile.d":
     ensure => "directory",
     owner => "root",
@@ -410,16 +419,42 @@ class base (
     require => Eselect[ruby],
   }
 
-  # If the node is a hypervisor, enable the bridge interface. Otherwise, enable
+  # If the node is a hypervisor or vpn, enable the bridge interface. Otherwise, enable
   # the normal network interface. network_interface contains the actual
   # interface name, not the bridge name which is why this conditional is
   # necessary.
+  # TODO: Consider adding symlinks to the network interface that is setup during provisioningg (eg. eth0)
   if $network_type == "hypervisor" {
     # Dependency for net info
     service { "net.br0":
       ensure => running,
       enable => true,
+      require => File['/etc/init.d/net.br0'],
     }
+
+    file { '/etc/init.d/net.br0':
+       ensure => 'link',
+       target => '/etc/init.d/net.lo',
+    }
+  }
+  elsif $network_type == "vpn" {
+
+    service { "net.br0":
+      ensure => running,
+      enable => true,
+      require => File['/etc/init.d/net.br0'],
+    }
+
+    file { '/etc/init.d/net.br0':
+       ensure => 'link',
+       target => '/etc/init.d/net.lo',
+    }
+
+    file { '/etc/init.d/net.tap0':
+       ensure => 'link',
+       target => '/etc/init.d/net.lo',
+    }
+
   }
   else {
     # Dependency for net info
