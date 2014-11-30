@@ -7,4 +7,5 @@
 ###########################################
 
 app-office/libreoffice dbus
+media-libs/harfbuzz icu
 
