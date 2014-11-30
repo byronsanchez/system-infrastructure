@@ -1,0 +1,27 @@
+#!/bin/sh
+
+WORKDIR="`pwd`"
+BUILDDIR="/usr/src/linux"
+
+for f in $WORKDIR/kernel/configs/*;
+do
+  filename="$(basename ${f})"
+  config_category="$(echo ${filename} | cut -d'-' -f1)"
+  config_type="$(echo ${filename} | cut -d'-' -f2)"
+
+  cp "${f}" "${BUILDDIR}/.config"
+
+  cur_dir="`pwd`"
+  cd "${BUILDDIR}"
+
+  make clean;
+  make tarbz2-pkg;
+  genkernel --kernel-config=/usr/src/linux/.config --lvm --install initramfs;
+
+  mkdir -p "${WORKDIR}/kernel/build"
+  mv ${BUILDDIR}/linux-*.tar.bz2 "${WORKDIR}/kernel/build/${config_category}-${config_type}-linux.tar.bz2"
+  mv /boot/initramfs-* "${WORKDIR}/kernel/build/${config_category}-${config_type}-initramfs"
+
+  cd "${cur_dir}"
+done
+

@@ -64,6 +64,15 @@ class binhost(
     source => "puppet:///files/binhost/usr/local/bin/publish-gentoo-updates",
   }
 
+  file { "/usr/local/bin/update-kernels":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/update-kernels",
+    source => "puppet:///files/binhost/usr/local/bin/update-kernels",
+  }
+
   if $portage_package_directory {
     file { '/srv/www/binhost.internal.nitelite.io/packages':
        ensure  => 'link',
