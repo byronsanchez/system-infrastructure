@@ -85,15 +85,6 @@ class xorgserver {
     source => "puppet:///files/xorg-server/etc/portage/package.use/fvwm",
   }
 
-  file { "/etc/local.d/10redshift.start":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0755,
-    path   => "/etc/local.d/10redshift.start",
-    source => "puppet:///files/xorg-server/etc/local.d/10redshift.start",
-  }
-
   file { "/etc/fonts/51-local.conf":
     ensure => present,
     owner => "root",

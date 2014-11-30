@@ -9,15 +9,6 @@ class workstation {
     source => "puppet:///files/workstation/etc/irssi.conf",
   }
 
-  file { "/etc/redshift.conf":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/redshift.conf",
-    source => "puppet:///files/workstation/etc/redshift.conf",
-  }
-
   file { "/etc/elinks":
     ensure => "directory",
     owner => "root",
@@ -145,6 +136,7 @@ class workstation {
 
   # TODO: install packer
   $packages = [
+    "app-backup/tarsnap",
     "app-laptop/laptop-mode-tools",
     "app-office/ledger",
     "app-emulation/virtualbox",
@@ -155,6 +147,7 @@ class workstation {
     "sys-auth/libfprint",
     "sys-auth/fprint_demo",
     "sys-auth/pam_fprint",
+    "sys-fs/cryptsetup",
     "adobe-flash",
     "grc",
     "elinks",
@@ -180,7 +173,6 @@ class workstation {
     "skype",
     "pyyaml",
     "lxml",
-    "festival",
     "espeak",
     "mupdf",
     "libreoffice",
