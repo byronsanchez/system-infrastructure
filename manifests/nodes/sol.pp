@@ -77,6 +77,8 @@ node 'sol.internal.nitelite.io' inherits network {
     boxes_directory           => "/srv/nfs/io/boxes",
   }
 
+  # TODO: Update paths to point to a vcs repo or modify the resources in some
+  # way that make them still serve their purpose on the provision server.
   class { "provision":
     boot_pxe_path    => "/srv/nfs/luna/Projects/hackbytes/gentoo-bootmodder/profiles/internal.nitelite.io/devices/pxe",
     boot_update_path => "/srv/nfs/luna/Projects/hackbytes/gentoo-provision/kernel/build",
@@ -89,8 +91,6 @@ node 'sol.internal.nitelite.io' inherits network {
   class { "xorgserver": }
 
   class { "mirror": }
-
-  class { "media": }
 
   class { "nodejs": }
 

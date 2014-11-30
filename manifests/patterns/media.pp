@@ -39,6 +39,37 @@ class media {
     source => "puppet:///files/media/etc/mpd.conf",
   }
 
+  # Make sure alsa dmix allows for sharing between multiple processes AND
+  # multiple users
+
+  file { "/etc/asound.conf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '644',
+    path => "/etc/asound.conf",
+    source => "puppet:///files/media/etc/asound.conf",
+  }
+
+  file { "/etc/libao.conf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '644',
+    path => "/etc/libao.conf",
+    source => "puppet:///files/media/etc/libao.conf",
+  }
+
+  # blacklist oss to force dmix sharing in certain apps (eg. flash in browsers)
+  file { "/etc/modprobe.d/blacklist.media.conf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '644',
+    path => "/etc/modprobe.d/blacklist.media.conf",
+    source => "puppet:///files/media/etc/modprobe.d/blacklist.media.conf",
+  }
+
   file { "/var/lib/mpd":
     ensure => directory,
     owner => "mpd",
@@ -97,6 +128,8 @@ class media {
     "ncmpcpp",
     "alsa-utils",
     "alsaequal",
+    "alsa-oss",
+    "alsa-plugins",
     "id3lib",
     "mp3check",
     "media-sound/picard",

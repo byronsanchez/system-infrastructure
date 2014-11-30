@@ -4,7 +4,7 @@
 
 source /usr/local/lib/nitelite/helpers/common.lib.sh;
 
-MUSIC_DIRECTORY="/mnt/luna/Music"
+MUSIC_DIRECTORY="/home/byronsanchez/Music"
 PLAYLIST_DIRECTORY="$MUSIC_DIRECTORY/Playlists"
 
 update_type="$1"
@@ -87,45 +87,43 @@ then
   fail "Please provide a destination path";
 fi
 
+rm -rf "${WORKDIR}"
+mkdir "${WORKDIR}"
+
 PLAYLIST_FILE="$PLAYLIST_DIRECTORY/$playlist.m3u"
 
 printf "Checking out: $PLAYLIST_FILE\n"
 
 if [ -e "$PLAYLIST_FILE" ]; then
-
-  printf "Playlist $PLAYLIST_FILE exists, checking out songs...\n\n"
+  playlist_path="${playlist}"
 
   while read line; do
     music_file=$line
-    printf "Current song: $music_file -- "
-
     if [ -e "$MUSIC_DIRECTORY/$music_file" ]; then
-
-      # skip if the file already exists...
-      if [ -e "${destination}/$music_file" ]; then
-        info "File exists at destination. Skipping..."
+      # if the song already exists at the destination, there's no need to recopy it. you could try letting rsync handle this as well.
+      if [ -e "${destination}/${playlist}/$music_file" ]; then
+        printf "$music_file exists at destination. skipping...\n"
         continue;
+      else
+        printf "$music_file queued for checkout...\n"
+        parentpath="$(dirname "$music_file")"
+        destpath="${destination}/${playlist_path}/${parentpath}"
+
+        echo "$music_file" >> "${WORKDIR}/musiclist"
       fi
-
-      # create all the parent directories from the source in the dest 
-      # directories and then copy the file from src to dst
-      message="File exists. Copying to ${destination}..."
-      printf "\e[32m$message\e[0m\n"
-      parentpath="$(dirname "$music_file")"
-      destpath="${destination}/${parentpath}"
-      mkdir -p "${destpath}"
-
-      cp "$MUSIC_DIRECTORY/$music_file" "${destination}/$music_file"
-    else
-      message="File DOES NOT exist. Skipping..."
-      printf "\e[31m$message\e[0m\n"
     fi
-
   done < "$PLAYLIST_FILE"
+
+  printf "Checking out playlist $PLAYLIST_FILE...\n\n"
+
+  rsync -aqvz --delete-before --files-from="${WORKDIR}/musiclist" "${MUSIC_DIRECTORY}" "${destination}/${playlist}" 
+  rsync -aqvz --delete-before "${PLAYLIST_DIRECTORY}/${playlist}.m3u" "${destination}/${playlist}/${playlist}.m3u" 
 
 else
 
   printf "$PLAYLIST_FILE NOT a playlist file\n"
 
 fi
+
+rm -rf "${WORKDIR}"
 
