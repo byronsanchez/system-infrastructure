@@ -37,6 +37,23 @@ class vpn(
       ],
     }
 
+    # clients will manually start openvpn. this will prevent auto-interference
+    # in case the client is locally connected to the subnet containing the
+    # openvpn server.
+    service { 'openvpn':
+      ensure => running,
+      enable => true,
+      subscribe => File['/etc/openvpn/openvpn.conf'],
+      require   => [
+        File['/etc/openvpn/openvpn.conf'],
+        File['/var/log/openvpn'],
+        File['/var/lib/openvpn'],
+        Package[openvpn],
+        # TODO: Decide if the following is necessary
+        #Service['/etc/init.d/net.br0'],
+      ],
+    }
+
   }
 
   file { "/etc/openvpn/openvpn.conf":
@@ -65,17 +82,5 @@ class vpn(
   ]
 
   package { $packages: ensure => installed }
-
-  service { 'openvpn':
-    ensure => running,
-    enable => true,
-    subscribe => File['/etc/openvpn/openvpn.conf'],
-    require   => [
-      File['/etc/openvpn/openvpn.conf'],
-      File['/var/log/openvpn'],
-      File['/var/lib/openvpn'],
-      Package[openvpn],
-    ],
-  }
 
 }
