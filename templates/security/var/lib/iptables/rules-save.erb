@@ -201,10 +201,14 @@ COMMIT
 <% end-%>
 
 <% if @iptables_type == "vpn" -%>
+# VPN
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 443 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 443 -j ACCEPT
+
 # permit packets to flow freely over tap0 and br0
-iptables -A INPUT -i tap0 -j ACCEPT
-iptables -A INPUT -i br0 -j ACCEPT
-iptables -A FORWARD -i br0 -j ACCEPT
+-A INPUT -i tap0 -j ACCEPT
+-A INPUT -i br0 -j ACCEPT
+-A FORWARD -i br0 -j ACCEPT
 <% end-%>
 
 # Drop marked packets (direct port 22 packets)
