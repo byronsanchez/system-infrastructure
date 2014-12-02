@@ -78,8 +78,8 @@ Section "Device"
         #Option     "EnablePageFlip"     	# [<bool>]
         #Option     "SwapbuffersWait"    	# [<bool>]
 	Identifier  "Card0"
-	Driver      "radeon"
-  BusID       "PCI:0:1:0"
+  Driver      "<% @xorg_driver %>"
+  BusID       "<% @xorg_busid %>"
 EndSection
 
 Section "Screen"

@@ -42,7 +42,10 @@ node 'mira.internal.nitelite.io' inherits network {
     vpn_type => "client",
   }
 
-  class { "xorgserver": }
+  class { "xorgserver":
+    xorg_driver => "nouveau",
+    xorg_busid  => "PCI:1:0:0",
+  }
 
   class { "media": }
 

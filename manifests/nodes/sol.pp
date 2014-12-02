@@ -88,7 +88,10 @@ node 'sol.internal.nitelite.io' inherits network {
 
   class { "hypervisor": }
 
-  class { "xorgserver": }
+  class { "xorgserver":
+    xorg_driver => "radeon",
+    xorg_busid  => "PCI:0:1:0",
+  }
 
   class { "mirror": }
 

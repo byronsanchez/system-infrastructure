@@ -1,4 +1,7 @@
-class xorgserver {
+class xorgserver (
+  $xorg_driver,
+  $xorg_busid,
+) {
 
   file { "/etc/X11":
     ensure => "directory",
@@ -17,9 +20,10 @@ class xorgserver {
     ensure => present,
     owner => "root",
     group => "root",
+    mode    => '644',
     require => File['/etc/X11/xorg.conf.d'],
+    content => template("xorg-server/etc/X11/xorg.conf.d/40-monitor.conf.erb"),
     path => "/etc/X11/xorg.conf.d/40-monitor.conf",
-    source => "puppet:///files/xorg-server/etc/X11/xorg.conf.d/40-monitor.conf",
   }
 
   file { "/etc/portage/package.use/xorg-server":
