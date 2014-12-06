@@ -340,6 +340,7 @@ class base (
     "lvm2",
     "vim",
     "pciutils",
+    "usbutils",
     "acpid",
     "gpm",
     "vixie-cron",
@@ -426,7 +427,7 @@ class base (
   # TODO: Consider adding symlinks to the network interface that is setup during provisioningg (eg. eth0)
   if $network_type == "hypervisor" {
     # Dependency for net info
-    service { "net.br0":
+    service { "/etc/init.d/net.br0":
       ensure => running,
       enable => true,
       require => File['/etc/init.d/net.br0'],
