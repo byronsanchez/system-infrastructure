@@ -3,6 +3,15 @@ class media {
   # TODO: For all classes, ensure that the use flags and other portage package
   # files are depended on by the corresponding packages.
 
+  file { "/etc/portage/package.use/ffmpeg":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/ffmpeg",
+    source => "puppet:///files/media/etc/portage/package.use/ffmpeg",
+  }
+
   file { "/etc/portage/package.use/mpd":
     ensure => present,
     owner => "root",
