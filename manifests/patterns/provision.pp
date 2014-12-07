@@ -1,11 +1,7 @@
 # must overlay rsyncd (for xinetd)
 # must overlay nas
 
-class provision (
-  $boot_pxe_path = '',
-  $boot_update_path = '',
-  $rsync_provision_directory = '',
-){
+class provision {
 
   file { "/etc/xinetd.d/tftpd":
     ensure  => present,
@@ -34,33 +30,31 @@ class provision (
     require => File["/etc/rsyncd.d"],
   }
 
-  if $boot_pxe_path {
-
-    file { '/srv/tftp/boot-pxe':
-       ensure  => 'link',
-       target  => "${boot_pxe_path}",
-       require => File["/srv/tftp"],
-    }
-
-  }
-
   # Make the provision directory available via rsync
-  if $rsync_provision_directory {
-    file { "/srv/rsync/gentoo-provision":
-       ensure  => 'link',
-       target  => "${rsync_provision_directory}",
-       require => File["/srv/rsync"],
-    }
+  # Used for remotes so that they may download the autoinstall script
+  file { "/srv/rsync/gentoo-provision":
+     ensure  => 'link',
+     target  => "/var/lib/nitelite/provision/gentoo-provision",
+     require => Vcsrepo["/var/lib/nitelite/provision/gentoo-provision"],
   }
 
-  if $boot_update_path {
+  # Kernel bins and configs are available via rsync at this location.
+  # Used for updating nodes on the subnet.
+  file { '/srv/rsync/gentoo-boot':
+     ensure  => 'link',
+     target  => "/var/lib/nitelite/provision/gentoo-provision/kernel/build",
+     require => Vcsrepo["/var/lib/nitelite/provision/gentoo-provision"],
+  }
 
-    file { '/srv/rsync/gentoo-boot':
-       ensure  => 'link',
-       target  => "${boot_update_path}",
-       require => File["/srv/rsync"],
-    }
-
+  # Make the pxe directory available via tftp
+  file { '/srv/tftp/boot-pxe':
+     ensure  => 'link',
+     target  =>
+     "/var/lib/nitelite/provision/gentoo-bootmodder/profiles/internal.nitelite.io/devices/pxe",
+     require => [
+       File["/srv/tftp"],
+       Vcsrepo["/var/lib/nitelite/provision/gentoo-bootmodder"],
+     ],
   }
 
   file { "/usr/local/bin/provision":
@@ -70,6 +64,35 @@ class provision (
     mode    => 0755,
     path => "/usr/local/bin/provision",
     source => "puppet:///files/provision/usr/local/bin/provision",
+  }
+
+  file { "/usr/local/bin/update-kernels":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/update-kernels",
+    source => "puppet:///files/provision/usr/local/bin/update-kernels",
+  }
+
+  file { "/var/lib/nitelite/provision":
+    ensure => 'directory',
+    mode    => 0755,
+    require => File["/var/lib/nitelite"],
+  }
+
+  vcsrepo { "/var/lib/nitelite/provision/gentoo-provision":
+    ensure   => present,
+    provider => git,
+    source   => "https://git.nitelite.io/hackbytes/gentoo-provision",
+    require => File["/var/lib/nitelite/provision"],
+  }
+
+  vcsrepo { "/var/lib/nitelite/provision/gentoo-bootmodder":
+    ensure   => present,
+    provider => git,
+    source   => "https://git.nitelite.io/hackbytes/gentoo-bootmodder",
+    require => File["/var/lib/nitelite/provision"],
   }
 
   $packages = [
