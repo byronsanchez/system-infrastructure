@@ -1,5 +1,15 @@
 class workstation {
 
+  file { "/etc/cron.daily/mlocate":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0755,
+    require => File['/etc/cron.daily'],
+    path    => "/etc/cron.daily/mlocate",
+    source  => "puppet:///files/workstation/etc/cron.daily/mlocate",
+  }
+
   file { "/etc/irssi.conf":
     ensure => present,
     owner  => "root",
@@ -7,6 +17,15 @@ class workstation {
     mode   => 0644,
     path   => "/etc/irssi.conf",
     source => "puppet:///files/workstation/etc/irssi.conf",
+  }
+
+  file { "/etc/cdmrc":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0644,
+    path   => "/etc/cdmrc",
+    source => "puppet:///files/workstation/etc/cdmrc",
   }
 
   file { "/etc/elinks":
@@ -94,8 +113,7 @@ class workstation {
     group => "root",
     require => File['/etc/portage/package.use'],
     path => "/etc/portage/package.use/laptop-mode-tools",
-    source =>
-    "puppet:///files/workstation/etc/portage/package.use/laptop-mode-tools",
+    source => "puppet:///files/workstation/etc/portage/package.use/laptop-mode-tools",
   }
 
   file { "/etc/portage/package.use/vlc":
@@ -113,8 +131,7 @@ class workstation {
     group => "root",
     require => File['/etc/portage/package.license'],
     path => "/etc/portage/package.license/adobe-flash",
-    source =>
-    "puppet:///files/workstation/etc/portage/package.license/adobe-flash",
+    source => "puppet:///files/workstation/etc/portage/package.license/adobe-flash",
   }
 
   file { "/etc/acpi/events/default":
@@ -193,8 +210,9 @@ class workstation {
     "cowsay",
     "vlc",
     "zsh",
-    "zsh-completion",
     "wpa_supplicant",
+    "pcmciautils",
+    "mlocate",
   ]
 
   package { $packages: ensure => installed }
