@@ -66,15 +66,6 @@ class provision {
     source => "puppet:///files/provision/usr/local/bin/provision",
   }
 
-  file { "/usr/local/bin/update-kernels":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode    => 0755,
-    path   => "/usr/local/bin/update-kernels",
-    source => "puppet:///files/provision/usr/local/bin/update-kernels",
-  }
-
   file { "/var/lib/nitelite/provision":
     ensure => 'directory',
     mode    => 0755,
