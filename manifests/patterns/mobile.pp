@@ -1,5 +1,7 @@
 class mobile {
 
+  # TODO: Update these to fit zsh
+
   file { "/etc/profile.d/mobile.custom.sh":
     ensure => present,
     owner => "root",
@@ -15,7 +17,7 @@ class mobile {
     group => "root",
     require => File['/etc/profile.d'],
     path => "/etc/profile.d/path.custom.sh",
-    source => "puppet:///files/base/etc/profile.d/path.custom.sh",
+    source => "puppet:///files/mobile/etc/profile.d/path.custom.sh",
   }
 
   $packages = [
