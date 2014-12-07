@@ -17,8 +17,8 @@ then
   /srv/nfs/io/gentoo-portage;
 
   # sync the main gentoo mirror
-  # this mirrors the whole tree, including distfiles, releases,  and snapshots
-  rsync -aqvz --delete --delete-during rsync.us.gentoo.org::gentoo \
+  # this mirrors the whole tree, including distfiles, releases, and snapshots
+  rsync -aqvz --delete --delete-during www.gtlib.gatech.edu::gentoo \
   /srv/nfs/io/gentoo;
 
   rm /tmp/mirror_gentoo;
