@@ -1,22 +1,6 @@
 ---
 rootpw: secret
 
-nodes:
-  - alya.internal.nitelite.io
-  - atlas.internal.nitelite.io
-  - bellatrix.internal.nitelite.io
-  - chow.internal.nitelite.io
-  - electra.internal.nitelite.io
-  - kastra.internal.nitelite.io
-  - kraz.internal.nitelite.io
-  - kuma.internal.nitelite.io
-  - maia.internal.nitelite.io
-  - polaris.internal.nitelite.io
-  - sirius-staging-1.internal.nitelite.io
-  - sirius-production-1.internal.nitelite.io
-  - vega.internal.nitelite.io
-  - zosma.internal.nitelite.io
-
 # WORKSTATION
 ssh_configs:
 
