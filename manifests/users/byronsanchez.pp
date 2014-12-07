@@ -19,7 +19,6 @@ class byronsanchez ($groups = ['audio', 'cdrom', 'usb',]) {
       password => $password,
       require    => [
         Package[zsh],
-        Package[zsh-completion],
       ]
     }
 
@@ -36,7 +35,6 @@ class byronsanchez ($groups = ['audio', 'cdrom', 'usb',]) {
       uid        => '1000',
       require    => [
         Package[zsh],
-        Package[zsh-completion],
       ]
     }
 
@@ -52,7 +50,6 @@ class byronsanchez ($groups = ['audio', 'cdrom', 'usb',]) {
     owner => "root",
     group => "root",
     mode    => '440',
-    require => File['/etc/sudoers.d'],
     path => "/etc/sudoers.d/byronsanchez",
     source => "puppet:///files/users/etc/sudoers.d/byronsanchez",
   }
