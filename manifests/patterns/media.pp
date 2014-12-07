@@ -3,6 +3,36 @@ class media {
   # TODO: For all classes, ensure that the use flags and other portage package
   # files are depended on by the corresponding packages.
 
+  user { 'realtime':
+    ensure => 'present',
+    gid    => '1017',
+    shell  => '/bin/false',
+    uid    => '1017',
+  }
+
+  group { 'realtime':
+    ensure => 'present',
+    gid    => '1017',
+  }
+
+  file { "/etc/security/limits.conf":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0644,
+    path   => "/etc/security/limits.conf",
+    source => "puppet:///files/media/etc/security/limits.conf",
+  }
+
+  file { "/etc/portage/package.accept_keywords/gentoo-studio":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/gentoo-studio",
+    source => "puppet:///files/media/etc/portage/package.accept_keywords/gentoo-studio",
+  }
+
   file { "/etc/portage/package.use/ffmpeg":
     ensure => present,
     owner => "root",
@@ -10,6 +40,15 @@ class media {
     require => File['/etc/portage/package.use'],
     path => "/etc/portage/package.use/ffmpeg",
     source => "puppet:///files/media/etc/portage/package.use/ffmpeg",
+  }
+
+  file { "/etc/portage/package.use/gentoo-studio":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/gentoo-studio",
+    source => "puppet:///files/media/etc/portage/package.use/gentoo-studio",
   }
 
   file { "/etc/portage/package.use/mpd":
@@ -131,6 +170,16 @@ class media {
     source => "puppet:///files/media/usr/local/bin/playlist-checkout",
   }
 
+  # TODO: Set the firewire device paths in the file. one line per firewire device
+  # to find path, hook up the device, and look in /dev/fw*
+  file { "/etc/udev/rules.d/fw.rules":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/udev/rules.d/fw.rules",
+    source => "puppet:///files/media/etc/udev/rules.d/fw.rules",
+  }
+
   $packages = [
     "mpd",
     "media-sound/mpc",
@@ -146,7 +195,69 @@ class media {
     "musicbrainz",
   ]
 
+  $gentoo_studio_packages = [
+    "a2jmidid",
+    "gscanbus",
+    "qjackctl",
+    "jack-keyboard",
+     # file manager
+     #"pcmanfm",
+    "dss",
+    "i-vst",
+    "ardour",
+    "rosegarden",
+    "audacity",
+    "nekobee",
+    "omins",
+    "blop",
+    "calf",
+    "eq10q",
+    "hexter",
+    "invada-studio-plugins",
+    "invada-studio-plugins-lv2",
+    "ll-plugins",
+    "lv2fil",
+    "njl-plugins",
+    "rev-plugins",
+    "swh-plugins",
+    "tap-plugins",
+    "vcf",
+    "vocoder-ladspa",
+    "wah-plugins",
+    "wasp",
+    "xsynth-dssi",
+    "amsynth",
+    "bristol",
+    "hydrogen",
+    "jack-rack",
+    "minicomputer",
+    "mx44",
+    "paulstretch",
+    "psindustrializer",
+    "qmidiroute",
+    "qtractor",
+    "rakarrack",
+    "rtsynth",
+    "seq24",
+    "yoshimi",
+    "zynaddsubfx",
+  ]
+
   package { $packages: ensure => installed }
+
+  package {
+    $gentoo_studio_packages: ensure => installed,
+    require                         => Layman['pro-audio'],
+  }
+
+  layman { 'pro-audio':
+    ensure  => present,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
 
   service { 'mpd':
     ensure => running,

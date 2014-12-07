@@ -1,0 +1,11 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+x11-libs/qt-gui gtkstyle
+x11-libs/fltk threads
+

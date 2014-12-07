@@ -1,0 +1,12 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+#KERNEL=="fwx", GROUP="audio", MODE="0664"
+#KERNEL=="fwy", GROUP="audio", MODE="0664"
+#KERNEL=="fwz", GROUP="audio", MODE="0664"
+
