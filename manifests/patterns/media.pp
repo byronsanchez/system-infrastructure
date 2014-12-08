@@ -200,8 +200,6 @@ class media {
     "gscanbus",
     "qjackctl",
     "jack-keyboard",
-     # file manager
-     #"pcmanfm",
     "dss",
     "i-vst",
     "ardour",

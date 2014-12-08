@@ -153,6 +153,8 @@ class workstation {
 
   # TODO: install packer
   $packages = [
+    "pcmanfm",
+    "gentoo",
     "app-backup/tarsnap",
     "app-laptop/laptop-mode-tools",
     "app-office/ledger",
