@@ -4,8 +4,8 @@
 
 source /usr/local/lib/nitelite/helpers/common.lib.sh;
 
-MUSIC_DIRECTORY="/home/byronsanchez/Music"
-PLAYLIST_DIRECTORY="$MUSIC_DIRECTORY/Playlists"
+MUSIC_DIRECTORY="/home/byronsanchez/music"
+PLAYLIST_DIRECTORY="$MUSIC_DIRECTORY/playlists"
 
 update_type="$1"
 WORKDIR="/tmp/nitelite"

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 PLAYLIST=$1
-MUSIC_DIRECTORY="/home/byronsanchez/Music"
-PLAYLIST_DIRECTORY="$MUSIC_DIRECTORY/Playlists"
+MUSIC_DIRECTORY="/home/byronsanchez/music"
+PLAYLIST_DIRECTORY="$MUSIC_DIRECTORY/playlists"
 PLAYLIST_FILE="$PLAYLIST_DIRECTORY/$PLAYLIST.m3u"
 
 printf "Preparing to analyze playlist $PLAYLIST...\n"
@@ -14,13 +14,10 @@ if [ -e "$PLAYLIST_FILE" ]; then
 
   while read line; do
     music_file=$line
-    printf "Current line: $music_file -- "
 
-    if [ -e "$MUSIC_DIRECTORY/$music_file" ]; then
-      message="File exists."
-      printf "\e[32m$message\e[0m\n"
-    else
+    if [ ! -e "$MUSIC_DIRECTORY/$music_file" ]; then
       message="File DOES NOT exist."
+      printf "Current line: $music_file -- "
       printf "\e[31m$message\e[0m\n"
     fi
 

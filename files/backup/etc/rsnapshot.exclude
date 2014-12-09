@@ -38,6 +38,7 @@
 # mac stuff
 - /Users/byronsanchez/mnt/*
 - /Users/byronsanchez/Downloads/*
+- /Users/byronsanchez/downloads/*
 - /Users/byronsanchez/private/var/vm/*
 - /private/var/vm/*¬
 - /private/var/folders/*
@@ -48,5 +49,4 @@
 - /Users/byronsanchez/Desktop/Trash It!.app/*
 - /Users/*/.Trash/*
 - /Users/*/VirtualBox\ VMs/*
-# luna
 - Nodes/*
