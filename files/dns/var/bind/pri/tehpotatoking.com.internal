@@ -14,6 +14,7 @@ tehpotatoking.com.   IN NS ns2.internal.nitelite.io.
 ;; CNAME Records
 production.tehpotatoking.com. IN CNAME tehpotatoking.com.
 www.tehpotatoking.com. IN CNAME tehpotatoking.com.
+feeds.tehpotatoking.com. IN CNAME 1t5jdoq.feedproxy.ghs.google.com.
 
 ;; A Records (IPv4 addresses)
 tehpotatoking.com. IN A 198.98.51.148
