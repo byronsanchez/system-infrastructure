@@ -6,6 +6,5 @@
 #                                         #
 ###########################################
 
-github=git@github.com:hackbytes/gentoo-overlay-b.git
-bitbucket=git@bitbucket.com:hackbytes/gentoo-overlay-b.git
-
+github=git@github.com:byronsanchez/creepypasta-files-android.git
+bitbucket=git@bitbucket.com:byronsanchez/creepypasta-files-android.git

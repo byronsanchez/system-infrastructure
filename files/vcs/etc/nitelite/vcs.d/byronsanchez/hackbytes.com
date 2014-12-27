@@ -6,5 +6,6 @@
 #                                         #
 ###########################################
 
-github=git@github.com:chompix/coloring-book-android.git
-bitbucket=git@bitbucket.com:chompix/coloring-book-android.git
+github=git@github.com:byronsanchez/hackbytes.com.git
+bitbucket=git@bitbucket.com:byronsanchez/hackbytes.com.git
+

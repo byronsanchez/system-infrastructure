@@ -6,6 +6,5 @@
 #                                         #
 ###########################################
 
-github=git@github.com:hackbytes/gentoo-overlay-a.git
-bitbucket=git@bitbucket.com:hackbytes/gentoo-overlay-a.git
-
+github=git@github.com:byronsanchez/coloring-book-android.git
+bitbucket=git@bitbucket.com:byronsanchez/coloring-book-android.git

@@ -6,6 +6,6 @@
 #                                         #
 ###########################################
 
-github=git@github.com:hackbytes/gentoo-overlay-applications.git
-bitbucket=git@bitbucket.com:hackbytes/gentoo-overlay-applications.git
+github=git@github.com:byronsanchez/wintersmith-handleize-helper.git
+bitbucket=git@bitbucket.com:byronsanchez/wintersmith-handleize-helper.git
 

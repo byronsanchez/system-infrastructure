@@ -6,6 +6,6 @@
 #                                         #
 ###########################################
 
-github=git@github.com:hackbytes/gentoo-provision.git
-bitbucket=git@bitbucket.com:hackbytes/gentoo-provision.git
+github=git@github.com:byronsanchez/tehpotatoking.com.git
+bitbucket=git@bitbucket.com:byronsanchez/tehpotatoking.com.git
 

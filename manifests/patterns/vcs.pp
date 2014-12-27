@@ -237,52 +237,22 @@ class vcs(
       require => File['/etc/nitelite/vcs.d'],
     }
 
-    file { "/etc/nitelite/vcs.d/chompix":
-      ensure => directory,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nitelite/vcs.d'],
-    }
-
-    file { "/etc/nitelite/vcs.d/hackbytes":
-      ensure => directory,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nitelite/vcs.d'],
-    }
-
-    file { "/etc/nitelite/vcs.d/tehpotatoking":
-      ensure => directory,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nitelite/vcs.d'],
-    }
-
     $vcs_source_files_byronsanchez = [
       '/etc/nitelite/vcs.d/byronsanchez/dotfiles',
-    ]
-
-    $vcs_source_files_chompix = [
-      '/etc/nitelite/vcs.d/chompix/coloring-book-android',
-      '/etc/nitelite/vcs.d/chompix/coloring-book-ios',
-    ]
-
-    $vcs_source_files_hackbytes = [
-      '/etc/nitelite/vcs.d/hackbytes/gentoo-bootmodder',
-      '/etc/nitelite/vcs.d/hackbytes/gentoo-overlay-a',
-      '/etc/nitelite/vcs.d/hackbytes/gentoo-overlay-b',
-      '/etc/nitelite/vcs.d/hackbytes/gentoo-overlay-applications',
-      '/etc/nitelite/vcs.d/hackbytes/gentoo-provision',
-      '/etc/nitelite/vcs.d/hackbytes/hackbytes.com',
-      '/etc/nitelite/vcs.d/hackbytes/nitelite.io',
-      '/etc/nitelite/vcs.d/hackbytes/puppet-nitelite',
-      '/etc/nitelite/vcs.d/hackbytes/wintersmith-articles-helper',
-      '/etc/nitelite/vcs.d/hackbytes/wintersmith-handleize-helper',
-      '/etc/nitelite/vcs.d/hackbytes/wintersmith-robotskirt',
-      '/etc/nitelite/vcs.d/hackbytes/wintersmith-tag-pages',
-    ]
-
-    $vcs_source_files_tehpotatoking = [
+      '/etc/nitelite/vcs.d/byronsanchez/coloring-book-android',
+      '/etc/nitelite/vcs.d/byronsanchez/coloring-book-ios',
+      '/etc/nitelite/vcs.d/byronsanchez/gentoo-bootmodder',
+      '/etc/nitelite/vcs.d/byronsanchez/gentoo-overlay-a',
+      '/etc/nitelite/vcs.d/byronsanchez/gentoo-overlay-b',
+      '/etc/nitelite/vcs.d/byronsanchez/gentoo-overlay-applications',
+      '/etc/nitelite/vcs.d/byronsanchez/gentoo-provision',
+      '/etc/nitelite/vcs.d/byronsanchez/hackbytes.com',
+      '/etc/nitelite/vcs.d/byronsanchez/tehpotatoking.com',
+      '/etc/nitelite/vcs.d/byronsanchez/system-infrastructure',
+      '/etc/nitelite/vcs.d/byronsanchez/wintersmith-articles-helper',
+      '/etc/nitelite/vcs.d/byronsanchez/wintersmith-handleize-helper',
+      '/etc/nitelite/vcs.d/byronsanchez/wintersmith-robotskirt',
+      '/etc/nitelite/vcs.d/byronsanchez/wintersmith-tag-pages',
       '/etc/nitelite/vcs.d/tehpotatoking/creepypasta-files-android',
       '/etc/nitelite/vcs.d/tehpotatoking/creepypasta-files-ios',
     ]
@@ -296,30 +266,6 @@ class vcs(
       group    => 'root',
       mode     => 0644,
       requires  => File["/etc/nitelite/vcs.d/byronsanchez"],
-      source => 'vcs',
-    }
-
-    nl_files { $vcs_source_files_chompix:
-      owner    => 'root',
-      group    => 'root',
-      mode     => 0644,
-      requires  => File["/etc/nitelite/vcs.d/chompix"],
-      source => 'vcs',
-    }
-
-    nl_files { $vcs_source_files_hackbytes:
-      owner    => 'root',
-      group    => 'root',
-      mode     => 0644,
-      requires  => File["/etc/nitelite/vcs.d/hackbytes"],
-      source => 'vcs',
-    }
-
-    nl_files { $vcs_source_files_tehpotatoking:
-      owner    => 'root',
-      group    => 'root',
-      mode     => 0644,
-      requires  => File["/etc/nitelite/vcs.d/tehpotatoking"],
       source => 'vcs',
     }
 
