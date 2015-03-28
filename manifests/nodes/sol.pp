@@ -49,9 +49,9 @@ node 'sol.internal.nitelite.io' inherits network {
     mail_type => "client",
   }
 
-  class { "nas": }
-
-  class { "nasclient": }
+  class { "nas":
+    nas_type   => "server",
+  }
 
   class { "ldap":
     ldap_type => "client"

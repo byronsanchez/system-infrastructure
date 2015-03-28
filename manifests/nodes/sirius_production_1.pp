@@ -32,7 +32,10 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
 
   class { "backup": }
 
-  class { "vcs": }
+  class { "vcs":
+    vcs_type           => "mirror",
+    mirror_environment => "${environment}",
+  }
 
   class { "data":
     data_type => "client",
@@ -59,7 +62,7 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
   class { "webserver": }
 
   class { "php":
-    environment => "{environment}",
+    environment => "${environment}",
     php_timezone => 'America/New_York',
   }
 

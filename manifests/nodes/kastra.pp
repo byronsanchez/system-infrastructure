@@ -40,7 +40,9 @@ node 'kastra.internal.nitelite.io' inherits network {
     mail_type => "client",
   }
 
-  class { "nasclient": }
+  class { "nas":
+    nas_type => "client",
+  }
 
   class { "ldap":
     ldap_type => "client"
