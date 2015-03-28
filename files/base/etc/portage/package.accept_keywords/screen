@@ -1,0 +1,11 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# needed for vertical split functionality
+app-misc/screen ~amd64
+

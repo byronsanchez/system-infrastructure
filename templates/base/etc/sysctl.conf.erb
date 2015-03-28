@@ -90,7 +90,9 @@ kernel.domainname = <%= @internal_domain %>
 ## enable forwarding for guest packets and ssh port
 net.ipv4.ip_forward = 1
 
-<% if @ipaddress == @hypervisor_address -%>
+kernel.shmmax = 0x7fffffff
+
+<% if @ipaddress == @hypervisor_address || @ipaddress = @vpn_address -%>
 # disable filters that prevent smooth bridging
 net.bridge.bridge-nf-call-ip6tables = 0
 net.bridge.bridge-nf-call-iptables = 0

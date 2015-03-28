@@ -13,19 +13,23 @@ class base (
   $mcollective_type = 'server',
   $network_interface = 'eth0',
   $enable_docker = false,
+  $keymap = 'us',
 ) {
 
   $rabbitmq_mcollective_password = hiera('rabbitmq_mcollective_password', '')
 
   if $hostname {
+
     # set hostname
     nl_hostname { $hostname:
       node_name => "${hostname}",
     }
+
     # add host data in hosts files
     class { "nl_hosts":
       node_name => "${hostname}"
     }
+
   }
 
   class { "::ntp": }
@@ -125,7 +129,7 @@ class base (
     mode => 0644,
     owner => "root",
     group => "root",
-    source => "puppet:///files/base/etc/conf.d/keymaps",
+    content => template('base/etc/conf.d/keymaps.erb'),
   }
 
   file { "/etc/conf.d/net":
@@ -325,6 +329,24 @@ class base (
     source => "puppet:///files/base/opt/screen/etc/screenrc",
   }
 
+  file { "/etc/portage/package.accept_keywords/screen":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/screen",
+    source => "puppet:///files/base/etc/portage/package.accept_keywords/screen",
+  }
+
+  file { "/etc/portage/package.accept_keywords/rsync":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/rsync",
+    source => "puppet:///files/base/etc/portage/package.accept_keywords/rsync",
+  }
+
   file { "/var/lib/nitelite":
     ensure => "directory",
     owner   => "root",
@@ -332,6 +354,7 @@ class base (
   }
 
   $packages = [
+    "net-dns/avahi",
     "the_silver_searcher",
     "rsync",
     "openssh",
@@ -346,6 +369,7 @@ class base (
     "vixie-cron",
     "ruby",
     "python",
+    "dev-python/pip",
     "app-text/tree",
     "sudo",
     "htop",
@@ -360,6 +384,8 @@ class base (
     "tcpdump",
     "strace",
     "traceroute",
+    "setserial",
+    "net-analyzer/iftop",
   ]
 
   package {
@@ -398,6 +424,22 @@ class base (
     provider => 'gem',
     require => [
       Eselect[ruby],
+    ],
+  }
+
+  eselect { 'python':
+    set => 'python2.7',
+  }
+
+  $pip_packages = [
+    "virtualenv",
+  ]
+
+  package { $pip_packages:
+    ensure  => installed,
+    provider => 'pip',
+    require => [
+      Eselect[python],
     ],
   }
 
@@ -473,6 +515,14 @@ class base (
     ],
   }
 
+  service { 'avahi-daemon': 
+    ensure    => running,
+    enable => true,
+    require   => [
+      Package['net-dns/avahi'],
+    ],
+  }
+
   service { sshd:
     ensure    => running,
     enable => true,
@@ -539,14 +589,6 @@ class base (
     refreshonly => true,
     require     => [
       File['/etc/sysctl.conf']
-    ],
-  }
-
-  package { "app-misc/screen":
-    ensure  => installed,
-    require => [
-      Layman['nitelite-a'],
-      Layman['nitelite-b'],
     ],
   }
 
