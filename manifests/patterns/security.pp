@@ -2,6 +2,15 @@
 # opposed to node-specific
 class security($iptables_type = '') {
 
+  file { "/etc/pam.d/system-auth":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '644',
+    path => "/etc/pam.d/system-auth",
+    content => template("security/etc/pam.d/system-auth.erb"),
+  }
+
   file { "/etc/chkrootkit.conf":
     ensure => present,
     owner  => "root",
