@@ -299,11 +299,12 @@
 ;	printable = no
 ;	write list = +staff
 
+<% if @nas_type == "server" %>
 # A publicly accessible directory, but read only, except for people in
 # the "staff" group
   [luna]
 	comment = Public Stuff
-  path = /srv/nfs/luna
+	path = /srv/nfs/luna
 	public = yes
 	writable = yes
 	printable = no
@@ -311,4 +312,20 @@
 	read only = no
 	force user = root
 	write list = +staff +root +nobody
+<% end -%>
+
+<% if @nas_type == "workstation" %>
+# A publicly accessible directory, but read only, except for people in
+# the "staff" group
+  [byronsanchez]
+	comment = Public Stuff
+	path = /home/byronsanchez
+	public = yes
+	writable = yes
+	printable = no
+	guest ok = yes
+	read only = no
+	force user = root
+	write list = +staff +root +nobody
+<% end -%>
 
