@@ -130,15 +130,6 @@ class ldap($ldap_type) {
     source => "puppet:///files/ldap/etc/openldap/ldap.conf",
   }
 
-  file { "/etc/pam.d/system-auth":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => '644',
-    path => "/etc/pam.d/system-auth",
-    source => "puppet:///files/ldap/etc/pam.d/system-auth",
-  }
-
   file { "/var/lib/openldap-ldbm":
     ensure  => "directory",
     owner   => "ldap",
