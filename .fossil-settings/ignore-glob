@@ -1,0 +1,49 @@
+#########
+# Globals
+
+# vim
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# linux
+*~
+.directory
+
+
+# osx
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+##################
+# Project-specific
+
+# librarian-puppet
+.tmp/
+.librarian/
+modules/*
+
+# ignore files with encrypted data
+secure/
+*.eyaml
+# plain text yaml secrets
+*secrets.yaml
+# encrypted yaml secrets
+*secrets.eyaml
+
