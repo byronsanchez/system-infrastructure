@@ -70,6 +70,41 @@ COMMIT
 # MPD HTTP Stream
 -A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 12000 -m state --state NEW -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 12000 -m state --state NEW -j ACCEPT
+# rTorrent
+-A INPUT -p tcp -m tcp --dport 60125:64125 -m state --state NEW -j ACCEPT
+-A INPUT -p udp -m udp --dport 60125:64125 -m state --state NEW -j ACCEPT
+
+# Samba Ports
+-A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 137 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -m state --state NEW -p udp --dport 137 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 138 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -m state --state NEW -p udp --dport 138 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 139 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -m state --state NEW -p udp --dport 139 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 445 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -m state --state NEW -p udp --dport 445 -j ACCEPT
+
+# Portmapper - Needed for NFS
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 111 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 111 -j ACCEPT
+# NFS Ports
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 1110 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 1110 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 2049 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 2049 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 4045 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 4045 -j ACCEPT
+# Mountd Ports - Needed for NFS
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 662 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 662 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 875 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 875 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 892 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 892 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 32769 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 32769 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 32803 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 32803 -j ACCEPT
 <% end-%>
 
 <% if @iptables_type == "hypervisor" -%>
@@ -202,8 +237,8 @@ COMMIT
 
 <% if @iptables_type == "vpn" -%>
 # VPN
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 443 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 443 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+-A INPUT -p udp -m udp --dport 443 -j ACCEPT
 
 # permit packets to flow freely over tap0 and br0
 -A INPUT -i tap0 -j ACCEPT
