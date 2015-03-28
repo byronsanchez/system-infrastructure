@@ -17,7 +17,7 @@ key /etc/ssl/vpn/private/cakey.pem.unencrypted
 dh /etc/openvpn/dh4096.pem
 tls-auth /etc/openvpn/ta.key 0
 
-server-bridge 10.66.77.4 255.255.255.0 10.66.77.121 10.66.77.150
+server-bridge <%= @vpn_address %> 255.255.255.0 10.66.77.121 10.66.77.150
 ifconfig-pool-persist /var/lib/openvpn/ipp.txt
 #push "redirect-gateway def1 bypass-dhcp"
 #push "dhcp-option DNS 8.8.8.8"

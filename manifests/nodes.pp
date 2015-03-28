@@ -22,6 +22,7 @@ node "network" {
   $ldapserver_address = "10.66.77.103"
   $pgmaster_address = "10.66.77.108"
   $mymaster_address = "10.66.77.110"
+  $vpn_address = "10.66.77.115"
   $vcs_address = "10.66.77.116"
 
 }
