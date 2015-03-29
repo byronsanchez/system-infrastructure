@@ -17,50 +17,78 @@ based on the information you see.
 #
 # source: http://forums.gentoo.org/viewtopic-t-976032-start-0.html
 
-Start by syncing from external mirrors to local mirrors:
+Check the changes to the portage tree (-w performs a webrsync instead of an 
+rsync):
 
-    /etc/cron.daily/mirror_gentoo
+    sudo eix-sync -w;
 
-When rebuilding @preserved-rebuild:
+If there are news items, read them carefully:
+
+    eselect news;
+
+Securiy advisory check:
+
+    glsa-check -t all;
+
+Run updates
+
+    emerge -DuvaN --with-bdeps=y world [--keep-going]
+
+After update, read messages and perform any necessary tasks:
+
+    less /var/log/portage/elog;
+
+Post-updates
 
     emerge --usepkg=n @preserved-rebuild
-
-When doing revdep-rebuild:
-
     revdep-rebuild -- --usepkg=n
-
-When doing perl-cleaner:
-
     perl-cleaner --all -- --usepkg=n
-
-When doing python-updater:
-
     python-updater -- --usepkg=n
 
-# general instructions
+Update configs if necessary and merge the updates with the puppet sources
 
-The following command is the equivalent to running:
+    dispatch-conf;
+    [Merge with puppet sources]
+    emerge -u puppet-nitelite-development
 
-    emerge --sync
-    eix-update
-    eix-diff
+Make updates available to clients:
 
-Check the changes to the portage tree
-    sudo eix-remote update; # for adding overlays to the cache
-    sudo eix-sync;
+    publish-gentoo-updates
+
+Make sure compiler is properly set:
+
+    gcc-config
+
+# Client
+
+Check the changes to the portage tree (-w performs a webrsync instead of an 
+rsync):
+
+    sudo eix-sync -w;
+
+Run updates
+
+    emerge -DuvaN --with-bdeps=y world [--keep-going]
+
+Post-updates
+
+    emerge @preserved-rebuild
+    revdep-rebuild;
+    perl-cleaner --all
+    python-updater
+
+Update configs through puppet (puppet gets updated through emerge):
+
+  cd /etc/puppet
+  ./init.sh
+  puppet apply manifests/site.pp
+
+# Additional tips
 
 After you analyze the portage tree, check what can be upgraded. Show
 dependencies so that you know why a package was pulled into the update list.
 
     emerge -Duvpt world;
-
-If there are news items, read them carefully
-
-    eselect news;
-
-Securiy advisory check
-
-    glsa-check;
 
 Read logs and determine whether or not you really want to update the package.
 
@@ -75,38 +103,7 @@ Get estimated merge time
 
     emerge -Duvp world | sudo genlop -p;
 
-Update
-
-    emerge -DuvaN --with-bdeps=y world
-
-After update, read messages
-
-    less /var/log/portage/elog;
-
-Update configs if necessary and merge the updates with the puppet sources
-
-    dispatch-conf;
-
 To check last merge time, run the command:
 
     sudo genlop -t1 --date 1 day ago;
-
-Also, don't forget to run the following command after updates:
-
-    revdep-rebuild;
-
-### Troubleshooting common problems
-
-If you have perl-related problems because of a perl upgrade, make sure to run:
-
-    perl-cleaner --all
-
-Python package updates
-
-    python-updater
-
-If you have gcc problems after a gcc upgrade, make sure a compiler is properly
-set by running:
-
-    gcc-config
 

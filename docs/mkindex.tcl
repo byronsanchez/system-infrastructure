@@ -10,16 +10,20 @@ set doclist {
   backups.md {Backups}
   binhost.md {Binhost}
   ci.md {Continuous Integration}
+  infrastructure-design.md {Infrastructure Design}
+  infrastructure-upgrade.md {Infrastructure Upgrade}
   memory.md {Memory Allocations}
   names.md {Node Naming Convention}
-  network.md {Infrastructure Design}
+  nas.md {NAS}
   pki.md {Public Key Infrastructure}
   puppet.md {Configuration Management with Puppet}
   replication.md {Replication}
   ssh.md {Secure Shell}
   updates.md {Update Guide for Node on the Network}
+  id.md {User ID Mappings}
   versions.md {Versioning Policies}
   vpn.md {VPN}
+  workstations.md {Workstations}
 }
 
 set permindex {}
