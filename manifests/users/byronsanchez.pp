@@ -18,7 +18,7 @@ class byronsanchez ($groups = ['audio', 'cdrom', 'usb',]) {
       uid        => '1000',
       password => $password,
       require    => [
-        Package[zsh],
+        Package['app-shells/zsh'],
       ]
     }
 
@@ -34,7 +34,7 @@ class byronsanchez ($groups = ['audio', 'cdrom', 'usb',]) {
       shell      => '/bin/zsh',
       uid        => '1000',
       require    => [
-        Package[zsh],
+        Package['app-shells/zsh'],
       ]
     }
 
