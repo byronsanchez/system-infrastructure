@@ -4,17 +4,8 @@
 
 class webserver {
 
-  user { 'www-data':
-    ensure => 'present',
-    gid    => '33',
-    shell  => '/bin/false',
-    uid    => '33',
-  }
-
-  group { 'www-data':
-    ensure => 'present',
-    gid    => '33',
-  }
+  # add base nginx resources
+  class { "nl_nginx": }
 
   # perms for any web apps
   # puppet will make all files 0644 and dirs will be 0755. If you want to
@@ -33,91 +24,14 @@ class webserver {
     owner  => 'deployer',
     group  => 'www-data',
     mode    => 0750,
-    require => File["/var/lib/nitelite"],
-  }
-
-  file { "/etc/nginx":
-    ensure => "directory",
-    owner => "root",
-    group => "root",
-  }
-
-  file { "/etc/nginx/nginx.conf":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/nginx.conf",
-    source => "puppet:///files/webserver/etc/nginx/nginx.conf",
-    require => File["/etc/nginx"],
-  }
-
-  file { "/etc/nginx/proxy_params":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/proxy_params",
-    source => "puppet:///files/webserver/etc/nginx/proxy_params",
-    require => File["/etc/nginx"],
-  }
-
-  file { "/etc/nginx/conf.d":
-    ensure  => "directory",
-    owner   => "root",
-    group   => "root",
-    require => File["/etc/nginx"],
-  }
-
-  file { "/etc/nginx/conf.d/default.conf":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/conf.d/default.conf",
-    source => "puppet:///files/webserver/etc/nginx/conf.d/default.conf",
-    require => File["/etc/nginx/conf.d"],
-  }
-
-  file { "/etc/nginx/conf.d/types.conf":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/conf.d/types.conf",
-    source => "puppet:///files/webserver/etc/nginx/conf.d/types.conf",
-    require => File["/etc/nginx/conf.d"],
-  }
-
-  file { "/etc/nginx/sites-available":
-    ensure  => "directory",
-    owner   => "root",
-    group   => "root",
-    require => File["/etc/nginx"],
-  }
-
-  file { "/etc/nginx/sites-available/default":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/sites-available/default",
-    source => "puppet:///files/webserver/etc/nginx/sites-available/default",
-    require => File["/etc/nginx/sites-available"],
-  }
-
-  file { "/etc/nginx/sites-enabled":
-    ensure  => "directory",
-    owner   => "root",
-    group   => "root",
-    require => File["/etc/nginx"],
+    require => Class["nl_nginx"],
   }
 
   file { "/etc/nginx/conf.d/nitelite":
     ensure => "directory",
     owner => "root",
     group => "root",
-    require => File["/etc/nginx/conf.d"],
+    require => Class["nl_nginx"],
   }
 
   file { "/etc/vhosts/webapp-config":
@@ -130,19 +44,11 @@ class webserver {
   }
 
   $packages = [
-    "nginx",
+    "app-admin/webapp-config",
   ]
 
-  package { $packages: ensure => installed }
-
-  service { 'nginx':
-    ensure => running,
-    enable => true,
-    subscribe => File['/etc/nginx/nginx.conf'],
-    require   => [
-      File['/etc/nginx/nginx.conf'],
-      Package[nginx],
-    ],
+  package { $packages:
+    ensure => installed,
   }
 
 }
