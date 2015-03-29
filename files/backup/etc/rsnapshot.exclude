@@ -23,7 +23,9 @@
 - /lost+found
 - /home/*/Downloads/*
 - /home/*/downloads/*
+- /home/byronsanchez/projects/byronsanchez/youtube/*
 - /home/scratch/**
+- /home/*/.local/share/Trash/*
 # mirrors get mirrored
 - /srv/nfs/io/**
 # the gentoo modules are just symlinks to other directories that get backed up
@@ -50,3 +52,12 @@
 - /Users/*/.Trash/*
 - /Users/*/VirtualBox\ VMs/*
 - Nodes/*
+# ci stuff that can be rebuilt from other backed up data
+- /var/lib/jenkins/home/config-history/*
+- /var/lib/jenkins/home/jobs/*/workspace*
+- /var/lib/jenkins/home/jobs/*/builds/*/archive
+- /var/lib/jenkins/home/plugins/*/*
+- /var/lib/jenkins/home/plugins/*.bak
+- /var/lib/jenkins/home/war
+- /var/lib/jenkins/home/cache
+

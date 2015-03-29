@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Installs backup scripts
+
+cp /var/lib/nitelite/workstation/backups/backitup.sh /usr/local/bin/backitup
+cp /var/lib/nitelite/workstation/backups/cryptshot.sh /usr/local/bin/cryptshot
+cp /var/lib/nitelite/workstation/backups/tarsnapper.py /usr/local/bin/tarsnapper.py
+

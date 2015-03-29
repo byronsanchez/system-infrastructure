@@ -32,7 +32,11 @@ config_version	1.2
 
 # All snapshots will be stored under this root directory.
 #
+<% if @backup_type == "server" %>
 snapshot_root	/vol/europa/snapshots/
+<% elsif @backup_type == "workstation" %>
+snapshot_root	/mnt/<%= @backup_uuid %>/snapshots/
+<% end %>
 
 # If no_create_root is enabled, rsnapshot will not automatically create the
 # snapshot_root directory. This is particularly useful if you are backing
@@ -204,9 +208,12 @@ use_lazy_deletes	1
 ### BACKUP POINTS / SCRIPTS ###
 ###############################
 
-######################################
-# Selective backup of all workstations
-######################################
+###############################
+# Selective backup of all nodes
+###############################
+
+
+<% if @backup_type == "server" %>
 
 # sol
 backup	/etc/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
@@ -215,24 +222,29 @@ backup	/root/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
 backup	/home/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
 backup	/srv/	sol.internal.nitelite.io/	+rsync_short_args=-aHAX
 
-# osx
-backup	byronsanchez@mira.internal.nitelite.io:/private/etc/	mira.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
-backup	byronsanchez@mira.internal.nitelite.io:/private/var/	mira.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
-backup	byronsanchez@mira.internal.nitelite.io:/Users/	mira.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHX
-
 <% @nodes.each do |node| -%>
 backup	rbackup@<%= node %>:/etc/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 backup	rbackup@<%= node %>:/var/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 backup	rbackup@<%= node %>:/root/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 backup	rbackup@<%= node %>:/home/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
 backup	rbackup@<%= node %>:/srv/	<%= node %>/	+rsync_long_args=--rsync-path=rsync_wrapper.sh, rsync_short_args=-aHAX
-
 <% end -%>
 
 backup_script	/usr/local/bin/backup-pgsql.sh	nitelite-pgsql/
 backup_script	/usr/local/bin/backup-mysql.sh	nitelite-mysql/
 backup_script	/usr/local/bin/backup-ldap.sh	nitelite-ldap/
 backup_script	/usr/local/bin/backup-virsh.sh	nitelite-virsh/
+
+<% elsif @backup_type == "workstation" %>
+
+# mira
+backup	/etc/	mira.internal.nitelite.io/	+rsync_short_args=-aHAX
+backup	/var/	mira.internal.nitelite.io/	+rsync_short_args=-aHAX
+backup	/root/	mira.internal.nitelite.io/	+rsync_short_args=-aHAX
+backup	/home/	mira.internal.nitelite.io/	+rsync_short_args=-aHAX
+backup	/srv/	mira.internal.nitelite.io/	+rsync_short_args=-aHAX
+
+<% end %>
 
 # EXAMPLE.COM
 #backup_script	/bin/date "+ backup of example.com started at %c"	unused1

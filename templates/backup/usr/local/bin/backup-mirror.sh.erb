@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Currently workstation only.
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+backup_dir="/mnt/<%= @backup_uuid %>"
+
+# Mirrors will be backed up via rsync instead of rsnapshot since we're not
+# looking for incremental changes, just the most recent.
+if [ ! -f /tmp/backup_mirror ];
+then
+  touch /tmp/backup_mirror;
+
+  if [ -d "${backup_dir}" ]; then
+    mkdir -p ${backup_dir}/mirror;
+    rsync -aqvz --delete --delete-during /home/byronsanchez/projects/byronsanchez/youtube/ ${backup_dir}/mirror/home/byronsanchez/projects/byronsanchez/youtube;
+  fi
+
+  rm /tmp/backup_mirror;
+fi
+
