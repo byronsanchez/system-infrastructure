@@ -9,4 +9,5 @@
 app-emulation/libvirt-glib python
 app-emulation/virt-manager gtk
 net-libs/gtk-vnc python
-net-misc/spice-gtk python gtk3
+net-misc/spice-gtk python gtk3 usbredir
+
