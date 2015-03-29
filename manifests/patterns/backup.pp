@@ -115,6 +115,15 @@ class backup(
 
   elsif $backup_type == "workstation" {
 
+    file { '/etc/tarsnapper.conf':
+      ensure  => present,
+      path    => "/etc/tarsnapper.conf",
+      source  => 'puppet:///files/backup/etc/tarsnapper.conf',
+      group   => '0',
+      mode    => '644',
+      owner   => '0',
+    }
+
     file { '/usr/local/bin/backup-mirror.sh':
       ensure  => present,
       path    => "/usr/local/bin/backup-mirror.sh",
