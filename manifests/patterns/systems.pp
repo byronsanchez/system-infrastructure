@@ -1,11 +1,6 @@
 class systems(
-  $phpmyadmin = false,
-  $phppgadmin = false,
-  $phpldapadmin = false,
   $postfixadmin = false,
-  $roundcube = false,
-  $ampache = false,
-  $gitbucket = false,
+  $phpldapadmin = false,
   $cgit = false,
   $fossil = false,
   $jenkins = false,
@@ -20,70 +15,6 @@ class systems(
     enable_php      => true,
     ssl_cert_path   => "/etc/ssl/nitelite.io/cacert.pem",
     ssl_key_path    => "/etc/ssl/nitelite.io/private/cakey.pem.unencrypted",
-  }
-
-  if $phpmyadmin {
-
-    file { "/srv/www/systems.nitelite.io/htdocs/phpmyadmin/config.inc.php":
-      ensure => present,
-      owner => "deployer",
-      group => "www-data",
-      require => [
-        Package[phpmyadmin],
-        Exec[webapp_config_phpmyadmin],
-      ],
-      path    => "/srv/www/systems.nitelite.io/htdocs/phpmyadmin/config.inc.php",
-      source => "puppet:///files/systems/srv/www/systems.nitelite.io/htdocs/phpmyadmin/config.inc.php",
-    }
-
-    $phpmyadmin_packages = [
-      "phpmyadmin",
-    ]
-
-    package { $phpmyadmin_packages: ensure => installed }
-
-    exec { "webapp_config_phpmyadmin":
-      command => "/usr/sbin/webapp-config -I -h systems.${domain} -d phpmyadmin phpmyadmin 4.1.7",
-      creates => "/srv/www/systems.${domain}/htdocs/phpmyadmin",
-      require => [
-        Package[phpmyadmin],
-        File['/srv/www'],
-        File['/etc/vhosts/webapp-config'],
-      ]
-    }
-
-  }
-
-  if $phppgadmin {
-
-    file { "/srv/www/systems.nitelite.io/htdocs/phppgadmin/conf/config.inc.php":
-      ensure => present,
-      owner => "deployer",
-      group => "www-data",
-      require => [
-        Package[phppgadmin],
-        Exec[webapp_config_phppgadmin],
-      ],
-      path    => "/srv/www/systems.nitelite.io/htdocs/phppgadmin/conf/config.inc.php",
-      source => "puppet:///files/systems/srv/www/systems.nitelite.io/htdocs/phppgadmin/conf/config.inc.php",
-    }
-
-    $phppgadmin_packages = [
-      "phppgadmin",
-    ]
-
-    package { $phppgadmin_packages: ensure => installed }
-
-    exec { "webapp_config_phppgadmin":
-      command => "/usr/sbin/webapp-config -I -h systems.${domain} -d phppgadmin phppgadmin 5.1",
-      creates => "/srv/www/systems.${domain}/htdocs/phppgadmin",
-      require => [
-        Package[phppgadmin],
-        File['/srv/www'],
-        File['/etc/vhosts/webapp-config'],
-      ]
-    }
-
   }
 
   if $phpldapadmin {
@@ -170,111 +101,11 @@ class systems(
 
   }
 
-  if $roundcube {
-
-    $roundcubereaderpw = hiera('roundcubereaderpw', '')
-
-    file { "/srv/www/systems.nitelite.io/htdocs/roundcube/config/db.inc.php":
-      ensure => present,
-      owner => "deployer",
-      group => "www-data",
-      require => [
-        Package[roundcube],
-        Exec[webapp_config_roundcube],
-      ],
-      path    => "/srv/www/systems.nitelite.io/htdocs/roundcube/config/db.inc.php",
-      content => template("systems/srv/www/systems.nitelite.io/htdocs/roundcube/config/db.inc.php.erb"),
-    }
-
-    file { "/srv/www/systems.nitelite.io/htdocs/roundcube/config/main.inc.php":
-      ensure => present,
-      owner => "deployer",
-      group => "www-data",
-      require => [
-        Package[roundcube],
-        Exec[webapp_config_roundcube],
-      ],
-      path    => "/srv/www/systems.nitelite.io/htdocs/roundcube/config/main.inc.php",
-      source => "puppet:///files/systems/srv/www/systems.nitelite.io/htdocs/roundcube/config/main.inc.php",
-    }
-
-    $roundcube_packages = [
-      "roundcube",
-    ]
-
-    package { $roundcube_packages: ensure => installed }
-
-    exec { "webapp_config_roundcube":
-      command => "/usr/sbin/webapp-config -I -h systems.${domain} -d roundcube roundcube 0.9.5",
-      creates => "/srv/www/systems.${domain}/htdocs/roundcube",
-      require => [
-        Package[roundcube],
-        File['/srv/www'],
-        File['/etc/vhosts/webapp-config'],
-      ]
-    }
-
-  }
-
-  if $ampache {
-
-    $ampachereaderpw = hiera('ampachereaderpw', '')
-
-    file { "/srv/www/systems.nitelite.io/htdocs/ampache/config/ampache.cfg.php":
-      ensure => present,
-      owner => "deployer",
-      group => "www-data",
-      require => [
-        Package[ampache],
-        Exec[webapp_config_ampache],
-      ],
-      path    => "/srv/www/systems.nitelite.io/htdocs/ampache/config/ampache.cfg.php",
-      content => template("systems/srv/www/systems.nitelite.io/htdocs/ampache/config/ampache.cfg.php.erb"),
-    }
-
-    # TODO: require nitelite overlay
-    $ampache_packages = [
-      "ampache",
-    ]
-
-    package { $ampache_packages: ensure => installed }
-
-    exec { "webapp_config_ampache":
-      command => "/usr/sbin/webapp-config -I -h systems.${domain} -d ampache ampache 9999",
-      creates => "/srv/www/systems.${domain}/htdocs/ampache",
-      require => [
-        Package[phppgadmin],
-        File['/srv/www'],
-        File['/etc/vhosts/webapp-config'],
-      ]
-    }
-
-  }
-
-  # TODO: consider removing gitbucket in favor of cgit
-  if $gitbucket {
-
-    nl_nginx::website { "git":
-      websiteName     => "git.nitelite.io",
-      environmentName => "production",
-      feed_path       => "git",
-      root_path       => "/htdocs",
-      enable_ssl      => true,
-      ssl_cert_path   => "/etc/ssl/nitelite.io/cacert.pem",
-      ssl_key_path    => "/etc/ssl/nitelite.io/private/cakey.pem.unencrypted",
-      # trailing slash is REQUIRED
-      proxy_pass      => "http://git.internal.nitelite.io:8080/gitbucket/",
-      proxy_cookie_path => "/gitbucket ''",
-      proxy_redirect  => "http://git.internal.nitelite.io:8080/gitbucket/ https://git.nitelite.io/"
-
-    }
-
-  }
-
   if $cgit {
 
+    # cgit internal frontend nginx for https
     nl_nginx::website { "git":
-      websiteName     => "git.nitelite.io",
+      websiteName     => "git.internal.nitelite.io",
       environmentName => "production",
       feed_path       => "git",
       root_path       => "/htdocs",
@@ -282,7 +113,7 @@ class systems(
       ssl_cert_path   => "/etc/ssl/nitelite.io/cacert.pem",
       ssl_key_path    => "/etc/ssl/nitelite.io/private/cakey.pem.unencrypted",
       proxy_pass      => "http://cgitserver",
-      proxy_redirect  => "http://cgit.internal.nitelite.io:8081/ https://git.nitelite.io/",
+      proxy_redirect  => "http://cgit.internal.nitelite.io:8081/ https://git.internal.nitelite.io/",
       upstream        => "cgitserver",
       # non-cgi scripts will be handled by the fossil server
       upstream_server => "cgit.internal.nitelite.io:8081",
@@ -292,8 +123,9 @@ class systems(
 
   if $fossil {
 
+    # fossil internal frontend nginx for https
     nl_nginx::website { "fossil":
-      websiteName     => "fossil.nitelite.io",
+      websiteName     => "fossil.internal.nitelite.io",
       environmentName => "production",
       feed_path       => "fossil",
       root_path       => "/htdocs",
@@ -301,23 +133,24 @@ class systems(
       enable_ssl      => true,
       enable_cgi      => true,
       # cgi scripts sent here
-      cgi_server      => "fossil.internal.nitelite.io:3128",
+      cgi_server      => "fs.internal.nitelite.io:3128",
       ssl_cert_path   => "/etc/ssl/nitelite.io/cacert.pem",
       ssl_key_path    => "/etc/ssl/nitelite.io/private/cakey.pem.unencrypted",
       proxy_pass      => "http://fossilserver",
-      proxy_redirect  => "http://fossil.internal.nitelite.io:4545/ https://fossil.nitelite.io/",
+      proxy_redirect  => "http://fs.internal.nitelite.io:4545/ https://fossil.internal.nitelite.io/",
       upstream        => "fossilserver",
       # non-cgi scripts will be handled by the fossil server
-      upstream_server => "fossil.internal.nitelite.io:4545",
+      upstream_server => "fs.internal.nitelite.io:4545",
     }
 
-    file { "/etc/nginx/conf.d/nitelite/fossil.nitelite.io":
+    file { "/etc/nginx/conf.d/nitelite/fossil.internal.nitelite.io":
       ensure => present,
       owner => "root",
       group => "root",
       require => File['/etc/nginx/conf.d/nitelite'],
-      path => "/etc/nginx/conf.d/nitelite/fossil.nitelite.io",
-      source => "puppet:///files/systems/etc/nginx/conf.d/nitelite/fossil.nitelite.io",
+      path => "/etc/nginx/conf.d/nitelite/fossil.internal.nitelite.io",
+      source =>
+      "puppet:///files/systems/etc/nginx/conf.d/nitelite/fossil.internal.nitelite.io",
     }
 
   }
