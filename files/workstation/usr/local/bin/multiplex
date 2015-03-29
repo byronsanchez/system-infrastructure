@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Multiplex video and sound
+ 
+if [[ $# -lt 2 ]] ; then
+    echo
+    echo "  Usage: $0 <video file> <sound file>"
+    echo
+    exit 1
+fi
+
+# muxer optimized for youtube
+
+# faststart - moov atom at the front of file
+# genpts - required for vbr video so that duration of each frame is known.  
+# usually provided by the decoder, but since we're using copy, we are bypassing 
+# the decoder. thus, we need to set this flag.
+command="ffmpeg -fflags +genpts -i $1 -i $2 -acodec libfdk_aac -ab 384k -ar 48000 -vcodec copy -movflags faststart -f mp4 ${1%%.*}.mp4"
+#next_command="ffmpeg -i ${1%%.*}.mp4 -acodec copy -vcodec copy ${1%%.*}.mkv"
+ 
+echo $command
+eval $command
+

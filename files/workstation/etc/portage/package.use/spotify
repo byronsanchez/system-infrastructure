@@ -1,0 +1,11 @@
+# required by dev-qt/qt3support-4.8.5
+dev-qt/qtgui qt3support
+# required by dev-qt/qtgui-4.8.5-r3
+# required by dev-qt/qt3support-4.8.5
+dev-qt/qtcore qt3support
+# required by dev-qt/qt3support-4.8.5
+# required by dev-qt/qtgui-4.8.5-r3[qt3support]
+# required by media-sound/spotify-0.9.11.27-r2
+# required by spotify (argument)
+dev-qt/qtsql qt3support
+

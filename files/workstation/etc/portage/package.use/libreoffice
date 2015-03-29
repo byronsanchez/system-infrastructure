@@ -6,6 +6,6 @@
 #                                         #
 ###########################################
 
-app-office/libreoffice dbus
+app-office/libreoffice dbus java
 media-libs/harfbuzz icu
 

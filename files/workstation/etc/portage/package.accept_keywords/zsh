@@ -1,0 +1,4 @@
+# needed to get the version of zsh that fixes bugs that cause RVM issues
+# see: https://github.com/wayneeseguin/rvm/issues/3091
+app-shells/zsh ~amd64
+

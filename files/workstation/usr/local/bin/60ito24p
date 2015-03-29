@@ -1,0 +1,105 @@
+#!/bin/sh
+
+help(){
+    cat <<END
+Usage: $0 [options] <filename>.[mpg|m2t|m2ts|mts]
+Options:
+END
+    exit 0
+}
+
+while getopts h name "$@"
+do
+    case $name in
+*)
+    help ;;
+    esac
+done
+let shiftind=$OPTIND-1
+shift $shiftind
+
+if test "$#" != "1"
+then
+    help
+fi
+
+multiplex_fix () {
+
+  m_input="$1"
+  m_base="$2"
+
+  echo "fixing dvgrab rync issue and outputting fix to ${m_base}-fixed.mpg"
+
+  projectx $m_input
+  mplex -f3 $m_base.m2v $m_base.mp2 -r 28000 -b 800 -o ${m_base}-fixed.mpg
+
+  rm $m_base.m2v $m_base.mp2
+
+}
+
+pulldown () {
+
+  p_input="$1"
+  p_base="$2"
+
+  # m_base is not a typo. the m_ versions are the bare names without extra data 
+  # appended
+  echo 24PF $p_input to ${m_base}-24.mpg video...
+
+  ffmpeg -i $p_input -ab 384000 -f mp2 -y $m_base.m2a
+  ffmpeg -i $p_input -r 30000/1001 -f yuv4mpegpipe \
+    -pix_fmt yuv420p \
+    -y /dev/stdout | yuvkineco -F 1 | mpeg2enc --no-constraints \
+    -f3 -nn -a3 -Ktmpgenc -lh \
+    -b24000 -V489 -r32 \
+    -G18 -D10 -q3 -s -o $m_base.m2v
+  mplex -f3 $m_base.m2a $m_base.m2v -r28000 -b800 -o $m_base-24.mpg
+
+  rm $m_base.m2a $m_base.m2v
+
+}
+
+generate_toc () {
+
+  t_input="$1"
+
+  echo "generating toc for $t_input"
+
+  # toc must be generated WITHIN directory containing file for it to work in 
+  # cinelerra. otherwise, cinelerra will fail on clip load with date error
+  dir="${t_input%%/src*}";
+  file="`basename ${t_input}`";
+  t_base="${file%%.mpg}";
+
+  cur_dir="`pwd`"
+  cd $dir;
+  mpeg3toc.hv -v "$file" "${t_base}.toc";
+  cd $cur_dir;
+
+}
+
+if [ -d "$1" ];
+then
+
+  for f in "$1"/*.{mts,m2ts,m2t,mpg}
+  do
+    if [ -f "$f" ];
+    then
+      input="$f"
+      base=`echo $input | sed "s/\.mts$//" | sed "s/\.m2t$//" | sed "s/\.m2t$//" | sed "s/\.mpg$//"`
+
+      multiplex_fix "$input" "$base"
+      pulldown "${base}-fixed.mpg" "$base-fixed"
+      generate_toc "${base}-24.mpg" "$base-24"
+    fi
+  done
+else
+
+  input="$1"
+  base=`echo $input | sed "s/\.mts$//" | sed "s/\.m2t$//" | sed "s/\.m2t$//" | sed "s/\.mpg$//"`
+
+  multiplex_fix "$input" "$base"
+  pulldown "${base}-fixed.mpg" "$base-fixed"
+  generate_toc "${base}-24.mpg" "$base-24"
+fi
+

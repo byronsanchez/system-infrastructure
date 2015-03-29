@@ -6,4 +6,4 @@
 #                                         #
 ###########################################
 
-net-im/bitlbee msn otr purple skype twitter
+net-im/bitlbee otr
