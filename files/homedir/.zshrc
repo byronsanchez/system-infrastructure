@@ -14,3 +14,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # nodejs for users using nodejs
 export PATH="$PATH:$HOME/.nodejs/bin"
+
+# locale settings
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
