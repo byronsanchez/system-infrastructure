@@ -1,12 +1,29 @@
-class deploy {
+class deploy(
+  $deploy_type,
+) {
 
-  file { "/etc/portage/package.unmask/docker":
+  if $deploy_type == "host" {
+  }
+
+  if $deploy_type == "client" {
+  }
+
+  file { "/etc/portage/package.accept_keywords/overlay-docker":
     ensure => present,
     owner => "root",
     group => "root",
-    require => File['/etc/portage/package.unmask'],
-    path => "/etc/portage/package.use/docker",
-    source => "puppet:///files/deploy/etc/portage/package.use/docker",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/overlay-",
+    source => "puppet:///files/deploy/etc/portage/package.accept_keywords/overlay-docker",
+  }
+
+  layman { 'docker':
+    ensure  => present,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
   }
 
   $packages = [
@@ -22,4 +39,17 @@ class deploy {
       Package['app-emulation/docker'],
     ],
   }
+
+  $pip_packages = [
+    "docker-registry",
+  ]
+
+  package { $pip_packages:
+    ensure  => installed,
+    provider => 'pip',
+    require => [
+      Eselect[python],
+    ],
+  }
+
 }
