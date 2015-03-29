@@ -1,0 +1,3 @@
+ JACKDUSER="byronsanchez"
+ JACKDHOME="/home/${JACKDUSER}" 
+ LOG=/var/log/jackd.log

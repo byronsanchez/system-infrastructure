@@ -15,6 +15,23 @@ class media {
     gid    => '1017',
   }
 
+  file { "/etc/asound.conf":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0644,
+    path   => "/etc/asound.conf",
+    source => "puppet:///files/media/etc/asound.conf",
+  }
+
+  file { "/etc/conf.d/jackd":
+    ensure => present,
+    mode => 0644,
+    owner => "root",
+    group => "root",
+    source => "puppet:///files/media/etc/conf.d/jackd",
+  }
+
   file { "/etc/security/limits.conf":
     ensure => present,
     owner  => "root",
@@ -31,6 +48,15 @@ class media {
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/gentoo-studio",
     source => "puppet:///files/media/etc/portage/package.accept_keywords/gentoo-studio",
+  }
+
+  file { "/etc/portage/package.license/fdk":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.license'],
+    path => "/etc/portage/package.license/fdk",
+    source => "puppet:///files/media/etc/portage/package.license/fdk",
   }
 
   file { "/etc/portage/package.use/ffmpeg":
@@ -87,9 +113,6 @@ class media {
     source => "puppet:///files/media/etc/mpd.conf",
   }
 
-  # Make sure alsa dmix allows for sharing between multiple processes AND
-  # multiple users
-
   file { "/etc/asound.conf":
     ensure => present,
     owner => "root",
@@ -99,28 +122,9 @@ class media {
     source => "puppet:///files/media/etc/asound.conf",
   }
 
-  file { "/etc/libao.conf":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => '644',
-    path => "/etc/libao.conf",
-    source => "puppet:///files/media/etc/libao.conf",
-  }
-
-  # blacklist oss to force dmix sharing in certain apps (eg. flash in browsers)
-  file { "/etc/modprobe.d/blacklist.media.conf":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => '644',
-    path => "/etc/modprobe.d/blacklist.media.conf",
-    source => "puppet:///files/media/etc/modprobe.d/blacklist.media.conf",
-  }
-
   file { "/var/lib/mpd":
     ensure => directory,
-    owner => "mpd",
+    owner => "byronsanchez",
     group => "audio",
     mode    => '644',
   }
@@ -132,6 +136,15 @@ class media {
     require => File['/usr/local/lib/nitelite'],
     path => "/usr/local/lib/nitelite/mp3-duration.fmt",
     source => "puppet:///files/media/usr/local/lib/nitelite/mp3-duration.fmt",
+  }
+
+  file { "/usr/local/bin/loop2jack":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => 0755,
+    path => "/usr/local/bin/loop2jack",
+    source => "puppet:///files/media/usr/local/bin/loop2jack",
   }
 
   file { "/usr/local/bin/mp3-clean":
@@ -200,6 +213,7 @@ class media {
     "gscanbus",
     "qjackctl",
     "jack-keyboard",
+    "jackd-init",
     "dss",
     "i-vst",
     "ardour",
@@ -267,11 +281,12 @@ class media {
     ],
   }
 
-  service { 'alsasound':
+  service { 'jackd':
     ensure => running,
     enable => true,
     require   => [
-      Package[alsa-utils],
+      File['/etc/conf.d/jackd'],
+      Package[jackd-init],
     ],
   }
 

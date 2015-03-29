@@ -29,3 +29,7 @@ media-sound/qmidiroute ~amd64
 media-sound/paulstretch ~amd64
 media-sound/bristol ~amd64
 media-sound/zynaddsubfx ~amd64
+
+# Custom
+sys-apps/jackd-init ~amd64
+

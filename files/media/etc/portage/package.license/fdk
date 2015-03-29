@@ -1,0 +1,4 @@
+# required by media-video/ffmpeg-1.2.6-r1[encode,fdk]
+# required by ffmpeg (argument)
+media-libs/fdk-aac FraunhoferFDK
+
