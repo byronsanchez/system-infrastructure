@@ -124,13 +124,22 @@ class workstation {
     require => File["/etc/elinks"],
   }
 
-  file { "/etc/portage/package.accept_keywords/lxappearance-obconf":
+  file { "/etc/portage/package.accept_keywords/chrome":
     ensure => present,
     owner => "root",
     group => "root",
     require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/lxappearance-obconf",
-    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/lxappearance-obconf",
+    path => "/etc/portage/package.accept_keywords/chrome",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/chrome",
+  }
+
+  file { "/etc/portage/package.accept_keywords/dunst":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/dunst",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/dunst",
   }
 
   file { "/etc/portage/package.accept_keywords/gpg":
@@ -140,6 +149,42 @@ class workstation {
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/gpg",
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/gpg",
+  }
+
+  file { "/etc/portage/package.accept_keywords/lxappearance-obconf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/lxappearance-obconf",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/lxappearance-obconf",
+  }
+
+  file { "/etc/portage/package.accept_keywords/mutt":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/mutt",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/mutt",
+  }
+
+  file { "/etc/portage/package.accept_keywords/skype":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/skype",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/skype",
+  }
+
+  file { "/etc/portage/package.accept_keywords/spotify":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/spotify",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/spotify",
   }
 
   file { "/etc/portage/package.accept_keywords/zsh":
@@ -241,6 +286,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/laptop-mode-tools",
   }
 
+  file { "/etc/portage/package.use/spotify":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/spotify",
+    source => "puppet:///files/workstation/etc/portage/package.use/spotify",
+  }
+
   file { "/etc/portage/package.use/tp_smapi":
     ensure => present,
     owner => "root",
@@ -275,6 +329,24 @@ class workstation {
     require => File['/etc/portage/package.license'],
     path => "/etc/portage/package.license/adobe-flash",
     source => "puppet:///files/workstation/etc/portage/package.license/adobe-flash",
+  }
+
+  file { "/etc/portage/package.license/skype":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.license'],
+    path => "/etc/portage/package.license/skype",
+    source => "puppet:///files/workstation/etc/portage/package.license/skype",
+  }
+
+  file { "/etc/portage/package.unmask/skype":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.unmask'],
+    path => "/etc/portage/package.unmask/skype",
+    source => "puppet:///files/workstation/etc/portage/package.unmask/skype",
   }
 
   file { "/etc/acpi/events/default":
