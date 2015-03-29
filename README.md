@@ -38,6 +38,7 @@ Here is the list of incompatible patterns:
     for simple workstation delivery of mail
   - vpn.pp and webserver.pp - both use port 443 - webserver uses it for https
     connections and vpn uses it for vpn connections
+  - hypervisor.pp and vpn.pp both declare the bridge-utils package
 
 ### Building Configs From Fragments
 
