@@ -1,7 +1,16 @@
 class xorgserver (
   $xorg_driver,
   $xorg_busid,
+  $xorg_type = "",
 ) {
+
+  nl_homedir::file { "staff_xsession":
+    file  => ".xsession",
+    user => "staff",
+    mode => 0644,
+    owner   => 'staff',
+    group   => 'staff',
+  }
 
   file { "/etc/X11":
     ensure => "directory",
@@ -80,15 +89,6 @@ class xorgserver (
     source => "puppet:///files/xorg-server/etc/portage/package.use/freetype",
   }
 
-  file { "/etc/portage/package.use/fvwm":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/fvwm",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/fvwm",
-  }
-
   file { "/etc/fonts/51-local.conf":
     ensure => present,
     owner => "root",
@@ -100,8 +100,6 @@ class xorgserver (
   $packages = [
     "xorg-server",
     "ratpoison",
-    "x11-wm/fvwm",
-    "x11-themes/fvwm-crystal",
     "redshift",
     "xbindkeys",
     "compton",
