@@ -1,0 +1,13 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# PATH must be set so that /usr/local/bin scripts may properly execute (the
+# scripts reference each other without full paths)
+PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+* * * * *	root	/usr/local/bin/fossil-ping

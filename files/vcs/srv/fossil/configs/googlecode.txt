@@ -1,5 +1,5 @@
 # The "skin" configuration exported from
-# repository "fossils/hackbytes/puppet-nitelite.fossil"
+# repository "fossils/byronsanchez/puppet-nitelite.fossil"
 # on 2014-06-16 23:54:12
 config /config 10127
 1402962583 'css' value '.container-12 {

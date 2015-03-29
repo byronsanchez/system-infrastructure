@@ -3,7 +3,7 @@
 #
 
 root-title=git.nitelite.io
-root-desc=source code for the nitelite.io network
+root-desc=git mirror for fossil repositories at fossil.nitelite.io
 snapshots=tar.gz tar.xz zip
 
 css=/cgit.css

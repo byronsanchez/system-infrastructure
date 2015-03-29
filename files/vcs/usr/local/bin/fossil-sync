@@ -1,0 +1,137 @@
+#!/bin/sh
+#
+# Mirrors local (centralized) fossil repos to external repositories (eg.
+# nitelite)
+
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+source /usr/local/lib/nitelite/helpers/common.lib.sh;
+
+repo_mirror_dir="/srv/fossil/fossils"
+org_dir="/etc/nitelite/vcs.d/fossil"
+
+organization=""
+repository=""
+
+quiet=0
+
+############################
+# Argument Parsing Functions
+
+# TODO: validate action values
+
+function show_help ()
+{
+cat <<-EOM
+
+$0 [OPTION] command
+
+options:
+
+    -o --organization=NAME         Organization that owns the repo
+    -r --repository=NAME           Repository name
+
+other:
+
+    -q --quiet               do not log messages to STDOUT
+    -h --help                display this message
+
+EOM
+    exit 1
+}
+
+function get_options () {
+    argv=()
+    while [ $# -gt 0 ]
+    do
+        opt=$1
+        shift
+        case ${opt} in
+            -o|--organization)
+                organization=$1
+                shift
+                ;;
+            --organization=*)
+                organization=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -r|--repository)
+                repository=$1
+                shift
+                ;;
+            --repository=*)
+                repository=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+
+            -q|--quiet)
+                quiet=1
+                ;;
+            -h|--help)
+                show_help
+                ;;
+            *)
+                if [ "${opt:0:1}" = "-" ]; then
+                    fail "${opt}: unknown option."
+                fi
+                argv+=(${opt})
+                ;;
+        esac
+    done
+}
+
+##################
+# GLOBAL VALIDATION
+
+# Parse options if they were passed
+get_options $*
+
+if [ ! -d "$repo_mirror_dir" ]; then
+  # If there are no repos, then there is nothing to push out to external repos.
+  # Exit...
+  exit 1;
+fi
+
+if [ ! -n "${organization}" ];
+then
+  exit 1;
+fi
+
+if [ ! -n "${repository}" ];
+then
+  exit 1;
+fi
+
+#############
+# MAIN SCRIPT
+
+org_name="${organization}"
+repo_name="${repository}.fossil"
+conf_file="${org_dir}/${organization}/${repository}"
+
+mirror_src="${repo_mirror_dir}/${org_name}/${repo_name}"
+dst_dir="${repo_mirror_dir}/${org_name}"
+
+# Strip comments and empty lines from the config file
+DATA=$(cat $conf_file | grep -v "^#" | grep -v "^$" | sed -e 's:#.*::g');
+
+while read -r line;
+do
+
+  remote_name=$(echo ${line} | awk -F'=' '{print $1}' )
+  remote_url=$(echo ${line} | awk -F'=' '{print $2}' )
+
+  cd "$dst_dir"
+
+  # synchronize external and internal repos
+  echo "Syncing ${dst_dir}/${repo_name} with external repository..."
+  fossil sync --once -R "${dst_dir}/${repo_name}" "${remote_url}"
+  echo "Syncing complete!"
+  echo ""
+
+done <<< "$DATA"
+
