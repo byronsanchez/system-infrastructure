@@ -46,6 +46,17 @@ module MCollective
         reply[:stderr] = cmd_error
       end
 
+      action "layman-sync" do
+        cmd_output = []
+        cmd_error = ""
+        reply[:exitcode] = run("/usr/bin/layman -S",
+            :stdout => cmd_output,
+            :stderr => cmd_error,
+           )
+        reply[:stdout] = cmd_output
+        reply[:stderr] = cmd_error
+      end
+
       action "emerge-world" do
         cmd_output = []
         cmd_error = ""

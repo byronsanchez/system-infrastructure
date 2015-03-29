@@ -10,6 +10,7 @@ The ACTION can be one of the following:
     update-nodes            - updates kernel and initramfs
     eix-remote-update       - adds overlays to the eix cache
     eix-sync                - updates eix caches and indexes packages
+    layman-sync             - syncs overlays
     emerge-world            - updates all packages
     revdep-rebuild          - rebuilds reverse dependencies
     perl-cleaner-all        - rebuilds perl dependent packages
@@ -62,7 +63,7 @@ END_OF_USAGE
       if ARGV.size < 1
         handle_message(:raise, 1)
       else
-        valid_actions = ['update-nodes', 'eix-remote-update', 'eix-sync', 'emerge-world', 'revdep-rebuild', 'perl-cleaner-all', 'python-updater', 'emerge-app', 'run-command']
+        valid_actions = ['update-nodes', 'eix-remote-update', 'eix-sync', 'layman-sync', 'emerge-world', 'revdep-rebuild', 'perl-cleaner-all', 'python-updater', 'emerge-app', 'run-command']
 
         if valid_actions.include?(ARGV[0])
           configuration[:action] = ARGV.shift
