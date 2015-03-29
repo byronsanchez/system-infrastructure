@@ -115,6 +115,16 @@ class gentoo(
     source  => "puppet:///files/gentoo/etc/eix-sync.conf",
   }
 
+
+  file { "/usr/local/bin/portage-import-gpg-key":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode   => 0755,
+    path   => "/usr/local/bin/portage-import-gpg-key",
+    source => "puppet:///files/gentoo/usr/local/bin/portage-import-gpg-key",
+  }
+
   $packages = [
     "gentoolkit",
     "layman",
@@ -130,24 +140,6 @@ class gentoo(
   # TODO: place layman nitelite as a dep for packages that will retrieve from
   # the overlay
   layman { 'niteLite':
-    ensure  => absent,
-    require => [
-      Package[layman],
-      File['/etc/layman/layman.cfg'],
-      Exec['layman_sync'],
-    ]
-  }
-
-  layman { 'niteLite-a':
-    ensure  => absent,
-    require => [
-      Package[layman],
-      File['/etc/layman/layman.cfg'],
-      Exec['layman_sync'],
-    ]
-  }
-
-  layman { 'niteLite-b':
     ensure  => absent,
     require => [
       Package[layman],
@@ -174,24 +166,6 @@ class gentoo(
     ]
   }
 
-  layman { 'nitelite-staging':
-    ensure  => absent,
-    require => [
-      Package[layman],
-      File['/etc/layman/layman.cfg'],
-      Exec['layman_sync'],
-    ]
-  }
-
-  layman { 'nitelite-production':
-    ensure  => absent,
-    require => [
-      Package[layman],
-      File['/etc/layman/layman.cfg'],
-      Exec['layman_sync'],
-    ]
-  }
-
   layman { 'nitelite-applications':
     ensure  => present,
     require => [
@@ -210,6 +184,12 @@ class gentoo(
   exec { "create_eix_cache":
     command => "/usr/bin/eix-update",
     creates => "/var/cache/eix/portage.eix",
+  }
+
+  exec { "portage_import_gpg_key":
+    command => "/usr/local/bin/portage-import-gpg-key",
+    creates => "/etc/portage/gpg/pubring.gpg",
+    require => File["/usr/local/bin/portage-import-gpg-key"],
   }
 
 }

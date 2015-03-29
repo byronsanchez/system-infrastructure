@@ -9,17 +9,14 @@
 [DEFAULT]
 main-repo=gentoo
 
-<% if @ipaddress != @binhost_address -%>
 [gentoo]
+# Disable synchronization by clearing the values
+# Do not even set it to '' or "" !
 location=/usr/portage
-sync-type=rsync
-sync-uri=rsync://binhost.internal.nitelite.io/gentoo-local-portage
-<% else %>
-[gentoo]
-location=/usr/portage
-sync-type=rsync
-sync-uri=rsync://binhost.internal.nitelite.io/gentoo-portage
+sync-type=
+sync-uri=
 
+<% if @ipaddress == @binhost_address -%>
 [nitelite-a]
 location=/var/lib/layman/nitelite-a
 priority=100

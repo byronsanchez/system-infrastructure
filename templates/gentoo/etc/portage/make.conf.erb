@@ -75,7 +75,7 @@ PORTAGE_BINHOST="http://binhost.internal.nitelite.io/packages"
 # revdep-rebuild or python-updater are run on the binary package server. 
 EMERGE_DEFAULT_OPTS="-k -g --binpkg-respect-use=y --rebuilt-binaries=y"
 EMERGE_EXTRA_OPTS="-k -g --binpkg-respect-use=y --rebuilt-binaries=y"
-FEATURES="buildpkg"
+FEATURES="buildpkg webrsync-gpg"
 # Use nfs mounts if you get the USE flag matching scripts written
 #DISTDIR="/mnt/gentoo-distfiles"
 #PKGDIR="/mnt/gentoo-local-packages"
@@ -84,6 +84,8 @@ FEATURES="buildpkg"
 #   euse - bug #474574
 #   euses and ufed - bug #478318
 <% end -%>
+
+PORTAGE_GPG_DIR="/etc/portage/gpg"
 
 # Portage will mercilessly update all files in the following directories. This
 # is useful since all puppet files are being distributed via tarball and so
