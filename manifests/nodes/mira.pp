@@ -11,10 +11,12 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "base":
     hostname          => "mira",
     network_interface => "wlan0",
+    # colemak keymap
+    keymap            => "en-latin9",
   }
 
   class { "gentoo":
-    use_flags     => "${gentoo_studio_use_flags} ${workstation_use_flags} mysql bluetooth",
+    use_flags     => "${gentoo_studio_use_flags} ${workstation_use_flags} mysql bluetooth qt3support xinerama",
     linguas       => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
     video_cards   => "nouveau",
     input_devices => "evdev synaptics",
@@ -55,6 +57,7 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "xorgserver":
     xorg_driver => "nouveau",
     xorg_busid  => "PCI:1:0:0",
+    xorg_type   => "workstation",
   }
 
   class { "media": }
@@ -66,6 +69,8 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "php": }
 
   class { "java": }
+
+  class { "scala": }
 
   class { "ruby": }
 
@@ -88,7 +93,7 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "staff": }
   class { "byronsanchez":
     #groups => ['plugdev', 'android'],
-    groups  => ['audio', 'realtime', 'cdrom', 'usb', 'wheel',],
+    groups  => ['audio', 'realtime', 'cdrom', 'joy', 'lp', 'lpadmin', 'usb', 'video', 'wheel',],
   }
   class { "logger": }
 
