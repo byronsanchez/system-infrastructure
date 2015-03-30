@@ -113,15 +113,6 @@ class media {
     source => "puppet:///files/media/etc/mpd.conf",
   }
 
-  file { "/etc/asound.conf":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => '644',
-    path => "/etc/asound.conf",
-    source => "puppet:///files/media/etc/asound.conf",
-  }
-
   file { "/var/lib/mpd":
     ensure => directory,
     owner => "byronsanchez",
