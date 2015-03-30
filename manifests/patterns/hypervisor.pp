@@ -48,8 +48,13 @@ class hypervisor {
     "virt-viewer",
   ]
 
+  $packages_require = [
+    File["/etc/portage/package.use/virt-manager"],
+  ]
+
   package { $packages:
-    ensure => installed,
+    ensure  => installed,
+    require => $packages_require,
   }
 
   service { 'libvirtd':

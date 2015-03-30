@@ -154,7 +154,14 @@ class ldap($ldap_type) {
     "nss_ldap",
   ]
 
-  package { $packages: ensure => 'installed' }
+  $packages_require = [
+    File["/etc/portage/package.use/openldap"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
 
   # Only run slapd on the master ldap server
   if $ldap_type == "master" {

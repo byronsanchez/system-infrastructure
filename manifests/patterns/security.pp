@@ -256,7 +256,15 @@ class security($iptables_type = '') {
     "iptables",
   ]
 
-  package { $packages: ensure => installed }
+  $packages_require = [
+    File["/etc/portage/package.use/rkhunter"],
+    File["/etc/portage/package.use/selinux"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
 
   service { 'fail2ban':
     ensure => running,

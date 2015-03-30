@@ -133,8 +133,13 @@ class gentoo(
     "genlop",
   ]
 
+  $packages_require = [
+    File["/etc/portage/package.use/layman"],
+  ]
+
   package { $packages:
-    ensure => installed,
+    ensure  => installed,
+    require => $packages_require,
   }
 
   # TODO: place layman nitelite as a dep for packages that will retrieve from

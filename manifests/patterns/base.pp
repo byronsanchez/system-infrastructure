@@ -42,18 +42,6 @@ class base (
     content => template('base/etc/profile.d/env.custom.sh.erb'),
   }
 
-  # set the client USE flag on nodes that will be used to administer mco
-  # commands
-  file { "/etc/portage/package.use/mcollective":
-    ensure  => present,
-    owner   => "root",
-    group   => "root",
-    mode    => 0644,
-    require => File['/etc/portage/package.use'],
-    path    => "/etc/portage/package.use/mcollective",
-    content => template("base/etc/portage/package.use/mcollective.erb"),
-  }
-
   file { "/etc/mcollective/facts.yaml":
     ensure  => present,
     owner   => "root",
@@ -181,6 +169,24 @@ class base (
     group   => "root",
   }
 
+  file { "/etc/portage/package.accept_keywords/rsync":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/rsync",
+    source => "puppet:///files/base/etc/portage/package.accept_keywords/rsync",
+  }
+
+  file { "/etc/portage/package.accept_keywords/screen":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/screen",
+    source => "puppet:///files/base/etc/portage/package.accept_keywords/screen",
+  }
+
   file { "/etc/portage/package.use/cairo":
     ensure => present,
     owner => "root",
@@ -190,13 +196,16 @@ class base (
     source => "puppet:///files/base/etc/portage/package.use/cairo",
   }
 
-  file { "/etc/portage/package.use/vim":
-    ensure => present,
-    owner => "root",
-    group => "root",
+  # set the client USE flag on nodes that will be used to administer mco
+  # commands
+  file { "/etc/portage/package.use/mcollective":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
     require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/vim",
-    source => "puppet:///files/base/etc/portage/package.use/vim",
+    path    => "/etc/portage/package.use/mcollective",
+    content => template("base/etc/portage/package.use/mcollective.erb"),
   }
 
   file { "/etc/portage/package.use/mutt":
@@ -208,6 +217,15 @@ class base (
     source => "puppet:///files/base/etc/portage/package.use/mutt",
   }
 
+  file { "/etc/portage/package.use/puppet":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/puppet",
+    source => "puppet:///files/base/etc/portage/package.use/puppet",
+  }
+
   file { "/etc/portage/package.use/python":
     ensure => present,
     owner => "root",
@@ -215,6 +233,15 @@ class base (
     require => File['/etc/portage/package.use'],
     path => "/etc/portage/package.use/python",
     source => "puppet:///files/base/etc/portage/package.use/python",
+  }
+
+  file { "/etc/portage/package.use/vim":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/vim",
+    source => "puppet:///files/base/etc/portage/package.use/vim",
   }
 
   file { "/etc/profile.d":
@@ -261,15 +288,6 @@ class base (
     ensure => "directory",
     owner  => "root",
     group  => "root",
-  }
-
-  file { "/etc/portage/package.use/puppet":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/puppet",
-    source => "puppet:///files/base/etc/portage/package.use/puppet",
   }
 
   file { "/etc/puppet/puppet.conf":
@@ -329,24 +347,6 @@ class base (
     source => "puppet:///files/base/opt/screen/etc/screenrc",
   }
 
-  file { "/etc/portage/package.accept_keywords/screen":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/screen",
-    source => "puppet:///files/base/etc/portage/package.accept_keywords/screen",
-  }
-
-  file { "/etc/portage/package.accept_keywords/rsync":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/rsync",
-    source => "puppet:///files/base/etc/portage/package.accept_keywords/rsync",
-  }
-
   file { "/var/lib/nitelite":
     ensure => "directory",
     owner   => "root",
@@ -388,8 +388,20 @@ class base (
     "net-analyzer/iftop",
   ]
 
+
+  $package_requires = [
+    File["/etc/portage/package.accept_keywords/rsync"],
+    File["/etc/portage/package.accept_keywords/screen"],
+    File["/etc/portage/package.use/cairo"],
+    File["/etc/portage/package.use/mutt"],
+    File["/etc/portage/package.use/puppet"],
+    File["/etc/portage/package.use/python"],
+    File["/etc/portage/package.use/vim"],
+  ]
+
   package {
     $packages: ensure => installed,
+    require => $package_requires,
   }
 
   # Ensure ruby 1.9 is set prior to installing these via portage
@@ -399,11 +411,14 @@ class base (
     "mcollective",
   ]
 
+  $ruby_package_requires = [
+    File["/etc/portage/package.use/mcollective"],
+    Eselect[ruby],
+  ]
+
   package { $ruby_packages:
     ensure  => installed,
-    require => [
-      Eselect[ruby],
-    ],
+    require => $ruby_package_requires,
   }
 
   # System ruby HAS to be 1.9 for mcollective to work. If other rubies are

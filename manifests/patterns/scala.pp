@@ -14,7 +14,14 @@ class scala {
     "sbt-bin",
   ]
 
-  package { $packages: ensure => installed }
+  $packages_require = [
+    File["/etc/portage/package.accept_keywords/scala"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
 
   eselect { 'scala':
     set     => 'scala-2.11.4',

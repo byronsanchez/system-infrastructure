@@ -574,7 +574,15 @@ class vcs(
       'cgit'
     ]
 
-    package { $server_packages: ensure => installed }
+    $server_packages_require = [
+      File["/etc/portage/package.accept_keywords/uwsgi"],
+      File["/etc/portage/package.use/uwsgi"],
+    ]
+
+    package { $server_packages:
+      ensure  => installed,
+      require => $server_packages_require,
+    }
 
     service { "uwsgi.fossil":
       ensure    => running,
@@ -629,6 +637,14 @@ class vcs(
     "rcs",
   ]
 
-  package { $packages: ensure => installed }
+  $packages_require = [
+    File["/etc/portage/package.use/fossil"],
+    File["/etc/portage/package.use/git"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
 
 }

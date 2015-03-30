@@ -30,7 +30,14 @@ class deploy(
     "app-emulation/docker",
   ]
 
-  package { $packages: ensure => installed }
+  $packages_require = [
+    File["/etc/portage/package.accept_keywords/overlay-docker"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
 
   service { 'docker':
     ensure => running,
