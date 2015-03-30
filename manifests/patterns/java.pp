@@ -63,7 +63,15 @@ class java(
     "icedtea-bin",
   ]
 
-  package { $packages: ensure => installed }
+  $packages_require = [
+    File["/etc/portage/package.license/java"],
+    File["/etc/portage/package.use/java"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
 
   package { "oracle-jdk-bin":
     ensure  => installed,

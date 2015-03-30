@@ -35,15 +35,6 @@ class xorgserver (
     path => "/etc/X11/xorg.conf.d/40-monitor.conf",
   }
 
-  file { "/etc/portage/package.use/xorg-server":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/xorg-server",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/xorg-server",
-  }
-
   file { "/etc/portage/package.use/compton":
     ensure => present,
     owner => "root",
@@ -51,15 +42,6 @@ class xorgserver (
     require => File['/etc/portage/package.use'],
     path => "/etc/portage/package.use/compton",
     source => "puppet:///files/xorg-server/etc/portage/package.use/compton",
-  }
-
-  file { "/etc/portage/package.use/rxvt-unicode":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/rxvt-unicode",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/rxvt-unicode",
   }
 
   file { "/etc/portage/package.use/firefox":
@@ -71,6 +53,15 @@ class xorgserver (
     source => "puppet:///files/xorg-server/etc/portage/package.use/firefox",
   }
 
+  file { "/etc/portage/package.use/freetype":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/freetype",
+    source => "puppet:///files/xorg-server/etc/portage/package.use/freetype",
+  }
+
   file { "/etc/portage/package.use/hsetroot":
     ensure => present,
     owner => "root",
@@ -80,13 +71,22 @@ class xorgserver (
     source => "puppet:///files/xorg-server/etc/portage/package.use/hsetroot",
   }
 
-  file { "/etc/portage/package.use/freetype":
+  file { "/etc/portage/package.use/rxvt-unicode":
     ensure => present,
     owner => "root",
     group => "root",
     require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/freetype",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/freetype",
+    path => "/etc/portage/package.use/rxvt-unicode",
+    source => "puppet:///files/xorg-server/etc/portage/package.use/rxvt-unicode",
+  }
+
+  file { "/etc/portage/package.use/xorg-server":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/xorg-server",
+    source => "puppet:///files/xorg-server/etc/portage/package.use/xorg-server",
   }
 
   file { "/etc/fonts/51-local.conf":
@@ -115,11 +115,18 @@ class xorgserver (
     "corefonts",
   ]
 
+  $packages_require = [
+      File["/etc/portage/package.use/compton"],
+      File["/etc/portage/package.use/firefox"],
+      File["/etc/portage/package.use/freetype"],
+      File["/etc/portage/package.use/hsetroot"],
+      File["/etc/portage/package.use/rxvt-unicode"],
+      File['/etc/portage/package.use/xorg-server'],
+  ]
+
   package { $packages:
     ensure  => installed,
-    require => [
-      File['/etc/portage/package.use/xorg-server'],
-    ],
+    require => $packages_require,
   }
 
   eselect { 'infinality':

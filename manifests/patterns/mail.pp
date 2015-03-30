@@ -41,8 +41,13 @@ class mail($mail_type) {
       #"gld",
     ]
 
+    $server_packages_require = [
+      File["/etc/portage/package.use/clamav"],
+    ]
+
     package { $server_packages:
       ensure  => installed,
+      require => $server_packages_require,
     }
 
     file { "/etc/postfix/virtual_alias_maps.cf":
@@ -326,8 +331,13 @@ class mail($mail_type) {
     "postfix",
   ]
 
+  $packages_require = [
+    File["/etc/portage/package.use/postfix"],
+  ]
+
   package { $packages:
     ensure  => installed,
+    require => $packages_require,
   }
 
   service { 'postfix':

@@ -10,8 +10,6 @@ class php(
     }
   }
 
-  # TODO: Install PECL YAML extension
-  # TODO: development vs production param for php.ini
   file { "/etc/portage/package.use/php":
     ensure => present,
     owner => "root",
@@ -153,7 +151,14 @@ class php(
     "pecl-yaml",
   ]
 
-  package { $packages: ensure => installed }
+  $packages_require = [
+    File["/etc/portage/package.use/php"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
 
   package { "dev-php/composer":
     ensure  => installed,

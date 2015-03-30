@@ -196,6 +196,42 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/zsh",
   }
 
+  file { "/etc/portage/package.license/adobe-flash":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.license'],
+    path => "/etc/portage/package.license/adobe-flash",
+    source => "puppet:///files/workstation/etc/portage/package.license/adobe-flash",
+  }
+
+  file { "/etc/portage/package.license/skype":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.license'],
+    path => "/etc/portage/package.license/skype",
+    source => "puppet:///files/workstation/etc/portage/package.license/skype",
+  }
+
+  file { "/etc/portage/package.use/bitlbee":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/bitlbee",
+    source => "puppet:///files/workstation/etc/portage/package.use/bitlbee",
+  }
+
+  file { "/etc/portage/package.use/calibre":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/calibre",
+    source => "puppet:///files/workstation/etc/portage/package.use/calibre",
+  }
+
   file { "/etc/portage/package.use/cups":
     ensure => present,
     owner => "root",
@@ -223,22 +259,31 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/fortune-mod",
   }
 
-  file { "/etc/portage/package.use/rtorrent":
+  file { "/etc/portage/package.use/imagemagick":
     ensure => present,
     owner => "root",
     group => "root",
     require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/rtorrent",
-    source => "puppet:///files/workstation/etc/portage/package.use/rtorrent",
+    path => "/etc/portage/package.use/imagemagick",
+    source => "puppet:///files/workstation/etc/portage/package.use/imagemagick",
   }
 
-  file { "/etc/portage/package.use/bitlbee":
+  file { "/etc/portage/package.use/inkscape":
     ensure => present,
     owner => "root",
     group => "root",
     require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/bitlbee",
-    source => "puppet:///files/workstation/etc/portage/package.use/bitlbee",
+    path => "/etc/portage/package.use/inkscape",
+    source => "puppet:///files/workstation/etc/portage/package.use/inkscape",
+  }
+
+  file { "/etc/portage/package.use/laptop-mode-tools":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/laptop-mode-tools",
+    source => "puppet:///files/workstation/etc/portage/package.use/laptop-mode-tools",
   }
 
   file { "/etc/portage/package.use/libreoffice":
@@ -259,31 +304,13 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/mupdf",
   }
 
-  file { "/etc/portage/package.use/imagemagick":
+  file { "/etc/portage/package.use/rtorrent":
     ensure => present,
     owner => "root",
     group => "root",
     require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/imagemagick",
-    source => "puppet:///files/workstation/etc/portage/package.use/imagemagick",
-  }
-
-  file { "/etc/portage/package.use/calibre":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/calibre",
-    source => "puppet:///files/workstation/etc/portage/package.use/calibre",
-  }
-
-  file { "/etc/portage/package.use/laptop-mode-tools":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/laptop-mode-tools",
-    source => "puppet:///files/workstation/etc/portage/package.use/laptop-mode-tools",
+    path => "/etc/portage/package.use/rtorrent",
+    source => "puppet:///files/workstation/etc/portage/package.use/rtorrent",
   }
 
   file { "/etc/portage/package.use/spotify":
@@ -311,33 +338,6 @@ class workstation {
     require => File['/etc/portage/package.use'],
     path => "/etc/portage/package.use/vlc",
     source => "puppet:///files/workstation/etc/portage/package.use/vlc",
-  }
-
-  file { "/etc/portage/package.use/inkscape":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/inkscape",
-    source => "puppet:///files/workstation/etc/portage/package.use/inkscape",
-  }
-
-  file { "/etc/portage/package.license/adobe-flash":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.license'],
-    path => "/etc/portage/package.license/adobe-flash",
-    source => "puppet:///files/workstation/etc/portage/package.license/adobe-flash",
-  }
-
-  file { "/etc/portage/package.license/skype":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.license'],
-    path => "/etc/portage/package.license/skype",
-    source => "puppet:///files/workstation/etc/portage/package.license/skype",
   }
 
   file { "/etc/portage/package.unmask/skype":
@@ -522,7 +522,38 @@ class workstation {
     "dev-util/android-studio",
   ]
 
-  package { $packages: ensure => installed }
+  $packages_require = [
+    File["/etc/portage/package.accept_keywords/chrome"],
+    File["/etc/portage/package.accept_keywords/dunst"],
+    File["/etc/portage/package.accept_keywords/gpg"],
+    File["/etc/portage/package.accept_keywords/lxappearance-obconf"],
+    File["/etc/portage/package.accept_keywords/mutt"],
+    File["/etc/portage/package.accept_keywords/skype"],
+    File["/etc/portage/package.accept_keywords/spotify"],
+    File["/etc/portage/package.accept_keywords/zsh"],
+    File["/etc/portage/package.license/adobe-flash"],
+    File["/etc/portage/package.license/skype"],
+    File["/etc/portage/package.use/bitlbee"],
+    File["/etc/portage/package.use/calibre"],
+    File["/etc/portage/package.use/cups"],
+    File["/etc/portage/package.use/dunst"],
+    File["/etc/portage/package.use/fortune-mod"],
+    File["/etc/portage/package.use/imagemagick"],
+    File["/etc/portage/package.use/inkscape"],
+    File["/etc/portage/package.use/laptop-mode-tools"],
+    File["/etc/portage/package.use/libreoffice"],
+    File["/etc/portage/package.use/mupdf"],
+    File["/etc/portage/package.use/rtorrent"],
+    File["/etc/portage/package.use/spotify"],
+    File["/etc/portage/package.use/tp_smapi"],
+    File["/etc/portage/package.use/vlc"],
+    File["/etc/portage/package.unmask/skype"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
 
   $packages_overlay = [
     "app-accessibility/svox",
@@ -531,12 +562,14 @@ class workstation {
     "net-print/lpdfilter-brother-hl2270dw-2.1.0",
   ]
 
+  $packages_overlay_require = [
+    Layman['nitelite-a'],
+    Layman['nitelite-b'],
+  ]
+
   package { $packages_overlay:
     ensure  => installed,
-    require => [
-      Layman['nitelite-a'],
-      Layman['nitelite-b'],
-    ],
+    require => $packages_overlay_require,
   }
 
   layman { 'unity-gentoo':

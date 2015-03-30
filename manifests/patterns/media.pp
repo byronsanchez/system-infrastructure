@@ -208,6 +208,19 @@ class media {
     "musicbrainz",
   ]
 
+  $packages_require = [
+    File["/etc/portage/package.license/fdk"],
+    File["/etc/portage/package.use/ffmpeg"],
+    File["/etc/portage/package.use/mpd"],
+    File["/etc/portage/package.use/ncmpcpp"],
+    File["/etc/portage/package.use/picard"],
+  ]
+
+  package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
+
   $gentoo_studio_packages = [
     "a2jmidid",
     "gscanbus",
@@ -255,11 +268,15 @@ class media {
     "zynaddsubfx",
   ]
 
-  package { $packages: ensure => installed }
+  $gentoo_studio_packages_require = [
+    Layman['pro-audio'],
+    File["/etc/portage/package.accept_keywords/gentoo-studio"],
+    File["/etc/portage/package.use/gentoo-studio"],
+  ]
 
-  package {
-    $gentoo_studio_packages: ensure => installed,
-    require                         => Layman['pro-audio'],
+  package { $gentoo_studio_packages:
+    ensure  => installed,
+    require => $gentoo_studio_packages_require,
   }
 
   layman { 'pro-audio':

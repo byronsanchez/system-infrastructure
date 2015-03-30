@@ -15,6 +15,17 @@ class mysql($db_type) {
     source => "puppet:///files/mysql/etc/portage/package.mask/mysql",
   }
 
+  # USE = extraengine
+  file { "/etc/portage/package.use/mariadb":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    require => File['/etc/portage/package.use'],
+    path    => "/etc/portage/package.use/mariadb",
+    mode    => 0644,
+    content => template("mysql/etc/portage/package.use/mariadb.erb"),
+  }
+
   case $db_type {
 
     "master", "slave": {
@@ -26,17 +37,6 @@ class mysql($db_type) {
         mode    => 0600,
         path    => "/root/.my.cnf",
         content => template("mysql/root/.my.cnf.erb"),
-      }
-
-      # USE = extraengine
-      file { "/etc/portage/package.use/mariadb":
-        ensure  => present,
-        owner   => "root",
-        group   => "root",
-        require => File['/etc/portage/package.use'],
-        path    => "/etc/portage/package.use/mariadb",
-        mode    => 0644,
-        content => template("mysql/etc/portage/package.use/mariadb.erb"),
       }
 
       file { "/etc/mysql/my.cnf":
@@ -73,6 +73,12 @@ class mysql($db_type) {
     "mariadb",
   ]
 
+  $packages_require = [
+    File["/etc/portage/package.mask/mysql"],
+    File["/etc/portage/package.use/mariadb"],
+    Package[mysql],
+  ]
+
   # Make sure mysql is uninstalled
   package { mysql:
     ensure => absent,
@@ -80,7 +86,7 @@ class mysql($db_type) {
 
   package { mariadb:
     ensure  => installed,
-    require => Package[mysql],
+    require => $packages_require,
   }
 
   # Only run once after the initial installation
