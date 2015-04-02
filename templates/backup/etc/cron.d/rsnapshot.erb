@@ -8,15 +8,16 @@
 
 # PATH must be set so that /usr/local/bin scripts may properly execute (the
 # scripts reference each other without full paths)
-# TODO: Fix if scopes
 PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-9  6 * * *	root	<% if @backup_type == "server" %>/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf days_ago<% end %>
-19 5 * * 6	root	<% if @backup_type == "server" %>/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf weeks_ago<% end %>
-29 4 1 * *	root	<% if @backup_type == "server" %>/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf months_ago<% end %>
-40 * * * *	root	<% if @backup_type == "workstation" %>/usr/local/bin/backitup -l /var/lib/nitelite/backup/cryptshot-daily -p DAILY -b '/usr/local/bin/cryptshot -u <%= @backup_uuid %> -k <%= @backup_keyfile %> "/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf days_ago; /usr/local/bin/backup-mirror.sh"'<% end %>
-20 * * * *	root	<% if @backup_type == "workstation" %>/usr/local/bin/backitup -l /var/lib/nitelite/backup/cryptshot-weekly -p WEEKLY -b '/usr/local/bin/cryptshot -u <%= @backup_uuid %> -k <%= @backup_keyfile %> "/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf weeks_ago; /usr/local/bin/backup-mirror.sh"'<% end %>
-0  * * * *	root	<% if @backup_type == "workstation" %>/usr/local/bin/backitup -l /var/lib/nitelite/backup/cryptshot-monthly -p MONTHLY -b '/usr/local/bin/cryptshot -u <%= @backup_uuid %> -k <%= @backup_keyfile %> "/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf months_ago; /usr/local/bin/backup-mirror.sh"'<% end %>
+<% if @backup_type == "server" %>9  6 * * *	root	/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf days_ago<% end %>
+<% if @backup_type == "server" %>19 5 * * 6	root	/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf weeks_ago<% end %>
+<% if @backup_type == "server" %>29 4 1 * *	root	/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf months_ago<% end %>
+
+<% if @backup_type == "workstation" %>40 * * * *	root	/usr/local/bin/backitup -l /var/lib/nitelite/backup/cryptshot-daily -p DAILY -b '/usr/local/bin/cryptshot -u <%= @backup_uuid %> -k <%= @backup_keyfile %> "/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf days_ago; /usr/local/bin/backup-mirror.sh"'<% end %>
+<% if @backup_type == "workstation" %>20 * * * *	root	/usr/local/bin/backitup -l /var/lib/nitelite/backup/cryptshot-weekly -p WEEKLY -b '/usr/local/bin/cryptshot -u <%= @backup_uuid %> -k <%= @backup_keyfile %> "/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf weeks_ago; /usr/local/bin/backup-mirror.sh"'<% end %>
+<% if @backup_type == "workstation" %>0  * * * *	root	/usr/local/bin/backitup -l /var/lib/nitelite/backup/cryptshot-monthly -p MONTHLY -b '/usr/local/bin/cryptshot -u <%= @backup_uuid %> -k <%= @backup_keyfile %> "/usr/bin/rsnapshot sync; /usr/bin/rsnapshot -c /etc/rsnapshot.conf months_ago; /usr/local/bin/backup-mirror.sh"'<% end %>
+
 # TODO: Enable tarsnap
-#0  * * * *	root	<% if @backup_type == "workstation" %>/usr/local/bin/backitup -l /var/lib/nitelite/backup/tarsnapper-lastrun -b /usr/local/bin/tarsnapper.py<% end %>
+ <% if @backup_type == "workstation" %>#0  * * * *	root	/usr/local/bin/backitup -l /var/lib/nitelite/backup/tarsnapper-lastrun -b /usr/local/bin/tarsnapper.py<% end %>
 
