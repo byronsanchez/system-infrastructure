@@ -16,7 +16,7 @@ node 'mira.internal.nitelite.io' inherits network {
   }
 
   class { "gentoo":
-    use_flags     => "${gentoo_studio_use_flags} ${workstation_use_flags} mysql bluetooth qt3support xinerama",
+    use_flags     => "${gentoo_studio_use_flags} ${workstation_use_flags} mysql bluetooth qt3support xinerama ffmpeg -libav",
     linguas       => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
     video_cards   => "nouveau",
     input_devices => "evdev synaptics",
