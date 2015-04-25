@@ -292,7 +292,7 @@ class vcs(
       ensure => present,
       owner  => "root",
       group  => "root",
-      mode   => 0755,
+      mode   => 0644,
       path   => "/etc/cron.d/fossil-ping",
       source => "puppet:///files/vcs/etc/cron.d/fossil-ping",
       require => File["/etc/cron.d"],
