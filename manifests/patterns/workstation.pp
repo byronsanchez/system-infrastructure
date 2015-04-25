@@ -151,15 +151,6 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/gpg",
   }
 
-  file { "/etc/portage/package.accept_keywords/lxappearance-obconf":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/lxappearance-obconf",
-    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/lxappearance-obconf",
-  }
-
   file { "/etc/portage/package.accept_keywords/mutt":
     ensure => present,
     owner => "root",
@@ -185,6 +176,15 @@ class workstation {
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/spotify",
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/spotify",
+  }
+
+  file { "/etc/portage/package.accept_keywords/wm":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/wm",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/wm",
   }
 
   file { "/etc/portage/package.accept_keywords/zsh":
@@ -516,23 +516,23 @@ class workstation {
     "x11-misc/dunst",
     "x11-misc/tinynotify-send",
     "app-office/scribus",
-    "x11-wm/openbox",
-    "x11-misc/obconf",
-    "lxde-base/lxappearance-obconf",
     "setxkbmap",
     "app-misc/gtypist",
     "dev-util/android-studio",
     "mesa-progs",
+    "x11-wm/bspwm",
+    "x11-misc/sxhkd",
+    "x11-misc/xdo",
   ]
 
   $packages_require = [
     File["/etc/portage/package.accept_keywords/chrome"],
     File["/etc/portage/package.accept_keywords/dunst"],
     File["/etc/portage/package.accept_keywords/gpg"],
-    File["/etc/portage/package.accept_keywords/lxappearance-obconf"],
     File["/etc/portage/package.accept_keywords/mutt"],
     File["/etc/portage/package.accept_keywords/skype"],
     File["/etc/portage/package.accept_keywords/spotify"],
+    File["/etc/portage/package.accept_keywords/wm"],
     File["/etc/portage/package.accept_keywords/zsh"],
     File["/etc/portage/package.license/adobe-flash"],
     File["/etc/portage/package.license/skype"],
@@ -563,6 +563,10 @@ class workstation {
     "media-gfx/pngout",
     "net-print/cupswrapper-brother-hl2270dw-2.0.4",
     "net-print/lpdfilter-brother-hl2270dw-2.1.0",
+    "x11-misc/lighthouse",
+    "x11-misc/bar",
+    "x11-misc/sutils",
+    "x11-misc/xtitle",
   ]
 
   $packages_overlay_require = [
