@@ -428,6 +428,8 @@ class workstation {
 
   # TODO: install packer
   $packages = [
+    "gifsicle",
+    "rfkill",
     "pcmanfm",
     "gentoo",
     "app-backup/tarsnap",
@@ -520,6 +522,7 @@ class workstation {
     "setxkbmap",
     "app-misc/gtypist",
     "dev-util/android-studio",
+    "mesa-progs",
   ]
 
   $packages_require = [
@@ -570,15 +573,6 @@ class workstation {
   package { $packages_overlay:
     ensure  => installed,
     require => $packages_overlay_require,
-  }
-
-  layman { 'unity-gentoo':
-    ensure  => present,
-    require => [
-      Package[layman],
-      File['/etc/layman/layman.cfg'],
-      Exec['layman_sync'],
-    ]
   }
 
   service { laptop_mode:
