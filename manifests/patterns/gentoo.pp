@@ -29,6 +29,27 @@ class gentoo(
     group => "root",
   }
 
+  file { "/etc/portage/env":
+    ensure => "directory",
+    owner => "root",
+    group => "root",
+  }
+
+  file { "/etc/portage/package.env":
+    ensure => "directory",
+    owner => "root",
+    group => "root",
+  }
+
+  file { "/etc/portage/env/disable-sandbox":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/env'],
+    path => "/etc/portage/env/disable-sandbox",
+    source => "puppet:///files/gentoo/etc/portage/env/disable-sandbox",
+  }
+
   file { "/etc/portage/package.mask":
     ensure => "directory",
     owner => "root",

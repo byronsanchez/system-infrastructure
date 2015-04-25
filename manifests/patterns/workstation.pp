@@ -124,6 +124,15 @@ class workstation {
     require => File["/etc/elinks"],
   }
 
+  file { "/etc/portage/package.env/xautolock":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.env'],
+    path => "/etc/portage/package.env/xautolock",
+    source => "puppet:///files/workstation/etc/portage/package.env/xautolock",
+  }
+
   file { "/etc/portage/package.accept_keywords/chrome":
     ensure => present,
     owner => "root",
@@ -523,6 +532,9 @@ class workstation {
     "x11-wm/bspwm",
     "x11-misc/sxhkd",
     "x11-misc/xdo",
+    "media-gfx/scrot",
+    "x11-misc/i3lock",
+    "x11-misc/xautolock",
   ]
 
   $packages_require = [
