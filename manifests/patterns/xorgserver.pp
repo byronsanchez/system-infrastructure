@@ -62,15 +62,6 @@ class xorgserver (
     source => "puppet:///files/xorg-server/etc/portage/package.use/freetype",
   }
 
-  file { "/etc/portage/package.use/hsetroot":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/hsetroot",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/hsetroot",
-  }
-
   file { "/etc/portage/package.use/rxvt-unicode":
     ensure => present,
     owner => "root",
@@ -99,15 +90,12 @@ class xorgserver (
 
   $packages = [
     "xorg-server",
-    "ratpoison",
     "redshift",
-    "xbindkeys",
     "compton",
     "rxvt-unicode",
     # lib for fonts
     "libXft",
     "firefox",
-    "hsetroot",
     "x11-misc/xclip",
     "freetype",
     "fontconfig",
@@ -119,7 +107,6 @@ class xorgserver (
       File["/etc/portage/package.use/compton"],
       File["/etc/portage/package.use/firefox"],
       File["/etc/portage/package.use/freetype"],
-      File["/etc/portage/package.use/hsetroot"],
       File["/etc/portage/package.use/rxvt-unicode"],
       File['/etc/portage/package.use/xorg-server'],
   ]
