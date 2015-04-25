@@ -477,6 +477,10 @@ class base (
     require => Eselect[ruby],
   }
 
+  eselect { 'locale':
+    set => 'en_US.utf8',
+  }
+
   # If the node is a hypervisor or vpn, enable the bridge interface. Otherwise, enable
   # the normal network interface. network_interface contains the actual
   # interface name, not the bridge name which is why this conditional is
