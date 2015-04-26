@@ -83,6 +83,15 @@ class gentoo(
     source => "puppet:///files/gentoo/etc/portage/package.mask/systemd",
   }
 
+  file { "/etc/portage/package.mask/udev":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.mask'],
+    path => "/etc/portage/package.mask/udev",
+    source => "puppet:///files/gentoo/etc/portage/package.mask/udev",
+  }
+
   file { "/etc/portage/package.use/layman":
     ensure => present,
     owner => "root",
@@ -165,9 +174,21 @@ class gentoo(
 
   $packages_require = [
     File["/etc/portage/package.use/layman"],
+    File["/etc/portage/package.mask/udev"],
+    Package[udev],
   ]
 
   package { $packages:
+    ensure  => installed,
+    require => $packages_require,
+  }
+
+  # Make sure udev is uninstalled
+  package { udev:
+    ensure => absent,
+  }
+
+  package { eudev:
     ensure  => installed,
     require => $packages_require,
   }
