@@ -1,0 +1,47 @@
+---
+nodes:
+  - bellatrix.internal.nitelite.io
+  - chow.internal.nitelite.io
+  - electra.internal.nitelite.io
+  - headofhydrus.internal.nitelite.io
+  - kastra.internal.nitelite.io
+  - polaris.internal.nitelite.io
+  - sirius-production-1.internal.nitelite.io
+  - vega.internal.nitelite.io
+  - wei.internal.nitelite.io
+  - zosma.internal.nitelite.io
+
+# BACKUP
+ssh_configs:
+
+  root:
+
+    - |
+      Host production.*
+      ForwardAgent yes
+      IdentityFile ~/.ssh/rbackup_rsa
+      User rbackup
+      Port 1224
+
+    - |
+      Host stage.*
+      ForwardAgent yes
+      IdentityFile ~/.ssh/rbackup_rsa
+      User rbackup
+      Port 1224
+
+    - |
+      Host mira.internal.nitelite.io
+      ForwardAgent yes
+      Hostname mira.internal.nitelite.io
+      IdentityFile ~/.ssh/rbackup_rsa
+      User byronsanchez
+      Port 1224
+
+    - |
+      Host *.internal.nitelite.io
+      ForwardAgent yes
+      IdentityFile ~/.ssh/rbackup_rsa
+      User rbackup
+      Port 1224
+
