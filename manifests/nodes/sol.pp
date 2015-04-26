@@ -65,17 +65,11 @@ node 'sol.internal.nitelite.io' inherits network {
 
   class { "hypervisor": }
 
-  class { "mirror": }
-
   # users
   class { "root": }
   class { "rbackup": }
   class { "deployer": }
   class { "staff": }
-  # TODO: ldap this if possible
-  #class { "byronsanchez":
-  #groups    => ['plugdev', 'android'],
-  #}
   class { "logger": }
 
 }
