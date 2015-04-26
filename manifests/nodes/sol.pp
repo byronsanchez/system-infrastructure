@@ -49,7 +49,7 @@ node 'sol.internal.nitelite.io' inherits network {
   }
 
   class { "pki":
-    ca_type => "puppet",
+    ca_type => "client",
   }
 
   class { "rsyncd": }

@@ -45,7 +45,7 @@ node 'headofhydrus.internal.nitelite.io' inherits network {
   }
 
   class { "pki":
-    ca_type => "client",
+    ca_type => "puppet",
   }
 
   class { "rsyncd": }
