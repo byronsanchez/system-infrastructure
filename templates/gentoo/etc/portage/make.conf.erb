@@ -6,7 +6,7 @@
 #                                         #
 ###########################################
 
-USE="agent audit bcmath device-mapper dlz gd -gpm -gtk imap ipv6 -ldap libwww maildir mhash maildir png -pppd sasl sockets -sqlite3 ssl truetype ubac unicode xml -xorg udev -unconfined vhosts xattr"
+USE="agent audit bcmath device-mapper dlz gd -gpm -gtk imap ipv6 -ldap libwww maildir mhash maildir png -pppd sasl sockets -sqlite3 ssl -systemd truetype ubac unicode xml -xorg udev -unconfined vhosts xattr"
 
 <% if @use_flags -%>
 USE="${USE} <%= @use_flags %>"

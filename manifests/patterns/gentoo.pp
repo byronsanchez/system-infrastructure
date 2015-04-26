@@ -74,6 +74,15 @@ class gentoo(
     group => "root",
   }
 
+  file { "/etc/portage/package.mask/systemd":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.mask'],
+    path => "/etc/portage/package.mask/systemd",
+    source => "puppet:///files/gentoo/etc/portage/package.mask/systemd",
+  }
+
   file { "/etc/portage/package.use/layman":
     ensure => present,
     owner => "root",
