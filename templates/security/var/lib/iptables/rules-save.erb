@@ -131,6 +131,9 @@ COMMIT
 <% end-%>
 
 <% if @iptables_type == "hypervisor" -%>
+<% end-%>
+
+<% if @iptables_type == "nas" -%>
 # Samba Ports
 -A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 137 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -m state --state NEW -p udp --dport 137 -j ACCEPT

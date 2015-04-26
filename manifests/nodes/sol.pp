@@ -8,7 +8,7 @@ node 'sol.internal.nitelite.io' inherits network {
   }
 
   class { "gentoo":
-    use_flags     => "mysql",
+    use_flags     => "postgres",
     linguas       => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
     video_cards   => "radeon",
     input_devices => "evdev",
@@ -41,16 +41,12 @@ node 'sol.internal.nitelite.io' inherits network {
     data_type => "client",
   }
 
-  class { "mysql": 
-    db_type => "client",
-  }
-
   class { "mail":
     mail_type => "client",
   }
 
   class { "nas":
-    nas_type   => "server",
+    nas_type   => "client",
   }
 
   class { "ldap":
