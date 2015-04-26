@@ -47,6 +47,29 @@ COMMIT
 # Allow all outbound traffic - you can modify this to only allow certain traffic
 -A OUTPUT -j ACCEPT
 
+<% if @iptables_type == "binhost" -%>
+# BOOTP
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 67 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 67 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 68 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 68 -j ACCEPT
+
+# TFTP
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 69 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 69 -j ACCEPT
+
+# Web
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 80 -j ACCEPT
+
+# SSL
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 443 -j ACCEPT
+-A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 443 -j ACCEPT
+
+# Rsync
+-A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 873 -m state --state NEW -j ACCEPT
+<% end-%>
+
 <% if @iptables_type == "web" -%>
 # Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).
 -A INPUT -p tcp --dport 80 -j ACCEPT
@@ -108,27 +131,6 @@ COMMIT
 <% end-%>
 
 <% if @iptables_type == "hypervisor" -%>
-# BOOTP
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 67 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 67 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 68 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 68 -j ACCEPT
-
-# TFTP
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 69 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 69 -j ACCEPT
-
-# Web
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 80 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 80 -j ACCEPT
-
-# SSL
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 443 -j ACCEPT
--A INPUT -s 10.66.77.0/24 -p udp -m udp --dport 443 -j ACCEPT
-
-# Rsync
--A INPUT -s 10.66.77.0/24 -p tcp -m tcp --dport 873 -m state --state NEW -j ACCEPT
-
 # Samba Ports
 -A INPUT -s 10.66.77.0/24 -m state --state NEW -p tcp --dport 137 -j ACCEPT
 -A INPUT -s 10.66.77.0/24 -m state --state NEW -p udp --dport 137 -j ACCEPT

@@ -63,28 +63,7 @@ node 'sol.internal.nitelite.io' inherits network {
 
   class { "rsyncd": }
 
-  class { "webserver": }
-
-  class { "binhost":
-    portage_package_directory => "/srv/nfs/io/gentoo-local-packages",
-    portage_directory         => "/srv/nfs/io/gentoo-local-portage",
-    portage_tree_directory    => "/srv/nfs/io/gentoo-portage",
-    gentoo_directory          => "/srv/nfs/io/gentoo",
-    application_directory     => "/srv/nfs/io/overlay-nitelite-applications",
-    overlay_a                 => "/srv/nfs/io/overlay-nitelite-a",
-    overlay_b                 => "/srv/nfs/io/overlay-nitelite-b",
-    external_directory        => "/srv/nfs/io/external",
-    boxes_directory           => "/srv/nfs/io/boxes",
-  }
-
-  class { "provision": }
-
   class { "hypervisor": }
-
-  class { "xorgserver":
-    xorg_driver => "radeon",
-    xorg_busid  => "PCI:0:1:0",
-  }
 
   class { "mirror": }
 
