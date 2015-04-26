@@ -25,15 +25,10 @@ node 'sol.internal.nitelite.io' inherits network {
       "rbackup",
       "staff",
       "deployer",
-      # this is an ldap user. placing it on the nfs server with the nfs homedir 
-      # means all node access!
-      "byronsanchez",
     ],
   }
 
-  class { "backup":
-    backup_type => "server",
-  }
+  class { "backup": }
 
   class { "vcs": }
 

@@ -1,7 +1,7 @@
-node 'wei.internal.nitelite.io' inherits network {
+node 'headofhydrus.internal.nitelite.io' inherits network {
 
   class { "base":
-    hostname          => "wei",
+    hostname          => "headofhydrus",
     network_interface => "eth0",
   }
 
@@ -12,7 +12,7 @@ node 'wei.internal.nitelite.io' inherits network {
   }
 
   class { "security":
-    iptables_type => "nas",
+    iptables_type => "backup",
   }
 
   class { "ssh":
@@ -21,13 +21,12 @@ node 'wei.internal.nitelite.io' inherits network {
       "staff",
       "deployer",
       "root",
-      # this is an ldap user. placing it on the nfs server with the nfs homedir 
-      # means all node access!
-      "byronsanchez",
     ],
   }
 
-  class { "backup": }
+  class { "backup":
+    backup_type => "server",
+  }
 
   class { "data":
     data_type => "client",
@@ -38,7 +37,7 @@ node 'wei.internal.nitelite.io' inherits network {
   }
 
   class { "nas":
-    nas_type   => "server",
+    nas_type   => "client",
   }
 
   class { "ldap":
