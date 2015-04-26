@@ -8,15 +8,6 @@ class hypervisor {
     require => File["/srv"],
   }
 
-  file { "/etc/portage/package.use/virt-manager":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/virt-manager",
-    source => "puppet:///files/hypervisor/etc/portage/package.use/virt-manager",
-  }
-
   file { "/etc/libvirt":
     ensure => "directory",
     owner => "root",
@@ -43,18 +34,11 @@ class hypervisor {
 
   $packages = [
     "libvirt",
-    "virt-manager",
     "bridge-utils",
-    "virt-viewer",
-  ]
-
-  $packages_require = [
-    File["/etc/portage/package.use/virt-manager"],
   ]
 
   package { $packages:
     ensure  => installed,
-    require => $packages_require,
   }
 
   service { 'libvirtd':
