@@ -60,6 +60,14 @@ class base (
     content => template("base/etc/mcollective/server.cfg.erb"),
   }
 
+  file { "/etc/inittab":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/inittab",
+    source => "puppet:///files/base/etc/inittab",
+  }
+
   # the random number will be >= 0 and less than MAX
   #
   # generate random values that will persist for each node, but be totally
