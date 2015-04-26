@@ -1,36 +1,33 @@
-node 'sol.internal.nitelite.io' inherits network {
+node 'wei.internal.nitelite.io' inherits network {
 
   class { "base":
-    hostname          => "sol",
-    network_interface => "enp3s0",
-    network_type      => "hypervisor",
-    mcollective_type  => "client",
+    hostname          => "wei",
+    network_interface => "eth0",
   }
 
   class { "gentoo":
-    use_flags     => "postgres",
-    linguas       => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
-    video_cards   => "radeon",
-    input_devices => "evdev",
-    lowmemorybox  => false,
+    use_flags    => "postgres",
+    linguas      => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
+    lowmemorybox => false,
   }
 
   class { "security":
-    iptables_type => "hypervisor",
+    iptables_type => "nas",
   }
 
   class { "ssh":
     username => [
-      "root",
       "rbackup",
       "staff",
       "deployer",
+      "root",
+      # this is an ldap user. placing it on the nfs server with the nfs homedir 
+      # means all node access!
+      "byronsanchez",
     ],
   }
 
   class { "backup": }
-
-  class { "vcs": }
 
   class { "data":
     data_type => "client",
@@ -41,7 +38,7 @@ node 'sol.internal.nitelite.io' inherits network {
   }
 
   class { "nas":
-    nas_type   => "client",
+    nas_type   => "server",
   }
 
   class { "ldap":
@@ -54,7 +51,7 @@ node 'sol.internal.nitelite.io' inherits network {
 
   class { "rsyncd": }
 
-  class { "hypervisor": }
+  class { "vcs": }
 
   # users
   class { "root": }
