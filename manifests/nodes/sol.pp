@@ -88,10 +88,6 @@ node 'sol.internal.nitelite.io' inherits network {
 
   class { "mirror": }
 
-  class { "nodejs": }
-
-  class { "php": }
-
   # users
   class { "root": }
   class { "rbackup": }
