@@ -160,6 +160,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/gpg",
   }
 
+  file { "/etc/portage/package.accept_keywords/kino":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/kino",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/kino",
+  }
+
   file { "/etc/portage/package.accept_keywords/mutt":
     ensure => present,
     owner => "root",
@@ -544,12 +553,14 @@ class workstation {
     "media-gfx/scrot",
     "x11-misc/i3lock",
     "x11-misc/xautolock",
+    "x11-base/xorg-server",
   ]
 
   $packages_require = [
     File["/etc/portage/package.accept_keywords/chrome"],
     File["/etc/portage/package.accept_keywords/dunst"],
     File["/etc/portage/package.accept_keywords/gpg"],
+    File["/etc/portage/package.accept_keywords/kino"],
     File["/etc/portage/package.accept_keywords/mutt"],
     File["/etc/portage/package.accept_keywords/skype"],
     File["/etc/portage/package.accept_keywords/spotify"],
