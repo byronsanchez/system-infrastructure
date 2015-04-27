@@ -45,6 +45,12 @@ Post-updates
     perl-cleaner --all -- --usepkg=n
     python-updater -- --usepkg=n
 
+Clean up (eclean will remove files that don't correspond to a package in the portage tree):
+
+    emerge -av --depclean
+    eclean distfiles
+    eclean packages
+
 Update configs if necessary and merge the updates with the puppet sources
 
     dispatch-conf;
@@ -76,6 +82,12 @@ Post-updates
     revdep-rebuild;
     perl-cleaner --all
     python-updater
+
+Clean up (eclean will remove files that don't correspond to a package in the portage tree):
+
+    emerge -av --depclean
+    eclean distfiles
+    eclean packages
 
 Update configs through puppet (puppet gets updated through emerge):
 
