@@ -31,11 +31,12 @@
     rotate 5
     weekly
     missingok
-    create
+    copytruncate
     sharedscripts
     postrotate
         /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
     endscript
+    compress
 }
 
 <% if @data_type == "server" -%>
@@ -47,11 +48,12 @@
     rotate 5
     weekly
     missingok
-    create
+    copytruncate
     sharedscripts
     postrotate
         /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
     endscript
+    compress
 }
 
 <% end -%>
