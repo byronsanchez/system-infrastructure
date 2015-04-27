@@ -67,8 +67,6 @@ node 'mira.internal.nitelite.io' inherits network {
 
   class { "nodejs": }
 
-  class { "php": }
-
   class { "java": }
 
   class { "scala": }
