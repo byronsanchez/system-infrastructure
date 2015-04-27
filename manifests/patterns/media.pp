@@ -50,6 +50,15 @@ class media {
     source => "puppet:///files/media/etc/portage/package.accept_keywords/gentoo-studio",
   }
 
+  file { "/etc/portage/package.accept_keywords/mplayer":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/mplayer",
+    source => "puppet:///files/media/etc/portage/package.accept_keywords/mplayer",
+  }
+
   file { "/etc/portage/package.license/fdk":
     ensure => present,
     owner => "root",
@@ -200,6 +209,7 @@ class media {
   ]
 
   $packages_require = [
+    File["/etc/portage/package.accept_keywords/mplayer"],
     File["/etc/portage/package.license/fdk"],
     File["/etc/portage/package.use/ffmpeg"],
     File["/etc/portage/package.use/mpd"],
