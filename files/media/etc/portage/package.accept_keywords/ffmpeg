@@ -1,0 +1,5 @@
+# needed to prevent flac to mp3 invalid sync code errors
+# this error does not occur with latest builds (2.6.1+)
+#
+# See: http://ffmpeg.gusari.org/viewtopic.php?f=11&t=1228
+media-video/ffmpeg ~amd64
