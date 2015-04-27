@@ -349,6 +349,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/vlc",
   }
 
+  file { "/etc/portage/package.use/wm":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/wm",
+    source => "puppet:///files/workstation/etc/portage/package.use/wm",
+  }
+
   file { "/etc/portage/package.unmask/skype":
     ensure => present,
     owner => "root",
@@ -562,6 +571,7 @@ class workstation {
     File["/etc/portage/package.use/spotify"],
     File["/etc/portage/package.use/tp_smapi"],
     File["/etc/portage/package.use/vlc"],
+    File["/etc/portage/package.use/wm"],
     File["/etc/portage/package.unmask/skype"],
   ]
 
