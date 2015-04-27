@@ -1,5 +1,6 @@
 class gentoo(
   $use_flags = '',
+  $cpu_flags = '',
   $linguas = '',
   $video_cards = '',
   $input_devices = '',

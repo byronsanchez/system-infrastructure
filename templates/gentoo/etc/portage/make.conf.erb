@@ -12,6 +12,10 @@ USE="agent audit bcmath device-mapper dlz gd -gpm -gtk imap ipv6 -ldap libwww ma
 USE="${USE} <%= @use_flags %>"
 <% end -%>
 
+<% if @cpu_flags -%>
+USE="${CPU_FLAGS_X86} <%= @cpu_flags %>"
+<% end -%>
+
 <% if @lowmemorybox -%>
 # Low memory, so compiles will go slower with these flags, but at least they
 # won't be killed for OOM errors

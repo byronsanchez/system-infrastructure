@@ -6,7 +6,7 @@ node 'mira.internal.nitelite.io' inherits network {
   # USE flags from /proc/cpuinfo
   # NOTE: Change this whenever your workstation changes; these are USE flags
   # specific to the CPU
-  $workstation_use_flags = "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm sse4_1 lahf_lm ida dtherm tpr_shadow vnmi flexpriority"
+  $workstation_cpu_flags = "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm sse4_1 lahf_lm ida dtherm tpr_shadow vnmi flexpriority"
 
   class { "base":
     hostname          => "mira",
@@ -16,7 +16,8 @@ node 'mira.internal.nitelite.io' inherits network {
   }
 
   class { "gentoo":
-    use_flags     => "${gentoo_studio_use_flags} ${workstation_use_flags} mysql bluetooth qt3support xinerama ffmpeg -libav",
+    use_flags     => "${gentoo_studio_use_flags} postgres bluetooth qt3support xinerama ffmpeg -libav",
+    cpu_flags     => "${workstation_cpu_flags}",
     linguas       => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
     video_cards   => "nouveau",
     input_devices => "evdev synaptics",
