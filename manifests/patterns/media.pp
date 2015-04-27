@@ -267,6 +267,8 @@ class media {
     "seq24",
     "yoshimi",
     "zynaddsubfx",
+    # required by picospeaker
+    "media-sound/sox",
   ]
 
   $gentoo_studio_packages_require = [
