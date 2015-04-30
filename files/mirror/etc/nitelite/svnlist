@@ -6,9 +6,6 @@
 #                                         #
 ###########################################
 
-http://core.svn.wordpress.org/trunk/
 svn://svn.linuxfromscratch.org/LFS/trunk/BOOK/
 svn://svn.linuxfromscratch.org/LFS/branches/systemd/
-http://svnbook.googlecode.com/svn/trunk/
-http://www.latex-project.org/svnroot/latex2e-public/
-http://latex-project.org/svnroot/experimental/trunk/
+
