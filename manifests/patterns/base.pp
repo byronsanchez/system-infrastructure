@@ -362,6 +362,7 @@ class base (
   }
 
   $packages = [
+    "net-misc/socat",
     "net-dns/avahi",
     "the_silver_searcher",
     "rsync",
