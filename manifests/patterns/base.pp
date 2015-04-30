@@ -34,14 +34,6 @@ class base (
 
   class { "::ntp": }
 
-  file { "/etc/profile.d/env.custom.sh":
-    ensure  => present,
-    owner   => "root",
-    group   => "root",
-    path    => "/etc/profile.d/env.custom.sh",
-    content => template('base/etc/profile.d/env.custom.sh.erb'),
-  }
-
   file { "/etc/mcollective/facts.yaml":
     ensure  => present,
     owner   => "root",
@@ -256,15 +248,6 @@ class base (
     ensure => "directory",
     owner => "root",
     group => "root",
-  }
-
-  file { "/etc/profile.d/ids.custom.sh":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/profile.d'],
-    path => "/etc/profile.d/ids.custom.sh",
-    source => "puppet:///files/base/etc/profile.d/ids.custom.sh",
   }
 
   file { "/etc/services":
