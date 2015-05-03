@@ -41,6 +41,7 @@ class workstation {
   }
 
   $laptop_mode_files = [
+    "/etc/acpi/actions/lm_lid.sh",
     "/etc/laptop-mode/laptop-mode.conf",
     "/etc/laptop-mode/lm-profiler.conf",
     "/etc/laptop-mode/conf.d/ac97-powersave.conf",
