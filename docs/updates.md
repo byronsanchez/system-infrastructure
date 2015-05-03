@@ -6,12 +6,30 @@ Some notes regarding gentoo package updates. Updates will currently be done
 manually. Once a significant amount of nodes are being managed, semi-automation
 should be considered.
 
-# Updating Gentoo
+## Updating Gentoo
 
 Try to stick to a regular weekly update process.
 
 Run the following commands, one-by-one, analyze outputs and determine steps
 based on the information you see.
+
+### Server and Workstation (Weekly)
+
+- Kernel updates
+- Configuration management updates 1 - applies new resources (eg. use flags) and
+  stuff before running portage updates
+- Portage package updates
+- Overlay updates
+- Configuration file updates
+- Configuration management updates 2 - applies portage conf updates to all nodes
+- Ensure backups are running properly
+- Ensure noip is updated
+- Ensure fossil and git subdomain ssl certs are validated
+
+### Workstation (Monthly)
+
+- Burn `secrets/` to two CDs; one for an offsite backup and one for home
+- Ensure GPG key and GPG passphrase are protected and secure
 
 # binhost
 #
