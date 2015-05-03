@@ -43,6 +43,14 @@ class nl_nfs {
     ],
   }
 
+  service { 'netmount':
+    ensure  => 'running',
+    enable  => 'true',
+    require => [
+      Package[nfs-utils],
+    ],
+  }
+
   exec { "nfs_export":
     command => "/usr/sbin/exportfs -a",
     subscribe   => File['/etc/exports'],
