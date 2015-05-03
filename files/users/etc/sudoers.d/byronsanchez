@@ -1,4 +1,4 @@
-##########################################
+###########################################
 #                                         #
 # MANAGED BY PUPPET                       #
 #                                         #
@@ -10,3 +10,4 @@
 ## User privilege specification
 ##
 byronsanchez	ALL=(ALL:ALL) ALL
+byronsanchez	ALL=NOPASSWD: /etc/init.d/alsasound
