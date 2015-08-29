@@ -13,6 +13,9 @@ WORKDIR="/tmp/nitelite"
 # Initialize our own variables:
 destination=""
 playlist=""
+# 0 - file exists check
+# 1 - cmp check
+check_type=""
 quiet=0
 
 ############################
@@ -28,6 +31,7 @@ options:
 
     -p --playlist=NAME           playlist name
     -d --destination=NAME        destination path
+    -c --check-type=TYPE         0 - file exists; 1 - cmp check
     -q --quiet                   do not log messages to STDOUT
     -h --help                    display this message
 
@@ -55,6 +59,13 @@ function get_options () {
                 ;;
             --destination=*)
                 destination=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -c|--check-type)
+                check_type=$1
+                shift
+                ;;
+            --check-type=*)
+                check_type=$(echo ${opt} | cut -d'=' -f 2);
                 ;;
             -q|--quiet)
                 quiet=1
@@ -100,8 +111,34 @@ if [ -e "$PLAYLIST_FILE" ]; then
   while read line; do
     music_file=$line
     if [ -e "$MUSIC_DIRECTORY/$music_file" ]; then
-      # if the song already exists at the destination, there's no need to recopy it. you could try letting rsync handle this as well.
-      if [ -e "${destination}/${playlist}/$music_file" ]; then
+
+      return_value=""
+      if [ -n  "$check_type" ];
+      then
+        if [ "$check_type" -eq 1 ];
+        then
+          cmp --silent "${destination}/${playlist}/$music_file" "$MUSIC_DIRECTORY/$music_file"
+          return_value=$?
+        else
+          if [ -e "${destination}/${playlist}/$music_file" ];
+          then
+            return_value=0
+          else
+            return_value=1
+          fi
+        fi
+      else
+        if [ -e "${destination}/${playlist}/$music_file" ];
+        then
+          return_value=0
+        else
+          return_value=1
+        fi
+      fi
+
+      # if the song already exists at the destination, there's no need to recopy 
+      # it. you could try letting rsync handle this as well.
+      if [ $return_value -eq 0 ]; then
         printf "$music_file exists at destination. skipping...\n"
         continue;
       else
@@ -111,6 +148,7 @@ if [ -e "$PLAYLIST_FILE" ]; then
 
         echo "$music_file" >> "${WORKDIR}/musiclist"
       fi
+
     fi
   done < "$PLAYLIST_FILE"
 
