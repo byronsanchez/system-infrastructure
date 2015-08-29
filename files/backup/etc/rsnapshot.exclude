@@ -24,6 +24,8 @@
 - /home/*/Downloads/*
 - /home/*/downloads/*
 - /home/byronsanchez/projects/byronsanchez/youtube/*
+# mount diirectory
+- /home/byronsanchez/nitelite/*
 - /home/scratch/**
 - /home/*/.local/share/Trash/*
 # mirrors get mirrored
@@ -36,6 +38,7 @@
 - /var/lib/libvirt/images/**
 - /var/tmp/ccache/**
 - /var/lib/nfs/**
+- /var/chroot/**
 - /usr/portage/**
 # mac stuff
 - /Users/byronsanchez/mnt/*
