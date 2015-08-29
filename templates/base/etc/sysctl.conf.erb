@@ -102,6 +102,8 @@ net.bridge.bridge-nf-call-arptables = 0
 #net.ipv4.ip_forward = 0
 <% end -%>
 
+# TODO: Enable for workstation for x86 chroots to prevent issues (eg. with dbus 
+# installation)
 <% if @enable_docker %>
 kernel.grsecurity.chroot_caps = 0
 kernel.grsecurity.chroot_deny_chmod = 0
