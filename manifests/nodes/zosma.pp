@@ -7,7 +7,7 @@ node 'zosma.internal.nitelite.io' inherits network {
 
   class { "gentoo":
     # TODO: add mysqli for all global uses with mysql
-    use_flags    => "mysql mysqli postgres",
+    use_flags    => "postgres",
     linguas      => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
     lowmemorybox => false,
   }
@@ -39,20 +39,8 @@ node 'zosma.internal.nitelite.io' inherits network {
 
   class { "webserver": }
 
-  class { "mysql": 
-    db_type => "client",
-  }
-
   class { "mail":
     mail_type => "client",
-  }
-
-  class { "nas":
-    nas_type => "client",
-  }
-
-  class { "ldap":
-    ldap_type => "client"
   }
 
   class { "pki":
@@ -60,12 +48,6 @@ node 'zosma.internal.nitelite.io' inherits network {
   }
 
   class { "systems":
-    phpmyadmin   => true,
-    phppgadmin   => true,
-    phpldapadmin => true,
-    postfixadmin => true,
-    roundcube    => true,
-    ampache      => true,
     cgit         => true,
     fossil       => true,
     jenkins      => true,

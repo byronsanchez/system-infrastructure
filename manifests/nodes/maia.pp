@@ -30,20 +30,8 @@ node 'maia.internal.nitelite.io' inherits network {
     data_type => "server",
   }
 
-  class { "mysql": 
-    db_type => "client",
-  }
-
   class { "mail":
     mail_type => "client",
-  }
-
-  class { "nas":
-    nas_type => "client",
-  }
-
-  class { "ldap":
-    ldap_type => "client"
   }
 
   class { "pki":

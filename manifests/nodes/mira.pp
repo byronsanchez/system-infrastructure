@@ -43,10 +43,6 @@ node 'mira.internal.nitelite.io' inherits network {
 
   class { "vcs": }
 
-  class { "nas":
-    nas_type   => "workstation",
-  }
-
   class { "pki":
     ca_type => "mira",
   }
@@ -68,8 +64,6 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "nodejs": }
 
   class { "java": }
-
-  class { "scala": }
 
   class { "ruby": }
 
