@@ -348,6 +348,7 @@ class base (
     "net-misc/socat",
     "net-dns/avahi",
     "the_silver_searcher",
+    "sys-apps/ack",
     "rsync",
     "openssh",
     "linux-firmware",
@@ -378,6 +379,7 @@ class base (
     "traceroute",
     "setserial",
     "net-analyzer/iftop",
+    "sys-process/parallel",
   ]
 
 
