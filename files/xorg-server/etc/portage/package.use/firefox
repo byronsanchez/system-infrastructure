@@ -6,6 +6,6 @@
 #                                         #
 ###########################################
 
-www-client/firefox sqlite sqlite3
+www-client/firefox sqlite sqlite3 bindist
 media-libs/libpng apng
 x11-libs/pango X
