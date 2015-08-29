@@ -170,6 +170,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/kino",
   }
 
+  file { "/etc/portage/package.accept_keywords/ledger":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/ledger",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/ledger",
+  }
+
   file { "/etc/portage/package.accept_keywords/mutt":
     ensure => present,
     owner => "root",
@@ -474,6 +483,8 @@ class workstation {
     "grc",
     "elinks",
     "lynx",
+    "www-client/links",
+    "www-client/w3m",
     "aview",
     "fbida",
     "fim",
@@ -555,6 +566,23 @@ class workstation {
     "x11-misc/i3lock",
     "x11-misc/xautolock",
     "x11-base/xorg-server",
+    "net-misc/tor",
+    "net-misc/i2pd",
+    "net-proxy/privoxy",
+    "net-im/pidgin",
+    "net-ftp/filezilla",
+    "media-gfx/blender",
+    "net-proxy/torsocks",
+    "app-misc/ranger",
+    "x11-apps/xrefresh",
+    "app-misc/gcal",
+    "app-misc/task",
+    "media-sound/pulseaudio",
+    "media-sound/pavucontrol",
+    "media-sound/paprefs",
+    "net-misc/freerdp",
+    "sys-fs/encfs",
+    "media-sound/cava",
   ]
 
   $packages_require = [
@@ -611,6 +639,14 @@ class workstation {
   package { $packages_overlay:
     ensure  => installed,
     require => $packages_overlay_require,
+  }
+
+  service { privoxy:
+    ensure    => running,
+    enable => true,
+    require   => [
+      Package['net-proxy/privoxy'],
+    ],
   }
 
   service { laptop_mode:
