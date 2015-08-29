@@ -90,6 +90,15 @@ class java(
     set => 'oracle-jdk-bin-1.7',
   }
 
+  layman { 'java':
+    ensure  => present,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
   # TODO: ensure certs are installed into java AND requires oracle bin eselect
 
 }
