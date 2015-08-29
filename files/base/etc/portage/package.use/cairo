@@ -8,4 +8,4 @@
 
 # if cairo is needed, pull in the x11 libs; this is a common requirement (eg.
 # urxvt and icedtea-bin)
-x11-libs/cairo X
+x11-libs/cairo X xcb
