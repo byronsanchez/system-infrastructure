@@ -93,6 +93,7 @@ class xorgserver (
     "redshift",
     "compton",
     "rxvt-unicode",
+    "urxvt-perls",
     # lib for fonts
     "libXft",
     "firefox",
