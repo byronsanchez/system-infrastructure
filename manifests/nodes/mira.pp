@@ -16,7 +16,7 @@ node 'mira.internal.nitelite.io' inherits network {
   }
 
   class { "gentoo":
-    use_flags     => "${gentoo_studio_use_flags} postgres bluetooth qt3support xinerama ffmpeg -libav",
+    use_flags     => "${gentoo_studio_use_flags} postgres pulseaudio bluetooth qt3support xinerama ffmpeg -libav",
     cpu_flags     => "${workstation_cpu_flags}",
     linguas       => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
     video_cards   => "nouveau",
@@ -72,6 +72,9 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "scala": }
 
   class { "ruby": }
+
+  # node management
+  class { "provision": }
 
   class { "nl_rvm":
     user => "byronsanchez",
