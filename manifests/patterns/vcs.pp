@@ -161,11 +161,11 @@ class vcs(
 
   if ($vcs_type == "mirror") {
 
-    # git.tehpotatoking.com
+    # git.hackbytes.com
 
     exec { "webapp_config_git_${environment}":
-      command => "/usr/sbin/webapp-config -I -h git.tehpotatoking.com -d git cgit 0.10",
-      creates => "/srv/www/git.tehpotatoking.com/htdocs/cgit",
+      command => "/usr/sbin/webapp-config -I -h git.hackbytes.com -d git cgit 0.10",
+      creates => "/srv/www/git.hackbytes.com/htdocs/cgit",
       require => [
         Package[cgit],
         File['/srv/www'],
@@ -178,13 +178,13 @@ class vcs(
       # cgit mirror frontend nginx for https (backend http not needed since the cgit
       # server and the http server are hosted on the same node)
       nl_nginx::website { "git":
-        websiteName     => "git.tehpotatoking.com",
+        websiteName     => "git.hackbytes.com",
         environmentName => "${mirror_environment}",
         feed_path       => "git",
         root_path       => "/htdocs",
         enable_ssl      => true,
-        ssl_cert_path   => "/etc/ssl/tehpotatoking.com/cacert.pem",
-        ssl_key_path    => "/etc/ssl/tehpotatoking.com/private/cakey.pem.unencrypted",
+        ssl_cert_path   => "/etc/ssl/hackbytes.com/cacert.pem",
+        ssl_key_path    => "/etc/ssl/hackbytes.com/private/cakey.pem.unencrypted",
         enable_custom_configs => true,
         enable_cgi      => true,
         cgi_server      => "cgit.internal.nitelite.io:3129",
@@ -193,7 +193,7 @@ class vcs(
       # fossil mirror frontend nginx for https (backend http not needed since the
       # fossil server and the http server are hosted on the same node)
       nl_nginx::website { "fossil":
-        websiteName     => "fossil.tehpotatoking.com",
+        websiteName     => "fossil.hackbytes.com",
         environmentName => "${mirror_environment}",
         feed_path       => "fossil",
         root_path       => "/htdocs",
@@ -201,14 +201,14 @@ class vcs(
         enable_ssl      => true,
         enable_cgi      => true,
         # cgi scripts sent here
-        cgi_server      => "fossil.tehpotatoking.com:3128",
-        ssl_cert_path   => "/etc/ssl/tehpotatoking.com/cacert.pem",
-        ssl_key_path    => "/etc/ssl/tehpotatoking.com/private/cakey.pem.unencrypted",
+        cgi_server      => "fossil.hackbytes.com:3128",
+        ssl_cert_path   => "/etc/ssl/hackbytes.com/cacert.pem",
+        ssl_key_path    => "/etc/ssl/hackbytes.com/private/cakey.pem.unencrypted",
         proxy_pass      => "http://fossilserver",
-        proxy_redirect  => "http://fossil.tehpotatoking.com:4545/ https://fossil.tehpotatoking.com/",
+        proxy_redirect  => "http://fossil.hackbytes.com:4545/ https://fossil.hackbytes.com/",
         upstream        => "fossilserver",
         # non-cgi scripts will be handled by the fossil server
-        upstream_server => "fossil.tehpotatoking.com:4545",
+        upstream_server => "fossil.hackbytes.com:4545",
       }
 
     }
@@ -217,13 +217,13 @@ class vcs(
       # cgit mirror frontend nginx for https (backend http not needed since the cgit
       # server and the http server are hosted on the same node)
       nl_nginx::website { "git":
-        websiteName     => "git.tehpotatoking.com",
+        websiteName     => "git.hackbytes.com",
         environmentName => "${mirror_environment}",
         feed_path       => "git",
         root_path       => "/htdocs",
         enable_ssl      => true,
-        ssl_cert_path   => "/etc/ssl/tehpotatoking.com/cacert.pem",
-        ssl_key_path    => "/etc/ssl/tehpotatoking.com/private/cakey.pem.unencrypted",
+        ssl_cert_path   => "/etc/ssl/hackbytes.com/cacert.pem",
+        ssl_key_path    => "/etc/ssl/hackbytes.com/private/cakey.pem.unencrypted",
         enable_custom_configs => true,
         enable_cgi      => true,
         cgi_server      => "cgit.internal.nitelite.io:3129",
@@ -232,7 +232,7 @@ class vcs(
       # fossil mirror frontend nginx for https (backend http not needed since the
       # fossil server and the http server are hosted on the same node)
       nl_nginx::website { "fossil":
-        websiteName     => "fossil.tehpotatoking.com",
+        websiteName     => "fossil.hackbytes.com",
         environmentName => "${mirror_environment}",
         feed_path       => "fossil",
         root_path       => "/htdocs",
@@ -240,36 +240,36 @@ class vcs(
         enable_ssl      => true,
         enable_cgi      => true,
         # cgi scripts sent here
-        cgi_server      => "${mirror_environment}.fossil.tehpotatoking.com:3128",
-        ssl_cert_path   => "/etc/ssl/tehpotatoking.com/cacert.pem",
-        ssl_key_path    => "/etc/ssl/tehpotatoking.com/private/cakey.pem.unencrypted",
+        cgi_server      => "${mirror_environment}.fossil.hackbytes.com:3128",
+        ssl_cert_path   => "/etc/ssl/hackbytes.com/cacert.pem",
+        ssl_key_path    => "/etc/ssl/hackbytes.com/private/cakey.pem.unencrypted",
         proxy_pass      => "http://fossilserver",
-        proxy_redirect  => "http://${mirror_environment}.fossil.tehpotatoking.com:4545/ https://${mirror_environment}.fossil.tehpotatoking.com/",
+        proxy_redirect  => "http://${mirror_environment}.fossil.hackbytes.com:4545/ https://${mirror_environment}.fossil.hackbytes.com/",
         upstream        => "fossilserver",
         # non-cgi scripts will be handled by the fossil server
-        upstream_server => "${mirror_environment}.fossil.tehpotatoking.com:4545",
+        upstream_server => "${mirror_environment}.fossil.hackbytes.com:4545",
       }
 
     }
 
     # the front end server
-    file { "/etc/nginx/conf.d/nitelite/fossil.tehpotatoking.com":
+    file { "/etc/nginx/conf.d/nitelite/fossil.hackbytes.com":
       ensure => present,
       owner => "root",
       group => "root",
       require => File['/etc/nginx/conf.d/nitelite'],
-      path => "/etc/nginx/conf.d/nitelite/fossil.tehpotatoking.com",
-      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/fossil.tehpotatoking.com",
+      path => "/etc/nginx/conf.d/nitelite/fossil.hackbytes.com",
+      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/fossil.hackbytes.com",
     }
 
     # needs to be on the cgi server
-    file { "/etc/nginx/conf.d/nitelite/git.tehpotatoking.com":
+    file { "/etc/nginx/conf.d/nitelite/git.hackbytes.com":
       ensure => present,
       owner => "root",
       group => "root",
       require => File['/etc/nginx/conf.d/nitelite'],
-      path => "/etc/nginx/conf.d/nitelite/git.tehpotatoking.com",
-      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/git.tehpotatoking.com",
+      path => "/etc/nginx/conf.d/nitelite/git.hackbytes.com",
+      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/git.hackbytes.com",
     }
 
   }
