@@ -269,6 +269,7 @@ class media {
     "zynaddsubfx",
     # required by picospeaker
     "media-sound/sox",
+    "media-sound/lmms",
   ]
 
   $gentoo_studio_packages_require = [
@@ -301,12 +302,11 @@ class media {
     ],
   }
 
-  service { 'jackd':
+  service { 'alsasound':
     ensure => running,
     enable => true,
     require   => [
-      File['/etc/conf.d/jackd'],
-      Package[jackd-init],
+      Package[alsa-utils],
     ],
   }
 
