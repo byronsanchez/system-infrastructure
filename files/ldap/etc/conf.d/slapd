@@ -1,9 +1,0 @@
-###########################################
-#                                         #
-# MANAGED BY PUPPET                       #
-#                                         #
-# Manual changes WILL be overwritten      #
-#                                         #
-###########################################
-
-OPTS="-h 'ldaps:// ldap:// ldapi://%2fvar%2frun%2fopenldap%2fslapd.sock'"
