@@ -3,6 +3,7 @@ node 'navi.internal.nitelite.io' inherits network {
   class { "base":
     hostname          => "navi",
     network_interface => "eth0",
+    mcollective_type  => "client",
   }
 
   class { "gentoo":
@@ -20,7 +21,7 @@ node 'navi.internal.nitelite.io' inherits network {
       "rbackup",
       "staff",
       "deployer",
-      "root",
+      "jenkins",
     ],
   }
 
@@ -35,14 +36,8 @@ node 'navi.internal.nitelite.io' inherits network {
   }
 
   class { "pki":
-    ca_type => "client",
+    ca_type => "server",
   }
-
-  class { "rsyncd": }
-
-  class { "webserver": }
-
-  class { "vcs": }
 
   class { "binhost":
     portage_package_directory => "/srv/nfs/io/gentoo-local-packages",
@@ -56,15 +51,42 @@ node 'navi.internal.nitelite.io' inherits network {
     boxes_directory           => "/srv/nfs/io/boxes",
   }
 
+  class { "rsyncd": }
   class { "provision": }
 
-  class { "mirror": }
+  class { "nodejs": }
+
+  class { "ruby": }
+
+  class { "nl_rvm":
+    user => "jenkins",
+    home => "/var/lib/jenkins",
+  }
+
+  class { "nl_nvm":
+    user => "jenkins",
+    home => "/var/lib/jenkins",
+  }
+
+  class { "java":
+    java_type => "server",
+  }
+
+  class { "rsyncd": }
+
+  class { "webserver": }
+
+  class { "vcs":
+    vcs_type => "server",
+  }
+
+  class { "ci": }
 
   # users
   class { "root": }
   class { "rbackup": }
-  class { "deployer": }
   class { "staff": }
+  class { "deployer": }
   class { "logger": }
 
 }
