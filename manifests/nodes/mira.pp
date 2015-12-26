@@ -57,6 +57,8 @@ node 'mira.internal.nitelite.io' inherits network {
     xorg_type   => "workstation",
   }
 
+  class { "mirror": }
+
   class { "media": }
 
   class { "workstation": }
@@ -68,6 +70,7 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "ruby": }
 
   # node management
+  class { "rsyncd": }
   class { "provision": }
 
   class { "nl_rvm":
@@ -89,7 +92,7 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "staff": }
   class { "byronsanchez":
     #groups => ['plugdev', 'android'],
-    groups  => ['audio', 'realtime', 'cdrom', 'joy', 'lp', 'lpadmin', 'usb', 'video', 'wheel',],
+    groups  => ['audio', 'realtime', 'cdrom', 'cron', 'crontab', 'joy', 'lp', 'lpadmin', 'usb', 'video', 'wheel',],
   }
   class { "logger": }
 
