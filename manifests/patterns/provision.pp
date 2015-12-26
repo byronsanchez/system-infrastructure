@@ -72,6 +72,19 @@ class provision {
     require => File["/var/lib/nitelite"],
   }
 
+  # TODO: Redesign binhost/provision architecture. The ambiguity of where this
+  # script belongs reveals a flaw (overlap?) of responsibilities somewhere along
+  # these 2 patterns
+  file { "/usr/local/bin/update-kernels":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0755,
+    path    => "/usr/local/bin/update-kernels",
+    source  => "puppet:///files/binhost/usr/local/bin/update-kernels",
+    require => Vcsrepo['/var/lib/nitelite/provision/gentoo-provision'],
+  }
+
   vcsrepo { "/var/lib/nitelite/provision/gentoo-provision":
     ensure   => present,
     provider => git,

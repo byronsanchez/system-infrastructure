@@ -1,0 +1,103 @@
+#!/bin/sh
+
+source /usr/local/lib/nitelite/helpers/common.lib.sh
+
+WORKDIR="/var/lib/nitelite/provision/gentoo-provision"
+BUILDDIR="/usr/src/linux"
+
+# Initialize our own variables
+configlist=""
+quiet=0
+
+############################
+# Argument Parsing Functions
+
+function show_help ()
+{
+cat <<-EOM
+
+$0 [OPTION]
+
+options:
+
+    -c --configs=LIST          comma-seperated list of configuration files to build (just the filename, not full-path)
+    -q --quiet                 do not log messages to STDOUT
+    -h --help                  display this message
+
+EOM
+    exit 1
+}
+
+function get_options () {
+    argv=()
+    while [ $# -gt 0 ]
+    do
+        opt=$1
+        shift
+        case ${opt} in
+            -c|--configs)
+                configlist=$1
+                shift
+                ;;
+            --configs=*)
+                configlist=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -q|--quiet)
+                quiet=1
+                ;;
+            -h|--help)
+                show_help
+                ;;
+            *)
+                if [ "${opt:0:1}" = "-" ]; then
+                    fail "${opt}: unknown option."
+                fi
+                argv+=(${opt});;
+        esac
+    done 
+}
+
+#############
+# MAIN SCRIPT
+
+# Parse options if they were passed
+get_options $*
+
+if [ ! -n "${configlist}" ];
+then
+  configlist="${WORKDIR}/kernel/configs/*"
+else
+
+  # Parse the config-list
+  parsed_configlist=$(echo "${configlist}" | tr ',' ' ')
+
+  for f in $parsed_configlist;
+  do
+    absolute_path_config_list="${absolute_path_config_list} ${WORKDIR}/kernel/configs/${f}"
+  done
+  configlist="${absolute_path_config_list}"
+fi
+
+for f in $configlist;
+do
+  filename="$(basename ${f})"
+  config_category="$(echo ${filename} | cut -d'-' -f1)"
+  config_type="$(echo ${filename} | cut -d'-' -f2)"
+
+  cp "${f}" "${BUILDDIR}/.config"
+
+  cur_dir="`pwd`"
+  cd "${BUILDDIR}"
+
+  make clean;
+  make tarbz2-pkg;
+  genkernel --kernel-config=/usr/src/linux/.config --lvm --install initramfs;
+
+  mkdir -p "${WORKDIR}/kernel/build"
+  mv ${BUILDDIR}/linux-*.tar.bz2 "${WORKDIR}/kernel/build/${config_category}-${config_type}-linux.tar.bz2"
+  mv /boot/initramfs-* "${WORKDIR}/kernel/build/${config_category}-${config_type}-initramfs"
+
+  cd "${cur_dir}"
+done
+
+
