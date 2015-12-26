@@ -44,17 +44,17 @@ If there are news items, read them carefully:
 
     eselect news;
 
-Securiy advisory check:
+Security advisory check:
 
     glsa-check -t all;
 
 Run updates
 
-    emerge -DuvaN --with-bdeps=y world [--keep-going]
+    emerge -DuvaN --with-bdeps=y world --keep-going
 
 After update, read messages and perform any necessary tasks:
 
-    less /var/log/portage/elog;
+    less /var/log/portage/builds/elog;
 
 Post-updates
 
