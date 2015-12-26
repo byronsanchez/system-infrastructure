@@ -80,6 +80,24 @@ class workstation {
     source => 'workstation',
   }
 
+  $privoxy_files = [
+    "/etc/privoxy/config",
+    "/etc/privoxy/default.action",
+    "/etc/privoxy/default.filter",
+    "/etc/privoxy/match-all.action",
+    "/etc/privoxy/trust",
+    "/etc/privoxy/user.action",
+    "/etc/privoxy/user.filter",
+  ]
+
+  nl_files { $privoxy_files:
+    owner    => 'root',
+    group    => 'root',
+    mode     => 0644,
+    requires  => Package["net-proxy/privoxy"],
+    source => 'workstation',
+  }
+
   file { "/etc/X11/xorg.conf.d/30-keyboard.conf":
     ensure  => present,
     owner   => "root",
@@ -152,6 +170,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/dunst",
   }
 
+  file { "/etc/portage/package.accept_keywords/easystroke":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/easystroke",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/easystroke",
+  }
+
   file { "/etc/portage/package.accept_keywords/gpg":
     ensure => present,
     owner => "root",
@@ -213,6 +240,15 @@ class workstation {
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/wm",
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/wm",
+  }
+
+  file { "/etc/portage/package.accept_keywords/zathura":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/zathura",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/zathura",
   }
 
   file { "/etc/portage/package.accept_keywords/zsh":
@@ -386,6 +422,26 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.unmask/skype",
   }
 
+  file { "/etc/tor/torrc":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    path    => "/etc/tor/torrc",
+    source  => "puppet:///files/workstation/etc/tor/torrc",
+    require => Package['net-misc/tor'],
+  }
+
+  file { "/etc/torsocks.conf":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    path    => "/etc/torsocks.conf",
+    source  => "puppet:///files/workstation/etc/torsocks.conf",
+    require => Package['net-proxy/torsocks'],
+  }
+
   file { "/etc/acpi/events/default":
     ensure => present,
     owner => "root",
@@ -467,8 +523,6 @@ class workstation {
   $packages = [
     "gifsicle",
     "rfkill",
-    "pcmanfm",
-    "gentoo",
     "app-backup/tarsnap",
     "app-laptop/laptop-mode-tools",
     "app-office/ledger",
@@ -562,6 +616,7 @@ class workstation {
     "x11-wm/bspwm",
     "x11-misc/sxhkd",
     "x11-misc/xdo",
+    "x11-misc/xdotool",
     "media-gfx/scrot",
     "x11-misc/i3lock",
     "x11-misc/xautolock",
@@ -583,17 +638,33 @@ class workstation {
     "net-misc/freerdp",
     "sys-fs/encfs",
     "media-sound/cava",
+    "x11-apps/xfontsel",
+    "x11-misc/easystroke",
+    "net-news/newsbeuter",
+    "media-gfx/comix",
+    "app-text/zathura",
+    "app-text/zathura-pdf-mupdf",
+    "app-text/zathura-djvu",
+    "media-sound/easytag",
+    "sys-apps/bleachbit",
+    "x11-misc/unclutter",
+    "x11-apps/xbacklight",
+    "x11-misc/wmctrl",
   ]
 
   $packages_require = [
     File["/etc/portage/package.accept_keywords/chrome"],
     File["/etc/portage/package.accept_keywords/dunst"],
+    File["/etc/portage/package.accept_keywords/easystroke"],
     File["/etc/portage/package.accept_keywords/gpg"],
+    File["/etc/portage/package.accept_keywords/i2p"],
     File["/etc/portage/package.accept_keywords/kino"],
     File["/etc/portage/package.accept_keywords/mutt"],
     File["/etc/portage/package.accept_keywords/skype"],
     File["/etc/portage/package.accept_keywords/spotify"],
+    File["/etc/portage/package.accept_keywords/tor"],
     File["/etc/portage/package.accept_keywords/wm"],
+    File["/etc/portage/package.accept_keywords/zathura"],
     File["/etc/portage/package.accept_keywords/zsh"],
     File["/etc/portage/package.license/adobe-flash"],
     File["/etc/portage/package.license/skype"],
@@ -602,7 +673,6 @@ class workstation {
     File["/etc/portage/package.use/cups"],
     File["/etc/portage/package.use/dunst"],
     File["/etc/portage/package.use/fortune-mod"],
-    File["/etc/portage/package.use/i2p"],
     File["/etc/portage/package.use/imagemagick"],
     File["/etc/portage/package.use/inkscape"],
     File["/etc/portage/package.use/laptop-mode-tools"],
@@ -610,7 +680,6 @@ class workstation {
     File["/etc/portage/package.use/mupdf"],
     File["/etc/portage/package.use/rtorrent"],
     File["/etc/portage/package.use/spotify"],
-    File["/etc/portage/package.use/tor"],
     File["/etc/portage/package.use/tp_smapi"],
     File["/etc/portage/package.use/vlc"],
     File["/etc/portage/package.use/wm"],
