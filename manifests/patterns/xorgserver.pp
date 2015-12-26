@@ -1,6 +1,7 @@
 class xorgserver (
   $xorg_driver,
   $xorg_busid,
+  $xorg_keyboard = "basic",
   $xorg_type = "",
 ) {
 

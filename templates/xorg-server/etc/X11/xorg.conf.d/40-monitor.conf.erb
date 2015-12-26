@@ -37,7 +37,8 @@ EndSection
 
 Section "InputDevice"
 	Identifier  "Keyboard0"
-	Driver      "kbd"
+  Driver      "kbd"
+  Option      "XkbVariant" "<%= @xorg_keyboard %>"
 EndSection
 
 Section "InputDevice"

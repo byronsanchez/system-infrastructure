@@ -52,9 +52,10 @@ node 'mira.internal.nitelite.io' inherits network {
   }
 
   class { "xorgserver":
-    xorg_driver => "nouveau",
-    xorg_busid  => "PCI:1:0:0",
-    xorg_type   => "workstation",
+    xorg_driver   => "nouveau",
+    xorg_busid    => "PCI:1:0:0",
+    xorg_keyboard => "colemak",
+    xorg_type     => "workstation",
   }
 
   class { "mirror": }
