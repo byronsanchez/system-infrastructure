@@ -395,6 +395,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/rtorrent",
   }
 
+  file { "/etc/portage/package.use/skype":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/skype",
+    source => "puppet:///files/workstation/etc/portage/package.use/skype",
+  }
+
   file { "/etc/portage/package.use/spotify":
     ensure => present,
     owner => "root",
@@ -431,6 +440,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/wm",
   }
 
+  file { "/etc/portage/package.unmask/cava":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.unmask'],
+    path => "/etc/portage/package.unmask/cava",
+    source => "puppet:///files/workstation/etc/portage/package.unmask/cava",
+  }
+
   file { "/etc/portage/package.unmask/skype":
     ensure => present,
     owner => "root",
@@ -438,6 +456,15 @@ class workstation {
     require => File['/etc/portage/package.unmask'],
     path => "/etc/portage/package.unmask/skype",
     source => "puppet:///files/workstation/etc/portage/package.unmask/skype",
+  }
+
+  file { "/etc/portage/package.unmask/virtualbox":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.unmask'],
+    path => "/etc/portage/package.unmask/virtualbox",
+    source => "puppet:///files/workstation/etc/portage/package.unmask/virtualbox",
   }
 
   file { "/etc/tor/torrc":
@@ -700,11 +727,14 @@ class workstation {
     File["/etc/portage/package.use/mupdf"],
     File["/etc/portage/package.use/pulseaudio"],
     File["/etc/portage/package.use/rtorrent"],
+    File["/etc/portage/package.use/skype"],
     File["/etc/portage/package.use/spotify"],
     File["/etc/portage/package.use/tp_smapi"],
     File["/etc/portage/package.use/vlc"],
     File["/etc/portage/package.use/wm"],
+    File["/etc/portage/package.unmask/cava"],
     File["/etc/portage/package.unmask/skype"],
+    File["/etc/portage/package.unmask/virtualbox"],
   ]
 
   package { $packages:

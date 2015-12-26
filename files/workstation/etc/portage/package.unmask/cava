@@ -1,0 +1,7 @@
+# required by media-sound/cava-0.3.2_p20150810::betagarden
+# required by @selected
+# required by @world (argument)
+# /usr/portage/profiles/package.mask:
+# Sebastian Pipping <sping@gentoo.org> (8 Aug 2015)
+# Upcoming, too young to go into testing unmasked
+dev-libs/iniparser
