@@ -1,0 +1,7 @@
+---
+
+# NAS
+exports:
+  - /srv/nfs/luna 10.66.77.0/24(rw,sync,insecure,subtree_check,all_squash,anonuid=0,anongid=0)
+  - /srv/nfs/byronsanchez 10.66.77.0/24(rw,sync,insecure,subtree_check,all_squash,anonuid=0,anongid=0)
+

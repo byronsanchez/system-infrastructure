@@ -1,0 +1,97 @@
+$ORIGIN nitelite.io.
+$TTL 1200 
+@ IN SOA  ns.internal.nitelite.io.  admin.internal.nitelite.io. (
+  2014041701  ; serial
+  3h    ; refresh
+  1h    ; retry
+  1w    ; expiry
+  1d )    ; minimum
+
+;; NS Records
+nitelite.io.   IN NS ns1.internal.nitelite.io.
+nitelite.io.   IN NS ns2.internal.nitelite.io.
+
+;; MX Records
+nitelite.io. IN MX 10 mx.internal.nitelite.io.
+;; Have all subdomains match the same MX record
+* 86400 IN MX 10 mx.internal.nitelite.io.
+
+;; CNAME Records
+production.nitelite.io. IN CNAME nitelite.io.
+www.nitelite.io. IN CNAME nitelite.io.
+fossil.nitelite.io. IN CNAME nitelite.io.
+git.nitelite.io. IN CNAME nitelite.io.
+feeds.nitelite.io. IN CNAME nitelite.io.
+feedburner.nitelite.io. IN CNAME 1t5jdoq.feedproxy.ghs.google.com.
+
+systems.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+mail.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+media.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+ci.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+
+;; A Records (IPv4 addresses)
+nitelite.io. IN A 198.98.51.148
+stage.nitelite.io. IN A 10.66.77.112
+
+$ORIGIN internal.nitelite.io.
+
+;; CNAME Records
+polaris.internal.nitelite.io. IN CNAME ns1.internal.nitelite.io.
+polaris2.internal.nitelite.io. IN CNAME ns2.internal.nitelite.io.
+
+rsync.internal.nitelite.io. IN CNAME sol.internal.nitelite.io.
+provision.internal.nitelite.io. IN CNAME sol.internal.nitelite.io.
+binhost.internal.nitelite.io. IN CNAME sol.internal.nitelite.io.
+nas.internal.nitelite.io. IN CNAME sol.internal.nitelite.io.
+media.internal.nitelite.io. IN CNAME mira.internal.nitelite.io.
+proxy.internal.nitelite.io. IN CNAME kraz.internal.nitelite.io.
+data.internal.nitelite.io. IN CNAME maia.internal.nitelite.io.
+ldap.internal.nitelite.io. IN CNAME electra.internal.nitelite.io.
+ldap1.internal.nitelite.io. IN CNAME electra.internal.nitelite.io.
+ldap2.internal.nitelite.io. IN CNAME electra2.internal.nitelite.io.
+mx.internal.nitelite.io. IN CNAME kuma.internal.nitelite.io.
+mail.internal.nitelite.io. IN CNAME kuma.internal.nitelite.io.
+smtp.internal.nitelite.io. IN CNAME kuma.internal.nitelite.io.
+imap.internal.nitelite.io. IN CNAME kuma.internal.nitelite.io.
+pg.internal.nitelite.io. IN CNAME alya.internal.nitelite.io.
+pg1.internal.nitelite.io. IN CNAME alya.internal.nitelite.io.
+pg2.internal.nitelite.io. IN CNAME alya2.internal.nitelite.io.
+my.internal.nitelite.io. IN CNAME atlas.internal.nitelite.io.
+my1.internal.nitelite.io. IN CNAME atlas.internal.nitelite.io.
+my2.internal.nitelite.io. IN CNAME atlas2.internal.nitelite.io.
+pki.internal.nitelite.io. IN CNAME vega.internal.nitelite.io.
+vpn.internal.nitelite.io. IN CNAME bellatrix.internal.nitelite.io.
+build.internal.nitelite.io. IN CNAME kastra.internal.nitelite.io.
+jenkins.internal.nitelite.io. IN CNAME kastra.internal.nitelite.io.
+; web front-ends for vcs
+git.internal.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+fossil.internal.nitelite.io. IN CNAME zosma.internal.nitelite.io.
+; vcs backend
+vcs.internal.nitelite.io. IN CNAME chow.internal.nitelite.io.
+cgit.internal.nitelite.io. IN CNAME chow.internal.nitelite.io.
+fs.internal.nitelite.io. IN CNAME chow.internal.nitelite.io.
+
+sirius-staging-1.internal.nitelite.io. IN CNAME sirius.internal.nitelite.io.
+sirius-production-1.internal.nitelite.io. IN CNAME nitelite.io.
+
+;; A Records (IPv4 addresses)
+sol.internal.nitelite.io. IN A  10.66.77.100
+ns1.internal.nitelite.io. IN A 10.66.77.101
+ns2.internal.nitelite.io. IN A 10.66.77.102
+electra.internal.nitelite.io. IN A  10.66.77.103
+electra2.internal.nitelite.io. IN A  10.66.77.104
+kraz.internal.nitelite.io. IN A  10.66.77.105
+kuma.internal.nitelite.io. IN A  10.66.77.106
+maia.internal.nitelite.io. IN A  10.66.77.107
+alya.internal.nitelite.io. IN A  10.66.77.108
+alya2.internal.nitelite.io. IN A  10.66.77.109
+atlas.internal.nitelite.io. IN A  10.66.77.110
+atlas2.internal.nitelite.io. IN A  10.66.77.111
+sirius.internal.nitelite.io. IN A  10.66.77.112
+vega.internal.nitelite.io. IN A 10.66.77.113
+zosma.internal.nitelite.io. IN A 10.66.77.114
+bellatrix.internal.nitelite.io. IN A 10.66.77.115
+chow.internal.nitelite.io. IN A 10.66.77.116
+kastra.internal.nitelite.io. IN A 10.66.77.117
+mira.internal.nitelite.io. IN A 10.66.77.121
+

@@ -1,0 +1,12 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+##
+## User privilege specification
+##
+rbackup	ALL=NOPASSWD: /usr/bin/rsync, /usr/bin/mysqldump, /usr/bin/pg_dump, /usr/bin/pg_dumpall, /usr/sbin/slapcat, /usr/bin/virsh dumpxml
