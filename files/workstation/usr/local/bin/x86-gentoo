@@ -1,0 +1,207 @@
+#!/usr/bin/env bash
+
+###############
+# CONFIGURATION
+
+# Set defaults
+notifier=""
+mount=""
+umount=""
+run_com=""
+
+quiet=0
+
+CHROOT_PATH=/var/chroot/gentoo-x86
+CHROOT_USER=byronsanchez
+CHROOT_ID=$(id -u $CHROOT_USER)
+KERNEL_VERSION=$(uname -r)
+
+source /home/${CHROOT_USER}/.dotfiles/scripts/helpers/common.lib.sh
+
+############################
+# Argument Parsing Functions
+
+function usage ()
+{
+cat <<-EOM
+
+$0 [OPTION] command
+
+options:
+
+    -m --mount       mount the chroot
+    -u --umount      unmount the chroot
+    -c --command     the command to run
+
+other:
+
+    -q --quiet               do not log messages to STDOUT
+    -h --help                display this message
+
+EOM
+    exit 1
+}
+
+
+# Get any arguments.
+while getopts ":muc:qh" opt; do
+    case $opt in
+        m)
+            mount="true"
+            ;;
+        u)
+            umount="true"
+            ;;
+        q)
+            quiet=1
+            ;;
+        c)
+            run_com="$OPTARG"
+            ;;
+        h)
+            usage
+            exit
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument.
+            "
+            usage
+            exit
+            ;;
+    esac
+done
+
+
+
+function notifier() {
+  f_notifier=$1
+  f_title=$2
+  f_message=$3
+
+  # Send the notification to the appropriate program
+  if [ -n "$f_notifier" ] && [ -n "$f_message" ];
+  then
+    if [ $f_notifier = "terminal-notifier" ];
+    then
+      terminal-notifier -message "$f_message" -title "$f_title"
+    elif [ $f_notifier = "ratpoison" ];
+    then
+      ratpoison -d :0 -c "echo [$f_title] $f_message"
+    elif [ $notifier = "dunstify" ];
+    then
+      dunstify -r 1 "[$f_title]" "$f_message"
+    else
+      # treat the notifer as a command and pass it the title and message as a
+      # string
+      $f_notifier "[$f_title] $f_message"
+    fi
+  fi
+}
+
+############
+# VALIDATION
+
+validate () {
+ if [  "$(whoami)" != "root" ] ; then
+  printf "error : you cannot perform this operation unless you are root" >&2
+  exit 1
+ fi
+}
+
+initChroot () {
+ # virtual filesystems
+ mount -o bind /proc $CHROOT_PATH/proc
+ mount -o bind /sys $CHROOT_PATH/sys
+ mount -o bind /dev $CHROOT_PATH/dev
+ mount -o bind /dev/pts $CHROOT_PATH/dev/pts
+ mount -o bind /dev/shm $CHROOT_PATH/dev/shm
+ mount -o bind /tmp $CHROOT_PATH/tmp
+ # linux kernel modules && sources
+ mkdir -p $CHROOT_PATH/lib/modules/$KERNEL_VERSION
+ mount -o bind /lib/modules/$KERNEL_VERSION $CHROOT_PATH/lib/modules/$KERNEL_VERSION
+ mkdir -p $CHROOT_PATH/usr/src/linux
+ mount -o bind /usr/src/linux $CHROOT_PATH/usr/src/linux
+ # pulseaudio sound access && home directory sharing
+ mount -o bind /var/run $CHROOT_PATH/var/run
+ mkdir -p $CHROOT_PATH/var/lib/dbus
+ mount -o bind /var/lib/dbus $CHROOT_PATH/var/lib/dbus
+ #mkdir -p $CHROOT_PATH/run/user/$CHROOT_ID
+ #mount -o bind /run/user/$CHROOT_ID $CHROOT_PATH/run/user/$CHROOT_ID
+ mkdir -p $CHROOT_PATH/home/$CHROOT_USER
+ mount -o bind /home/$CHROOT_USER $CHROOT_PATH/home/$CHROOT_USER
+ # IMPORTANT files to replicate our host system
+ cp -pf /etc/resolv.conf $CHROOT_PATH/etc 
+ cp -pf /etc/passwd $CHROOT_PATH/etc
+ cp -pf /etc/shadow $CHROOT_PATH/etc
+ cp -pf /etc/group $CHROOT_PATH/etc
+ cp -pf /etc/gshadow $CHROOT_PATH/etc
+ cp -pf /etc/hosts $CHROOT_PATH/etc
+ cp -Ppf /etc/localtime $CHROOT_PATH/etc
+}
+
+endChroot () {
+ # virtual filesystems
+ umount -l $CHROOT_PATH/proc
+ umount -l $CHROOT_PATH/sys
+ umount -l $CHROOT_PATH/dev/pts
+ umount -l $CHROOT_PATH/dev/shm
+ umount -l $CHROOT_PATH/dev
+ umount -l $CHROOT_PATH/tmp
+ # linux kernel modules and sources
+ umount -l $CHROOT_PATH/lib/modules/$KERNEL_VERSION
+ umount -l $CHROOT_PATH/usr/src/linux
+ # pulseaudio sound access && home directory sharing
+ umount -l $CHROOT_PATH/var/run
+ umount -l $CHROOT_PATH/var/lib/dbus
+ #umount -l $CHROOT_PATH/run/user/$CHROOT_ID
+ umount -l $CHROOT_PATH/home/$CHROOT_USER
+}
+
+runProcess () {
+	linux32 chroot $CHROOT_PATH su - $CHROOT_USER -c "$run_com"
+}
+
+main () {
+
+  if [ -n "$mount" ];
+  then
+
+    echo "Starting x86 chroot..."
+
+    initChroot
+
+  elif [ -n "$umount" ];
+  then
+
+    echo "Stopping x86 chroot..."
+
+    endChroot
+
+  elif [ -n "$run_com" ];
+  then
+
+    if validate ;
+    then
+
+      echo "Starting x86 chroot..."
+
+      initChroot
+
+      echo "Running command..."
+
+      runProcess
+
+      echo "Stopping x86 chroot..."
+
+      endChroot
+
+    fi
+
+  fi
+
+}
+
+main
+
+exit 0
+

@@ -531,6 +531,15 @@ class workstation {
     source => "puppet:///files/workstation/usr/local/bin/multiplex",
   }
 
+  file { "/usr/local/bin/x86-gentoo":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/x86-gentoo",
+    source => "puppet:///files/workstation/usr/local/bin/x86-gentoo",
+  }
+
   file { "/etc/udev/hdaps-joy.rules":
     ensure => present,
     owner => "root",
