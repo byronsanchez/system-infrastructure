@@ -152,6 +152,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.env/xautolock",
   }
 
+  file { "/etc/portage/package.accept_keywords/cava":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/cava",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/cava",
+  }
+
   file { "/etc/portage/package.accept_keywords/chrome":
     ensure => present,
     owner => "root",
@@ -366,6 +375,15 @@ class workstation {
     require => File['/etc/portage/package.use'],
     path => "/etc/portage/package.use/mupdf",
     source => "puppet:///files/workstation/etc/portage/package.use/mupdf",
+  }
+
+  file { "/etc/portage/package.use/pulseaudio":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/pulseaudio",
+    source => "puppet:///files/workstation/etc/portage/package.use/pulseaudio",
   }
 
   file { "/etc/portage/package.use/rtorrent":
@@ -653,12 +671,14 @@ class workstation {
   ]
 
   $packages_require = [
+    File["/etc/portage/package.accept_keywords/cava"],
     File["/etc/portage/package.accept_keywords/chrome"],
     File["/etc/portage/package.accept_keywords/dunst"],
     File["/etc/portage/package.accept_keywords/easystroke"],
     File["/etc/portage/package.accept_keywords/gpg"],
     File["/etc/portage/package.accept_keywords/i2p"],
     File["/etc/portage/package.accept_keywords/kino"],
+    File["/etc/portage/package.accept_keywords/ledger"],
     File["/etc/portage/package.accept_keywords/mutt"],
     File["/etc/portage/package.accept_keywords/skype"],
     File["/etc/portage/package.accept_keywords/spotify"],
@@ -678,6 +698,7 @@ class workstation {
     File["/etc/portage/package.use/laptop-mode-tools"],
     File["/etc/portage/package.use/libreoffice"],
     File["/etc/portage/package.use/mupdf"],
+    File["/etc/portage/package.use/pulseaudio"],
     File["/etc/portage/package.use/rtorrent"],
     File["/etc/portage/package.use/spotify"],
     File["/etc/portage/package.use/tp_smapi"],
