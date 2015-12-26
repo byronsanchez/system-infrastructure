@@ -98,6 +98,21 @@ class workstation {
     source => 'workstation',
   }
 
+  $pulse_files = [
+    "files/workstation/etc/pulse/client.conf",
+    "files/workstation/etc/pulse/daemon.conf",
+    "files/workstation/etc/pulse/default.pa",
+    "files/workstation/etc/pulse/system.pa",
+  ]
+
+  nl_files { $pulse_files:
+    owner    => 'root',
+    group    => 'root',
+    mode     => 0644,
+    requires  => Package["media-sound/pulseaudio"],
+    source => 'workstation',
+  }
+
   file { "/etc/X11/xorg.conf.d/30-keyboard.conf":
     ensure  => present,
     owner   => "root",
