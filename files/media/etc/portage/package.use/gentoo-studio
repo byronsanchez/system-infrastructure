@@ -6,6 +6,7 @@
 #                                         #
 ###########################################
 
-x11-libs/qt-gui gtkstyle
+dev-qt/qt-gui gtkstyle
 x11-libs/fltk threads
+dev-libs/libpcre pcre16
 
