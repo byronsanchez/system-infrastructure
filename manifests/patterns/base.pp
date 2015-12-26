@@ -13,6 +13,7 @@ class base (
   $mcollective_type = 'server',
   $network_interface = 'eth0',
   $enable_docker = false,
+  $enable_chroot = false,
   $keymap = 'us',
 ) {
 

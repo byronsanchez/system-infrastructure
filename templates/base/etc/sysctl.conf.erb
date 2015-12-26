@@ -104,7 +104,7 @@ net.bridge.bridge-nf-call-arptables = 0
 
 # TODO: Enable for workstation for x86 chroots to prevent issues (eg. with dbus 
 # installation)
-<% if @enable_docker %>
+<% if @enable_docker || @enable_chroot %>
 kernel.grsecurity.chroot_caps = 0
 kernel.grsecurity.chroot_deny_chmod = 0
 kernel.grsecurity.chroot_deny_chroot = 0
@@ -112,5 +112,18 @@ kernel.grsecurity.chroot_deny_mount = 0
 kernel.grsecurity.chroot_deny_pivot = 0
 #kernel.grsecurity.chroot_deny_mknod = 0
 #kernel.grsecurity.chroot_findtask = 0
+<% end %>
+
+<% if @enable_chroot %>
+kernel.grsecurity.chroot_deny_mknod = 0
+kernel.grsecurity.chroot_findtask = 0
+
+kernel.grsecurity.chroot_deny_fchdir = 0
+kernel.grsecurity.chroot_deny_shmat = 0
+kernel.grsecurity.chroot_deny_sysctl = 0
+kernel.grsecurity.chroot_deny_unix = 0
+kernel.grsecurity.chroot_enforce_chdir = 0
+kernel.grsecurity.chroot_execlog = 0
+kernel.grsecurity.chroot_restrict_nice = 0
 <% end %>
 
