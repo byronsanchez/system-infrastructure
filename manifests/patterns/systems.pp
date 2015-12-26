@@ -1,6 +1,4 @@
 class systems(
-  $postfixadmin = false,
-  $phpldapadmin = false,
   $cgit = false,
   $fossil = false,
   $jenkins = false,
@@ -15,90 +13,6 @@ class systems(
     enable_php      => true,
     ssl_cert_path   => "/etc/ssl/nitelite.io/cacert.pem",
     ssl_key_path    => "/etc/ssl/nitelite.io/private/cakey.pem.unencrypted",
-  }
-
-  if $phpldapadmin {
-
-    file { "/etc/portage/package.use/phpldapadmin":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      require => File['/etc/portage/package.use'],
-      path => "/etc/portage/package.use/phpldapadmin",
-      source => "puppet:///files/systems/etc/portage/package.use/phpldapadmin",
-    }
-
-    file { "/srv/www/systems.nitelite.io/htdocs/phpldapadmin/config/config.php":
-      ensure => present,
-      owner => "deployer",
-      group => "www-data",
-      require => [
-        Package[phpldapadmin],
-        Exec[webapp_config_phpldapadmin],
-      ],
-      path    => "/srv/www/systems.nitelite.io/htdocs/phpldapadmin/config/config.php",
-      source => "puppet:///files/systems/srv/www/systems.nitelite.io/htdocs/phpldapadmin/config/config.php",
-    }
-
-    $phpldapadmin_packages = [
-      "phpldapadmin",
-    ]
-
-    package { $phpldapadmin_packages: ensure => installed }
-
-    exec { "webapp_config_phpldapadmin":
-      command => "/usr/sbin/webapp-config -I -h systems.${domain} -d phpldapadmin phpldapadmin 1.2.3",
-      creates => "/srv/www/systems.${domain}/htdocs/phpldapadmin",
-      require => [
-        Package[phpldapadmin],
-        File['/srv/www'],
-        File['/etc/vhosts/webapp-config'],
-      ]
-    }
-
-  }
-
-  if $postfixadmin {
-
-    $mailreaderpw = hiera('mailreaderpw', '')
-
-    file { "/etc/portage/package.use/postfixadmin":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      require => File['/etc/portage/package.use'],
-      path => "/etc/portage/package.use/postfixadmin",
-      source => "puppet:///files/systems/etc/portage/package.use/postfixadmin",
-    }
-
-    file { "/srv/www/systems.nitelite.io/htdocs/postfixadmin/config.inc.php":
-      ensure => present,
-      owner => "deployer",
-      group => "www-data",
-      require => [
-        Package[postfixadmin],
-        Exec[webapp_config_postfixadmin],
-      ],
-      path    => "/srv/www/systems.nitelite.io/htdocs/postfixadmin/config.inc.php",
-      content => template("systems/srv/www/systems.nitelite.io/htdocs/postfixadmin/config.inc.php.erb"),
-    }
-
-    $postfixadmin_packages = [
-      "postfixadmin",
-    ]
-
-    package { $postfixadmin_packages: ensure => installed }
-
-    exec { "webapp_config_postfixadmin":
-      command => "/usr/sbin/webapp-config -I -h systems.${domain} -d postfixadmin postfixadmin 2.3.7",
-      creates => "/srv/www/systems.${domain}/htdocs/postfixadmin",
-      require => [
-        Package[postfixadmin],
-        File['/srv/www'],
-        File['/etc/vhosts/webapp-config'],
-      ]
-    }
-
   }
 
   if $cgit {
