@@ -35,6 +35,15 @@ class xorgserver (
     path => "/etc/X11/xorg.conf.d/40-monitor.conf",
   }
 
+  file { "/etc/portage/package.accept_keywords/firefox":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/firefox",
+    source => "puppet:///files/xorg-server/etc/portage/package.accept_keywords/firefox",
+  }
+
   file { "/etc/portage/package.use/compton":
     ensure => present,
     owner => "root",
