@@ -1,3 +1,6 @@
+
+# TODO: Skype should be in chroot only
+
 class workstation {
 
   user { 'joy':
@@ -248,14 +251,14 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/mutt",
   }
 
-  file { "/etc/portage/package.accept_keywords/skype":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/skype",
-    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/skype",
-  }
+  # file { "/etc/portage/package.accept_keywords/skype":
+  #   ensure => present,
+  #   owner => "root",
+  #   group => "root",
+  #   require => File['/etc/portage/package.accept_keywords'],
+  #   path => "/etc/portage/package.accept_keywords/skype",
+  #   source => "puppet:///files/workstation/etc/portage/package.accept_keywords/skype",
+  # }
 
   file { "/etc/portage/package.accept_keywords/spotify":
     ensure => present,
@@ -311,14 +314,14 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.license/adobe-flash",
   }
 
-  file { "/etc/portage/package.license/skype":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.license'],
-    path => "/etc/portage/package.license/skype",
-    source => "puppet:///files/workstation/etc/portage/package.license/skype",
-  }
+  # file { "/etc/portage/package.license/skype":
+  #   ensure => present,
+  #   owner => "root",
+  #   group => "root",
+  #   require => File['/etc/portage/package.license'],
+  #   path => "/etc/portage/package.license/skype",
+  #   source => "puppet:///files/workstation/etc/portage/package.license/skype",
+  # }
 
   file { "/etc/portage/package.use/bitlbee":
     ensure => present,
@@ -428,14 +431,14 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.use/rtorrent",
   }
 
-  file { "/etc/portage/package.use/skype":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/skype",
-    source => "puppet:///files/workstation/etc/portage/package.use/skype",
-  }
+  # file { "/etc/portage/package.use/skype":
+  #   ensure => present,
+  #   owner => "root",
+  #   group => "root",
+  #   require => File['/etc/portage/package.use'],
+  #   path => "/etc/portage/package.use/skype",
+  #   source => "puppet:///files/workstation/etc/portage/package.use/skype",
+  # }
 
   file { "/etc/portage/package.use/spotify":
     ensure => present,
@@ -482,14 +485,14 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.unmask/cava",
   }
 
-  file { "/etc/portage/package.unmask/skype":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.unmask'],
-    path => "/etc/portage/package.unmask/skype",
-    source => "puppet:///files/workstation/etc/portage/package.unmask/skype",
-  }
+  # file { "/etc/portage/package.unmask/skype":
+  #   ensure => present,
+  #   owner => "root",
+  #   group => "root",
+  #   require => File['/etc/portage/package.unmask'],
+  #   path => "/etc/portage/package.unmask/skype",
+  #   source => "puppet:///files/workstation/etc/portage/package.unmask/skype",
+  # }
 
   file { "/etc/portage/package.unmask/virtualbox":
     ensure => present,
@@ -644,7 +647,7 @@ class workstation {
     "irssi",
     "weechat",
     "bitlbee",
-    "skype",
+    # "skype",
     "pyyaml",
     "lxml",
     "mupdf",
@@ -749,14 +752,14 @@ class workstation {
     File["/etc/portage/package.accept_keywords/kino"],
     File["/etc/portage/package.accept_keywords/ledger"],
     File["/etc/portage/package.accept_keywords/mutt"],
-    File["/etc/portage/package.accept_keywords/skype"],
+    # File["/etc/portage/package.accept_keywords/skype"],
     File["/etc/portage/package.accept_keywords/spotify"],
     File["/etc/portage/package.accept_keywords/tor"],
     File["/etc/portage/package.accept_keywords/wm"],
     File["/etc/portage/package.accept_keywords/zathura"],
     File["/etc/portage/package.accept_keywords/zsh"],
     File["/etc/portage/package.license/adobe-flash"],
-    File["/etc/portage/package.license/skype"],
+    # File["/etc/portage/package.license/skype"],
     File["/etc/portage/package.use/bitlbee"],
     File["/etc/portage/package.use/calibre"],
     File["/etc/portage/package.use/cups"],
@@ -769,13 +772,13 @@ class workstation {
     File["/etc/portage/package.use/mupdf"],
     File["/etc/portage/package.use/pulseaudio"],
     File["/etc/portage/package.use/rtorrent"],
-    File["/etc/portage/package.use/skype"],
+    # File["/etc/portage/package.use/skype"],
     File["/etc/portage/package.use/spotify"],
     File["/etc/portage/package.use/tp_smapi"],
     File["/etc/portage/package.use/vlc"],
     File["/etc/portage/package.use/wm"],
     File["/etc/portage/package.unmask/cava"],
-    File["/etc/portage/package.unmask/skype"],
+    # File["/etc/portage/package.unmask/skype"],
     File["/etc/portage/package.unmask/virtualbox"],
   ]
 

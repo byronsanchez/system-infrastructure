@@ -194,12 +194,6 @@ class gentoo(
     require => $packages_require,
   }
 
-  service { "udev-postmount":
-    ensure => running,
-    enable => true,
-    require => $packages_require,
-  }
-
   # TODO: place layman nitelite as a dep for packages that will retrieve from
   # the overlay
   layman { 'niteLite':

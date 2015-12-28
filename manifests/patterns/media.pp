@@ -275,7 +275,7 @@ class media {
   ]
 
   $gentoo_studio_packages_require = [
-    Layman['pro-audio'],
+    Layman['proaudio'],
     File["/etc/portage/package.accept_keywords/gentoo-studio"],
     File["/etc/portage/package.use/gentoo-studio"],
   ]
@@ -285,7 +285,7 @@ class media {
     require => $gentoo_studio_packages_require,
   }
 
-  layman { 'pro-audio':
+  layman { 'proaudio':
     ensure  => present,
     require => [
       Package[layman],

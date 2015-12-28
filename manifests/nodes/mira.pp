@@ -48,9 +48,9 @@ node 'mira.internal.nitelite.io' inherits network {
     ca_type => "mira",
   }
 
-  class { "vpn":
-    vpn_type => "client",
-  }
+  # class { "vpn":
+  #   vpn_type => "client",
+  # }
 
   class { "xorgserver":
     xorg_driver   => "nouveau",
@@ -73,7 +73,7 @@ node 'mira.internal.nitelite.io' inherits network {
 
   # node management
   class { "rsyncd": }
-  class { "provision": }
+  # class { "provision": }
 
   class { "nl_nvm":
     user => "byronsanchez",
