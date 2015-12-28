@@ -65,7 +65,7 @@ get_options $*
 
 if [ ! -n "${configlist}" ];
 then
-  configlist="${WORKDIR}/kernel/configs/*"
+  configlist="${WORKDIR}/configs/kernel/*"
 else
 
   # Parse the config-list
@@ -73,7 +73,7 @@ else
 
   for f in $parsed_configlist;
   do
-    absolute_path_config_list="${absolute_path_config_list} ${WORKDIR}/kernel/configs/${f}"
+    absolute_path_config_list="${absolute_path_config_list} ${WORKDIR}/configs/kernel/${f}"
   done
   configlist="${absolute_path_config_list}"
 fi
@@ -93,9 +93,12 @@ do
   make tarbz2-pkg;
   genkernel --kernel-config=/usr/src/linux/.config --lvm --install initramfs;
 
-  mkdir -p "${WORKDIR}/kernel/build"
-  mv ${BUILDDIR}/linux-*.tar.bz2 "${WORKDIR}/kernel/build/${config_category}-${config_type}-linux.tar.bz2"
-  mv /boot/initramfs-* "${WORKDIR}/kernel/build/${config_category}-${config_type}-initramfs"
+  mkdir -p "${WORKDIR}/build"
+  mv ${BUILDDIR}/linux-*.tar.bz2 "${WORKDIR}/build/${config_category}-${config_type}-linux.tar.bz2"
+  mv /boot/initramfs-* "${WORKDIR}/build/${config_category}-${config_type}-initramfs"
+
+  quickpkg sys-kernel/hardened-sources
+  cp /usr/portage/packages/sys-kernel/hardened-sources-*.tbz2 "${WORKDIR}/build/${config_category}-${config_type}-sources.tbz2"
 
   cd "${cur_dir}"
 done

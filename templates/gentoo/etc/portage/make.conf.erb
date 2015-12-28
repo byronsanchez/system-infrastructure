@@ -100,6 +100,8 @@ POLICY_TYPES="strict mcs"
 PORT_LOGDIR="/var/log/portage/builds"
 MAKEOPTS="-j<%= @processorcount %>"
 
+PAX_MARKINGS="XT"
+
 <% if @linguas %>
 LINGUAS="<%= @linguas %>"
 <% end -%>
@@ -119,6 +121,9 @@ PHP_INI_VERSION="development"
 <% end -%>
 
 PHP_TARGETS="php5-5 php5-4"
+
+# Standard PC (BIOS)
+GRUB_PLATFORMS="pc"
 
 source /var/lib/layman/make.conf
 

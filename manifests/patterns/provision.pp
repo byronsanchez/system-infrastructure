@@ -42,7 +42,7 @@ class provision {
   # Used for updating nodes on the subnet.
   file { '/srv/rsync/gentoo-boot':
      ensure  => 'link',
-     target  => "/var/lib/nitelite/provision/gentoo-provision/kernel/build",
+     target  => "/var/lib/nitelite/provision/gentoo-provision/build",
      require => Vcsrepo["/var/lib/nitelite/provision/gentoo-provision"],
   }
 
