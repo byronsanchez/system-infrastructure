@@ -112,6 +112,7 @@ class xorgserver (
     "fontconfig",
     "fontconfig-infinality",
     "corefonts",
+    "net-misc/tigervnc"
   ]
 
   $packages_require = [
