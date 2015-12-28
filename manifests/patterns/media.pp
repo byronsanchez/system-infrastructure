@@ -206,6 +206,7 @@ class media {
     "media-sound/picard",
     "mplayer",
     "musicbrainz",
+    "cpuinfo2cpuflags",
   ]
 
   $packages_require = [
@@ -222,6 +223,7 @@ class media {
     require => $packages_require,
   }
 
+  # TODO: This is stale, update with most recent
   $gentoo_studio_packages = [
     "a2jmidid",
     "gscanbus",

@@ -81,7 +81,7 @@ class provision {
     group   => "root",
     mode    => 0755,
     path    => "/usr/local/bin/update-kernels",
-    source  => "puppet:///files/binhost/usr/local/bin/update-kernels",
+    source  => "puppet:///files/provision/usr/local/bin/update-kernels",
     require => Vcsrepo['/var/lib/nitelite/provision/gentoo-provision'],
   }
 

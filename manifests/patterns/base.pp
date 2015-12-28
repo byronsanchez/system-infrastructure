@@ -291,15 +291,6 @@ class base (
     source => "puppet:///files/base/etc/puppet/puppet.conf",
   }
 
-  file { "/etc/profile.d/fortune.custom.sh":
-    ensure => absent,
-    owner => "root",
-    group => "root",
-    require => File['/etc/profile.d'],
-    path => "/etc/profile.d/fortune.custom.sh",
-    source => "puppet:///files/base/etc/profile.d/fortune.custom.sh",
-  }
-
   file { "/usr/local/lib/nitelite":
     ensure => "directory",
     owner  => "root",

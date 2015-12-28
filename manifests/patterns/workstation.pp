@@ -99,10 +99,10 @@ class workstation {
   }
 
   $pulse_files = [
-    "files/workstation/etc/pulse/client.conf",
-    "files/workstation/etc/pulse/daemon.conf",
-    "files/workstation/etc/pulse/default.pa",
-    "files/workstation/etc/pulse/system.pa",
+    "/etc/pulse/client.conf",
+    "/etc/pulse/daemon.conf",
+    "/etc/pulse/default.pa",
+    "/etc/pulse/system.pa",
   ]
 
   nl_files { $pulse_files:
@@ -212,6 +212,15 @@ class workstation {
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/gpg",
   }
 
+  file { "/etc/portage/package.accept_keywords/i2p":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/i2p",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/i2p",
+  }
+
   file { "/etc/portage/package.accept_keywords/kino":
     ensure => present,
     owner => "root",
@@ -255,6 +264,15 @@ class workstation {
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/spotify",
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/spotify",
+  }
+
+  file { "/etc/portage/package.accept_keywords/tor":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/tor",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/tor",
   }
 
   file { "/etc/portage/package.accept_keywords/wm":
@@ -631,7 +649,7 @@ class workstation {
     "lxml",
     "mupdf",
     "libreoffice",
-    "appoffice-ext/languagetool",
+    "app-officeext/languagetool",
     "offlineimap",
     "msmtp",
     "notmuch",
@@ -769,8 +787,6 @@ class workstation {
   $packages_overlay = [
     "app-accessibility/svox",
     "media-gfx/pngout",
-    "net-print/cupswrapper-brother-hl2270dw-2.0.4",
-    "net-print/lpdfilter-brother-hl2270dw-2.1.0",
     "x11-misc/lighthouse",
     "x11-misc/bar",
     "x11-misc/sutils",

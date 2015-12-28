@@ -1,4 +1,4 @@
-r must overlay webserver 
+# must overlay webserver
 # must overlay rsyncd
 
 class binhost(

@@ -31,9 +31,9 @@ GIT
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-vcsrepo.git
   ref: master
-  sha: 46588aa62d444c5f0a538cccec357a80cd191b93
+  sha: 268e599839f86f7d5dd4352e73c0f698dc4b0c18
   specs:
-    puppetlabs/vcsrepo (0.2.0)
+    puppetlabs/vcsrepo (0.0.1)
 
 DEPENDENCIES
   byronsanchez/rabbitmq (>= 0)
