@@ -1,0 +1,13 @@
+###########################################
+#                                         #
+# MANAGED BY PUPPET                       #
+#                                         #
+# Manual changes WILL be overwritten      #
+#                                         #
+###########################################
+
+# Make user installs to the homedir
+# Affects multi-wide installations on root and will install to root home instead
+export rvm_prefix="$HOME"
+export rvm_path="$HOME/.rvm"
+

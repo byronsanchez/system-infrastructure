@@ -74,14 +74,14 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "rsyncd": }
   class { "provision": }
 
-  class { "nl_rvm":
+  class { "nl_nvm":
     user => "byronsanchez",
     home => "/home/byronsanchez",
   }
 
-  class { "nl_nvm":
-    user => "byronsanchez",
-    home => "/home/byronsanchez",
+  nl_rvm::user_install { "byronsanchez_rvm":
+    user    => "byronsanchez",
+    home    => "/home/byronsanchez",
   }
 
   class { "mobile": }

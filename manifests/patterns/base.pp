@@ -35,6 +35,22 @@ class base (
 
   class { "::ntp": }
 
+  # all nodes will have rvm for the root user to provide the ruby environment to
+  # run puppet
+  nl_homedir::file { "root_rvmrc":
+    file  => ".rvmrc",
+    user => "root",
+    mode => 0644,
+    owner   => 'root',
+    group   => 'root',
+  }
+
+  nl_rvm::user_install { "root_rvm":
+    user    => "root",
+    home    => "/root",
+    require => nl_homedir::file["root_rvmrc"]
+  }
+
   file { "/etc/mcollective/facts.yaml":
     ensure  => present,
     owner   => "root",
@@ -407,10 +423,9 @@ class base (
     require => $ruby_package_requires,
   }
 
-  # System ruby HAS to be 1.9 for mcollective to work. If other rubies are
-  # needed, find an alternative solution to deploy them.
+  # mcollective needs ruby 1.9, but we'll use rvm to provide rubies
   eselect { 'ruby':
-    set => 'ruby19',
+    set => 'ruby20',
   }
 
   $ruby_gems = [
