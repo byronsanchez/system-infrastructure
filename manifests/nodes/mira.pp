@@ -11,8 +11,9 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "base":
     hostname          => "mira",
     network_interface => "wlan0",
-    # colemak keymap
-    keymap            => "en-latin9",
+    keymap            => "en-latin9", # colemak
+    enable_docker     => false,
+    enable_chroot     => true,
   }
 
   class { "gentoo":

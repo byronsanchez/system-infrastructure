@@ -26,6 +26,7 @@ options:
 
     -k --kernel=NAME           kernel filename
     -i --initramfs=NAME        initramfs filename
+    -p --package=NAME          sources binpkg
     -q --quiet                 do not log messages to STDOUT
     -h --help                  display this message
 
@@ -53,6 +54,13 @@ function get_options () {
                 ;;
             --initramfs=*)
                 initramfs=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -p|--package)
+                package=$1
+                shift
+                ;;
+            --package=*)
+                package=$(echo ${opt} | cut -d'=' -f 2);
                 ;;
             -q|--quiet)
                 quiet=1
@@ -85,7 +93,16 @@ then
   fail "Please provide an initramfs filename";
 fi
 
+if [ ! -n "$package" ];
+then
+  fail "Please provide a package filename";
+fi
+
 mkdir -p "${WORKDIR}";
+
+rsync -avug \
+rsync://provision.internal.nitelite.io:/gentoo-boot/$package \
+${WORKDIR}/$package;
 
 rsync -avug \
 rsync://provision.internal.nitelite.io:/gentoo-boot/$initramfs \
@@ -94,12 +111,6 @@ ${WORKDIR}/$initramfs;
 rsync -avug \
 rsync://provision.internal.nitelite.io:/gentoo-boot/$kernel \
 ${WORKDIR}/linux-binary.tar.bz2;
-
-printf "  - Installing kernel ${KERNELPACKAGE} (source code)... ";
-logPrint "   - Installing kernel ${KERNELPACKAGE} (source code)" >> ${LOG};
-runChrootCommand emerge --binpkg-respect-use=y -g ${KERNELPACKAGE} >> ${LOG} 
-2>&1;
-printf "done\n";
 
 # create backups
 mv -f /boot/kernel-* /boot/kernel.old;
@@ -112,7 +123,7 @@ tar xjf ${WORKDIR}/linux-binary.tar.bz2 -C /;
 
 # give the files predictable names
 mv -f /boot/vmlinuz-* /boot/kernel-nitelite;
-mv -f /boot/initramfs-* /boot/initramfs-nitelite;
+mv -f ${WORKDIR}/${initramfs} /boot/initramfs-nitelite;
 mv -f /boot/config-* /boot/config-nitelite;
 mv -f /boot/System.map-* /boot/System.map-nitelite;
 mv -f /boot/vmlinux-* /boot/vmlinux-nitelite;
@@ -120,12 +131,19 @@ KERNELVERSION=$(file /boot/kernel-nitelite | awk '{print $9}' | cut -d'-' -f 1);
 KVERSION=$(file /boot/kernel-nitelite | awk '{print $9}');
 KERNELFILEVERSION="kernel-${KVERSION}"
 INITRDFILEVERSION="initrd-${KVERSION}"
+PACKAGEFILEVERSION=$(echo ${KVERSION} | awk -F'-' '{print "hardened-sources-"$1"-"$3".tbz2"}');
 # give the files names that are recognizable by grub2
 mv -f /boot/kernel-nitelite /boot/$KERNELFILEVERSION;
 mv -f /boot/initramfs-nitelite /boot/$INITRDFILEVERSION;
 mv -f /boot/config-nitelite /boot/config-$KVERSION;
 mv -f /boot/System.map-nitelite /boot/System.map-$KVERSION;
 mv -f /boot/vmlinux-nitelite /boot/vmlinux-$KVERSION;
+
+printf "  - Installing kernel ${PACKAGEFILEVERSION} (source code)... ";
+logPrint "   - Installing kernel ${PACKAGEFILEVERSION} (source code)" >> ${LOG};
+cp ${WORKDIR}/$package /usr/portage/packages/sys-kernel/${PACKAGEFILEVERSION}
+emerge --binpkg-respect-use=y -g ${PACKAGEFILEVERSION} >> ${LOG} 2>&1;
+printf "done\n";
 
 printf "  - Configuring GRUB2... ";
 # Generate the final grub2 file based on settings in $GRUBFILE
