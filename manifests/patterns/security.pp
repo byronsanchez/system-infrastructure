@@ -49,6 +49,15 @@ class security($iptables_type = '') {
     source  => "puppet:///files/security/etc/cron.daily/rkhunter",
   }
 
+  file { "/etc/portage/package.accept_keywords/bastille":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/bastille",
+    source => "puppet:///files/security/etc/portage/package.accept_keywords/bastille",
+  }
+
   file { "/var/lib/iptables":
     ensure => "directory",
     owner => "root",
@@ -254,6 +263,7 @@ class security($iptables_type = '') {
     "rkhunter",
     "fail2ban",
     "iptables",
+    "app-admin/bastille"
   ]
 
   $packages_require = [
