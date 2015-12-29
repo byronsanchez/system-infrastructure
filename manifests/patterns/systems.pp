@@ -1,3 +1,9 @@
+# internal web-apps
+#
+# typically, these will be nginx front-ends that will talk to the actual target app
+# that was installed and configured by another pattern (eg. ci, vcs, etc.).
+# These front-ends provide the public access points. The back-ends should not be
+# directly publically accessible.
 class systems(
   $cgit = false,
   $fossil = false,
