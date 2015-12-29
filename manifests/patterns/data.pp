@@ -1,4 +1,6 @@
-class data($data_type) {
+class data(
+  $data_type = ''
+) {
 
   # TODO: ensure the graphital script exists on target system
   # this would fall under same scope of dotfiles 3rd party stuff. this script is MIT.
