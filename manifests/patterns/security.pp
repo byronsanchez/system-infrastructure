@@ -263,7 +263,8 @@ class security($iptables_type = '') {
     "rkhunter",
     "fail2ban",
     "iptables",
-    "app-admin/bastille"
+    "app-admin/bastille",
+    "sys-process/audit",
   ]
 
   $packages_require = [
@@ -303,6 +304,14 @@ class security($iptables_type = '') {
     require   => [
       File['/var/lib/iptables/rules-save'],
       Package[iptables],
+    ],
+  }
+
+  service { 'auditd':
+    ensure => running,
+    enable => true,
+    require   => [
+      Package['sys-process/audit'],
     ],
   }
 
