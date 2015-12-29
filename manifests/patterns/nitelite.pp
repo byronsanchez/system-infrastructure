@@ -11,14 +11,14 @@ class nitelite($environment) {
     feed_path       => "hackbytes",
   }
 
-  nl_nginx::website { "tehpotatoking.com":
-    websiteName     => "tehpotatoking.com",
-    environmentName => "${environment}",
-    root_path       => "/htdocs",
-    enable_php      => true,
-    enable_feed     => true,
-    feed_path       => "tehpotatoking",
-  }
+  # nl_nginx::website { "tehpotatoking.com":
+  #   websiteName     => "tehpotatoking.com",
+  #   environmentName => "${environment}",
+  #   root_path       => "/htdocs",
+  #   enable_php      => true,
+  #   enable_feed     => true,
+  #   feed_path       => "tehpotatoking",
+  # }
 
   $packages = [
     "sqlite3",
