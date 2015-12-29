@@ -35,22 +35,6 @@ class base (
 
   class { "::ntp": }
 
-  # all nodes will have rvm for the root user to provide the ruby environment to
-  # run puppet
-  nl_homedir::file { "root_rvmrc":
-    file  => ".rvmrc",
-    user => "root",
-    mode => 0644,
-    owner   => 'root',
-    group   => 'root',
-  }
-
-  nl_rvm::user_install { "root_rvm":
-    user    => "root",
-    home    => "/root",
-    require => nl_homedir::file["root_rvmrc"]
-  }
-
   file { "/etc/mcollective/facts.yaml":
     ensure  => present,
     owner   => "root",
@@ -467,9 +451,9 @@ class base (
     "mcollective-service-agent",
   ]
 
-  package { $mcollective_packages:
-    ensure  => installed,
-  }
+  # package { $mcollective_packages:
+  #   ensure  => installed,
+  # }
 
   exec { "gem-update":
     command     => "/usr/bin/gem update",
@@ -583,15 +567,15 @@ class base (
 
   # The daemon needs to be running on all nodes which will be managed with mco
   # (even the admin server so the commands will be invoked on the invoking node)
-  service { 'mcollectived':
-    ensure  => running,
-    enable  => true,
-    subscribe => File['/etc/mcollective/server.cfg'],
-    require => [
-      Package[mcollective],
-      File['/etc/mcollective/server.cfg'],
-    ],
-  }
+  # service { 'mcollectived':
+  #   ensure  => running,
+  #   enable  => true,
+  #   subscribe => File['/etc/mcollective/server.cfg'],
+  #   require => [
+  #     Package[mcollective],
+  #     File['/etc/mcollective/server.cfg'],
+  #   ],
+  # }
 
   # ensure automatic updates of system hostname if it changes
   exec { 'hostname_update':
