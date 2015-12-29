@@ -149,7 +149,7 @@ class nl_nginx {
     owner   => 'www-data',
     group   => 'www-data',
     require => [
-      Package[nginx]
+      Package['www-servers/nginx']
     ]
   }
 
