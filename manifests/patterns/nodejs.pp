@@ -16,6 +16,17 @@ class nodejs {
     group   => 'www-data',
   }
 
+  # Install nvm to deployer to provide a production node environment (instead of
+  # using system node)
+  nl_nvm::user_install { "deployer_nvm":
+    user    => "deployer",
+    home    => "/home/deployer",
+    require => [ 
+      nl_homedir::file["deployer_npmrc"],
+      nl_homedir::file["deployer_profile"],
+    ],
+  }
+
   $packages = [
     "nodejs",
   ]

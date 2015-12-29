@@ -3,11 +3,18 @@ class nl_nvm(
   $home,
 ) {
 
-  vcsrepo { "${home}/.nvm":
-    ensure   => present,
-    provider => git,
-    source   => "git://github.com/creationix/nvm.git",
-    user     => "${user}",
+  define user_install (
+    $user,
+    $home,
+  ) {
+
+    vcsrepo { "${home}/.nvm":
+      ensure   => present,
+      provider => git,
+      source   => "git://github.com/creationix/nvm.git",
+      user     => "${user}",
+    }
+
   }
 
 }
