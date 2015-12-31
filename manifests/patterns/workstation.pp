@@ -610,6 +610,10 @@ class workstation {
   }
 
   # TODO: install packer
+  # TODO: Consider splitting up user-specific packages to dotfiles. Will require
+  # mangement of portage config files (use, keywords, etc.); This pattern will 
+  # only contain lower-level stuff like hardware configs, xorg, etc. User-level 
+  # stuff will be moved to dotfiles to match homebrew and chocolatey.
   $packages = [
     "gifsicle",
     "rfkill",
