@@ -107,7 +107,9 @@ Clean up (eclean will remove files that don't correspond to a package in the por
     eclean distfiles
     eclean packages
 
-Update configs through puppet (puppet gets updated through emerge):
+Update configs through puppet (puppet gets updated through emerge). Puppet must 
+be run as root to ensure all gem dependencies are loaded properly (it will use 
+the puppet gem instead of system puppet):
 
   cd /etc/puppet
   ./init.sh
