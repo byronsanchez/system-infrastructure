@@ -8,7 +8,7 @@
 
 127.0.0.1 localhost local
 <% if @node_name -%>
-127.0.1.1 <%= @node_name %>.<%= @internal_domain %> <%= @node_name %>
+<%= @fqdn %> <%= @node_name %>.<%= @internal_domain %> <%= @node_name %>
 <% end -%>
 <% if @puppetmaster_address -%>
 <%= @puppetmaster_address %> puppet.<%= @internal_domain %> puppet
