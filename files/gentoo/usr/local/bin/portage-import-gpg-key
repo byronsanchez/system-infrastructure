@@ -6,7 +6,7 @@ TEMP_FILE="${WORK_DIR}/portage-gpg-key"
 
 mkdir -p "${WORK_DIR}"
 
-gpg --homedir /etc/portage/gpg --keyserver subkeys.pgp.net --recv-keys 0xDB6B8C1F96D8BF6D
+gpg --homedir /etc/portage/gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xDB6B8C1F96D8BF6D
 TRUSTVAR=`gpg --homedir /etc/portage/gpg --fingerprint 0xDB6B8C1F96D8BF6D | grep Key | cut -d= -f2 | sed 's/ //g'  | grep -v "uid"`
 echo $TRUSTVAR$TRUST_VALUE > $TEMP_FILE
 gpg --homedir /etc/portage/gpg --import-ownertrust $TEMP_FILE
