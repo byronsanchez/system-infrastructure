@@ -62,10 +62,4 @@ node 'kastra.internal.nitelite.io' inherits network {
 
   class { "ci": }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "staff": }
-  class { "logger": }
-
 }

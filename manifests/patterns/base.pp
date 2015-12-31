@@ -35,6 +35,13 @@ class base (
 
   class { "::ntp": }
 
+  # users
+  class { "root": }
+  class { "rbackup": }
+  class { "deployer": }
+  class { "staff": }
+  class { "logger": }
+
   file { "/etc/sudoers":
     ensure => present,
     owner => "root",

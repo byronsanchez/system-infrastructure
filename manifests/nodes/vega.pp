@@ -38,10 +38,4 @@ node 'vega.internal.nitelite.io' inherits network {
     ca_type => "server",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "staff": }
-  class { "logger": }
-
 }

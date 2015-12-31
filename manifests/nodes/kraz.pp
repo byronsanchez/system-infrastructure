@@ -52,10 +52,4 @@ node 'kraz.internal.nitelite.io' inherits network {
 
   class { "proxy": }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "staff": }
-  class { "logger": }
-
 }

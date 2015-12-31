@@ -57,11 +57,4 @@ node 'alya2.internal.nitelite.io' inherits network {
     pgmaster_address => "${pgmaster_address}",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }

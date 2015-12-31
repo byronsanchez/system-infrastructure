@@ -48,11 +48,4 @@ node 'sol.internal.nitelite.io' inherits network {
 
   class { "hypervisor": }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }

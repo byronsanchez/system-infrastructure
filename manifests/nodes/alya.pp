@@ -56,11 +56,4 @@ node 'alya.internal.nitelite.io' inherits network {
     db_type => "master",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }

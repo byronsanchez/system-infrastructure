@@ -54,10 +54,4 @@ node 'polaris2.internal.nitelite.io' inherits network {
     dns_type => "slave",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "staff": }
-  class { "logger": }
-
 }

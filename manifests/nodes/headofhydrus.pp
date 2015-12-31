@@ -44,11 +44,4 @@ node 'headofhydrus.internal.nitelite.io' inherits network {
 
   class { "vcs": }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }

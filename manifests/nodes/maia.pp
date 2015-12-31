@@ -40,11 +40,5 @@ node 'maia.internal.nitelite.io' inherits network {
 
   class { "amqp": }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "staff": }
-  class { "logger": }
-
 }
 

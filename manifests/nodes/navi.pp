@@ -82,11 +82,4 @@ node 'navi.internal.nitelite.io' inherits network {
 
   class { "ci": }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "staff": }
-  class { "deployer": }
-  class { "logger": }
-
 }

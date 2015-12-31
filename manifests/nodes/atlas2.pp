@@ -52,11 +52,4 @@ node 'atlas2.internal.nitelite.io' inherits network {
     ca_group   => "mysql",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }

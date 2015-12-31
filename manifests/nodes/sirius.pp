@@ -75,12 +75,5 @@ node 'sirius.internal.nitelite.io' inherits network {
     environment => "${environment}",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }
 

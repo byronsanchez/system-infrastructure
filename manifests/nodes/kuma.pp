@@ -44,11 +44,4 @@ node 'kuma.internal.nitelite.io' inherits network {
     ca_type => "mail",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }

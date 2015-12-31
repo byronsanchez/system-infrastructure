@@ -49,11 +49,4 @@ node 'chow.internal.nitelite.io' inherits network {
     vcs_type => "server",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }

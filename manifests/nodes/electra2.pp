@@ -52,10 +52,4 @@ node 'electra2.internal.nitelite.io' inherits network {
     ca_group => "ldap",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "staff": }
-  class { "logger": }
-
 }

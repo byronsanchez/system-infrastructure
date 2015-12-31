@@ -43,10 +43,4 @@ node 'bellatrix.internal.nitelite.io' inherits network {
     vpn_type => "server",
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "staff": }
-  class { "logger": }
-
 }

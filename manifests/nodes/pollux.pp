@@ -30,7 +30,4 @@ node 'pollux.internal.nitelite.io' inherits network {
     ],
   }
 
-  # users
-  class { "root": }
-
 }

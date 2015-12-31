@@ -53,11 +53,4 @@ node 'zosma.internal.nitelite.io' inherits network {
     jenkins      => true,
   }
 
-  # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
-  class { "logger": }
-
 }

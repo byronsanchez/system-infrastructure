@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Updates kernel and initramfs using the provision server as the source
+# Updates kernel and initrd using the provision server as the source
 # directory
 
 source /usr/local/lib/nitelite/helpers/common.lib.sh;
@@ -9,8 +9,10 @@ update_type="$1"
 WORKDIR="/tmp/nitelite"
 
 # Initialize our own variables:
-initramfs=""
+initrd=""
 kernel=""
+package=""
+modules=""
 quiet=0
 
 ############################
@@ -25,7 +27,7 @@ $0 [OPTION]
 options:
 
     -k --kernel=NAME           kernel filename
-    -i --initramfs=NAME        initramfs filename
+    -i --initrd=NAME           initrd filename
     -p --package=NAME          sources binpkg
     -q --quiet                 do not log messages to STDOUT
     -h --help                  display this message
@@ -48,12 +50,12 @@ function get_options () {
             --kernel=*)
                 kernel=$(echo ${opt} | cut -d'=' -f 2);
                 ;;
-            -i|--initramfs)
-                initramfs=$1
+            -i|--initrd)
+                initrd=$1
                 shift
                 ;;
-            --initramfs=*)
-                initramfs=$(echo ${opt} | cut -d'=' -f 2);
+            --initrd=*)
+                initrd=$(echo ${opt} | cut -d'=' -f 2);
                 ;;
             -p|--package)
                 package=$1
@@ -61,6 +63,13 @@ function get_options () {
                 ;;
             --package=*)
                 package=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -m|--modules)
+                modules=$1
+                shift
+                ;;
+            --modules=*)
+                modules=$(echo ${opt} | cut -d'=' -f 2);
                 ;;
             -q|--quiet)
                 quiet=1
@@ -88,14 +97,19 @@ then
   fail "Please provide a kernel filename";
 fi
 
-if [ ! -n "$initramfs" ];
+if [ ! -n "$initrd" ];
 then
-  fail "Please provide an initramfs filename";
+  fail "Please provide an initrd filename";
 fi
 
 if [ ! -n "$package" ];
 then
   fail "Please provide a package filename";
+fi
+
+if [ ! -n "$modules" ];
+then
+  fail "Please provide a modules filename";
 fi
 
 mkdir -p "${WORKDIR}";
@@ -105,25 +119,38 @@ rsync://provision.internal.nitelite.io:/gentoo-boot/$package \
 ${WORKDIR}/$package;
 
 rsync -avug \
-rsync://provision.internal.nitelite.io:/gentoo-boot/$initramfs \
-${WORKDIR}/$initramfs;
+rsync://provision.internal.nitelite.io:/gentoo-boot/$initrd \
+${WORKDIR}/$initrd;
 
 rsync -avug \
 rsync://provision.internal.nitelite.io:/gentoo-boot/$kernel \
 ${WORKDIR}/linux-binary.tar.bz2;
 
+rsync -avug \
+rsync://provision.internal.nitelite.io:/gentoo-boot/$modules \
+${WORKDIR}/modules;
+
 # create backups
 mv -f /boot/kernel-* /boot/kernel.old;
-mv -f /boot/initramfs-* /boot/initramfs.old;
+mv -f /boot/initrd-* /boot/initrd.old;
 mv -f /boot/System.map-* /boot/System.map.old;
 mv -f /boot/config-* /boot/config.old;
 mv -f /boot/vmlinux-* /boot/vmlinux.old;
 
 tar xjf ${WORKDIR}/linux-binary.tar.bz2 -C /;
 
+# If lib symlink has been clobbered due to the tar extraction, fix it
+if [ ! -h "/lib" ];
+then
+  printf "  -  /lib is no longer a symlink. Fixing...";
+  mv /lib/* /lib64/;
+  rmdir /lib;
+  ln -sv /lib64 /lib;
+fi
+
 # give the files predictable names
 mv -f /boot/vmlinuz-* /boot/kernel-nitelite;
-mv -f ${WORKDIR}/${initramfs} /boot/initramfs-nitelite;
+mv -f ${WORKDIR}/${initrd} /boot/initrd-nitelite;
 mv -f /boot/config-* /boot/config-nitelite;
 mv -f /boot/System.map-* /boot/System.map-nitelite;
 mv -f /boot/vmlinux-* /boot/vmlinux-nitelite;
@@ -131,18 +158,21 @@ KERNELVERSION=$(file /boot/kernel-nitelite | awk '{print $9}' | cut -d'-' -f 1);
 KVERSION=$(file /boot/kernel-nitelite | awk '{print $9}');
 KERNELFILEVERSION="kernel-${KVERSION}"
 INITRDFILEVERSION="initrd-${KVERSION}"
-PACKAGEFILEVERSION=$(echo ${KVERSION} | awk -F'-' '{print "hardened-sources-"$1"-"$3".tbz2"}');
+PACKAGEFILEVERSION=$(echo ${KVERSION} | awk -F'-' '{print "=hardened-sources-"$1"-"$3}');
 # give the files names that are recognizable by grub2
 mv -f /boot/kernel-nitelite /boot/$KERNELFILEVERSION;
-mv -f /boot/initramfs-nitelite /boot/$INITRDFILEVERSION;
+mv -f /boot/initrd-nitelite /boot/$INITRDFILEVERSION;
 mv -f /boot/config-nitelite /boot/config-$KVERSION;
 mv -f /boot/System.map-nitelite /boot/System.map-$KVERSION;
 mv -f /boot/vmlinux-nitelite /boot/vmlinux-$KVERSION;
 
+printf "  - Configuring kernel module list...  ";
+cp ${WORKDIR}/modules /etc/conf.d/modules;
+printf "done\n";
+
 printf "  - Installing kernel ${PACKAGEFILEVERSION} (source code)... ";
-logPrint "   - Installing kernel ${PACKAGEFILEVERSION} (source code)" >> ${LOG};
 cp ${WORKDIR}/$package /usr/portage/packages/sys-kernel/${PACKAGEFILEVERSION}
-emerge --binpkg-respect-use=y -g ${PACKAGEFILEVERSION} >> ${LOG} 2>&1;
+emerge --binpkg-respect-use=y -g ${PACKAGEFILEVERSION};
 printf "done\n";
 
 printf "  - Configuring GRUB2... ";

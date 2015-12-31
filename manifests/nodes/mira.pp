@@ -88,14 +88,9 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "mobile": }
 
   # users
-  class { "root": }
-  class { "rbackup": }
-  class { "deployer": }
-  class { "staff": }
   class { "byronsanchez":
     #groups => ['plugdev', 'android'],
     groups  => ['audio', 'realtime', 'cdrom', 'cron', 'crontab', 'joy', 'lp', 'lpadmin', 'usb', 'video', 'wheel',],
   }
-  class { "logger": }
 
 }
