@@ -35,6 +35,63 @@ class base (
 
   class { "::ntp": }
 
+  file { "/etc/sudoers":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    path => "/etc/sudoers",
+    source => "puppet:///files/ldap/etc/sudoers",
+  }
+
+  file { "/etc/sudoers.d":
+    ensure => "directory",
+    owner => "root",
+    group => "root",
+    mode   => '750',
+  }
+
+  file { "/etc/sudoers.d/staff":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    require => File['/etc/sudoers.d'],
+    path => "/etc/sudoers.d/staff",
+    source => "puppet:///files/ldap/etc/sudoers.d/staff",
+  }
+
+  file { "/etc/sudoers.d/rbackup":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    require => File['/etc/sudoers.d'],
+    path => "/etc/sudoers.d/rbackup",
+    source => "puppet:///files/ldap/etc/sudoers.d/rbackup",
+  }
+
+  file { "/etc/sudoers.d/deployer":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    require => File['/etc/sudoers.d'],
+    path => "/etc/sudoers.d/deployer",
+    source => "puppet:///files/ldap/etc/sudoers.d/deployer",
+  }
+
+  file { "/etc/sudoers.d/jenkins":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    mode    => '440',
+    require => File['/etc/sudoers.d'],
+    path => "/etc/sudoers.d/jenkins",
+    source => "puppet:///files/ldap/etc/sudoers.d/jenkins",
+  }
+
+
   file { "/etc/mcollective/facts.yaml":
     ensure  => present,
     owner   => "root",
