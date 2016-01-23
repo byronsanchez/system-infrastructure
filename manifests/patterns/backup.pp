@@ -115,15 +115,6 @@ class backup(
 
   elsif $backup_type == "workstation" {
 
-    file { '/etc/tarsnapper.conf':
-      ensure  => present,
-      path    => "/etc/tarsnapper.conf",
-      source  => 'puppet:///files/backup/etc/tarsnapper.conf',
-      group   => '0',
-      mode    => '644',
-      owner   => '0',
-    }
-
     file { '/usr/local/bin/backup-mirror.sh':
       ensure  => present,
       path    => "/usr/local/bin/backup-mirror.sh",
@@ -140,14 +131,6 @@ class backup(
       require  => File["/var/lib/nitelite/workstation"],
     }
 
-    exec { "install_workstation_backup_scripts":
-      command => "/usr/local/bin/install-workstation-backup-scripts",
-      require => [
-        Vcsrepo["/var/lib/nitelite/workstation/backups"],
-        File["/usr/local/bin/install-workstation-backup-scripts"],
-      ],
-    }
-
     file { '/usr/local/bin/install-workstation-backup-scripts':
       ensure  => present,
       path => "/usr/local/bin/install-workstation-backup-scripts",
@@ -155,6 +138,14 @@ class backup(
       owner   => 'root',
       group   => 'root',
       mode    => '755',
+    }
+
+    exec { "install_workstation_backup_scripts":
+      command => "/usr/local/bin/install-workstation-backup-scripts",
+      require => [
+        Vcsrepo["/var/lib/nitelite/workstation/backups"],
+        File["/usr/local/bin/install-workstation-backup-scripts"],
+      ],
     }
 
   }
