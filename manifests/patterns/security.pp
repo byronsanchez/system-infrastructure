@@ -307,12 +307,13 @@ class security($iptables_type = '') {
     ],
   }
 
-  service { 'auditd':
-    ensure => running,
-    enable => true,
-    require   => [
-      Package['sys-process/audit'],
-    ],
-  }
+  # TODO: Needs to be added to boot runlevel
+  # service { 'auditd':
+  #   ensure => running,
+  #   enable => true,
+  #   require   => [
+  #     Package['sys-process/audit'],
+  #   ],
+  # }
 
 }
