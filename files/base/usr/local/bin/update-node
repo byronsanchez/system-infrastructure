@@ -143,6 +143,7 @@ tar xjf ${WORKDIR}/linux-binary.tar.bz2 -C /;
 if [ ! -h "/lib" ];
 then
   printf "  -  /lib is no longer a symlink. Fixing...";
+  rm -rf /lib64/modules;
   mv /lib/* /lib64/;
   rmdir /lib;
   ln -sv /lib64 /lib;
