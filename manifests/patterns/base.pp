@@ -418,7 +418,6 @@ class base (
     "vixie-cron",
     "ruby",
     "python",
-    "dev-python/pip",
     "app-text/tree",
     "sudo",
     "htop",
@@ -493,18 +492,6 @@ class base (
 
   eselect { 'python':
     set => 'python2.7',
-  }
-
-  $pip_packages = [
-    "virtualenv",
-  ]
-
-  package { $pip_packages:
-    ensure  => installed,
-    provider => 'pip',
-    require => [
-      Eselect[python],
-    ],
   }
 
   $mcollective_packages = [
