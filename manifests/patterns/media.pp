@@ -15,6 +15,22 @@ class media {
     gid    => '1017',
   }
 
+  # pulse is used for cava audio visualization and skype
+  $pulse_files = [
+    "/etc/pulse/client.conf",
+    "/etc/pulse/daemon.conf",
+    "/etc/pulse/default.pa",
+    "/etc/pulse/system.pa",
+  ]
+
+  nl_files { $pulse_files:
+    owner    => 'root',
+    group    => 'root',
+    mode     => 0644,
+    requires  => Package["media-sound/pulseaudio"],
+    source => 'media',
+  }
+
   file { "/etc/asound.conf":
     ensure => present,
     owner  => "root",
@@ -50,33 +66,6 @@ class media {
     source => "puppet:///files/media/etc/portage/package.accept_keywords/gentoo-studio",
   }
 
-  file { "/etc/portage/package.accept_keywords/mplayer":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/mplayer",
-    source => "puppet:///files/media/etc/portage/package.accept_keywords/mplayer",
-  }
-
-  file { "/etc/portage/package.license/fdk":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.license'],
-    path => "/etc/portage/package.license/fdk",
-    source => "puppet:///files/media/etc/portage/package.license/fdk",
-  }
-
-  file { "/etc/portage/package.use/ffmpeg":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/ffmpeg",
-    source => "puppet:///files/media/etc/portage/package.use/ffmpeg",
-  }
-
   file { "/etc/portage/package.use/gentoo-studio":
     ensure => present,
     owner => "root",
@@ -86,56 +75,13 @@ class media {
     source => "puppet:///files/media/etc/portage/package.use/gentoo-studio",
   }
 
-  file { "/etc/portage/package.use/mpd":
+  file { "/etc/portage/package.use/pulseaudio":
     ensure => present,
     owner => "root",
     group => "root",
     require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/mpd",
-    source => "puppet:///files/media/etc/portage/package.use/mpd",
-  }
-
-  file { "/etc/portage/package.use/ncmpcpp":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/ncmpcpp",
-    source => "puppet:///files/media/etc/portage/package.use/ncmpcpp",
-  }
-
-  file { "/etc/portage/package.use/picard":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/picard",
-    source => "puppet:///files/media/etc/portage/package.use/picard",
-  }
-
-  file { "/etc/mpd.conf":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => '644',
-    path => "/etc/mpd.conf",
-    source => "puppet:///files/media/etc/mpd.conf",
-  }
-
-  file { "/var/lib/mpd":
-    ensure => directory,
-    owner => "byronsanchez",
-    group => "audio",
-    mode    => '644',
-  }
-
-  file { "/usr/local/lib/nitelite/mp3-duration.fmt":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/usr/local/lib/nitelite'],
-    path => "/usr/local/lib/nitelite/mp3-duration.fmt",
-    source => "puppet:///files/media/usr/local/lib/nitelite/mp3-duration.fmt",
+    path => "/etc/portage/package.use/pulseaudio",
+    source => "puppet:///files/media/etc/portage/package.use/pulseaudio",
   }
 
   file { "/usr/local/bin/loop2jack":
@@ -145,42 +91,6 @@ class media {
     mode    => 0755,
     path => "/usr/local/bin/loop2jack",
     source => "puppet:///files/media/usr/local/bin/loop2jack",
-  }
-
-  file { "/usr/local/bin/mp3-clean":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => 0755,
-    path => "/usr/local/bin/mp3-clean",
-    source => "puppet:///files/media/usr/local/bin/mp3-clean",
-  }
-
-  file { "/usr/local/bin/mp3-validate":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => 0755,
-    path => "/usr/local/bin/mp3-validate",
-    source => "puppet:///files/media/usr/local/bin/mp3-validate",
-  }
-
-  file { "/usr/local/bin/playlist-scan":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => 0755,
-    path => "/usr/local/bin/playlist-scan",
-    source => "puppet:///files/media/usr/local/bin/playlist-scan",
-  }
-
-  file { "/usr/local/bin/playlist-checkout":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    mode    => 0755,
-    path => "/usr/local/bin/playlist-checkout",
-    source => "puppet:///files/media/usr/local/bin/playlist-checkout",
   }
 
   # TODO: Set the firewire device paths in the file. one line per firewire device
@@ -193,29 +103,60 @@ class media {
     source => "puppet:///files/media/etc/udev/rules.d/fw.rules",
   }
 
+  file { "/etc/portage/package.accept_keywords/kino":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/kino",
+    source => "puppet:///files/media/etc/portage/package.accept_keywords/kino",
+  }
+
+  file { "/usr/local/bin/60ito24p":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/60ito24p",
+    source => "puppet:///files/media/usr/local/bin/60ito24p",
+  }
+
+  file { "/usr/local/bin/pipe-x264":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/pipe-x264",
+    source => "puppet:///files/media/usr/local/bin/pipe-x264",
+  }
+
+  file { "/usr/local/bin/multiplex":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/multiplex",
+    source => "puppet:///files/media/usr/local/bin/multiplex",
+  }
+
   $packages = [
-    "mpd",
-    "media-sound/mpc",
-    "ncmpcpp",
     "alsa-utils",
     "alsaequal",
     "alsa-oss",
     "alsa-plugins",
-    "id3lib",
-    "mp3check",
-    "media-sound/picard",
-    "mplayer",
-    "musicbrainz",
-    "cpuinfo2cpuflags",
+    "media-video/dvgrab",
+    "media-video/kino",
+    "media-video/cinelerra",
+    "media-video/projectx",
+    "media-video/x264-encoder",
+    "media-sound/pulseaudio",
+    "media-sound/pavucontrol",
+    "media-sound/paprefs",
   ]
 
   $packages_require = [
-    File["/etc/portage/package.accept_keywords/mplayer"],
-    File["/etc/portage/package.license/fdk"],
-    File["/etc/portage/package.use/ffmpeg"],
-    File["/etc/portage/package.use/mpd"],
-    File["/etc/portage/package.use/ncmpcpp"],
-    File["/etc/portage/package.use/picard"],
+    File["/etc/portage/package.accept_keywords/kino"],
+    File["/etc/portage/package.use/pulseaudio"],
   ]
 
   package { $packages:
@@ -269,9 +210,6 @@ class media {
     "seq24",
     "yoshimi",
     "zynaddsubfx",
-    # required by picospeaker
-    "media-sound/sox",
-    "media-sound/lmms",
   ]
 
   $gentoo_studio_packages_require = [
@@ -294,16 +232,6 @@ class media {
     ]
   }
 
-  service { 'mpd':
-    ensure => running,
-    enable => true,
-    subscribe => File['/etc/mpd.conf'],
-    require   => [
-      File['/etc/mpd.conf'],
-      Package[mpd],
-    ],
-  }
-
   service { 'alsasound':
     ensure => running,
     enable => true,
@@ -313,3 +241,4 @@ class media {
   }
 
 }
+

@@ -26,6 +26,16 @@ class xorgserver (
     require => File['/etc/X11'],
   }
 
+  file { "/etc/X11/xorg.conf.d/30-keyboard.conf":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    require => File['/etc/X11/xorg.conf.d'],
+    path    => "/etc/X11/xorg.conf.d/30-keyboard.conf",
+    source  => "puppet:///files/xorg-server/etc/X11/xorg.conf.d/30-keyboard.conf",
+  }
+
   file { "/etc/X11/xorg.conf.d/40-monitor.conf":
     ensure => present,
     owner => "root",
@@ -34,33 +44,6 @@ class xorgserver (
     require => File['/etc/X11/xorg.conf.d'],
     content => template("xorg-server/etc/X11/xorg.conf.d/40-monitor.conf.erb"),
     path => "/etc/X11/xorg.conf.d/40-monitor.conf",
-  }
-
-  file { "/etc/portage/package.accept_keywords/firefox":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/firefox",
-    source => "puppet:///files/xorg-server/etc/portage/package.accept_keywords/firefox",
-  }
-
-  file { "/etc/portage/package.use/compton":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/compton",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/compton",
-  }
-
-  file { "/etc/portage/package.use/firefox":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.use'],
-    path => "/etc/portage/package.use/firefox",
-    source => "puppet:///files/xorg-server/etc/portage/package.use/firefox",
   }
 
   file { "/etc/portage/package.use/freetype":
@@ -99,25 +82,18 @@ class xorgserver (
   }
 
   $packages = [
-    "xorg-server",
-    "redshift",
-    "compton",
+    "x11-base/xorg-server",
     "rxvt-unicode",
     "urxvt-perls",
     # lib for fonts
     "libXft",
-    "firefox",
-    "x11-misc/xclip",
     "freetype",
     "fontconfig",
     "fontconfig-infinality",
     "corefonts",
-    "net-misc/tigervnc"
   ]
 
   $packages_require = [
-      File["/etc/portage/package.use/compton"],
-      File["/etc/portage/package.use/firefox"],
       File["/etc/portage/package.use/freetype"],
       File["/etc/portage/package.use/rxvt-unicode"],
       File['/etc/portage/package.use/xorg-server'],
