@@ -63,7 +63,12 @@ node 'mira.internal.nitelite.io' inherits network {
 
   class { "media": }
 
-  class { "workstation": }
+  class { "laptop": }
+
+  class { "workstation":
+    xorg_apps   => true,
+    skype       => false,
+  }
 
   class { "nodejs": }
 

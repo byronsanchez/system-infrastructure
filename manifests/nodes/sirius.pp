@@ -70,6 +70,11 @@ node 'sirius.internal.nitelite.io' inherits network {
 
   class { "nodejs": }
 
+  class { "workstation":
+    xorg_apps   => false,
+    skype       => false,
+  }
+
   # app configs
   class { "nitelite":
     environment => "${environment}",
