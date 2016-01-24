@@ -152,6 +152,7 @@ class media {
     "media-sound/pulseaudio",
     "media-sound/pavucontrol",
     "media-sound/paprefs",
+    "media-sound/lmms",
   ]
 
   $packages_require = [

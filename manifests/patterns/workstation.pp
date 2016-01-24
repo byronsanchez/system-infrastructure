@@ -6,6 +6,9 @@ class workstation (
   $skype = false
 ) {
 
+  # TODO: paramter for browsing, axel and stuff
+  # TODO: paramter for media
+
   if $skype {
 
     file { "/etc/portage/package.accept_keywords/skype":
@@ -254,6 +257,8 @@ class workstation (
     }
 
     $packages_xorg = [
+      "sys-apps/dbus",
+      "feh",
       "media-sound/picard",
       "musicbrainz",
       "redshift",
@@ -350,6 +355,14 @@ class workstation (
     package { $packages_overlay_xorg:
       ensure  => installed,
       require => $packages_overlay_xorg_require,
+    }
+
+    service { dbus:
+      ensure    => running,
+      enable => true,
+      require   => [
+        Package['sys-apps/dbus'],
+      ],
     }
 
   }
@@ -561,15 +574,6 @@ class workstation (
     source => "puppet:///files/workstation/etc/portage/package.unmask/cava",
   }
 
-  file { "/etc/portage/package.accept_keywords/mplayer":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/mplayer",
-    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/mplayer",
-  }
-
   file { "/etc/portage/package.license/fdk":
     ensure => present,
     owner => "root",
@@ -699,7 +703,6 @@ class workstation (
     "app-backup/tarsnap",
     "app-office/ledger",
     # "app-emulation/docker",
-    "sys-apps/dbus",
     "sys-fs/cryptsetup",
     "grc",
     "elinks",
@@ -709,7 +712,6 @@ class workstation (
     "aview",
     "fbida",
     "fim",
-    "feh",
     "libcaca",
     "aalib",
     "clockywock",
@@ -769,7 +771,6 @@ class workstation (
     "media-sound/cava",
     # required by picospeaker
     "media-sound/sox",
-    "media-sound/lmms",
   ]
 
   $packages_require = [
@@ -829,14 +830,6 @@ class workstation (
     enable => true,
     require   => [
       Package['net-proxy/privoxy'],
-    ],
-  }
-
-  service { dbus:
-    ensure    => running,
-    enable => true,
-    require   => [
-      Package['sys-apps/dbus'],
     ],
   }
 
