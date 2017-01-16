@@ -1,7 +1,7 @@
 class xorgserver (
   $xorg_driver,
   $xorg_busid,
-  $xorg_keyboard = "basic",
+  $xorg_keyboard = "us",
   $xorg_type = "",
 ) {
 
@@ -115,7 +115,7 @@ class xorgserver (
   # Update environment if xorg is freshly installed
   exec { "xorg_update_environment":
     command     => "/usr/sbin/env-update && source /etc/profile",
-    subscribe   => Package[xorg-server],
+    subscribe   => Package["x11-base/xorg-server"],
     refreshonly => true,
   }
 

@@ -8,5 +8,5 @@
 
 x11-base/xorg-server xorg
 dev-libs/libxml2 python
-media-libs/mesa gbm
+media-libs/mesa gbm gles2
 x11-libs/gtk+ X
