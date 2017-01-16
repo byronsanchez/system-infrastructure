@@ -1,5 +1,14 @@
 class ci {
 
+  file { "/etc/portage/package.accept_keywords/jenkins":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/jenkins",
+    source => "puppet:///files/ci/etc/portage/package.accept_keywords/jenkins",
+  }
+
   file { "/var/lib/jenkins/.ssh/jenkins_rsa":
     ensure => present,
     owner => "jenkins",
