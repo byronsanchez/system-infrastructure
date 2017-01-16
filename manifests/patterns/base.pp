@@ -234,6 +234,15 @@ class base (
     group   => "root",
   }
 
+  file { "/etc/portage/package.accept_keywords/python":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/python",
+    source => "puppet:///files/base/etc/portage/package.accept_keywords/python",
+  }
+
   file { "/etc/portage/package.accept_keywords/rsync":
     ensure => present,
     owner => "root",
@@ -250,6 +259,15 @@ class base (
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/screen",
     source => "puppet:///files/base/etc/portage/package.accept_keywords/screen",
+  }
+
+  file { "/etc/portage/package.accept_keywords/vim":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/vim",
+    source => "puppet:///files/base/etc/portage/package.accept_keywords/vim",
   }
 
   file { "/etc/portage/package.use/cairo":
@@ -435,12 +453,15 @@ class base (
     "setserial",
     "net-analyzer/iftop",
     "sys-process/parallel",
+    "sys-apps/gptfdisk",
   ]
 
 
   $package_requires = [
+    File["/etc/portage/package.accept_keywords/python"],
     File["/etc/portage/package.accept_keywords/rsync"],
     File["/etc/portage/package.accept_keywords/screen"],
+    File["/etc/portage/package.accept_keywords/vim"],
     File["/etc/portage/package.use/cairo"],
     File["/etc/portage/package.use/mutt"],
     File["/etc/portage/package.use/puppet"],
@@ -613,6 +634,14 @@ class base (
     require => [
       Package[puppet],
       File['/etc/puppet/puppet.conf']
+    ],
+  }
+
+  service { 'gpm':
+    ensure  => running,
+    enable  => true,
+    require => [
+      Package[gpm],
     ],
   }
 

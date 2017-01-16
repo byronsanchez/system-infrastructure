@@ -16,7 +16,8 @@
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-Port 1224
+# port knocking ensures this port isn't actually exposed directly
+Port 22
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
