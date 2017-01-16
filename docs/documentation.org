@@ -1,0 +1,22 @@
+
+#+TITLE: Documentation
+#+DATE: 2017-01-15 Sunday 13:48:24 -0500
+#+AUTHOR: Byron Sanchez
+#+EMAIL: byron@hackbytes.com
+#+LANGUAGE:  en
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+FILETAGS: 
+
+
+* Tasks
+  [2017-01-15 Sun 13:55]
+* Notes
+  [2017-01-15 Sun 13:55]
+* Someday/Maybe
+  [2017-01-15 Sun 13:56]
+* Reading List
+  [2017-01-15 Sun 13:56]
+* SSL Configuration
+
+- https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04
