@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/mplayer -af scaletempo -softvol -softvol-max 1000 "$@"

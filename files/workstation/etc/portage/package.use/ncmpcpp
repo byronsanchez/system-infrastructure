@@ -7,4 +7,5 @@
 ###########################################
 
 media-sound/ncmpcpp bash-completion clock curl fftw outputs taglib visualizer
+dev-libs/boost icu
 

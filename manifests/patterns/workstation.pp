@@ -435,6 +435,69 @@ class workstation (
     require => File["/etc/elinks"],
   }
 
+  file { "/etc/portage/package.accept_keywords/bbdb":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/bbdb",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/bbdb",
+  }
+
+  file { "/etc/portage/package.accept_keywords/emacs":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/emacs",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/emacs",
+  }
+
+  file { "/etc/portage/package.accept_keywords/google-cloud-storage":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/google-cloud-storage",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/google-cloud-storage",
+  }
+
+  file { "/etc/portage/package.accept_keywords/svox":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/svox",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/svox",
+  }
+
+  file { "/etc/portage/package.accept_keywords/tarsnap":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/tarsnap",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/tarsnap",
+  }
+
+  file { "/etc/portage/package.accept_keywords/vim":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/vim",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/vim",
+  }
+
+  file { "/etc/portage/package.accept_keywords/weechat":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/weechat",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/weechat",
+  }
+
   file { "/etc/portage/package.accept_keywords/dropbox":
     ensure => present,
     owner => "root",
@@ -514,6 +577,15 @@ class workstation (
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/zsh",
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/zsh",
+  }
+
+  file { "/etc/portage/package.use/emacs":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/emacs",
+    source => "puppet:///files/workstation/etc/portage/package.use/emacs",
   }
 
   file { "/etc/portage/package.use/bitlbee":
@@ -686,6 +758,15 @@ class workstation (
     source => "puppet:///files/workstation/usr/local/lib/nitelite/mp3-duration.fmt",
   }
 
+  file { "/usr/local/bin/mplayer":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/mplayer",
+    source => "puppet:///files/workstation/usr/local/bin/mplayer",
+  }
+
   file { "/usr/local/bin/mp3-clean":
     ensure => present,
     owner => "root",
@@ -843,6 +924,13 @@ class workstation (
 
   $packages_require = [
     #File["/etc/portage/package.accept_keywords/cava"],
+    File["/etc/portage/package.accept_keywords/bbdb"],
+    File["/etc/portage/package.accept_keywords/emacs"],
+    File["/etc/portage/package.accept_keywords/google-cloud-storage"],
+    File["/etc/portage/package.accept_keywords/svox"],
+    File["/etc/portage/package.accept_keywords/tarsnap"],
+    File["/etc/portage/package.accept_keywords/vim"],
+    File["/etc/portage/package.accept_keywords/weechat"],
     File["/etc/portage/package.accept_keywords/dropbox"],
     File["/etc/portage/package.accept_keywords/gpg"],
     File["/etc/portage/package.accept_keywords/i2p"],
@@ -853,13 +941,14 @@ class workstation (
     File["/etc/portage/package.accept_keywords/zsh"],
     File["/etc/portage/package.license/fdk"],
     #File["/etc/portage/package.unmask/cava"],
+    File["/etc/portage/package.use/emacs"],
+    File["/etc/portage/package.use/mplayer"],
     File["/etc/portage/package.use/bitlbee"],
     File["/etc/portage/package.use/dropbox"],
     File["/etc/portage/package.use/ffmpeg"],
     File["/etc/portage/package.use/fortune-mod"],
     File["/etc/portage/package.use/imagemagick"],
     File["/etc/portage/package.use/mpd"],
-    File["/etc/portage/package.use/mplayer"],
     File["/etc/portage/package.use/ncmpcpp"],
     File["/etc/portage/package.use/rtorrent"],
   ]

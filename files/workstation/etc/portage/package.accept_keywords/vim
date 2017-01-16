@@ -1,0 +1,3 @@
+# need 7.4.959+ for vim-gnupg clipboard functionality
+app-editors/vim-core ~amd64
+app-editors/vim ~amd64

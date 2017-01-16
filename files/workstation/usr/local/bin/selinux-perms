@@ -1,0 +1,5 @@
+#!/bin/bash
+
+setfattr -n user.pax.flags -v pemr /usr/lib64/misc/xscreensaver/glslideshow
+setfattr -n user.pax.flags -v pemr /usr/bin/firefox
+

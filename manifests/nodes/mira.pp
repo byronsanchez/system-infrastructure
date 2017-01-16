@@ -11,7 +11,7 @@ node 'mira.internal.nitelite.io' inherits network {
   class { "base":
     hostname          => "mira",
     network_interface => "wlan0",
-    keymap            => "en-latin9", # colemak
+    keymap            => "us",
     enable_docker     => false,
     enable_chroot     => true,
   }
@@ -20,7 +20,7 @@ node 'mira.internal.nitelite.io' inherits network {
     use_flags     => "${gentoo_studio_use_flags} postgres pulseaudio bluetooth qt3support xinerama ffmpeg -libav",
     cpu_flags     => "${workstation_cpu_flags}",
     linguas       => "en_US en en_GB es zh_CN zh_TW zh_HK ja jp fr_FR fr fr_CA ru_RU ru",
-    video_cards   => "nouveau",
+    video_cards   => "intel i915",
     input_devices => "evdev synaptics",
     lowmemorybox  => false,
   }
@@ -44,6 +44,10 @@ node 'mira.internal.nitelite.io' inherits network {
 
   class { "vcs": }
 
+  class { "nas":
+    nas_type   => "workstation",
+  }
+
   class { "pki":
     ca_type => "mira",
   }
@@ -53,7 +57,7 @@ node 'mira.internal.nitelite.io' inherits network {
   # }
 
   class { "xorgserver":
-    xorg_driver   => "nouveau",
+    xorg_driver   => "intel",
     xorg_busid    => "PCI:1:0:0",
     xorg_keyboard => "colemak",
     xorg_type     => "workstation",
@@ -92,10 +96,14 @@ node 'mira.internal.nitelite.io' inherits network {
 
   class { "mobile": }
 
+  class { "mail":
+    mail_type => "server",
+  }
+
   # users
   class { "byronsanchez":
     #groups => ['plugdev', 'android'],
-    groups  => ['audio', 'realtime', 'cdrom', 'cron', 'crontab', 'joy', 'lp', 'lpadmin', 'usb', 'video', 'wheel',],
+    groups  => ['audio', 'realtime', 'cdrom', 'cron', 'crontab', 'joy', 'lp', 'lpadmin', 'usb', 'vboxusers', 'video', 'wheel',],
   }
 
 }

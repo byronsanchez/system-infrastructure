@@ -2,3 +2,9 @@
 # see: https://github.com/wayneeseguin/rvm/issues/3091
 app-shells/zsh ~amd64
 
+# required by sutils (argument)
+=x11-misc/sutils-9999 **
+# required by lemonbar (argument)
+=x11-misc/lemonbar-20160119 ~amd64
+# required by xtitle::belak (argument)
+=x11-misc/xtitle-9999 **

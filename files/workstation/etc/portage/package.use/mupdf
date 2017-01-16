@@ -7,3 +7,4 @@
 ###########################################
 
 app-text/mupdf X
+dev-python/PyQt4 compat

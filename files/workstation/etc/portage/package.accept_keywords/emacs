@@ -1,0 +1,12 @@
+
+# need 2.1.5+ for allow-emacs-pinentry feature to allow emacs to prompt for a password for gpg encrypted files. Otherwise, it can hang on the terminal
+=app-crypt/gnupg-2.1.11-r1 ~amd64
+
+# required by media-video/vlc-2.2.1-r1::gentoo
+# required by @selected
+# required by @world (argument)
+=dev-libs/libgpg-error-1.21 ~amd64
+# required by app-crypt/gnupg-2.1.11-r1::gentoo[-static]
+# required by gnupg (argument)
+=dev-libs/libassuan-2.4.2 ~amd64
+

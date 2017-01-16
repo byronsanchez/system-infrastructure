@@ -1,3 +1,28 @@
 app-crypt/paperkey ~amd64
 dev-python/keyring ~amd64
 
+# 2.1.5+ needed for allows-emacs-pinentry so that emacs prompts for password on 
+# encrypted gpg files
+
+app-crypt/gnupg ~amd64
+
+# required by media-video/vlc-2.2.1-r1::gentoo
+# required by @selected
+# required by @world (argument)
+dev-libs/libgpg-error ~amd64
+# required by media-libs/libmtp-1.1.11::gentoo[crypt]
+# required by app-text/calibre-1.20::gentoo
+# required by @selected
+# required by @world (argument)
+dev-libs/libgcrypt ~amd64
+# required by app-crypt/gnupg-2.1.14::gentoo
+# required by @selected
+# required by @world (argument)
+dev-libs/libassuan ~amd64
+# required by app-crypt/gnupg-2.1.14::gentoo
+# required by @selected
+# required by @world (argument)
+dev-libs/npth ~amd64
+
+
+
