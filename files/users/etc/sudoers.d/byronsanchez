@@ -10,5 +10,5 @@
 ## User privilege specification
 ##
 byronsanchez	ALL=(ALL:ALL) ALL
-byronsanchez	ALL=NOPASSWD: /etc/init.d/alsasound, /usr/local/bin/x86-gentoo -c skype
+byronsanchez	ALL=NOPASSWD: /etc/init.d/alsasound, /usr/local/bin/x86-gentoo -c skype, /bin/cat /sys/class/power_supply/BAT0/capacity, /usr/bin/acpi --battery
 
