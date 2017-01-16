@@ -100,6 +100,7 @@ class systems(
       root_path         => "/htdocs",
       enable_ssl        => true,
       enable_basic_auth => true,
+      disable_robots    => true,
       ssl_cert_path     => "/etc/letsencrypt/live/books.nitelite.io/fullchain.pem",
       ssl_key_path      => "/etc/letsencrypt/live/books.nitelite.io/privkey.pem",
     }

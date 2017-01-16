@@ -77,6 +77,8 @@ class ci {
     ],
   }
 
+  # Jenkins automatically disables all robots, so we don't have to specify our
+  # implemention of robots.txt here.
   nl_nginx::website { "jenkins":
     websiteName       => "jenkins.nitelite.io",
     environmentName   => "production",

@@ -308,30 +308,32 @@ class vcs(
 
     # cgit internal backend nginx for https
     nl_nginx::website { "git":
-      websiteName     => "git.nitelite.io",
-      environmentName => "production",
-      feed_path       => "git",
-      root_path       => "/htdocs/git",
+      websiteName           => "git.nitelite.io",
+      environmentName       => "production",
+      feed_path             => "git",
+      root_path             => "/htdocs/git",
       enable_custom_configs => true,
-      enable_cgi      => true,
-      enable_ssl      => true,
-      cgi_server      => "45.79.190.253:3129",
-      ssl_cert_path   => "/etc/letsencrypt/live/git.nitelite.io/fullchain.pem",
-      ssl_key_path    => "/etc/letsencrypt/live/git.nitelite.io/privkey.pem",
+      enable_cgi            => true,
+      enable_ssl            => true,
+      disable_robots        => true,
+      cgi_server            => "45.79.190.253:3129",
+      ssl_cert_path         => "/etc/letsencrypt/live/git.nitelite.io/fullchain.pem",
+      ssl_key_path          => "/etc/letsencrypt/live/git.nitelite.io/privkey.pem",
     }
 
     # fossil mirror frontend nginx for https (backend http not needed since the
     # fossil server and the http server are hosted on the same node)
     nl_nginx::website { "fossil":
-      websiteName     => "fossil.nitelite.io",
-      environmentName => "production",
-      feed_path       => "fossil",
-      root_path       => "/htdocs",
+      websiteName           => "fossil.nitelite.io",
+      environmentName       => "production",
+      feed_path             => "fossil",
+      root_path             => "/htdocs",
       enable_custom_configs => true,
-      enable_cgi      => true,
-      enable_ssl      => true,
-      ssl_cert_path   => "/etc/letsencrypt/live/fossil.nitelite.io/fullchain.pem",
-      ssl_key_path    => "/etc/letsencrypt/live/fossil.nitelite.io/privkey.pem",
+      enable_cgi            => true,
+      enable_ssl            => true,
+      disable_robots        => true,
+      ssl_cert_path         => "/etc/letsencrypt/live/fossil.nitelite.io/fullchain.pem",
+      ssl_key_path          => "/etc/letsencrypt/live/fossil.nitelite.io/privkey.pem",
       # cgi scripts sent here
       cgi_server      => "45.79.190.253:3128",
       proxy_pass      => "http://fossilserver",

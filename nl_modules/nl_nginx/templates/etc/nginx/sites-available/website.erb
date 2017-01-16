@@ -56,10 +56,6 @@ server {
     default_type application/xml;
   }
 
-	location ~ /.well-known {
-		allow all;
-	}
-
   rewrite ^/<%= @feed_path %>/.* /<%= @feed_path %>;
 }
 <% end %>
@@ -98,6 +94,19 @@ server {
   location ~ /.well-known {
   	allow all;
   }
+
+  <% if @enable_root_location %>
+  location ~ / {
+    allow all;
+  }
+	<% end %>
+
+  <% if @disable_robots %>
+  # allow the file to be served
+  location ~ /robots.txt {
+    allow all;
+  }
+	<% end %>
 
   <% if @enable_php %>
   # Pass all .php files onto a php-fpm/php-fcgi server.

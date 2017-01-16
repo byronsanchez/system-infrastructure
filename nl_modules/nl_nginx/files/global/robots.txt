@@ -1,0 +1,3 @@
+# Disallow everything from this nitelite subdomain
+User-agent: *
+Disallow: /

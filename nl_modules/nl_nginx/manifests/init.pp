@@ -19,6 +19,9 @@ class nl_nginx {
     $enable_ssl = false,
     $enable_php = false,
     $enable_cgi = false,
+    $enable_basic_auth = false,
+    $enable_root_location = false,
+    $disable_robots = false,
     $php_server = 'unix:/var/run/php5-fpm.sock',
     $cgi_server = '127.0.0.1:3128',
     $ssl_cert_path = '',
@@ -51,120 +54,146 @@ class nl_nginx {
        ensure => "link",
        target => "/etc/nginx/sites-available/${realWebsiteName}",
     }
-  }
 
-  user { 'www-data':
-    ensure => 'present',
-    gid    => '33',
-    shell  => '/bin/false',
-    uid    => '33',
-  }
+    file { "/srv/www/${realWebsiteName}":
+			ensure => "directory",
+			owner => "root",
+			group => "root",
+    }
 
-  group { 'www-data':
-    ensure => 'present',
-    gid    => '33',
-  }
+    file { "/srv/www/${realWebsiteName}/$root_path":
+			ensure => "directory",
+			owner => "root",
+			group => "root",
+			require => File["/srv/www/${realWebsiteName}"],
+    }
 
-  file { "/etc/nginx":
-    ensure => "directory",
-    owner => "root",
-    group => "root",
-  }
+		if $disable_robots {
+			file { "/srv/www/${realWebsiteName}/$root_path/robots.txt":
+				ensure => present,
+				owner  => "root",
+				group  => "root",
+				mode   => 0644,
+				path   => "/srv/www/${realWebsiteName}/$root_path/robots.txt",
+				source => "puppet:///modules/nl_nginx/global/robots.txt",
+				require => File["/srv/www/${realWebsiteName}/$root_path"],
+			}
+		}
 
-  file { "/etc/nginx/conf.d":
-    ensure  => "directory",
-    owner   => "root",
-    group   => "root",
-    require => File["/etc/nginx"],
-  }
+	}
 
-  file { "/etc/nginx/conf.d/default.conf":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/conf.d/default.conf",
-    source => "puppet:///modules/nl_nginx/etc/nginx/conf.d/default.conf",
-    require => File["/etc/nginx/conf.d"],
-  }
+	user { 'www-data':
+		ensure => 'present',
+		gid    => '33',
+		shell  => '/bin/false',
+		uid    => '33',
+	}
 
-  file { "/etc/nginx/conf.d/types.conf":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/conf.d/types.conf",
-    source => "puppet:///modules/nl_nginx/etc/nginx/conf.d/types.conf",
-    require => File["/etc/nginx/conf.d"],
-  }
+	group { 'www-data':
+		ensure => 'present',
+		gid    => '33',
+	}
 
-  file { "/etc/nginx/nginx.conf":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/nginx.conf",
-    content => template("nl_nginx/etc/nginx/nginx.conf.erb"),
-    require => File["/etc/nginx"],
-  }
+	file { "/etc/nginx":
+		ensure => "directory",
+		owner => "root",
+		group => "root",
+	}
 
-  file { "/etc/nginx/proxy_params":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/proxy_params",
-    source => "puppet:///modules/nl_nginx/etc/nginx/proxy_params",
-    require => File["/etc/nginx"],
-  }
+	file { "/etc/nginx/conf.d":
+		ensure  => "directory",
+		owner   => "root",
+		group   => "root",
+		require => File["/etc/nginx"],
+	}
 
-  file { "/etc/nginx/sites-available":
-    ensure  => "directory",
-    owner   => "root",
-    group   => "root",
-    require => File["/etc/nginx"],
-  }
+	file { "/etc/nginx/conf.d/default.conf":
+		ensure => present,
+		owner  => "root",
+		group  => "root",
+		mode   => 0644,
+		path   => "/etc/nginx/conf.d/default.conf",
+		source => "puppet:///modules/nl_nginx/etc/nginx/conf.d/default.conf",
+		require => File["/etc/nginx/conf.d"],
+	}
 
-  file { "/etc/nginx/sites-available/default":
-    ensure => present,
-    owner  => "root",
-    group  => "root",
-    mode   => 0644,
-    path   => "/etc/nginx/sites-available/default",
-    source => "puppet:///modules/nl_nginx/etc/nginx/sites-available/default",
-    require => File["/etc/nginx/sites-available"],
-  }
+	file { "/etc/nginx/conf.d/types.conf":
+		ensure => present,
+		owner  => "root",
+		group  => "root",
+		mode   => 0644,
+		path   => "/etc/nginx/conf.d/types.conf",
+		source => "puppet:///modules/nl_nginx/etc/nginx/conf.d/types.conf",
+		require => File["/etc/nginx/conf.d"],
+	}
 
-  file { "/etc/nginx/sites-enabled":
-    ensure  => "directory",
-    owner   => "root",
-    group   => "root",
-    require => File["/etc/nginx"],
-  }
+	file { "/etc/nginx/nginx.conf":
+		ensure => present,
+		owner  => "root",
+		group  => "root",
+		mode   => 0644,
+		path   => "/etc/nginx/nginx.conf",
+		content => template("nl_nginx/etc/nginx/nginx.conf.erb"),
+		require => File["/etc/nginx"],
+	}
 
-  # Since nginx is running as www-data, var files must allow for writing for 
-  # www-data
-  file { "/var/lib/nginx/":
-    ensure  => 'directory',
-    owner   => 'www-data',
-    group   => 'www-data',
-    require => [
-      Package['www-servers/nginx']
-    ]
-  }
+	file { "/etc/nginx/proxy_params":
+		ensure => present,
+		owner  => "root",
+		group  => "root",
+		mode   => 0644,
+		path   => "/etc/nginx/proxy_params",
+		source => "puppet:///modules/nl_nginx/etc/nginx/proxy_params",
+		require => File["/etc/nginx"],
+	}
 
-  package { "www-servers/nginx":
-    ensure => installed,
-  }
+	file { "/etc/nginx/sites-available":
+		ensure  => "directory",
+		owner   => "root",
+		group   => "root",
+		require => File["/etc/nginx"],
+	}
 
-  service { 'nginx':
-    ensure => running,
-    enable => true,
-    subscribe => File['/etc/nginx/nginx.conf'],
-    require   => [
-      File['/etc/nginx/nginx.conf'],
-      Package["www-servers/nginx"],
-    ],
-  }
+	file { "/etc/nginx/sites-available/default":
+		ensure => present,
+		owner  => "root",
+		group  => "root",
+		mode   => 0644,
+		path   => "/etc/nginx/sites-available/default",
+		source => "puppet:///modules/nl_nginx/etc/nginx/sites-available/default",
+		require => File["/etc/nginx/sites-available"],
+	}
+
+	file { "/etc/nginx/sites-enabled":
+		ensure  => "directory",
+		owner   => "root",
+		group   => "root",
+		require => File["/etc/nginx"],
+	}
+
+	# Since nginx is running as www-data, var files must allow for writing for 
+	# www-data
+	file { "/var/lib/nginx/":
+		ensure  => 'directory',
+		owner   => 'www-data',
+		group   => 'www-data',
+		require => [
+			Package['www-servers/nginx']
+		]
+	}
+
+	package { "www-servers/nginx":
+		ensure => installed,
+	}
+
+	service { 'nginx':
+		ensure => running,
+		enable => true,
+		subscribe => File['/etc/nginx/nginx.conf'],
+		require   => [
+			File['/etc/nginx/nginx.conf'],
+			Package["www-servers/nginx"],
+		],
+	}
 
 }
