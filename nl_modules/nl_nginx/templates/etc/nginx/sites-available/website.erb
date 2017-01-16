@@ -153,6 +153,15 @@ server {
     <% if @proxy_redirect %> proxy_redirect       <%= @proxy_redirect %>;<% end %>
     <% if @proxy_cookie_path %> proxy_cookie_path       <%= @proxy_cookie_path %>;<% end %>
   }
+<% end %>
+
+
+  <% if @enable_basic_auth %>
+  location / {
+    try_files $uri $uri/ =404;
+    auth_basic "Restricted Content";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+  }
   <% end %>
 }
 

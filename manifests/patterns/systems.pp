@@ -99,8 +99,9 @@ class systems(
       feed_path         => "books",
       root_path         => "/htdocs",
       enable_ssl        => true,
-      ssl_cert_path   => "/etc/letsencrypt/live/books.nitelite.io/fullchain.pem",
-      ssl_key_path    => "/etc/letsencrypt/live/books.nitelite.io/privkey.pem",
+      enable_basic_auth => true,
+      ssl_cert_path     => "/etc/letsencrypt/live/books.nitelite.io/fullchain.pem",
+      ssl_key_path      => "/etc/letsencrypt/live/books.nitelite.io/privkey.pem",
     }
   }
 
