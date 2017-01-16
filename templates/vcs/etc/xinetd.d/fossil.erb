@@ -22,6 +22,11 @@ service fossil
         <% if @vcs_type == "server" %>
         server_args = http /srv/fossil/fossils --https --host fossil.internal.nitelite.io --notfound https://fossil.internal.nitelite.io
         <% end %>
+
+        <% if @vcs_type == "remote" %>
+        server_args = http /srv/fossil/fossils --https --host fossil.nitelite.io --notfound https://fossil.nitelite.io
+        <% end %>
+
         <% if @vcs_type == "mirror" %>
           <% if @mirror_environment == "production" %>
             server_args = http /srv/fossil/fossils --https --host fossil.tehpotatoking.com --notfound https://fossil.tehpotatoking.com

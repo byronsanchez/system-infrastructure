@@ -56,6 +56,10 @@ server {
     default_type application/xml;
   }
 
+	location ~ /.well-known {
+		allow all;
+	}
+
   rewrite ^/<%= @feed_path %>/.* /<%= @feed_path %>;
 }
 <% end %>
@@ -69,6 +73,7 @@ server {
   ssl_certificate <%= @ssl_cert_path %>;
   ssl_certificate_key <%= @ssl_key_path %>;
   ssl_session_cache shared:SSL:10m;
+
   <% else %>
   listen <%= @port %>;
   <% end %>
@@ -89,6 +94,10 @@ server {
   # include specific settings that are not yet modularized
   include /etc/nginx/conf.d/nitelite/<%= @websiteName %>;
   <% end %>
+
+  location ~ /.well-known {
+  	allow all;
+  }
 
   <% if @enable_php %>
   # Pass all .php files onto a php-fpm/php-fcgi server.

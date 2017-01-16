@@ -10,7 +10,7 @@ fossil_dir="/srv/fossil/fossils"
 org_dir="/etc/nitelite/vcs.d/fossil"
 
 # org/repo prefix and suffix
-rss_prefix="https://fossil.internal.nitelite.io"
+rss_prefix="https://fossil.nitelite.io"
 rss_suffix="timeline.rss?y=ci"
 
 # Trim the first n lines of the cached xml files to remove the always changing pubDate

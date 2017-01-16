@@ -1,4 +1,4 @@
-node 'sirius.internal.nitelite.io' inherits network {
+node 'sirius-production-1.internal.nitelite.io' inherits network {
 
   $environment = "production"
 
@@ -27,14 +27,16 @@ node 'sirius.internal.nitelite.io' inherits network {
     username => [
       "rbackup",
       "deployer",
-      "staff",
+      "staff"
     ],
   }
 
   class { "backup": }
 
+  class { "ci": }
+
   class { "vcs":
-    # vcs_type           => "mirror",
+    vcs_type           => "remote",
     # mirror_environment => "${environment}",
   }
 
@@ -61,7 +63,9 @@ node 'sirius.internal.nitelite.io' inherits network {
 
   class { "rsyncd": }
 
-  class { "webserver": }
+  class { "webserver":
+    is_secure => true
+  }
 
   class { "php":
     environment => "${environment}",
@@ -73,6 +77,10 @@ node 'sirius.internal.nitelite.io' inherits network {
   class { "workstation":
     xorg_apps   => false,
     skype       => false,
+  }
+
+  class { "systems":
+    books => true,
   }
 
   # app configs

@@ -257,6 +257,9 @@ class workstation (
     }
 
     $packages_xorg = [
+      "app-editors/gvim",
+      "media-sound/easytag",
+      "sys-apps/bleachbit",
       "sys-apps/dbus",
       "feh",
       "media-sound/picard",
@@ -300,7 +303,7 @@ class workstation (
       "net-ftp/filezilla",
       "media-gfx/blender",
       "x11-apps/xrefresh",
-      "net-misc/freerdp",
+      #"net-misc/freerdp",
       "media-gfx/comix",
       "app-text/zathura",
       "app-text/zathura-pdf-mupdf",
@@ -311,6 +314,9 @@ class workstation (
       "x11-apps/xfontsel",
       "x11-misc/easystroke",
       "mesa-progs",
+      "pcmanfm",
+      "app-emulation/virt-manager",
+      "x11-misc/xscreensaver",
     ]
 
     $packages_xorg_require = [
@@ -385,6 +391,15 @@ class workstation (
     source => 'workstation',
   }
 
+
+  file { "/etc/conf.d/dropbox":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/conf.d/dropbox",
+    source => "puppet:///files/workstation/etc/conf.d/dropbox",
+  }
+
   file { "/etc/cron.daily/mlocate":
     ensure  => present,
     owner   => "root",
@@ -418,6 +433,15 @@ class workstation (
     path    => "/etc/elinks/elinks.conf",
     source  => "puppet:///files/workstation/etc/elinks/elinks.conf",
     require => File["/etc/elinks"],
+  }
+
+  file { "/etc/portage/package.accept_keywords/dropbox":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/dropbox",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/dropbox",
   }
 
   file { "/etc/portage/package.accept_keywords/ffmpeg":
@@ -556,23 +580,23 @@ class workstation (
 
   ### new stuff
 
-  file { "/etc/portage/package.accept_keywords/cava":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/cava",
-    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/cava",
-  }
+  # file { "/etc/portage/package.accept_keywords/cava":
+  #   ensure => present,
+  #   owner => "root",
+  #   group => "root",
+  #   require => File['/etc/portage/package.accept_keywords'],
+  #   path => "/etc/portage/package.accept_keywords/cava",
+  #   source => "puppet:///files/workstation/etc/portage/package.accept_keywords/cava",
+  # }
 
-  file { "/etc/portage/package.unmask/cava":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.unmask'],
-    path => "/etc/portage/package.unmask/cava",
-    source => "puppet:///files/workstation/etc/portage/package.unmask/cava",
-  }
+  # file { "/etc/portage/package.unmask/cava":
+  #   ensure => present,
+  #   owner => "root",
+  #   group => "root",
+  #   require => File['/etc/portage/package.unmask'],
+  #   path => "/etc/portage/package.unmask/cava",
+  #   source => "puppet:///files/workstation/etc/portage/package.unmask/cava",
+  # }
 
   file { "/etc/portage/package.license/fdk":
     ensure => present,
@@ -581,6 +605,15 @@ class workstation (
     require => File['/etc/portage/package.license'],
     path => "/etc/portage/package.license/fdk",
     source => "puppet:///files/workstation/etc/portage/package.license/fdk",
+  }
+
+  file { "/etc/portage/package.use/dropbox":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/dropbox",
+    source => "puppet:///files/workstation/etc/portage/package.use/dropbox",
   }
 
   file { "/etc/portage/package.use/ffmpeg":
@@ -608,6 +641,15 @@ class workstation (
     require => File['/etc/portage/package.use'],
     path => "/etc/portage/package.use/mpd",
     source => "puppet:///files/workstation/etc/portage/package.use/mpd",
+  }
+
+  file { "/etc/portage/package.use/mplayer":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/mplayer",
+    source => "puppet:///files/workstation/etc/portage/package.use/mplayer",
   }
 
   file { "/etc/portage/package.use/ncmpcpp":
@@ -693,25 +735,36 @@ class workstation (
     require => Vcsrepo["/var/lib/nitelite/workstation/picospeaker"],
   }
 
+  file { "/usr/local/bin/selinux-perms":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/selinux-perms",
+    source => "puppet:///files/workstation/usr/local/bin/selinux-perms",
+  }
+
   # TODO: install packer
   # TODO: Consider splitting up user-specific packages to dotfiles. Will require
   # mangement of portage config files (use, keywords, etc.); This pattern will 
   # only contain lower-level stuff like hardware configs, xorg, etc. User-level 
   # stuff will be moved to dotfiles to match homebrew and chocolatey.
   $packages = [
+    "net-misc/dropbox",
+    "net-misc/dropbox-cli",
     "dev-python/pip",
-    "app-backup/tarsnap",
-    "app-office/ledger",
+    #"app-office/ledger",
     # "app-emulation/docker",
     "sys-fs/cryptsetup",
+    "app-backup/tarsnap",
     "grc",
     "elinks",
     "lynx",
     "www-client/links",
     "www-client/w3m",
     "aview",
-    "fbida",
-    "fim",
+    # "fbida",
+    #"fim",
     "libcaca",
     "aalib",
     "clockywock",
@@ -721,7 +774,7 @@ class workstation (
     "axel",
     "irssi",
     "weechat",
-    "bitlbee",
+    # "bitlbee",
     "pyyaml",
     "lxml",
     "offlineimap",
@@ -754,7 +807,6 @@ class workstation (
     "app-misc/task",
     "sys-fs/encfs",
     "net-news/newsbeuter",
-    "sys-apps/bleachbit",
     "sys-fs/dosfstools",
     "mpd",
     "media-sound/mpc",
@@ -763,18 +815,35 @@ class workstation (
     "mp3check",
     "mplayer",
     "cpuinfo2cpuflags",
-    "media-sound/easytag",
     "gifsicle",
     "imagemagick",
     "optipng",
     "exiftool",
-    "media-sound/cava",
+    #"media-sound/cava",
     # required by picospeaker
     "media-sound/sox",
+    "app-text/pandoc",
+    "app-editors/emacs",
+    "app-emacs/bbdb",
+    "dev-lisp/clisp",
+    # vbox advanced cpu features
+    #
+    # commented out because requires multilib
+    #"app-emulation/virtualbox-extpack-oracle",
+    # vbox networking advanced
+    "net-misc/bridge-utils",
+    "sys-apps/usermode-utilities",
+    "media-gfx/plantuml",
+    "media-gfx/graphviz",
+    # fonts so that unicode chars (eg. emojis) work on browsers and apps
+    "media-fonts/dejavu",
+    "media-fonts/noto",
+    "media-fonts/arphicfonts"
   ]
 
   $packages_require = [
-    File["/etc/portage/package.accept_keywords/cava"],
+    #File["/etc/portage/package.accept_keywords/cava"],
+    File["/etc/portage/package.accept_keywords/dropbox"],
     File["/etc/portage/package.accept_keywords/gpg"],
     File["/etc/portage/package.accept_keywords/i2p"],
     File["/etc/portage/package.accept_keywords/ledger"],
@@ -783,12 +852,14 @@ class workstation (
     File["/etc/portage/package.accept_keywords/tor"],
     File["/etc/portage/package.accept_keywords/zsh"],
     File["/etc/portage/package.license/fdk"],
-    File["/etc/portage/package.unmask/cava"],
+    #File["/etc/portage/package.unmask/cava"],
     File["/etc/portage/package.use/bitlbee"],
+    File["/etc/portage/package.use/dropbox"],
     File["/etc/portage/package.use/ffmpeg"],
     File["/etc/portage/package.use/fortune-mod"],
     File["/etc/portage/package.use/imagemagick"],
     File["/etc/portage/package.use/mpd"],
+    File["/etc/portage/package.use/mplayer"],
     File["/etc/portage/package.use/ncmpcpp"],
     File["/etc/portage/package.use/rtorrent"],
   ]
@@ -833,13 +904,13 @@ class workstation (
     ],
   }
 
-  service { bitlbee:
-    ensure    => running,
-    enable => true,
-    require   => [
-      Package['bitlbee'],
-    ],
-  }
+  # service { bitlbee:
+  #   ensure    => running,
+  #   enable => true,
+  #   require   => [
+  #     Package['bitlbee'],
+  #   ],
+  # }
 
   service { 'mpd':
     ensure => running,
@@ -850,6 +921,17 @@ class workstation (
       Package[mpd],
     ],
   }
+
+  service { 'dropbox':
+    ensure => running,
+    enable => true,
+    subscribe => File['/etc/conf.d/dropbox'],
+    require   => [
+      File['/etc/conf.d/dropbox'],
+      Package["net-misc/dropbox"],
+    ],
+  }
+
 
 }
 

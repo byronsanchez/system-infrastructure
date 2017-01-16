@@ -1,0 +1,4 @@
+# required by dev-qt/qtwebkit-5.5.1-r1::gentoo
+# required by net-misc/dropbox-3.19.34::gentoo[X]
+# required by net-misc/dropbox (argument)
+>=dev-qt/qtcore-5.5.1-r1 icu

@@ -5,20 +5,24 @@
 # These front-ends provide the public access points. The back-ends should not be
 # directly publically accessible.
 class systems(
+  $systems = false,
   $cgit = false,
   $fossil = false,
   $jenkins = false,
+  $books = false,
 ) {
 
-  nl_nginx::website { "systems":
-    websiteName     => "systems.nitelite.io",
-    environmentName => "production",
-    feed_path       => "systems",
-    root_path       => "/htdocs",
-    enable_ssl      => true,
-    enable_php      => true,
-    ssl_cert_path   => "/etc/ssl/nitelite.io/cacert.pem",
-    ssl_key_path    => "/etc/ssl/nitelite.io/private/cakey.pem.unencrypted",
+  if $systems {
+    nl_nginx::website { "systems":
+      websiteName     => "systems.nitelite.io",
+      environmentName => "production",
+      feed_path       => "systems",
+      root_path       => "/htdocs",
+      enable_ssl      => true,
+      enable_php      => true,
+      ssl_cert_path   => "/etc/ssl/nitelite.io/cacert.pem",
+      ssl_key_path    => "/etc/ssl/nitelite.io/private/cakey.pem.unencrypted",
+    }
   }
 
   if $cgit {
@@ -76,7 +80,6 @@ class systems(
   }
 
   if $jenkins {
-
     nl_nginx::website { "ci":
       websiteName       => "ci.nitelite.io",
       environmentName   => "production",
@@ -87,7 +90,18 @@ class systems(
       ssl_key_path      => "/etc/ssl/nitelite.io/private/cakey.pem.unencrypted",
       proxy_pass        => "http://jenkins.internal.nitelite.io:8080",
     }
+  }
 
+  if $books {
+    nl_nginx::website { "books":
+      websiteName       => "books.nitelite.io",
+      environmentName   => "production",
+      feed_path         => "books",
+      root_path         => "/htdocs",
+      enable_ssl        => true,
+      ssl_cert_path   => "/etc/letsencrypt/live/books.nitelite.io/fullchain.pem",
+      ssl_key_path    => "/etc/letsencrypt/live/books.nitelite.io/privkey.pem",
+    }
   }
 
 }

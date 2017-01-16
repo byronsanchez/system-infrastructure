@@ -77,4 +77,19 @@ class ci {
     ],
   }
 
+  nl_nginx::website { "jenkins":
+    websiteName       => "jenkins.nitelite.io",
+    environmentName   => "production",
+    feed_path         => "jenkins",
+    root_path         => "/htdocs",
+    enable_ssl        => true,
+    ssl_cert_path   => "/etc/letsencrypt/live/jenkins.nitelite.io/fullchain.pem",
+    ssl_key_path    => "/etc/letsencrypt/live/jenkins.nitelite.io/privkey.pem",
+    proxy_pass      => "http://jenkinsserver",
+    proxy_redirect  => "http://jenkins.nitelite.io:8080/ https://jenkins.nitelite.io/",
+    upstream        => "jenkinsserver",
+    # non-cgi scripts will be handled by the fossil server
+    upstream_server => "localhost:8080",
+  }
+
 }

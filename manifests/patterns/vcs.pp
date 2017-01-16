@@ -229,6 +229,8 @@ class vcs(
         cgi_server      => "cgit.internal.nitelite.io:3129",
       }
 
+
+
       # fossil mirror frontend nginx for https (backend http not needed since the
       # fossil server and the http server are hosted on the same node)
       nl_nginx::website { "fossil":
@@ -274,7 +276,94 @@ class vcs(
 
   }
 
-  if ($vcs_type == "server") or ($vcs_type == "mirror") {
+  # "mirror" and "server" were used to distinguish between two vcs nodes in my
+  # old network architecture- an internal "server" on my actual local network
+  # not exposed to the internet, and a "mirror" on a remote network that was
+  # exposed to the internet.
+  #
+  # The "server" would regularly push to the "mirror" via cron jobs. It required
+  # repo passwords, which is why the server has access to them via 600'd /etc
+  # files.
+  #
+  # I've since stopped using that architecture and am moving to a more typical
+  # single workstation on the local network and a single remote node. So I will
+  # just push whenever I want to the remote node, which can be considered
+  # authoritative, much like a more typical github or bitbucket repo.
+  #
+  # I can remove the above configs for "server" and "mirror" whenever I wish
+  # once I get my new environment configured.
+  if ($vcs_type == 'remote') {
+
+    # git.nitelite.io
+
+    exec { "webapp_config_git_${environment}":
+      command => "/usr/sbin/webapp-config -I cgit 0.12 -h git.nitelite.io -d git",
+      creates => "/srv/www/git.nitelite.io/htdocs/git",
+      require => [
+        Package[cgit],
+        File['/srv/www'],
+        File['/etc/vhosts/webapp-config'],
+      ]
+    }
+
+    # cgit internal backend nginx for https
+    nl_nginx::website { "git":
+      websiteName     => "git.nitelite.io",
+      environmentName => "production",
+      feed_path       => "git",
+      root_path       => "/htdocs/git",
+      enable_custom_configs => true,
+      enable_cgi      => true,
+      enable_ssl      => true,
+      cgi_server      => "45.79.190.253:3129",
+      ssl_cert_path   => "/etc/letsencrypt/live/git.nitelite.io/fullchain.pem",
+      ssl_key_path    => "/etc/letsencrypt/live/git.nitelite.io/privkey.pem",
+    }
+
+    # fossil mirror frontend nginx for https (backend http not needed since the
+    # fossil server and the http server are hosted on the same node)
+    nl_nginx::website { "fossil":
+      websiteName     => "fossil.nitelite.io",
+      environmentName => "production",
+      feed_path       => "fossil",
+      root_path       => "/htdocs",
+      enable_custom_configs => true,
+      enable_cgi      => true,
+      enable_ssl      => true,
+      ssl_cert_path   => "/etc/letsencrypt/live/fossil.nitelite.io/fullchain.pem",
+      ssl_key_path    => "/etc/letsencrypt/live/fossil.nitelite.io/privkey.pem",
+      # cgi scripts sent here
+      cgi_server      => "45.79.190.253:3128",
+      proxy_pass      => "http://fossilserver",
+      proxy_redirect  => "http://fossil.nitelite.io:4545/ https://fossil.nitelite.io/",
+      upstream        => "fossilserver",
+      # non-cgi scripts will be handled by the fossil server
+      upstream_server => "localhost:4545",
+    }
+
+    # the front end server
+    file { "/etc/nginx/conf.d/nitelite/fossil.nitelite.io":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      require => File['/etc/nginx/conf.d/nitelite'],
+      path => "/etc/nginx/conf.d/nitelite/fossil.nitelite.io",
+      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/fossil.nitelite.io",
+    }
+
+    # needs to be on the cgi server
+    file { "/etc/nginx/conf.d/nitelite/git.nitelite.io":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      require => File['/etc/nginx/conf.d/nitelite'],
+      path => "/etc/nginx/conf.d/nitelite/git.nitelite.io",
+      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/git.nitelite.io",
+    }
+
+  }
+
+  if ($vcs_type == "server") or ($vcs_type == "mirror") or ($vcs_type == "remote") {
 
     # needs to be on the cgi server
     file { "/etc/portage/package.accept_keywords/uwsgi":
@@ -459,8 +548,8 @@ class vcs(
     }
 
     file { '/etc/init.d/uwsgi.fossil':
-       ensure => 'link',
-       target => '/etc/init.d/uwsgi',
+      ensure => 'link',
+      target => '/etc/init.d/uwsgi',
     }
 
     # GIT
@@ -527,8 +616,8 @@ class vcs(
     }
 
     file { '/etc/init.d/uwsgi.cgit':
-       ensure => 'link',
-       target => '/etc/init.d/uwsgi',
+      ensure => 'link',
+      target => '/etc/init.d/uwsgi',
     }
 
     file { "/etc/portage/package.use/uwsgi":

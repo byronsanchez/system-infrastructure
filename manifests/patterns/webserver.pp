@@ -2,10 +2,44 @@
 #
 # binhost and nitelite can overlay this.
 
-class webserver {
+class webserver(
+  $is_secure = false
+) {
 
   # add base nginx resources
   class { "nl_nginx": }
+
+  if $is_secure {
+
+    file { "/etc/cron.daily/certbot":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0755,
+      path   => "/etc/cron.daily/certbot",
+      source => "puppet:///files/webserver/etc/cron.daily/certbot",
+      require => File["/etc/cron.daily"],
+    }
+
+    file { "/etc/portage/package.accept_keywords/cerbot":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      require => File['/etc/portage/package.accept_keywords'],
+      path => "/etc/portage/package.accept_keywords/certbot",
+      source => "puppet:///files/webserver/etc/portage/package.accept_keywords/certbot",
+    }
+
+    $secure_packages = [
+      "app-crypt/certbot"
+    ]
+
+    package { $secure_packages:
+      ensure => installed,
+    }
+  }
+
+
 
   # perms for any web apps
   # puppet will make all files 0644 and dirs will be 0755. If you want to

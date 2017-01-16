@@ -1,13 +1,7 @@
 <uwsgi> 
-
     <plugins>cgi</plugins>
-
     <socket><%= @ipaddress %>:3128</socket>
-
     <cgi>/cgi-bin=/srv/fossil/cgi-bin</cgi>
-
     <cgi-allowed-ext>.cgi</cgi-allowed-ext>
-
     <cgi-allowed-ext>.pl</cgi-allowed-ext>
-
 </uwsgi>
