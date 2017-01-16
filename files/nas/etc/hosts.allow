@@ -20,5 +20,6 @@
 # The wildcard here is pretty stupid, but since this is a private local network
 # it's not a big deal. CHANGE IT IF OPENING NFS TO A NON-PRIVATE NETWORK
 rpcbind:10.66.*
+rpcbind:192.168..*
 rpcbind:127.0.0.1,a.b.c.d EXCEPT PARANOID
 sshd: ALL

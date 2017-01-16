@@ -299,7 +299,7 @@
 ;	printable = no
 ;	write list = +staff
 
-<% if @nas_type == "server" %>
+<% if @nas_type == "server" || @nas_type == "workstation"  %>
 # A publicly accessible directory, but read only, except for people in
 # the "staff" group
   [luna]
@@ -311,10 +311,8 @@
 	guest ok = yes
 	read only = no
 	force user = root
-	write list = +staff +root +nobody
-<% end -%>
+  write list = +staff +root +nobody
 
-<% if @nas_type == "workstation" %>
 # A publicly accessible directory, but read only, except for people in
 # the "staff" group
   [byronsanchez]

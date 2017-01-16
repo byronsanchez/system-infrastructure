@@ -93,6 +93,7 @@ class nas (
   # These depend on a running NAS server somewhere on the network
 
   # Generic file share
+
   file { "/mnt/luna":
     ensure => "directory",
     owner => "root",
@@ -131,5 +132,5 @@ class nas (
     enable => true,
   }
 
-
 }
+
