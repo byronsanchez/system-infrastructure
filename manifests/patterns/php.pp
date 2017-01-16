@@ -10,6 +10,15 @@ class php(
     }
   }
 
+  file { "/etc/portage/package.accept_keywords/pecl-yaml":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/pecl-yaml",
+    source => "puppet:///files/php/etc/portage/package.accept_keywords/pecl-yaml",
+  }
+
   file { "/etc/portage/package.use/php":
     ensure => present,
     owner => "root",
