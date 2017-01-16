@@ -115,6 +115,28 @@ class backup(
 
   elsif $backup_type == "workstation" {
 
+    # authoritative server stuff
+
+    file { "/home/rbackup/.ssh/rbackup_rsa":
+      ensure => present,
+      owner => "rbackup",
+      group => "rbackup",
+      mode => 0600,
+      path => "/home/rbackup/.ssh/rbackup_rsa",
+      source => "puppet:///secure/ssh/rbackup_rsa",
+    }
+
+    file { "/home/rbackup/.ssh/rbackup_rsa.pub":
+      ensure => present,
+      owner => "rbackup",
+      group => "rbackup",
+      mode => 0644,
+      path => "/home/rbackup/.ssh/rbackup_rsa.pub",
+      source => "puppet:///secure/ssh/rbackup_rsa.pub",
+    }
+
+    # workstation stuff
+
     file { '/usr/local/bin/backup-mirror.sh':
       ensure  => present,
       path    => "/usr/local/bin/backup-mirror.sh",

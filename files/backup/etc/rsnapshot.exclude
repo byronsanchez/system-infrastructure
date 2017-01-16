@@ -23,8 +23,10 @@
 - /lost+found
 - /home/*/Downloads/*
 - /home/*/downloads/*
+- /home/byronsanchez/mirrors/*
 - /home/byronsanchez/projects/byronsanchez/youtube/*
 # mount directory
+- /home/byronsanchez/nitelite
 - /home/byronsanchez/nitelite/*
 - /home/scratch/**
 - /home/*/.local/share/Trash/*
