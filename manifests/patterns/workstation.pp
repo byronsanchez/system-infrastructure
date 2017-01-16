@@ -480,15 +480,6 @@ class workstation (
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/tarsnap",
   }
 
-  file { "/etc/portage/package.accept_keywords/vim":
-    ensure => present,
-    owner => "root",
-    group => "root",
-    require => File['/etc/portage/package.accept_keywords'],
-    path => "/etc/portage/package.accept_keywords/vim",
-    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/vim",
-  }
-
   file { "/etc/portage/package.accept_keywords/weechat":
     ensure => present,
     owner => "root",
@@ -929,7 +920,6 @@ class workstation (
     File["/etc/portage/package.accept_keywords/google-cloud-storage"],
     File["/etc/portage/package.accept_keywords/svox"],
     File["/etc/portage/package.accept_keywords/tarsnap"],
-    File["/etc/portage/package.accept_keywords/vim"],
     File["/etc/portage/package.accept_keywords/weechat"],
     File["/etc/portage/package.accept_keywords/dropbox"],
     File["/etc/portage/package.accept_keywords/gpg"],
