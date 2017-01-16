@@ -100,6 +100,10 @@ do
   quickpkg sys-kernel/hardened-sources
   cp /usr/portage/packages/sys-kernel/hardened-sources-*.tbz2 "${WORKDIR}/build/${config_category}-${config_type}-sources.tbz2"
 
+  # TODO: finish this 
+  #rebuild modules
+  emerge @module-rebuild
+
   # TODO: Find a way to get kernel module list
 
   cd "${cur_dir}"
