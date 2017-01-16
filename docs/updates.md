@@ -1,3 +1,4 @@
+
 # Updating Gentoo packages
 #
 # source: blog.yjl.im/2010/11/my-weekly-gentoo-update-process.html
@@ -35,6 +36,10 @@ based on the information you see.
 #
 # source: http://forums.gentoo.org/viewtopic-t-976032-start-0.html
 
+Prepare environment for updates:
+
+    rvm use system
+
 Check the changes to the portage tree (-w performs a webrsync instead of an 
 rsync):
 
@@ -43,10 +48,6 @@ rsync):
 If there are news items, read them carefully:
 
     eselect news;
-
-Security advisory check:
-
-    glsa-check -t all;
 
 Run updates
 
@@ -84,6 +85,10 @@ Make sure compiler is properly set:
     gcc-config
 
 # Client
+
+Prepare environment for updates:
+
+    rvm use system
 
 Check the changes to the portage tree (-w performs a webrsync instead of an 
 rsync):
