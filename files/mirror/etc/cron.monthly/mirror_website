@@ -56,17 +56,21 @@ while read -r line; do
   printf "Most Recent Mirror: $latest_dir\n"
   printf "New Mirror Path: $mirror_dir\n"
 
-  if [ -n "$latest_dir" ]; then
-    printf "$latest_dir exists. Hard linking..."
+  # NOTE: Since this is a rare op, I'm doing these manually. The code below is 
+  # for reference.
 
-    # mac can't use regular old cp, so use gcp
-    #gcp -al "$latest_dir" "$mirror_dir"
-    cp -al "$latest_dir" "$mirror_dir"
-  else
-    mkdir -p "$mirror_dir"
-  fi
+  # if [ -n "$latest_dir" ]; then
+  #   printf "$latest_dir exists. Hard linking..."
+  #
+  #   # mac can't use regular old cp, so use gcp
+  #   #gcp -al "$latest_dir" "$mirror_dir"
+  #   cp -al "$latest_dir" "$mirror_dir"
+  # else
+  #   mkdir -p "$mirror_dir"
+  # fi
+  #
+  # # -sN 0 - never follow robots.txt and meta robots tags
+  # httrack "$line" -O "$mirror_dir" -R5s0zZvDnr50c1 -F "$user_agent" "+*.$site_name/*"
 
-  # -sN 0 - never follow robots.txt and meta robots tags
-  httrack "$line" -O "$mirror_dir" -R5s0zZvDnr50c1 -F "$user_agent" "+*.$site_name/*"
 done <<< "$DATA"
 
