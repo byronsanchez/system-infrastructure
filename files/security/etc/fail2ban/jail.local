@@ -14,7 +14,14 @@
 # MTA for the mailing. Change mta configuration parameter to mail
 # if you want to revert to conventional 'mail'.
 mta = mail
-
+destemail = bfs5030@gmail.com
+sendername = Fail2BanAlerts
+# The default action. Fail2Ban has 3 default actions- ban, ban + email you, ban + email you + provide log lines in the email
+# We're gonna go with log lines
+action = %(action_mwl)s
+ignoreip = 127.0.0.1/8
+bantime = 3600
+maxretry = 6
 
 [ssh]
 
@@ -44,11 +51,11 @@ maxretry = 6
 # Block anyone failing to authenticate using nginx basic authentication
 [nginx-auth]
 
-enabled = false
+enabled = true
 filter = nginx-http-auth
 action = iptables-multiport[name=NoAuthFailures, port="http,https"]
-logpath = /var/log/nginx*/*error*.log
-bantime = 600
+logpath = /var/log/nginx*/*error*log
+bantime = 3600
 maxretry = 6
 
 # Block anyone failing to authenticate using our application's log in page
@@ -57,27 +64,27 @@ maxretry = 6
 enabled = false
 filter = nginx-login
 action = iptables-multiport[name=NoLoginFailures, port="http,https"]
-logpath = /var/log/nginx*/*access*.log
+logpath = /var/log/nginx*/*access*log
 bantime = 600
 maxretry = 6
 
-# Block bad bots
+# Block bad bots - stops malicious bot request patterns
 [nginx-badbots]
 
 enabled  = true
 filter = apache-badbots
 action = iptables-multiport[name=BadBots, port="http,https"]
-logpath = /var/log/nginx*/*access*.log
+logpath = /var/log/nginx*/*access*log
 bantime = 86400
 maxretry = 1
 
-# Block anyone trying to run scripts (.pl, .cgi, .exe, etc)
+# Block anyone trying to run scripts (.pl, .cgi, .exe, etc) looking for an opening.
 [nginx-noscript]
 
 enabled = true
 action = iptables-multiport[name=NoScript, port="http,https"]
 filter = nginx-noscript
-logpath = /var/log/nginx*/*access*.log
+logpath = /var/log/nginx*/*access*log
 maxretry = 6
 bantime  = 86400
 
@@ -87,7 +94,16 @@ bantime  = 86400
 enabled = true
 action = iptables-multiport[name=NoProxy, port="http,https"]
 filter = nginx-proxy
-logpath = /var/log/nginx*/*access*.log
+logpath = /var/log/nginx*/*access*log
 maxretry = 0
 bantime  = 86400
+
+# Ban users who request home directory resources, since we don't serve any
+[nginx-nohome]
+
+enabled  = true
+port     = http,https
+filter   = nginx-nohome
+logpath  = /var/log/nginx/*access*log
+maxretry = 2
 
