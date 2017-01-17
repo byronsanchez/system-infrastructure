@@ -57,22 +57,22 @@ class nl_nginx {
 
     file { "/srv/www/${realWebsiteName}":
 			ensure => "directory",
-			owner => "root",
-			group => "root",
+      owner   => 'deployer',
+      group   => 'www-data',
     }
 
     file { "/srv/www/${realWebsiteName}/$root_path":
 			ensure => "directory",
-			owner => "root",
-			group => "root",
+      owner   => 'deployer',
+      group   => 'www-data',
 			require => File["/srv/www/${realWebsiteName}"],
     }
 
 		if $disable_robots {
 			file { "/srv/www/${realWebsiteName}/$root_path/robots.txt":
 				ensure => present,
-				owner  => "root",
-				group  => "root",
+        owner   => 'deployer',
+        group   => 'www-data',
 				mode   => 0644,
 				path   => "/srv/www/${realWebsiteName}/$root_path/robots.txt",
 				source => "puppet:///modules/nl_nginx/global/robots.txt",
