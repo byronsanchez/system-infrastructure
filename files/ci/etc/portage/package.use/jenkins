@@ -1,0 +1,7 @@
+# required by x11-libs/gtk+-2.24.31::gentoo
+# required by dev-java/icedtea-bin-3.2.0::gentoo[gtk]
+# required by virtual/jdk-1.8.0-r3::gentoo
+# required by virtual/jre-1.8.0-r1::gentoo
+# required by dev-util/jenkins-bin-2.38::gentoo
+# required by jenkins-bin (argument)
+x11-libs/gdk-pixbuf X
