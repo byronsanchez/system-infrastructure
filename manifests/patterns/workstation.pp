@@ -963,6 +963,7 @@ class workstation (
   $packages_overlay = [
     "media-gfx/pngout",
     "app-accessibility/svox",
+    "sci-misc/zotero"
   ]
 
   $packages_overlay_require = [
