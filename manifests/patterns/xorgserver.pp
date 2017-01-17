@@ -46,6 +46,26 @@ class xorgserver (
     path => "/etc/X11/xorg.conf.d/40-monitor.conf",
   }
 
+  file { "/etc/X11/xorg.conf.d/50-thinkpad-trackpoint.conf":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    require => File['/etc/X11/xorg.conf.d'],
+    path    => "/etc/X11/xorg.conf.d/50-thinkpad-trackpoint.conf",
+    source  => "puppet:///files/xorg-server/etc/X11/xorg.conf.d/50-thinkpad-trackpoint.conf",
+  }
+
+  file { "/etc/X11/xorg.conf.d/50-twofingerscroll.conf":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    require => File['/etc/X11/xorg.conf.d'],
+    path    => "/etc/X11/xorg.conf.d/50-twofingerscroll.conf",
+    source  => "puppet:///files/xorg-server/etc/X11/xorg.conf.d/50-twofingerscroll.conf",
+  }
+
   file { "/etc/portage/package.use/freetype":
     ensure => present,
     owner => "root",
