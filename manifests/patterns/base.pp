@@ -14,6 +14,7 @@ class base (
   $network_interface = 'eth0',
   $enable_docker = false,
   $enable_chroot = false,
+  $enable_dropbox = false,
   $keymap = 'us',
 ) {
 

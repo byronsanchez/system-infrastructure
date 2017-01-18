@@ -14,6 +14,7 @@ node 'mira.internal.nitelite.io' inherits network {
     keymap            => "us",
     enable_docker     => false,
     enable_chroot     => true,
+    enable_dropbox    => true,
   }
 
   class { "gentoo":

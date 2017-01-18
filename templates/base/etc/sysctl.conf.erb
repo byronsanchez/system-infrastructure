@@ -127,3 +127,6 @@ kernel.grsecurity.chroot_execlog = 0
 kernel.grsecurity.chroot_restrict_nice = 0
 <% end %>
 
+<% if @enable_dropbox %>
+fs.inotify.max_user_watches=100000
+<% end %>
