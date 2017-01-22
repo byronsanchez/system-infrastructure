@@ -15,6 +15,7 @@ class base (
   $enable_docker = false,
   $enable_chroot = false,
   $enable_dropbox = false,
+  $enable_workstation_kvm = false,
   $keymap = 'us',
 ) {
 
@@ -494,7 +495,7 @@ class base (
 
   # mcollective needs ruby 1.9, but we'll use rvm to provide rubies
   eselect { 'ruby':
-    set => 'ruby20',
+    set => 'ruby21',
   }
 
   $ruby_gems = [
