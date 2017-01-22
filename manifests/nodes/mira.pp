@@ -1,4 +1,4 @@
-node 'mira.internal.nitelite.io' inherits network {
+node 'mira.fios-router.home' inherits network {
 
   # USE flags set according to Gentoo Studio for DAW in addition to custom
   # configs
@@ -103,8 +103,11 @@ node 'mira.internal.nitelite.io' inherits network {
 
   # users
   class { "byronsanchez":
-    #groups => ['plugdev', 'android'],
-    groups  => ['audio', 'realtime', 'cdrom', 'cron', 'crontab', 'joy', 'lp', 'lpadmin', 'usb', 'vboxusers', 'video', 'wheel',],
+    # plugdev for bluetooth
+    #
+    # we don't add audio, because the audio group has to be clear for consolekit 
+    # managed permissions to be respected (this is needed for pulseaudio)
+    groups  => ['realtime', 'cdrom', 'cron', 'crontab', 'joy', 'lp', 'lpadmin', 'usb', 'vboxusers', 'video', 'wheel', 'plugdev'],
   }
 
 }

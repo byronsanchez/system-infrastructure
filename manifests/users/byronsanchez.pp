@@ -1,4 +1,4 @@
-class byronsanchez ($groups = ['audio', 'cdrom', 'usb',]) {
+class byronsanchez ($groups = ['cdrom', 'usb',]) {
 
   $passwords = hiera("passwords", "")
 
