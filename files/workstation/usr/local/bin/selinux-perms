@@ -1,5 +1,11 @@
 #!/bin/bash
 
 setfattr -n user.pax.flags -v pemr /usr/lib64/misc/xscreensaver/glslideshow
-setfattr -n user.pax.flags -v pemr /usr/bin/firefox
+#setfattr -n user.pax.flags -v pemr /usr/bin/firefox
+setfattr -n user.pax.flags -v pemr /opt/spotify/spotify-client/spotify
+setfattr -n user.pax.flags -v pemr /usr/bin/spotify
+setfattr -n user.pax.flags -v pemr /home/byronsanchez/.dropbox-dist/dropboxd
+setfattr -n user.pax.flags -v pemr /home/byronsanchez/.dropbox-dist/dropbox-lnx.x86_64-*/dropbox*
+setfattr -n user.pax.flags -v pemr /opt/bin/zotero
+setfattr -n user.pax.flags -v pemr /opt/zotero/zotero*
 
