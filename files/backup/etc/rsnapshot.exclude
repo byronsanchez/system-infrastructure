@@ -23,11 +23,20 @@
 - /lost+found
 - /home/*/Downloads/*
 - /home/*/downloads/*
-- /home/byronsanchez/mirrors/*
+# exclude dropbox stuff. the authoritative workstation just symlinks it to
+# outside directories and those outside directories will be backed up. thus, to
+# restore dropbox data, we just re-create the symlinks
+- /home/*/Dropbox/*
+- /home/*/.dropbox/*
+- /home/*/.dropbox-exclude/*
+- /home/byronsanchez/movies/dating/*
 - /home/byronsanchez/projects/byronsanchez/youtube/*
-# mount directory
+- /home/byronsanchez/mirrors/*
+# mount directories
 - /home/byronsanchez/nitelite
 - /home/byronsanchez/nitelite/*
+- /home/byronsanchez/encrypted
+- /home/byronsanchez/encrypted/*
 - /home/scratch/**
 - /home/*/.local/share/Trash/*
 # mirrors get mirrored
@@ -58,11 +67,11 @@
 - /Users/*/VirtualBox\ VMs/*
 - Nodes/*
 # ci stuff that can be rebuilt from other backed up data
-- /var/lib/jenkins/home/config-history/*
-- /var/lib/jenkins/home/jobs/*/workspace*
-- /var/lib/jenkins/home/jobs/*/builds/*/archive
-- /var/lib/jenkins/home/plugins/*/*
-- /var/lib/jenkins/home/plugins/*.bak
-- /var/lib/jenkins/home/war
-- /var/lib/jenkins/home/cache
+#- /var/lib/jenkins/home/config-history/*
+#- /var/lib/jenkins/home/jobs/*/workspace*
+#- /var/lib/jenkins/home/jobs/*/builds/*/archive
+#- /var/lib/jenkins/home/plugins/*/*
+#- /var/lib/jenkins/home/plugins/*.bak
+#- /var/lib/jenkins/home/war
+#- /var/lib/jenkins/home/cache
 
