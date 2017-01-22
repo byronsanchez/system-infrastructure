@@ -169,5 +169,13 @@ class laptop {
     ],
   }
 
+  service { bluetooth:
+    ensure    => running,
+    enable => true,
+    require   => [
+      Package['net-wireless/bluez'],
+    ],
+  }
+
 }
 
