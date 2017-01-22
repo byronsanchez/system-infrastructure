@@ -822,8 +822,15 @@ class workstation (
   # only contain lower-level stuff like hardware configs, xorg, etc. User-level 
   # stuff will be moved to dotfiles to match homebrew and chocolatey.
   $packages = [
-    "net-misc/dropbox",
-    "net-misc/dropbox-cli",
+    # NOTE: It appears installing dropbox at the user-level (like nvm, rvm, 
+    # etc.) makes it more bleeding-edge and it works more properly. Using the 
+    # package version appears to get upgrading-status-stuck errors, where you 
+    # can't get status data from dropboxd and it looks like it stops responding 
+    # and syncing. The updated version directly from dropbox.com (installed via 
+    # dotfiles scripts) appears to be much more stable. So I'm commenting this 
+    # out.
+    #"net-misc/dropbox",
+    #"net-misc/dropbox-cli",
     "dev-python/pip",
     #"app-office/ledger",
     # "app-emulation/docker",
@@ -1002,15 +1009,15 @@ class workstation (
     ],
   }
 
-  service { 'dropbox':
-    ensure => running,
-    enable => true,
-    subscribe => File['/etc/conf.d/dropbox'],
-    require   => [
-      File['/etc/conf.d/dropbox'],
-      Package["net-misc/dropbox"],
-    ],
-  }
+#  service { 'dropbox':
+#    ensure => running,
+#    enable => true,
+#    subscribe => File['/etc/conf.d/dropbox'],
+#    require   => [
+#      File['/etc/conf.d/dropbox'],
+#      Package["net-misc/dropbox"],
+#    ],
+#  }
 
 
 }
