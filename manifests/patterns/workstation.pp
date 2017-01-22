@@ -314,7 +314,7 @@ class workstation (
       "x11-apps/xfontsel",
       "x11-misc/easystroke",
       "mesa-progs",
-      "pcmanfm",
+      "nautilus",
       "app-emulation/virt-manager",
       "x11-misc/xscreensaver",
     ]
