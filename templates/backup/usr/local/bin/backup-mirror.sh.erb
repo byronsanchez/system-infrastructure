@@ -21,9 +21,6 @@ then
   touch /tmp/backup_mirror;
 
   if [ -d "${backup_dir}" ]; then
-    mkdir -p ${backup_dir}/mirror/home/byronsanchez/projects/tpk/youtube;
-    rsync -aqvz --delete --delete-during /home/byronsanchez/projects/tpk/youtube/ ${backup_dir}/mirror/home/byronsanchez/projects/tpk/youtube;
-
     mkdir -p ${backup_dir}/mirror/srv/nfs/io;
     rsync -aqvz --delete --delete-during /srv/nfs/io/ ${backup_dir}/mirror/srv/nfs/io;
   fi

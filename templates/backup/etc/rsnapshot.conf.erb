@@ -138,7 +138,12 @@ lockfile	/var/run/rsnapshot.pid
 # Default rsync args. All rsync commands have at least these options set.
 #
 #rsync_short_args	-a
-rsync_short_args	-aHAX
+# AHAX is for all linux systems. shortened it to be more granular later on in
+# node-specific configs to work with windows and non-SELinux envs without
+# rsnapshot throwing warnings about ACLs (windows) or extended attributes (non
+# SELinux)
+#rsync_short_args	-aHAX
+rsync_short_args	-aH
 #rsync_long_args	--delete --numeric-ids --relative --delete-excluded
 rsync_long_args	--delete --numeric-ids --relative --delete-excluded
 
@@ -247,18 +252,39 @@ backup_script	/usr/local/bin/backup-virsh.sh	nitelite-virsh/
 #backup	/home/	mira.internal.nitelite.io/	+rsync_short_args=-aHAX
 #backup	/srv/	mira.internal.nitelite.io/	+rsync_short_args=-aHAX
 
-backup	/etc/	mira.internal.nitelite.io/
-backup	/var/	mira.internal.nitelite.io/
-backup	/root/	mira.internal.nitelite.io/
-backup	/home/	mira.internal.nitelite.io/
-backup	/srv/	mira.internal.nitelite.io/
+# mira
+backup	/etc/	mira.internal.nitelite.io/	+rsync_long_args=--acls --xattrs
+backup	/var/	mira.internal.nitelite.io/	+rsync_long_args=--acls --xattrs
+backup	/root/	mira.internal.nitelite.io/	+rsync_long_args=--acls --xattrs
+backup	/home/	mira.internal.nitelite.io/	+rsync_long_args=--acls --xattrs
+backup	/srv/	mira.internal.nitelite.io/	+rsync_long_args=--acls --xattrs
+
+# non selinux will throw warnings if using -X, so not used here
 
 # sirius
-backup	rbackup@sirius.internal.nitelite.io:/etc/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
-backup	rbackup@sirius.internal.nitelite.io:/var/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
-backup	rbackup@sirius.internal.nitelite.io:/root/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
-backup	rbackup@sirius.internal.nitelite.io:/home/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
-backup	rbackup@sirius.internal.nitelite.io:/srv/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+backup	rbackup@sirius.internal.nitelite.io:/etc/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh --acls
+backup	rbackup@sirius.internal.nitelite.io:/var/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh --acls
+backup	rbackup@sirius.internal.nitelite.io:/root/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh --acls
+backup	rbackup@sirius.internal.nitelite.io:/home/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh --acls
+backup	rbackup@sirius.internal.nitelite.io:/srv/	sirius.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh --acls
+
+# For windows, -X causes rsync to error out completely, while -A throws warnings
+# since it doesn't set the ACLs properly due to rsync incompatibilities. So
+# these are disabled for windows nodes.
+
+# navi
+backup	bfs50@navi.internal.nitelite.io:/etc/	navi.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+backup	bfs50@navi.internal.nitelite.io:/var/	navi.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+backup	bfs50@navi.internal.nitelite.io:/home/	navi.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+backup	bfs50@navi.internal.nitelite.io:/cygdrive/c/	navi.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+
+# nix
+#backup	byronsanchez@nix.internal.nitelite.io:/etc/	nix.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+#backup	byronsanchez@nix.internal.nitelite.io:/var/	nix.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+#backup	byronsanchez@nix.internal.nitelite.io:/home/	nix.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+#backup	byronsanchez@nix.internal.nitelite.io:/cygdrive/c/	nix.internal.nitelite.io/	+rsync_long_args=--rsync-path=rsync_wrapper.sh
+
+
 <% end %>
 
 # EXAMPLE.COM

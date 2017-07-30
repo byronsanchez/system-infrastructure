@@ -6,8 +6,6 @@
 #                                         #
 ###########################################
 
-- /root/downloads/*
-- /root/Downloads/*
 - /bin/*
 - /sbin/*
 - /media/*
@@ -21,24 +19,42 @@
 - /mnt/*
 - /media/*
 - /lost+found
-- /home/*/Downloads/*
-- /home/*/downloads/*
 # exclude dropbox stuff. the authoritative workstation just symlinks it to
 # outside directories and those outside directories will be backed up. thus, to
 # restore dropbox data, we just re-create the symlinks
 - /home/*/Dropbox/*
 - /home/*/.dropbox/*
 - /home/*/.dropbox-exclude/*
-- /home/byronsanchez/movies/dating/*
-- /home/byronsanchez/projects/byronsanchez/youtube/*
-- /home/byronsanchez/mirrors/*
+- /home/*/*/.dropbox.cache/*
+- /cygdrive/c/Users/*/Dropbox/*
+- /cygdrive/c/Users/*/.dropbox/*
+- /cygdrive/c/Users/*/.dropbox-exclude/*
+- /cygdrive/c/Users/*/*/.dropbox.cache/*
+# exclude project symlinks
+#
+# On all workstations, there is a dropbox folder or a projects folder as the
+# authoritative source data folder
+#
+# to be more specific, mira has an authoritative reference folder with
+# dropbox+projects symlinking to it. because this also hosts the backups,
+# rsnapshot copies symlinks as symlinks instead of duping the data
+# 
+# on dropbox "client" machines, dropbox is the authoritative data directory and
+# symlinks are built to point to it. Let's write some exclude rules to be safe.
 # mount directories
-- /home/byronsanchez/nitelite
-- /home/byronsanchez/nitelite/*
-- /home/byronsanchez/encrypted
-- /home/byronsanchez/encrypted/*
+- /home/*/nitelite
+- /home/*/nitelite/*
+- /home/*/encrypted
+- /home/*/encrypted/*
 - /home/scratch/**
 - /home/*/.local/share/Trash/*
+- /cygdrive/c/Users/*/nitelite
+- /cygdrive/c/Users/*/nitelite/*
+- /cygdrive/c/Users/*/encrypted
+- /cygdrive/c/Users/*/encrypted/*
+- /cygdrive/c/Users/*/scratch/**
+- /cygdrive/c/Users/*/.local/share/Trash/*
+#- /cygdrive/c/Users/*/private/*
 # mirrors get mirrored
 - /srv/nfs/io/**
 # the gentoo modules are just symlinks to other directories that get backed up
@@ -48,9 +64,15 @@
 - /srv/www/binhost.internal.nitelite.io/*
 - /var/lib/libvirt/images/**
 - /var/tmp/ccache/**
+# gentoo package sources for emerge don't need to be backed up. These typically
+# get deleted on a successful merge They take up a lot of disk space if they don't get removed.
+- /var/tmp/portage/**
 - /var/lib/nfs/**
 - /var/chroot/**
 - /usr/portage/**
+# windows stuff
+- /cygdrive/c/Program Files
+- /cygdrive/c/Program Files (x86)
 # mac stuff
 - /Users/byronsanchez/mnt/*
 - /Users/byronsanchez/Downloads/*
