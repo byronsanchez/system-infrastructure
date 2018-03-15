@@ -6,5 +6,6 @@
 #                                         #
 ###########################################
 
-nitelite=https://byronsanchez:<%= @fossilpw %>@fossil.tehpotatoking.com/byronsanchez/gentoo-overlay-applications
+github=git@github.com:byronsanchez/system-infrastructure.git
+#bitbucket=git@bitbucket.com:byronsanchez/system-infrastructure.git
 

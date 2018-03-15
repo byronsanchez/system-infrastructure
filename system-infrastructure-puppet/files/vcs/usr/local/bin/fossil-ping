@@ -1,6 +1,7 @@
 #!/bin/sh
 #
-# Fossil server repository management script
+# Fossil server repository management script - run as a cron job to update mirror repos (both git and fossil) whenever
+# the authoritative fossil repos update
 
 source /usr/local/lib/nitelite/helpers/common.lib.sh;
 
@@ -139,7 +140,9 @@ do
       # Create a git version of the repository
       fossil-to-git-sync -o ${org_name} -r ${fossil_repo_base}
       # Sync the fossil repository with the public fossil mirrors
-      fossil-sync -o ${org_name} -r ${fossil_repo_base}
+      # UPDATE 2018-03-15: I no longer have a pattern of centralized local VCS node and external VCS node. I now just
+      # use my workstation and the external node /is/ the centralized VCS node.
+      #fossil-sync -o ${org_name} -r ${fossil_repo_base}
       # Sync the git repository with the public git mirrors
       git-sync -o ${org_name} -r ${fossil_repo_base}
     fi

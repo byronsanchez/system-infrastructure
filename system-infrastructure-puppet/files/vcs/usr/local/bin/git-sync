@@ -13,7 +13,7 @@
 source /usr/local/lib/nitelite/helpers/common.lib.sh;
 
 repo_mirror_dir="/srv/git/repositories"
-org_dir="/etc/nitelite/vcs.d/git"
+#org_dir="/etc/nitelite/vcs.d/git"
 
 organization=""
 repository=""
@@ -110,7 +110,7 @@ fi
 
 org_name="${organization}"
 repo_name="${repository}.git"
-conf_file="${org_dir}/${organization}/${repository}"
+conf_file="${repo_mirror_dir}/${org_name}/${repo_name}/${repository}-deploy/mirrors/git"
 
 mirror_src="${repo_mirror_dir}/${org_name}/${repo_name}"
 dst_dir="${repo_mirror_dir}/${org_name}"

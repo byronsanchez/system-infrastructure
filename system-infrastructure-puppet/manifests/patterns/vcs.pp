@@ -6,8 +6,6 @@ class vcs(
   $mirror_environment = '',
 ) {
 
-  $fossilpw = hiera('fossilpw', '')
-
   if $vcs_type == "server" {
 
     file { "/etc/nitelite/vcs.d":
@@ -17,52 +15,12 @@ class vcs(
       require => File['/etc/nitelite'],
     }
 
-    file { "/etc/nitelite/vcs.d/fossil":
-      ensure => directory,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nitelite/vcs.d'],
-    }
-
-    file { "/etc/nitelite/vcs.d/fossil/byronsanchez":
-      ensure => directory,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nitelite/vcs.d/fossil'],
-    }
-
-    file { "/etc/nitelite/vcs.d/git":
-      ensure => directory,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nitelite/vcs.d'],
-    }
-
     file { "/etc/nitelite/vcs.d/git/byronsanchez":
       ensure => directory,
       owner => "root",
       group => "root",
       require => File['/etc/nitelite/vcs.d/git'],
     }
-
-    $fossil_mirror_configs_byronsanchez = [
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/dotfiles',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/coloring-book-android',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/coloring-book-ios',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/gentoo-bootmodder',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/gentoo-overlay-a',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/gentoo-overlay-b',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/gentoo-overlay-applications',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/gentoo-provision',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/hackbytes.com',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/system-infrastructure',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/wintersmith-articles-helper',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/wintersmith-handleize-helper',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/wintersmith-robotskirt',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/wintersmith-tag-pages',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/creepypasta-files-android',
-      '/etc/nitelite/vcs.d/fossil/byronsanchez/creepypasta-files-ios',
-    ]
 
     $git_mirror_configs_byronsanchez = [
       '/etc/nitelite/vcs.d/git/byronsanchez/dotfiles',
@@ -86,15 +44,6 @@ class vcs(
     # TODO: rewrite the git_push script to read a single config file instead of
     # the way it's currently implemented (multiple config files in different org
     # dirs)
-
-    nl_files { $fossil_mirror_configs_byronsanchez:
-      owner     => 'www-data',
-      group     => 'www-data',
-      mode      => 0600,
-      requires  => File["/etc/nitelite/vcs.d/fossil/byronsanchez"],
-      source    => 'vcs',
-      file_type => 'template',
-    }
 
     nl_files { $git_mirror_configs_byronsanchez:
       owner    => 'www-data',
