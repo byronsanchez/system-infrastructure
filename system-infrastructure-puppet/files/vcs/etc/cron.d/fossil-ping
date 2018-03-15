@@ -10,4 +10,4 @@
 # scripts reference each other without full paths)
 PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-* * * * *	root	/usr/local/bin/fossil-ping
+* * * * *	deployer	/usr/local/bin/fossil-ping
