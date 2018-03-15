@@ -138,9 +138,6 @@ $RECYCLE.BIN/
 ##################
 # Project-specific
 
-# ignore design project files
-design/
-
 # librarian-puppet
 .tmp/
 .librarian/

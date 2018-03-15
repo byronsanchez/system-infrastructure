@@ -59,7 +59,7 @@ function get_options () {
                 argv+=(${opt})
                 ;;
         esac
-    done 
+    done
 }
 
 ##################
@@ -104,7 +104,7 @@ do
     trimmed_last_xml_cache="${cache_dir}/trimmed-last-xml-cache-${org_name}-${fossil_repo_base}.xml"
     trimmed_new_xml_cache="${cache_dir}/trimmed-new-xml-cache-${org_name}-${fossil_repo_base}.xml"
 
-    # If no last cache exists, retrieve a cache and exit. A comparison can be 
+    # If no last cache exists, retrieve a cache and exit. A comparison can be
     # done on the knext run of this script.
     if [ ! -e "${last_xml_cache}" ];
     then

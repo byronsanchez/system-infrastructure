@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Mirrors local (centralized) git repos to external repositories (eg. github)
+# Mirrors local (centralized) git repos to external repositories (eg. github).
 
 ###########################################
 #                                         #

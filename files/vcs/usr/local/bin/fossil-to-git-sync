@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Mirror source fossil repos to git so that other devs can play with code using
-# git if they'd like
+# git if they'd like.
 
 ###########################################
 #                                         #
