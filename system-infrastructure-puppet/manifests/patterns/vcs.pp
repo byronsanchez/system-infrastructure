@@ -624,8 +624,9 @@ class vcs(
 
     file { "/var/lib/nitelite/vcs":
       ensure => directory,
-      owner => "root",
-      group => "root",
+      owner => "deployer",
+      group => "www-data",
+      recurse => true,
       require => File['/var/lib/nitelite'],
     }
 

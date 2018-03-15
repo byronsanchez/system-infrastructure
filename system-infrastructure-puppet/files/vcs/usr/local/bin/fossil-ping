@@ -17,6 +17,7 @@ rss_suffix="timeline.rss?y=ci"
 # Trim the first n lines of the cached xml files to remove the always changing pubDate
 trim=9
 
+skip=0
 quiet=0
 
 ############################
@@ -32,6 +33,7 @@ $0 [OPTION] command
 
 other:
 
+    -s --skip                skip the feed check and update everything
     -q --quiet               do not log messages to STDOUT
     -h --help                display this message
 
@@ -47,6 +49,9 @@ function get_options () {
         shift
         case ${opt} in
 
+            -s|--skip)
+                skip=1
+                ;;
             -q|--quiet)
                 quiet=1
                 ;;
@@ -127,7 +132,7 @@ do
 
     diff "${trimmed_last_xml_cache}" "${trimmed_new_xml_cache}" &> /dev/null
 
-    if [ $? -eq 0 ]; then
+    if [ $? -eq 0 -a ${skip} -eq 0 ]; then
       echo "Feed Is Same"
       rm ""${new_xml_cache}""
       rm ""${trimmed_new_xml_cache}""
