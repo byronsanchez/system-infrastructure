@@ -22,7 +22,7 @@ class nl_nginx {
     $enable_basic_auth = false,
     $enable_root_location = false,
     $disable_robots = false,
-    $php_server = 'unix:/var/run/php5-fpm.sock',
+    $php_server = 'unix:/var/run/php-fpm.sock',
     $cgi_server = '127.0.0.1:3128',
     $ssl_cert_path = '',
     $ssl_key_path = '',

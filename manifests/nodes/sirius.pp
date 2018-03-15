@@ -1,11 +1,11 @@
 
-node 'sirius-production-1.internal.nitelite.io' inherits network {
+node 'sirius.members.linode.com' inherits network {
 
   $environment = "production"
 
   class { "base":
     environment       => "${environment}",
-    hostname          => "sirius-${environment}-1",
+    hostname          => "sirius",
     # TODO: make sure all nodes use eth[n] interface names for consistency
     # across all nodes
     network_interface => "eth0",
@@ -82,6 +82,7 @@ node 'sirius-production-1.internal.nitelite.io' inherits network {
 
   class { "systems":
     books => true,
+    media =>  true,
   }
 
   # app configs

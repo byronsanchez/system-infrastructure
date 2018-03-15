@@ -41,12 +41,15 @@ class hypervisor {
     ensure  => installed,
   }
 
-  service { 'libvirtd':
-    ensure => 'running',
-    enable => 'true',
-    require => [
-      Package[libvirt],
-    ],
-  }
+  # NOTE: Disabled from running as it mangles iptables rules.
+  # TODO: Fix these rules
+  # 
+  # service { 'libvirtd':
+  #   ensure => 'running',
+  #   enable => 'true',
+  #   require => [
+  #     Package[libvirt],
+  #   ],
+  # }
 
 }

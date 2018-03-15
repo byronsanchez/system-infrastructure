@@ -6,7 +6,7 @@
 #                                         #
 ###########################################
 
-x11-base/xorg-server xorg
+x11-base/xorg-server xorg glamor
 dev-libs/libxml2 python
 media-libs/mesa gbm gles2
 x11-libs/gtk+ X

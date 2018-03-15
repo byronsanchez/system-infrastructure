@@ -1,0 +1,8 @@
+app-text/pdfsandwich ~amd64
+
+# required by app-text/pdfsandwich-0.1.4-r1::gentoo
+# required by pdfsandwich (argument)
+media-gfx/exact-image ~amd64
+# required by app-text/pdfsandwich-0.1.4-r1::gentoo
+# required by pdfsandwich (argument)
+app-text/unpaper ~amd64

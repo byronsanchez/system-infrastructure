@@ -6,6 +6,9 @@
 #                                         #
 ###########################################
 
+# This is only needed for fw devices. USB sound cards typically get set to audio
+# group by default (at leat my zoom h4n does).
+
 #KERNEL=="fwx", GROUP="audio", MODE="0664"
 #KERNEL=="fwy", GROUP="audio", MODE="0664"
 #KERNEL=="fwz", GROUP="audio", MODE="0664"

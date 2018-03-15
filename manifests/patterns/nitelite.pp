@@ -14,6 +14,42 @@ class nitelite($environment) {
     ssl_key_path    => "/etc/letsencrypt/live/hackbytes.com/privkey.pem",
   }
 
+  nl_nginx::website { "byronsanchez.io":
+    websiteName     => "byronsanchez.io",
+    environmentName => "${environment}",
+    feed_path       => "byronsanchez",
+    root_path       => "/htdocs",
+    enable_php      => true,
+    enable_feed     => true,
+    enable_ssl      => true,
+    ssl_cert_path   => "/etc/letsencrypt/live/byronsanchez.io/fullchain.pem",
+    ssl_key_path    => "/etc/letsencrypt/live/byronsanchez.io/privkey.pem",
+  }
+
+  nl_nginx::website { "nitelite.io":
+    websiteName     => "nitelite.io",
+    environmentName => "${environment}",
+    feed_path       => "nitelite",
+    root_path       => "/htdocs",
+    enable_php      => true,
+    enable_feed     => true,
+    enable_ssl      => true,
+    ssl_cert_path   => "/etc/letsencrypt/live/nitelite.io/fullchain.pem",
+    ssl_key_path    => "/etc/letsencrypt/live/nitelite.io/privkey.pem",
+  }
+
+  nl_nginx::website { "byronfsanchez.com":
+    websiteName     => "byronfsanchez.com",
+    environmentName => "${environment}",
+    feed_path       => "byronsanchez",
+    root_path       => "/htdocs",
+    enable_php      => true,
+    enable_feed     => true,
+    enable_ssl      => true,
+    ssl_cert_path   => "/etc/letsencrypt/live/byronfsanchez.com/fullchain.pem",
+    ssl_key_path    => "/etc/letsencrypt/live/byronfsanchez.com/privkey.pem",
+  }
+
   # nl_nginx::website { "tehpotatoking.com":
   #   websiteName     => "tehpotatoking.com",
   #   environmentName => "${environment}",

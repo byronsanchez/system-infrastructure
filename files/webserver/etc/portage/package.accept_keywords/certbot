@@ -1,18 +1,9 @@
-# required by app-crypt/acme-0.9.3::gentoo
-# required by app-crypt/certbot-0.9.3-r1::gentoo
-# required by app-crypt/certbot (argument)
-=dev-python/pyrfc3339-1.0 ~amd64
-# required by app-crypt/certbot-0.9.3-r1::gentoo[python_targets_python2_7]
-# required by app-crypt/certbot (argument)
-=dev-python/pythondialog-3.3.0-r200 ~amd64
-# required by app-crypt/certbot-0.9.3-r1::gentoo
-# required by app-crypt/certbot (argument)
-=dev-python/parsedatetime-2.1 ~amd64
-# required by app-crypt/certbot-0.9.3-r1::gentoo
-# required by app-crypt/certbot (argument)
-=dev-python/zope-component-4.3.0 ~amd64
-# required by app-crypt/certbot (argument)
-=app-crypt/certbot-0.9.3-r1 ~amd64
-# required by app-crypt/certbot-0.9.3-r1::gentoo
-# required by app-crypt/certbot (argument)
-=app-crypt/acme-0.9.3 ~amd64
+# required by certbot-nginx (argument)
+=app-crypt/certbot-nginx-0.15.0 ~amd64
+# required by app-crypt/certbot-nginx-0.15.0::gentoo
+# required by certbot-nginx (argument)
+=app-crypt/acme-0.15.0 ~amd64
+# required by app-crypt/certbot-nginx-0.15.0::gentoo
+# required by certbot-nginx (argument)
+=app-crypt/certbot-0.15.0 ~amd64
+

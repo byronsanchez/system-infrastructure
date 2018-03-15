@@ -8,4 +8,7 @@ setfattr -n user.pax.flags -v pemr /home/byronsanchez/.dropbox-dist/dropboxd
 setfattr -n user.pax.flags -v pemr /home/byronsanchez/.dropbox-dist/dropbox-lnx.x86_64-*/dropbox*
 setfattr -n user.pax.flags -v pemr /opt/bin/zotero
 setfattr -n user.pax.flags -v pemr /opt/zotero/zotero*
+setfattr -n user.pax.flags -v pemr /home/byronsanchez/.nvm/v*/bin/node
+setfattr -n user.pax.flags -v pemr /home/byronsanchez/.nvm/versions/node/v*/bin/node
+setfattr -n user.pax.flags -v perm /opt/calibre/bin/*
 

@@ -54,6 +54,8 @@
 - /cygdrive/c/Users/*/encrypted/*
 - /cygdrive/c/Users/*/scratch/**
 - /cygdrive/c/Users/*/.local/share/Trash/*
+# The authoritative private is mira but in case of divergences, we're allowing
+# backups from other workstations as well
 #- /cygdrive/c/Users/*/private/*
 # mirrors get mirrored
 - /srv/nfs/io/**
@@ -73,6 +75,14 @@
 # windows stuff
 - /cygdrive/c/Program Files
 - /cygdrive/c/Program Files (x86)
+- /cygdrive/c/\$Recycle.Bin/*
+- /cygdrive/c/$Recycle.Bin/*
+# steinberg vsts - these can run up to 100+ GB and can just easily be
+# redownloaded, so it's not worth backing up
+- /cygdrive/c/Users/bfs50/AppData/Roaming/Steinberg/Content/*
+- /cygdrive/c/Users/bfs50/AppData/Local/Spotify/*
+- /cygdrive/c/Users/bfs50/AppData/Local/Temp/Adobe/*
+- /cygdrive/c/Users/bfs50/Downloads/*
 # mac stuff
 - /Users/byronsanchez/mnt/*
 - /Users/byronsanchez/Downloads/*

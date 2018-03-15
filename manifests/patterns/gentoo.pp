@@ -4,8 +4,10 @@ class gentoo(
   $linguas = '',
   $video_cards = '',
   $input_devices = '',
+  $accept_license = '',
   $lowmemorybox = false,
   $environment = '',
+  $build_kernel = false,
 ) {
 
   file { "/etc/portage/make.conf":
@@ -17,11 +19,38 @@ class gentoo(
   }
 
   file { "/etc/portage/repos.conf":
-    ensure => present,
-    path => "/etc/portage/repos.conf",
+    ensure => "directory",
     owner => "root",
     group => "root",
-    content => template("gentoo/etc/portage/repos.conf.erb"),
+  }
+
+  file { "/etc/portage/repos.conf/gentoo.conf":
+    ensure => present,
+    path => "/etc/portage/repos.conf/gentoo.conf",
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/repos.conf'],
+    source => "puppet:///files/gentoo/etc/portage/repos.conf/gentoo.conf",
+  }
+
+  file { "/etc/portage/repos.conf/sakaki-tools.conf":
+    ensure => present,
+    path => "/etc/portage/repos.conf/sakaki-tools.conf",
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/repos.conf'],
+    source => "puppet:///files/gentoo/etc/portage/repos.conf/sakaki-tools.conf",
+  }
+
+  if $ipaddress == $binhost_address {
+    file { "/etc/portage/repos.conf/nitelite.conf":
+      ensure => present,
+      path => "/etc/portage/repos.conf/nitelite.conf",
+      owner => "root",
+      group => "root",
+      require => File['/etc/portage/repos.conf'],
+      source => "puppet:///files/gentoo/etc/portage/repos.conf/nitelite.conf",
+    }
   }
 
   file { "/etc/portage/bashrc.d":
@@ -102,6 +131,14 @@ class gentoo(
     source => "puppet:///files/gentoo/etc/portage/package.use/layman",
   }
 
+  file { "/etc/portage/package.use/sakaki-tools":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    content => template("gentoo/etc/portage/package.use/sakaki-tools.erb"),
+  }
+
   file { "/etc/portage/package.accept_keywords/overlay-nitelite":
     ensure => present,
     owner => "root",
@@ -109,6 +146,15 @@ class gentoo(
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/overlay-nitelite",
     source => "puppet:///files/gentoo/etc/portage/package.accept_keywords/overlay-nitelite",
+  }
+
+  file { "/etc/portage/package.accept_keywords/sakaki-tools-repo":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/sakaki-tools-repo",
+    source => "puppet:///files/gentoo/etc/portage/package.accept_keywords/sakaki-tools-rep",
   }
 
   file { "/etc/portage/patches":
@@ -184,6 +230,21 @@ class gentoo(
     require => $packages_require,
   }
 
+  $sakaki_tools_packages = [
+    "genup"
+  ]
+
+  $sakaki_tools_packages_require = [
+    Layman['sakaki-tools'],
+    File["/etc/portage/package.accept_keywords/sakaki-tools-repo"],
+    File["/etc/portage/package.use/sakaki-tools"],
+  ]
+
+  package { $sakaki_tools_packages:
+    ensure  => installed,
+    require => $sakaki_tools_packages_require,
+  }
+
   # Make sure udev is uninstalled
   package { udev:
     ensure => absent,
@@ -196,14 +257,6 @@ class gentoo(
 
   # TODO: place layman nitelite as a dep for packages that will retrieve from
   # the overlay
-  layman { 'niteLite':
-    ensure  => absent,
-    require => [
-      Package[layman],
-      File['/etc/layman/layman.cfg'],
-      Exec['layman_sync'],
-    ]
-  }
 
   layman { 'nitelite-a':
     ensure  => present,
@@ -231,6 +284,25 @@ class gentoo(
       Exec['layman_sync'],
     ]
   }
+
+  layman { 'sakaki-tools':
+    ensure  => present,
+    require => [
+      Package[layman],
+      File['/etc/layman/layman.cfg'],
+      Exec['layman_sync'],
+    ]
+  }
+
+  # was using for uzbl
+  # layman { 'rindeal':
+  #   ensure  => present,
+  #   require => [
+  #     Package[layman],
+  #     File['/etc/layman/layman.cfg'],
+  #     Exec['layman_sync'],
+  #   ]
+  # }
 
   exec { "layman_sync":
     command => "/usr/bin/layman -S",

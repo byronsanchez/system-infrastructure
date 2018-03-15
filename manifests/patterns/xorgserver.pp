@@ -1,6 +1,5 @@
 class xorgserver (
   $xorg_driver,
-  $xorg_busid,
   $xorg_keyboard = "us",
   $xorg_type = "",
 ) {
@@ -26,6 +25,14 @@ class xorgserver (
     require => File['/etc/X11'],
   }
 
+  # This file is needed by some apps, eg. calibre
+  file { "/usr/share/desktop-directories/":
+    ensure => "directory",
+    owner => "root",
+    group => "root",
+  }
+
+  
   file { "/etc/X11/xorg.conf.d/30-keyboard.conf":
     ensure  => present,
     owner   => "root",

@@ -7,22 +7,51 @@
 ###########################################
 
 <% if @network_type == "hypervisor" -%>
+
+bridge_br0="tap0 tap1"
+
+brctl_br0="setfd 0 sethello 0 stp off"
+rc_need_br0="net.tap0 net.tap1"
+
+config_<%= @network_interface %>="dhcp"
+
+config_br0="192.168.3.1/24"
+
+config_tap0="null"
+tuntap_tap0="tap"
+tunctl_tap0="-g kvm"
+#mac_tap0="52:54:00:12:34:56"
+
+config_tap1="null"
+tuntap_tap1="tap"
+tunctl_tap1="-g kvm"
+#mac_tap1="52:54:00:12:34:57"
+
+<% elsif @network_type == "hypervisor" -%>
+
+# will only work with eth0 interfaces, not wlan0!
+# for wlan0, see the workstation config
 bridge_br0="<%= @network_interface %>"
 config_br0="dhcp"
 config_<%= @network_interface %>="null"
+
 <% elsif @network_type == "vpn" -%>
+
 config_<%= @network_interface %>=( "null" )
- 
+
 tuntap_tap0="tap"
 config_tap0="null"
- 
+
 bridge_br0=( "<%= @network_interface %> tap0" )
 brctl_br0=( "setfd 0" "sethello 10" "stp on" )
 config_br0=( "dhcp" )
- 
+
 depend_br0() {
         need net.<%= @network_interface %> net.tap0
 }
+
 <% else %>
+
 config_<%= @network_interface %>="dhcp"
+
 <% end -%>

@@ -10,6 +10,7 @@ class systems(
   $fossil = false,
   $jenkins = false,
   $books = false,
+  $media = false,
 ) {
 
   if $systems {
@@ -105,5 +106,33 @@ class systems(
       ssl_key_path      => "/etc/letsencrypt/live/books.nitelite.io/privkey.pem",
     }
   }
+
+  if $media {
+    nl_nginx::website { "media":
+      websiteName       => "media.nitelite.io",
+      environmentName   => "production",
+      feed_path         => "media",
+      root_path         => "/htdocs",
+      enable_ssl        => true,
+      disable_robots    => true,
+      ssl_cert_path     => "/etc/letsencrypt/live/media.nitelite.io/fullchain.pem",
+      ssl_key_path      => "/etc/letsencrypt/live/media.nitelite.io/privkey.pem",
+    }
+  }
+
+  if $znc {
+    nl_nginx::website { "znc":
+      websiteName       => "znc.nitelite.io",
+      environmentName   => "production",
+      feed_path         => "znc",
+      root_path         => "/htdocs",
+      enable_ssl        => true,
+      disable_robots    => true,
+      ssl_cert_path     => "/etc/letsencrypt/live/znc.nitelite.io/fullchain.pem",
+      ssl_key_path      => "/etc/letsencrypt/live/znc.nitelite.io/privkey.pem",
+    }
+  }
+
+
 
 }

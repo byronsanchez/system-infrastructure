@@ -10,3 +10,14 @@ dev-qt/qt-gui gtkstyle
 x11-libs/fltk threads
 dev-libs/libpcre pcre16
 
+# required by media-sound/psychosynth-0.3.0::proaudio[psynth3d]
+# required by psychosynth (argument)
+dev-games/cegui ogre
+media-video/vlc skins xml
+
+media-libs/libmp4v2 utils
+
+media-sound/drumkv1 nsm osc jacksession
+
+media-sound/rosegarden qt4
+

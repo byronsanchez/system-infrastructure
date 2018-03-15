@@ -1,0 +1,27 @@
+#!/bin/sh
+
+ROOT_PUPPET_DIR="/var/lib/nitelite/deploy/system-infrastructure"
+
+dest="/etc/puppet"
+
+echo "Installing system-infrastructure..."
+
+#mkdir -p ${dest}
+sudo rsync -avz ${ROOT_PUPPET_DIR}/ ${dest}
+
+# chown -R deployer:www-data "${DATABASE_DIR}"
+# find ${DATABASE_DIR} -type d -exec chmod 2770 '{}' \;
+# find ${DATABASE_DIR} -type f -exec chmod 660 '{}' \;
+#
+# chown -R deployer:www-data "${ROOT_WEB_DIR}"
+# find ${WEB_PKG_DIR} -type d -exec chmod 2750 '{}' \;
+# find ${WEB_PKG_DIR} -type f -exec chmod 640 '{}' \;
+
+# fix perms for node_modules dirs
+# sudo chown -R www-data:www-data "${NPM_DIR}/node_modules"
+
+# use these on upload directories only
+# chmod 2770 ${UPLOAD_DIR};
+# find ${UPLOAD_DIR} -type d -exec chmod 2770 '{}' \;
+# find ${UPLOAD_DIR} -type f -exec chmod 640 '{}' \;
+

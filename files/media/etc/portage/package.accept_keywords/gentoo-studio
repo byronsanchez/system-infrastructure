@@ -1,18 +1,15 @@
 =media-sound/jack-audio-connection-kit-1.9999 **
 media-sound/jack-keyboard ~amd64
-media-libs/libffado ~amd64
 media-plugins/dssi-vst ~amd64
 dev-libs/dbus-c++ ~amd64
 media-sound/a2jmidid **
 media-libs/lv2core **
-=media-sound/ardour-3.9999 **
 media-libs/suil ~amd64
 dev-libs/serd ~amd64
 media-libs/sratom ~amd64
 media-libs/lv2 ~amd64
 dev-libs/sord ~amd64
 media-libs/lilv ~amd64
-media-sound/rosegarden ~amd64
 media-plugins/calf ~amd64
 media-plugins/vcf **
 dev-cpp/pstreams ~amd64
@@ -29,7 +26,123 @@ media-sound/qmidiroute ~amd64
 media-sound/paulstretch ~amd64
 media-sound/bristol ~amd64
 media-sound/zynaddsubfx ~amd64
+media-sound/yoshimi ~amd64
+media-sound/qmidiarp ~amd64
+media-sound/drumkv1 ~amd64
 
 # Custom
 sys-apps/jackd-init ~amd64
+
+
+
+# required by chuck (argument)
+=media-sound/chuck-1.3.5.2 ~amd64
+# required by qsampler (argument)
+=media-sound/qsampler-0.4.2 ~amd64
+# required by media-sound/linuxsampler-2.0.0-r2::gentoo
+# required by media-sound/qsampler-0.4.2::gentoo
+# required by qsampler (argument)
+=media-libs/libgig-4.0.0-r1 ~amd64
+# required by media-sound/qsampler-0.4.2::gentoo
+# required by qsampler (argument)
+=media-sound/linuxsampler-2.0.0-r2 ~amd64
+# required by media-sound/qsampler-0.4.2::gentoo
+# required by qsampler (argument)
+=media-libs/liblscp-0.5.8 ~amd64
+# required by japa (argument)
+=media-sound/japa-0.8.4 ~amd64
+# required by media-sound/chuck-1.3.5.2::gentoo
+# required by chuck (argument)
+=app-eselect/eselect-chuck-1.0.1 ~amd64
+# required by machina (argument)
+=media-sound/machina-9999 **
+# required by lmms (argument)
+=media-sound/lmms-1.1.90 ~amd64
+# required by specimen (argument)
+=media-sound/specimen-0.5.2_rc3-r2 ~amd64
+# required by sooperlooper (argument)
+=media-sound/sooperlooper-1.7.3-r1 ~amd64
+
+# required by mda-lv2 (argument)
+media-plugins/mda-lv2 ~amd64
+# required by ams-lv2 (argument)
+media-plugins/ams-lv2 ~amd64
+# required by media-plugins/convoLV2-9999::proaudio
+# required by convoLV2 (argument)
+media-libs/zita-convolver ~amd64
+# required by media-plugins/ams-lv2-1.1.0::gentoo
+# required by ams-lv2 (argument)
+media-libs/lvtk ~amd64
+# required by midifilter-lv2 (argument)
+media-plugins/midifilter-lv2 ~amd64
+# required by balance-lv2 (argument)
+=media-plugins/balance-lv2-9999 **
+# required by meters-lv2 (argument)
+=media-plugins/meters-lv2-9999 **
+# required by convoLV2 (argument)
+=media-plugins/convoLV2-9999 **
+
+media-sound/rtsynth ~amd64
+media-sound/ams ~amd64
+# required by mx44 (argument)
+media-sound/mx44 ~amd64
+# required by din (argument)
+media-sound/din ~amd64
+# required by whysynth (argument)
+media-plugins/whysynth ~amd64
+
+# required by psychosynth (argument)
+media-sound/psychosynth ~amd64
+# required by synthv1 (argument)
+media-sound/synthv1 ~amd64
+media-sound/ac3jack **
+
+# required by media-sound/ac3jack-2.0.3-r1::proaudio
+# required by ac3jack (argument)
+=media-libs/aften-0.0.8-r2 ~amd64
+# required by jack-smf-utils (argument)
+=media-sound/jack-smf-utils-1.0 ~amd64
+# required by jack-tools (argument)
+=media-sound/jack-tools-20131226 ~amd64
+# required by jackminimix (argument)
+=media-sound/jackminimix-0.2 ~amd64
+# required by jack_mixer (argument)
+=media-sound/jack_mixer-10 ~amd64
+# required by jack_capture (argument)
+=media-sound/jack_capture-0.9.71 ~amd64
+# required by jack_snapshot (argument)
+=media-sound/jack_snapshot-0.0.4 ~amd64
+# required by jackmixdesk (argument)
+=media-sound/jackmixdesk-0.3_p4 ~amd64
+# required by jack_delay (argument)
+=media-sound/jack_delay-0.4.0 ~amd64
+# required by media-sound/jackmixdesk-0.3_p4::proaudio
+# required by jackmixdesk (argument)
+=virtual/liblash-1 ~amd64
+# required by jackmeter (argument)
+=media-sound/jackmeter-0.4 ~amd64
+# required by qjackmmc (argument)
+=media-sound/qjackmmc-4 ~amd64
+# required by silentjack (argument)
+=media-sound/silentjack-0.3 ~amd64
+
+media-sound/audacious ~amd64
+media-plugins/audacious-plugins ~amd64
+media-video/smplayer ~amd64
+x11-themes/smplayer-skins ~amd64
+x11-themes/smplayer-themes ~amd64
+
+# required by mp3unicode (argument)
+=media-sound/mp3unicode-1.2.1 ~amd64
+# required by wavsplit (argument)
+=media-sound/wavsplit-1.2.1-r1 ~amd64
+# required by redoflacs (argument)
+=media-sound/redoflacs-0.30 ~amd64
+# required by flac-image (argument)
+=media-sound/flac-image-1.00 ~amd64
+# required by flack (argument)
+=media-sound/flack-2.0.6 ~amd64
+
+# custom again
+media-sound/vmpk ~amd64
 

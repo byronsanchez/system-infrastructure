@@ -1,4 +1,5 @@
 
+app-editors/emacs ~amd64
 # need 2.1.5+ for allow-emacs-pinentry feature to allow emacs to prompt for a password for gpg encrypted files. Otherwise, it can hang on the terminal
 =app-crypt/gnupg-2.1.11-r1 ~amd64
 

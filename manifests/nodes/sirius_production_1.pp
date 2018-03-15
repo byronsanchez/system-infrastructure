@@ -1,4 +1,4 @@
-node 'sirius-production-1.internal.nitelite.io' inherits network {
+node 'sirius-prod-1.internal.nitelite.io' inherits network {
 
   $environment = "production"
 

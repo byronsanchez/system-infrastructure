@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Set the performance cpu scaling governors. This is best for Ardour,
+# consumes a lot of power!
+echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+echo performance > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
+echo performance > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
+echo performance > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
+

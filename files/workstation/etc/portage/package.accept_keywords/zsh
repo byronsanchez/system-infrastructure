@@ -1,6 +1,8 @@
 # needed to get the version of zsh that fixes bugs that cause RVM issues
 # see: https://github.com/wayneeseguin/rvm/issues/3091
-app-shells/zsh ~amd64
+# 
+# we're locking it to 5.3.1 since higher versions (5.4.1) are being bocked by baselayout
+=app-shells/zsh-5.3.1 ~amd64
 
 # required by sutils (argument)
 =x11-misc/sutils-9999 **

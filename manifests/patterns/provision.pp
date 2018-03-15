@@ -88,19 +88,20 @@ class provision {
   vcsrepo { "/var/lib/nitelite/provision/gentoo-provision":
     ensure   => present,
     provider => git,
-    source   => "https://git.nitelite.io/hackbytes/gentoo-provision",
+    source   => "https://git.nitelite.io/byronsanchez/gentoo-provision",
     require => File["/var/lib/nitelite/provision"],
   }
 
   vcsrepo { "/var/lib/nitelite/provision/gentoo-bootmodder":
     ensure   => present,
     provider => git,
-    source   => "https://git.nitelite.io/hackbytes/gentoo-bootmodder",
+    source   => "https://git.nitelite.io/byronsanchez/gentoo-bootmodder",
     require => File["/var/lib/nitelite/provision"],
   }
 
   $packages = [
-    "app-cdr/cdrtools",
+    #"app-cdr/cdrtools",
+    "app-cdr/cdrkit",
     "sys-boot/syslinux",
     "sys-fs/squashfs-tools",
     "tftp-hpa",

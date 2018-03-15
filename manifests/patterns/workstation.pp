@@ -112,6 +112,15 @@ class workstation (
       source => "puppet:///files/workstation/etc/portage/package.accept_keywords/firefox",
     }
 
+    file { "/etc/portage/package.use/krita":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      require => File['/etc/portage/package.use'],
+      path => "/etc/portage/package.use/krita",
+      source => "puppet:///files/workstation/etc/portage/package.use/krita",
+    }
+
     file { "/etc/portage/package.accept_keywords/spotify":
       ensure => present,
       owner => "root",
@@ -128,15 +137,6 @@ class workstation (
       require => File['/etc/portage/package.accept_keywords'],
       path => "/etc/portage/package.accept_keywords/wm",
       source => "puppet:///files/workstation/etc/portage/package.accept_keywords/wm",
-    }
-
-    file { "/etc/portage/package.accept_keywords/zathura":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      require => File['/etc/portage/package.accept_keywords'],
-      path => "/etc/portage/package.accept_keywords/zathura",
-      source => "puppet:///files/workstation/etc/portage/package.accept_keywords/zathura",
     }
 
     file { "/etc/portage/package.license/adobe-flash":
@@ -258,7 +258,8 @@ class workstation (
 
     $packages_xorg = [
       "app-editors/gvim",
-      "media-sound/easytag",
+      # disabling easytag since I don't use it and is interfering with nautilus
+      #"media-sound/easytag",
       "sys-apps/bleachbit",
       "sys-apps/dbus",
       "feh",
@@ -266,7 +267,9 @@ class workstation (
       "musicbrainz",
       "redshift",
       "compton",
-      "firefox",
+      #"firefox",
+      # I am not a patient man o_o
+      "firefox-bin",
       "x11-misc/xclip",
       "net-misc/tigervnc",
       "app-text/calibre",
@@ -276,7 +279,8 @@ class workstation (
       "libreoffice",
       "app-officeext/languagetool",
       "filezilla",
-      "vlc",
+      # TODO: Fix dupe collision with media pattern
+      #"vlc",
       "xmodmap",
       "xsetroot",
       "xrandr",
@@ -305,9 +309,6 @@ class workstation (
       "x11-apps/xrefresh",
       #"net-misc/freerdp",
       "media-gfx/comix",
-      "app-text/zathura",
-      "app-text/zathura-pdf-mupdf",
-      "app-text/zathura-djvu",
       "x11-misc/unclutter",
       "x11-apps/xbacklight",
       "x11-misc/wmctrl",
@@ -317,6 +318,19 @@ class workstation (
       "nautilus",
       "app-emulation/virt-manager",
       "x11-misc/xscreensaver",
+      "x11-apps/xinput",
+      # xorg macros!
+      "x11-misc/xnee",
+      "dev-util/meld",
+      # printing out keycods for hotkey binding
+      "x11-apps/xev",
+      "media-gfx/krita",
+      "x11-misc/cmd",
+      "x11-misc/dmenu",
+      # simple gui browser
+      #"www-client/surf",
+      # tab functionality for surf
+      #"x11-misc/tabbed",
     ]
 
     $packages_xorg_require = [
@@ -325,13 +339,13 @@ class workstation (
       File["/etc/portage/package.accept_keywords/easystroke"],
       File["/etc/portage/package.accept_keywords/spotify"],
       File["/etc/portage/package.accept_keywords/wm"],
-      File["/etc/portage/package.accept_keywords/zathura"],
       File["/etc/portage/package.license/adobe-flash"],
       File["/etc/portage/package.use/calibre"],
       File["/etc/portage/package.use/compton"],
       File["/etc/portage/package.use/dunst"],
       File["/etc/portage/package.use/firefox"],
       File["/etc/portage/package.use/inkscape"],
+      File["/etc/portage/package.use/krita"],
       File["/etc/portage/package.use/libreoffice"],
       File["/etc/portage/package.use/mupdf"],
       File["/etc/portage/package.use/picard"],
@@ -552,6 +566,15 @@ class workstation (
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/mutt",
   }
 
+  file { "/etc/portage/package.accept_keywords/pdfsandwich":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/pdfsandwich",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/pdfsandwich",
+  }
+
   file { "/etc/portage/package.accept_keywords/tor":
     ensure => present,
     owner => "root",
@@ -559,6 +582,15 @@ class workstation (
     require => File['/etc/portage/package.accept_keywords'],
     path => "/etc/portage/package.accept_keywords/tor",
     source => "puppet:///files/workstation/etc/portage/package.accept_keywords/tor",
+  }
+
+  file { "/etc/portage/package.accept_keywords/yubikey":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/yubikey",
+    source => "puppet:///files/workstation/etc/portage/package.accept_keywords/yubikey",
   }
 
   file { "/etc/portage/package.accept_keywords/zsh":
@@ -604,6 +636,15 @@ class workstation (
     require => File['/etc/portage/package.use'],
     path => "/etc/portage/package.use/rtorrent",
     source => "puppet:///files/workstation/etc/portage/package.use/rtorrent",
+  }
+
+  file { "/etc/portage/package.use/yubikey":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/yubikey",
+    source => "puppet:///files/workstation/etc/portage/package.use/yubikey",
   }
 
   file { "/etc/tor/torrc":
@@ -818,16 +859,16 @@ class workstation (
 
   # TODO: install packer
   # TODO: Consider splitting up user-specific packages to dotfiles. Will require
-  # mangement of portage config files (use, keywords, etc.); This pattern will 
-  # only contain lower-level stuff like hardware configs, xorg, etc. User-level 
+  # mangement of portage config files (use, keywords, etc.); This pattern will
+  # only contain lower-level stuff like hardware configs, xorg, etc. User-level
   # stuff will be moved to dotfiles to match homebrew and chocolatey.
   $packages = [
-    # NOTE: It appears installing dropbox at the user-level (like nvm, rvm, 
-    # etc.) makes it more bleeding-edge and it works more properly. Using the 
-    # package version appears to get upgrading-status-stuck errors, where you 
-    # can't get status data from dropboxd and it looks like it stops responding 
-    # and syncing. The updated version directly from dropbox.com (installed via 
-    # dotfiles scripts) appears to be much more stable. So I'm commenting this 
+    # NOTE: It appears installing dropbox at the user-level (like nvm, rvm,
+    # etc.) makes it more bleeding-edge and it works more properly. Using the
+    # package version appears to get upgrading-status-stuck errors, where you
+    # can't get status data from dropboxd and it looks like it stops responding
+    # and syncing. The updated version directly from dropbox.com (installed via
+    # dotfiles scripts) appears to be much more stable. So I'm commenting this
     # out.
     #"net-misc/dropbox",
     #"net-misc/dropbox-cli",
@@ -853,10 +894,13 @@ class workstation (
     "axel",
     "irssi",
     "weechat",
+    "znc",
     # "bitlbee",
     "pyyaml",
     "lxml",
     "offlineimap",
+    "net-mail/isync",
+    "popfile",
     "msmtp",
     "notmuch",
     "urlview",
@@ -891,7 +935,8 @@ class workstation (
     "media-sound/mpc",
     "ncmpcpp",
     "id3lib",
-    "mp3check",
+    # TODO: Fix duplicate collision with media.pp
+    #"mp3check",
     "mplayer",
     "cpuinfo2cpuflags",
     "gifsicle",
@@ -904,7 +949,8 @@ class workstation (
     "app-text/pandoc",
     "app-editors/emacs",
     "app-emacs/bbdb",
-    "dev-lisp/clisp",
+    "app-emacs/ebuild-mode",
+    #"dev-lisp/clisp",
     # vbox advanced cpu features
     #
     # commented out because requires multilib
@@ -917,7 +963,24 @@ class workstation (
     # fonts so that unicode chars (eg. emojis) work on browsers and apps
     "media-fonts/dejavu",
     "media-fonts/noto",
-    "media-fonts/arphicfonts"
+    "media-fonts/arphicfonts",
+    "app-text/pdfsandwich",
+    "gsutil",
+    "youtube-dl",
+    "ncdu",
+    # yubikey tools
+    "app-crypt/yubikey-manager",
+    "app-crypt/yubikey-neo-manager",
+    "sys-auth/yubikey-personalization-gui",
+    "sys-auth/yubico-piv-tool",
+    # yubikey gpg smartcard support
+    "app-crypt/gnupg-pkcs11-scd",
+    # generic smartcard support
+    "dev-libs/opensc",
+    "net-misc/youtube-dl",
+    # exfat support
+    "sys-fs/fuse-exfat",
+    "sys-fs/exfat-utils",
   ]
 
   $packages_require = [
@@ -934,7 +997,9 @@ class workstation (
     File["/etc/portage/package.accept_keywords/ledger"],
     File["/etc/portage/package.accept_keywords/mplayer"],
     File["/etc/portage/package.accept_keywords/mutt"],
+    File["/etc/portage/package.accept_keywords/pdfsandwich"],
     File["/etc/portage/package.accept_keywords/tor"],
+    File["/etc/portage/package.accept_keywords/yubikey"],
     File["/etc/portage/package.accept_keywords/zsh"],
     File["/etc/portage/package.license/fdk"],
     #File["/etc/portage/package.unmask/cava"],
@@ -948,6 +1013,7 @@ class workstation (
     File["/etc/portage/package.use/mpd"],
     File["/etc/portage/package.use/ncmpcpp"],
     File["/etc/portage/package.use/rtorrent"],
+    File["/etc/portage/package.use/yubikey"],
   ]
 
   package { $packages:
@@ -957,6 +1023,10 @@ class workstation (
 
   $pip_packages = [
     "virtualenv",
+    # to org-capture (via org-protocol) html documents that have only the
+    # readable/main content as opposed to everything else (ads, etc.) that a
+    # webpage may have
+    "readability-lxml",
   ]
 
   package { $pip_packages:
@@ -970,12 +1040,21 @@ class workstation (
   $packages_overlay = [
     "media-gfx/pngout",
     "app-accessibility/svox",
-    "sci-misc/zotero"
+    "sci-misc/zotero",
+    "google-cloud-sdk",
+    #"www-client/uzbl",
+    # needed to play certain video formats in webkit (uzbl/surf) without
+    # crashing
+    #"gst-plugins-libav",
+    # graphically visualize disk usage (eg. by directory)
+    "xdu",
   ]
 
   $packages_overlay_require = [
     Layman['nitelite-a'],
     Layman['nitelite-b'],
+    # has a working uzbl
+    #Layman['rindeal'],
   ]
 
   package { $packages_overlay:

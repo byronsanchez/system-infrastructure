@@ -127,6 +127,14 @@ class base (
     source => "puppet:///files/base/etc/inittab",
   }
 
+  file { "/etc/updatedb.conf":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    path => "/etc/updatedb.conf",
+    source => "puppet:///files/base/etc/updatedb.conf",
+  }
+
   # the random number will be >= 0 and less than MAX
   #
   # generate random values that will persist for each node, but be totally
@@ -456,6 +464,11 @@ class base (
     "net-analyzer/iftop",
     "sys-process/parallel",
     "sys-apps/gptfdisk",
+    "sys-process/at",
+    # Helps in listing PCI devices and that sort of thing, useful for debugging
+    # devices that might be malfunctioning or drivers aren't working, etc.
+    "sys-apps/hwinfo",
+    "sys-apps/lshw",
   ]
 
 
@@ -545,7 +558,10 @@ class base (
   # interface name, not the bridge name which is why this conditional is
   # necessary.
   # TODO: Consider adding symlinks to the network interface that is setup during provisioningg (eg. eth0)
-  if $network_type == "hypervisor" {
+  # NOTE: Disabling bridged networks for workstations since I'm not using kvm at
+  # the moment and libvirt is mangling my iptable rules (2017-06-06)
+  # if ($network_type == "hypervisor") or ($network_type == "workstation") {
+  if ($network_type == "hypervisor") {
     # Dependency for net info
     service { "/etc/init.d/net.br0":
       ensure => running,
@@ -593,7 +609,7 @@ class base (
     ],
   }
 
-  service { 'avahi-daemon': 
+  service { 'avahi-daemon':
     ensure    => running,
     enable => true,
     require   => [
@@ -616,6 +632,14 @@ class base (
     enable  => true,
     require => [
       Package[vixie-cron],
+    ],
+  }
+
+  service { 'atd':
+    ensure  => running,
+    enable  => true,
+    require => [
+      Package['sys-process/at'],
     ],
   }
 

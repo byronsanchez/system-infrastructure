@@ -1,1 +1,11 @@
 net-misc/gsutil ~amd64
+
+# required by net-misc/gsutil-4.20::gentoo
+# required by gsutil (argument)
+dev-python/gcs-oauth2-boto-plugin ~amd64
+# required by net-misc/gsutil-4.20::gentoo
+# required by gsutil (argument)
+dev-python/google-apitools ~amd64
+# required by net-misc/gsutil-4.20::gentoo
+# required by gsutil (argument)
+dev-python/oauth2client ~amd64

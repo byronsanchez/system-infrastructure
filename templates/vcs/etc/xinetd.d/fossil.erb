@@ -12,9 +12,11 @@ service fossil
         socket_type = stream
         protocol = tcp
         wait = no
-        user = root
+        user = www-data
         disable = no
         server = /usr/bin/fossil
+        # We only expect connections from localhost since external requests are being proxied by nginx to this fossil service
+        only_from = 127.0.0.1 localhost
 
         # HTTP port to listen to (the same as the one in '/etc/services')
         port = 4545

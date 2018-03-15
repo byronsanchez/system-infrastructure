@@ -31,7 +31,8 @@ class webserver(
     }
 
     $secure_packages = [
-      "app-crypt/certbot"
+      "app-crypt/certbot",
+      "app-crypt/certbot-nginx"
     ]
 
     package { $secure_packages:
@@ -49,6 +50,14 @@ class webserver(
     group   => 'www-data',
     mode    => 0750,
     require => File["/srv"],
+  }
+
+  file { "/var/lib/nitelite/deploy":
+    ensure => 'directory',
+    owner  => 'deployer',
+    group  => 'www-data',
+    mode    => 0750,
+    require => Class["nl_nginx"],
   }
 
   file { "/var/lib/nitelite/webserver":

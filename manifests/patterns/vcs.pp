@@ -123,7 +123,7 @@ class vcs(
     }
 
     # git.internal.nitelite.io
-    # TODO: Make use of the install instead of source path that is currently 
+    # TODO: Make use of the install instead of source path that is currently
     # used by uwsgi configs
 
     exec { "webapp_config_cgit":
@@ -494,6 +494,24 @@ class vcs(
       group => "root",
       path => "/srv/fossil/configs/googlecode.txt",
       source => "puppet:///files/vcs/srv/fossil/configs/googlecode.txt",
+      require => File['/srv/fossil/configs'],
+    }
+
+    file { "/srv/fossil/configs/project.conf":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      path => "/srv/fossil/configs/project.conf",
+      source => "puppet:///files/vcs/srv/fossil/configs/project.conf",
+      require => File['/srv/fossil/configs'],
+    }
+
+    file { "/srv/fossil/configs/skin.conf":
+      ensure => present,
+      owner => "root",
+      group => "root",
+      path => "/srv/fossil/configs/skin.conf",
+      source => "puppet:///files/vcs/srv/fossil/configs/skin.conf",
       require => File['/srv/fossil/configs'],
     }
 

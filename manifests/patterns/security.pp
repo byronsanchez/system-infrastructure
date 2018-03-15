@@ -200,6 +200,16 @@ class security($iptables_type = '') {
     require => File['/etc/fail2ban/filter.d'],
   }
 
+  file { "/etc/fail2ban/filter.d/nginx-nohome.conf":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    path    => "/etc/fail2ban/filter.d/nginx-nohome.conf",
+    source  => "puppet:///files/security/etc/fail2ban/filter.d/nginx-nohome.conf",
+    require => File['/etc/fail2ban/filter.d'],
+  }
+
   file { "/etc/fail2ban/filter.d/pam-generic.conf":
     ensure  => present,
     owner   => "root",

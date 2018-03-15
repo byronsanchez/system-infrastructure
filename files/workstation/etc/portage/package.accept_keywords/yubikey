@@ -1,0 +1,38 @@
+
+app-crypt/yubikey-manager ~amd64
+app-crypt/yubikey-neo-manager ~amd64
+sys-auth/yubikey-personalization-gui ~amd64
+
+# required by sys-auth/ykpers-1.18.0::gentoo
+# required by sys-auth/yubikey-personalization-gui-3.1.24::gentoo
+# required by sys-auth/yubikey-personalization-gui (argument)
+sys-auth/libyubikey ~amd64
+# required by app-crypt/yubikey-neo-manager-1.4.0::gentoo
+# required by app-crypt/yubikey-neo-manager (argument)
+app-crypt/libykneomgr ~amd64
+# required by app-crypt/yubikey-manager-0.3.2::gentoo
+# required by app-crypt/yubikey-manager (argument)
+dev-python/pyusb ~amd64
+# required by app-crypt/yubikey-manager-0.3.2::gentoo
+# required by app-crypt/yubikey-manager (argument)
+dev-python/pyscard ~amd64
+# required by app-crypt/yubikey-neo-manager-1.4.0::gentoo
+# required by app-crypt/yubikey-neo-manager (argument)
+app-crypt/libu2f-host ~amd64
+# required by sys-auth/yubikey-personalization-gui-3.1.24::gentoo
+# required by sys-auth/yubikey-personalization-gui (argument)
+sys-auth/ykpers ~amd64
+
+# piv support
+# required by sys-auth/yubico-piv-tool-1.4.3::gentoo
+# required by sys-auth/yubico-piv-tool (argument)
+dev-util/gengetopt ~amd64
+# required by sys-auth/yubico-piv-tool (argument)
+sys-auth/yubico-piv-tool ~amd64
+
+# smartcard support
+app-crypt/gnupg-pkcs11-scd ~amd64
+sys-apps/pcsc-tools ~amd64
+dev-perl/pcsc-perl ~amd64
+
+

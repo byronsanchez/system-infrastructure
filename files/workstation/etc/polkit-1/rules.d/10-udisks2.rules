@@ -1,0 +1,24 @@
+// Allow udisks2 to mount devices without authentication
+// for users in the "storage" group.
+polkit.addRule(function(action, subject) {
+ if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+      action.id == "org.freedesktop.udisks2.filesystem-mount") &&
+subject.isInGroup("plugdev")) {
+       return polkit.Result.YES;
+   }
+});
+polkit.addRule(function(action, subject) {
+   if ((action.id == "org.freedesktop.udisks.filesystem-mount-system-internal") &&
+subject.isInGroup("plugdev")) {
+       return polkit.Result.YES;
+    }
+});
+
+polkit.addRule(function(action, subject) {
+    if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+         action.id == "org.freedesktop.udisks.filesystem-mount-system-internal") &&
+        subject.local && subject.active && subject.isInGroup("users"))
+    {
+            return polkit.Result.YES;
+    }
+});

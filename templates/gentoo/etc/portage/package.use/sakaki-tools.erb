@@ -1,0 +1,10 @@
+# Explictly disable buildkernel by default for non-gui workstations, since it
+# does encryption stuff and we don't need that for servers. It also pulls in X
+# via plymouth.
+<% if @build_kernel -%>
+app-portage/genup buildkernel
+<% else %>
+app-portage/genup -buildkernel
+<% end %>
+
+

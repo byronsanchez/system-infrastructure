@@ -130,3 +130,9 @@ kernel.grsecurity.chroot_restrict_nice = 0
 <% if @enable_dropbox %>
 fs.inotify.max_user_watches=100000
 <% end %>
+
+<% if @enable_workstation_kvm %>
+# needed for bridging kvm network and NATing to wlan0 interface
+net.ipv4.conf.tap0.proxy_arp=1
+net.ipv4.conf.wlan0.proxy_arp=1
+<% end %>

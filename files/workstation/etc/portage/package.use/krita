@@ -1,0 +1,23 @@
+# required by kde-plasma/polkit-kde-agent-5.8.6::gentoo
+# required by kde-frameworks/kauth-5.29.0::gentoo[policykit]
+# required by kde-frameworks/kconfigwidgets-5.29.0::gentoo
+# required by kde-frameworks/kbookmarks-5.29.0::gentoo
+# required by kde-frameworks/kio-5.29.0-r1::gentoo
+# required by kde-frameworks/kinit-5.29.0::gentoo
+# required by kde-frameworks/kded-5.29.0::gentoo
+>=sys-auth/polkit-qt-0.112.0-r1 qt5
+# required by kde-frameworks/knotifications-5.29.0::gentoo[dbus]
+# required by kde-frameworks/kwallet-5.29.0::gentoo
+# required by kde-frameworks/kio-5.29.0-r1::gentoo[kwallet]
+# required by kde-frameworks/kinit-5.29.0::gentoo
+# required by kde-frameworks/kded-5.29.0::gentoo
+>=dev-libs/libdbusmenu-qt-0.9.3_pre20140619-r1 qt5
+# required by media-libs/phonon-4.9.0::gentoo[vlc]
+# required by kde-frameworks/knotifications-5.29.0::gentoo
+# required by kde-frameworks/kwallet-5.29.0::gentoo
+# required by kde-frameworks/kio-5.29.0-r1::gentoo[kwallet]
+# required by kde-frameworks/kinit-5.29.0::gentoo
+# required by kde-frameworks/kded-5.29.0::gentoo
+>=media-libs/phonon-vlc-0.9.0 qt5
+# required by media-libs/phonon-vlc-0.9.0::gentoo
+>=media-libs/phonon-4.9.0 qt5

@@ -7,3 +7,5 @@
 ###########################################
 
 dev-vcs/git highlight
+dev-libs/libpcre2 jit
+

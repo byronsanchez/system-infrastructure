@@ -1,0 +1,2 @@
+# required by onboard::unity-gentoo (argument)
+dev-libs/libdbusmenu gtk3

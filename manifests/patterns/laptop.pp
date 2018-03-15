@@ -80,6 +80,24 @@ class laptop {
     source => 'laptop',
   }
 
+  file { "/etc/portage/package.accept_keywords/tablet":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.accept_keywords'],
+    path => "/etc/portage/package.accept_keywords/tablet",
+    source => "puppet:///files/laptop/etc/portage/package.accept_keywords/tablet",
+  }
+
+  file { "/etc/portage/package.use/tablet":
+    ensure => present,
+    owner => "root",
+    group => "root",
+    require => File['/etc/portage/package.use'],
+    path => "/etc/portage/package.use/tablet",
+    source => "puppet:///files/laptop/etc/portage/package.use/tablet",
+  }
+
   file { "/etc/portage/package.use/laptop-mode-tools":
     ensure => present,
     owner => "root",
@@ -106,6 +124,15 @@ class laptop {
     source => "puppet:///files/laptop/etc/acpi/events/default",
   }
 
+  file { "/usr/local/bin/rotate":
+    ensure => present,
+    owner  => "root",
+    group  => "root",
+    mode    => 0755,
+    path   => "/usr/local/bin/rotate",
+    source => "puppet:///files/laptop/usr/local/bin/rotate",
+  }
+
   file { "/usr/local/bin/toggle-bluetooth":
     ensure => present,
     owner  => "root",
@@ -130,7 +157,8 @@ class laptop {
   }
 
   $packages = [
-    "rfkill",
+    "net-wireless/rfkill",
+    "net-misc/networkmanager",
     "app-laptop/laptop-mode-tools",
     "net-wireless/bluez",
     "app-laptop/tp_smapi",
@@ -140,6 +168,8 @@ class laptop {
     "sys-power/hibernate-script",
     "sys-power/suspend",
     "net-dialup/minicom",
+    # on screen keyboard
+    "media-gfx/cellwriter",
   ]
 
   $packages_require = [
@@ -152,6 +182,22 @@ class laptop {
     require => $packages_require,
   }
 
+  $packages_overlay = [
+    # auto rotation for tablets
+    "x11-misc/magick-rotation",
+    "app-laptop/thinkpad-scripts",
+    "app-accessibility/onboard"
+  ]
+
+  $packages_overlay_require = [
+    Layman['nitelite-a'],
+    Layman['nitelite-b'],
+  ]
+
+  package { $packages_overlay:
+    ensure  => installed,
+    require => $packages_overlay_require,
+  }
 
   service { laptop_mode:
     ensure    => running,
@@ -174,6 +220,14 @@ class laptop {
     enable => true,
     require   => [
       Package['net-wireless/bluez'],
+    ],
+  }
+
+  service { NetworkManager:
+    ensure    => running,
+    enable => true,
+    require   => [
+      Package['net-misc/networkmanager'],
     ],
   }
 
