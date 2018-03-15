@@ -53,6 +53,8 @@ class vcs(
       source => 'vcs',
     }
 
+    # I don't use these rsa keys because I'm not gonna have an exposed internet facing node's root user pushing out to
+    # other servers. This was used for my own internal network computer which is a pattern I don't use anymore
     file { "/root/.ssh/vcs_rsa":
       ensure => present,
       owner => "root",
@@ -466,8 +468,9 @@ class vcs(
 
     file { "/srv/fossil/fossils":
       ensure => directory,
-      owner => "root",
-      group => "root",
+      owner => "deployer",
+      group => "www-data",
+      recurse => true,
       require => File['/srv/fossil'],
     }
 
@@ -532,8 +535,9 @@ class vcs(
 
     file { "/srv/git/repositories":
       ensure => directory,
-      owner => "root",
-      group => "root",
+      owner => "deployer",
+      group => "www-data",
+      recurse => true,
       require => File['/srv/git'],
     }
 

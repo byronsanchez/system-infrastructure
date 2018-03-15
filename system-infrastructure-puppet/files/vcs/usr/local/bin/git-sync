@@ -110,15 +110,17 @@ fi
 
 org_name="${organization}"
 repo_name="${repository}.git"
-conf_file="${repo_mirror_dir}/${org_name}/${repo_name}/${repository}-deploy/mirrors/git"
 
 mirror_src="${repo_mirror_dir}/${org_name}/${repo_name}"
 dst_dir="${repo_mirror_dir}/${org_name}"
 
-# Strip comments and empty lines from the config file
-DATA=$(cat $conf_file | grep -v "^#" | grep -v "^$" | sed -e 's:#.*::g');
-
 cd "$mirror_src"
+
+conf_file=$(git show master:${repository}-deploy/mirrors/git)
+# Strip comments and empty lines from the config file
+DATA=$(echo "${conf_file}" | grep -v "^#" | grep -v "^$" | sed -e 's:#.*::g');
+
+echo "$DATA"
 
 while read -r line;
 do
@@ -140,4 +142,3 @@ do
   git push -q --mirror ${remote_name}
 
 done <<< "$DATA"
-

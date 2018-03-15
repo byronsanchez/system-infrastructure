@@ -7,7 +7,7 @@ dest="/etc/puppet"
 echo "Installing system-infrastructure..."
 
 #mkdir -p ${dest}
-sudo rsync -avz ${ROOT_PUPPET_DIR}/ ${dest}
+sudo rsync -zptlrq --delete ${ROOT_PUPPET_DIR}/system-infrastructure-puppet/ ${dest}
 
 # chown -R deployer:www-data "${DATABASE_DIR}"
 # find ${DATABASE_DIR} -type d -exec chmod 2770 '{}' \;
