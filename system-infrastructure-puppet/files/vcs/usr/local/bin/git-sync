@@ -139,6 +139,6 @@ do
   # are fossil)
   #git fetch -q
   # push fetched changes to external repos
-  git push -q --mirror ${remote_name}
+  git push -q --mirror --force ${remote_name}
 
 done <<< "$DATA"
