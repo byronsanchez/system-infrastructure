@@ -12,7 +12,8 @@ service fossil
         socket_type = stream
         protocol = tcp
         wait = no
-        user = www-data
+        user = deployer
+        group = www-data
         disable = no
         server = /usr/bin/fossil
         # We only expect connections from localhost since external requests are being proxied by nginx to this fossil service

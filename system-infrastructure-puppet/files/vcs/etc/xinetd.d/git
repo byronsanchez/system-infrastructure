@@ -6,7 +6,8 @@ service git
         port            = 9418
         socket_type     = stream
         wait            = no
-        user            = www-data
+        user            = deployer
+        group           = www-data
         server          = /usr/bin/git
         server_args     = daemon --inetd --export-all --base-path=/srv/git/repositories
         log_on_failure  += USERID
