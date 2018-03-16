@@ -4,13 +4,13 @@
 
 source /usr/local/lib/nitelite/helpers/common.lib.sh;
 
-work_dir="/srv/fossil/fossils"
-configs_dir="/srv/fossil/configs"
+fossil_dir="/srv/fossil/fossils"
+settings_dir="/srv/fossil/configs"
 
 # Initialize our own variables:
 organization=""
-action=""
 repository=""
+action=""
 
 quiet=0
 
@@ -29,6 +29,11 @@ options:
 
     -o --organization=NAME         Organization that owns the repo
     -r --repository=NAME           Repository name
+
+optional:
+
+    -f --fossil-dir                The directory containing the fossil files
+    -s --settings-dir              The directory containing the fossil settings
 
 commands:
 
@@ -67,6 +72,20 @@ function get_options () {
             --repository=*)
                 repository=$(echo ${opt} | cut -d'=' -f 2);
                 ;;
+            -f|--fossil-dir)
+                fossil_dir=$1
+                shift
+                ;;
+            --fossil-dir=*)
+                fossil_dir=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -s|--settings-dir)
+                settings_dir=$1
+                shift
+                ;;
+            --settings-dir=*)
+                settings_dir=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
 
             -c|--create)
                 action="create"
@@ -98,7 +117,7 @@ function get_options () {
                 argv+=(${opt})
                 ;;
         esac
-    done 
+    done
 }
 
 ##################
@@ -130,7 +149,7 @@ create)
 
   info "creating repository with name ${repository} under organization ${organization}..."
 
-  dst_dir="${work_dir}/${organization}"
+  dst_dir="${fossil_dir}/${organization}"
 
   mkdir -p "${dst_dir}"
   cd "${dst_dir}"
@@ -154,7 +173,7 @@ delete)
 
   info "deleting repository with name ${repository} under organization ${organization}..."
 
-  fossil_repo="${work_dir}/${organization}/${repository}.fossil"
+  fossil_repo="${fossil_dir}/${organization}/${repository}.fossil"
 
   rm -rf "${fossil_repo}"
 
@@ -174,24 +193,24 @@ update)
 
   info "updating configs for ${repository} under organization ${organization}..."
 
-  dst_dir="${work_dir}/${organization}"
+  dst_dir="${fossil_dir}/${organization}"
 
   cd "${dst_dir}"
-  rm -rf "tmp"
-  mkdir "tmp"
-  cd "tmp"
+#  rm -rf "tmp"
+#  mkdir "tmp"
+#  cd "tmp"
 
-  fossil open "${dst_dir}/${repository}.fossil"
+  #fossil open "${dst_dir}/${repository}.fossil"
 
-  for f in ${configs_dir}/*;
+  for f in ${settings_dir}/*;
   do
-    fossil config import "${f}"
+    fossil config import "${f}" -R "./${repository}.fossil"
   done
 
-  fossil close
+  #fossil close
 
   cd "${dst_dir}"
-  rm -rf "tmp"
+  #rm -rf "tmp"
 
   ;;
 
@@ -199,7 +218,7 @@ update-all)
 
   info "updating configuration settings for all repositories..."
 
-  for organization in $work_dir/*;
+  for organization in $fossil_dir/*;
   do
     org_name="$(basename ${organization})"
 
