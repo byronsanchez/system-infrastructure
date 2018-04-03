@@ -17,7 +17,6 @@
 - /vol/*
 - /run/*
 - /mnt/*
-- /media/*
 - /lost+found
 # exclude dropbox stuff. the authoritative workstation just symlinks it to
 # outside directories and those outside directories will be backed up. thus, to
@@ -38,7 +37,7 @@
 # to be more specific, mira has an authoritative reference folder with
 # dropbox+projects symlinking to it. because this also hosts the backups,
 # rsnapshot copies symlinks as symlinks instead of duping the data
-# 
+#
 # on dropbox "client" machines, dropbox is the authoritative data directory and
 # symlinks are built to point to it. Let's write some exclude rules to be safe.
 # mount directories
@@ -54,9 +53,9 @@
 - /cygdrive/c/Users/*/encrypted/*
 - /cygdrive/c/Users/*/scratch/**
 - /cygdrive/c/Users/*/.local/share/Trash/*
-# The authoritative private is mira but in case of divergences, we're allowing
-# backups from other workstations as well
-#- /cygdrive/c/Users/*/private/*
+# The way it works now is that there's a cron job on mira who syncs navi's private directory every hour
+# rsnapshot will then backup the ~/private directory on mira. so to prevent dupes, we ignore navi's version
+- /cygdrive/c/Users/*/private/*
 # mirrors get mirrored
 - /srv/nfs/io/**
 # the gentoo modules are just symlinks to other directories that get backed up

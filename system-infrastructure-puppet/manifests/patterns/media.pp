@@ -458,7 +458,7 @@ class media {
     "mp3unicode",
     "mp3wrap",
     "mp3info",
-    "mp3gain",
+    #"mp3gain",
     "mp3diags",
     "mp3check",
     "mp3asm",

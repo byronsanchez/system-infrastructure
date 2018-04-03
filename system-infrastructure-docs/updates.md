@@ -38,7 +38,7 @@ based on the information you see.
 
 Command ball:
 
-rvm use system; genup -n; eix-sync -w; emerge -DuvaN --with-bdeps=y --keep-going @world; emerge @preserved-rebuild; revdep-rebuild; perl-cleaner --all; python-updater; emerge -av --depclean; eclean distfiles; eclean packages; 
+    rvm use system; genup -n; eix-sync -w; emerge -DuvaN --with-bdeps=y --keep-going @world; emerge @preserved-rebuild --keep-going; revdep-rebuild --keep-going; perl-cleaner --all --keep-going; python-updater --keep-going; emerge -av --depclean --keep-going; eclean distfiles; eclean packages;
 
 Prepare environment for updates:
 
