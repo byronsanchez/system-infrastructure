@@ -1,2 +1,2 @@
 src="."
-dst="deploy-nitelite:/var/lib/nitelite/deploy/system-infrastructure"
+dst="deploy:/var/lib/nitelite/deploy/system-infrastructure"
