@@ -22,37 +22,6 @@ class vcs(
       require => File['/etc/nitelite/vcs.d/git'],
     }
 
-    $git_mirror_configs_byronsanchez = [
-      '/etc/nitelite/vcs.d/git/byronsanchez/dotfiles',
-      '/etc/nitelite/vcs.d/git/byronsanchez/coloring-book-android',
-      '/etc/nitelite/vcs.d/git/byronsanchez/coloring-book-ios',
-      '/etc/nitelite/vcs.d/git/byronsanchez/gentoo-bootmodder',
-      '/etc/nitelite/vcs.d/git/byronsanchez/gentoo-overlay-a',
-      '/etc/nitelite/vcs.d/git/byronsanchez/gentoo-overlay-b',
-      '/etc/nitelite/vcs.d/git/byronsanchez/gentoo-overlay-applications',
-      '/etc/nitelite/vcs.d/git/byronsanchez/gentoo-provision',
-      '/etc/nitelite/vcs.d/git/byronsanchez/hackbytes.com',
-      '/etc/nitelite/vcs.d/git/byronsanchez/system-infrastructure',
-      '/etc/nitelite/vcs.d/git/byronsanchez/wintersmith-articles-helper',
-      '/etc/nitelite/vcs.d/git/byronsanchez/wintersmith-handleize-helper',
-      '/etc/nitelite/vcs.d/git/byronsanchez/wintersmith-robotskirt',
-      '/etc/nitelite/vcs.d/git/byronsanchez/wintersmith-tag-pages',
-      '/etc/nitelite/vcs.d/git/byronsanchez/creepypasta-files-android',
-      '/etc/nitelite/vcs.d/git/byronsanchez/creepypasta-files-ios',
-    ]
-
-    # TODO: rewrite the git_push script to read a single config file instead of
-    # the way it's currently implemented (multiple config files in different org
-    # dirs)
-
-    nl_files { $git_mirror_configs_byronsanchez:
-      owner    => 'www-data',
-      group    => 'www-data',
-      mode     => 0644,
-      requires  => File["/etc/nitelite/vcs.d/git/byronsanchez"],
-      source => 'vcs',
-    }
-
     # I don't use these rsa keys because I'm not gonna have an exposed internet facing node's root user pushing out to
     # other servers. This was used for my own internal network computer which is a pattern I don't use anymore
     file { "/root/.ssh/vcs_rsa":
@@ -428,24 +397,6 @@ class vcs(
       owner => "root",
       group => "root",
       require => File['/srv/fossil'],
-    }
-
-    file { "/srv/fossil/configs/blackwhitealt.txt":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      path => "/srv/fossil/configs/blackwhitealt.txt",
-      source => "puppet:///files/vcs/srv/fossil/configs/blackwhitealt.txt",
-      require => File['/srv/fossil/configs'],
-    }
-
-    file { "/srv/fossil/configs/googlecode.txt":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      path => "/srv/fossil/configs/googlecode.txt",
-      source => "puppet:///files/vcs/srv/fossil/configs/googlecode.txt",
-      require => File['/srv/fossil/configs'],
     }
 
     file { "/srv/fossil/configs/project.conf":

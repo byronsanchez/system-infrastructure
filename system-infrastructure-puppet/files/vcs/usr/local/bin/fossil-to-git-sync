@@ -127,7 +127,7 @@ if [ ! -e "${git_dst}/HEAD" ];
 then
   /usr/bin/git init --bare
   /usr/bin/git config user.name "Byron Sanchez"
-  /usr/bin/git config user.email "byron@byronsanchez.io"
+  /usr/bin/git config user.email "byron@hackbytes.io"
 fi
 
 fossil export --git ${fossil_repo_path} | git fast-import --force
