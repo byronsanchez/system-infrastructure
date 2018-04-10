@@ -1,11 +1,4 @@
-###########################################
-#                                         #
-# MANAGED BY PUPPET                       #
-#                                         #
-# Manual changes WILL be overwritten      #
-#                                         #
-###########################################
 
 github=git@github.com:byronsanchez/system-infrastructure.git
-#bitbucket=git@bitbucket.com:byronsanchez/system-infrastructure.git
+bitbucket=git@bitbucket.org:byronsanchez/system-infrastructure.git
 
