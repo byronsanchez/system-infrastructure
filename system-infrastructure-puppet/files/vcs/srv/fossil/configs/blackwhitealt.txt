@@ -612,7 +612,7 @@ config /config 1417
 </head>
 <body>
 <div class="header">
-  <div class="title"><a href="$baseurl">fossil.nitelite.io</a> / $<project_name> | $<title></div>
+  <div class="title"><a href="$baseurl">fossil.hackbytes.io</a> / $<project_name> | $<title></div>
   <div class="status"><th1>
      if {[info exists login]} {
        puts "Logged in as $login"

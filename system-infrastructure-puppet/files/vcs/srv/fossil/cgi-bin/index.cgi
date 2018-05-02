@@ -6,7 +6,7 @@ cat <<EOM
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-      <title>fossil.nitelite.io</title>
+      <title>fossil.hackbytes.io</title>
       <style type="text/css">
       .main {
       padding-left:     1em;
@@ -30,7 +30,7 @@ cat <<EOM
     </head>
     <body>
       <div class="main">
-        <h3>fossil.nitelite.io</h3>
+        <h3>fossil.hackbytes.io</h3>
         <div>
           <p><a href="/opml.cgi">opml</a> | <a href="/list.cgi">list</a></p>
         </div>

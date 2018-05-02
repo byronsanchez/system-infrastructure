@@ -716,7 +716,7 @@ config /config 2541
   <div class="header"> 
     <a href="$home$index_page"><img src="$home/logo" alt="logo" class="logo" /></a>
     <div class="title-header">
-      <div class="title"><small><a href="https://fossil.nitelite.io">fossil.nitelite.io</a> &#8250; <a href="$home$index_page">$<project_name></a></small></div>
+      <div class="title"><small><a href="https://fossil.hackbytes.io">fossil.hackbytes.io</a> &#8250; <a href="$home$index_page">$<project_name></a></small></div>
         <div class="page-title">
       <th1>
         if {$current_page eq [string range $index_page 1 end] || 

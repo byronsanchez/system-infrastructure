@@ -2,8 +2,8 @@
 # cgit config
 #
 
-root-title=git.nitelite.io
-root-desc=git mirror for fossil repositories at fossil.nitelite.io
+root-title=git.hackbytes.io
+root-desc=
 snapshots=tar.gz tar.xz zip
 
 css=/cgit.css

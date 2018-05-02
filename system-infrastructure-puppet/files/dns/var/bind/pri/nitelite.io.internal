@@ -19,8 +19,6 @@ nitelite.io. IN MX 10 mx.internal.nitelite.io.
 ;; CNAME Records
 production.nitelite.io. IN CNAME nitelite.io.
 www.nitelite.io. IN CNAME nitelite.io.
-fossil.nitelite.io. IN CNAME nitelite.io.
-git.nitelite.io. IN CNAME nitelite.io.
 feeds.nitelite.io. IN CNAME nitelite.io.
 feedburner.nitelite.io. IN CNAME 1t5jdoq.feedproxy.ghs.google.com.
 

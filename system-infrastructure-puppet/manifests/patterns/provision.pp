@@ -88,14 +88,14 @@ class provision {
   vcsrepo { "/var/lib/nitelite/provision/gentoo-provision":
     ensure   => present,
     provider => git,
-    source   => "https://git.nitelite.io/byronsanchez/gentoo-provision",
+    source   => "https://git.hackbytes.io/byronsanchez/gentoo-provision",
     require => File["/var/lib/nitelite/provision"],
   }
 
   vcsrepo { "/var/lib/nitelite/provision/gentoo-bootmodder":
     ensure   => present,
     provider => git,
-    source   => "https://git.nitelite.io/byronsanchez/gentoo-bootmodder",
+    source   => "https://git.hackbytes.io/byronsanchez/gentoo-bootmodder",
     require => File["/var/lib/nitelite/provision"],
   }
 

@@ -112,24 +112,24 @@ class vcs(
 
       # fossil mirror frontend nginx for https (backend http not needed since the
       # fossil server and the http server are hosted on the same node)
-      nl_nginx::website { "fossil":
-        websiteName     => "fossil.hackbytes.com",
-        environmentName => "${mirror_environment}",
-        feed_path       => "fossil",
-        root_path       => "/htdocs",
-        enable_custom_configs => true,
-        enable_ssl      => true,
-        enable_cgi      => true,
-        # cgi scripts sent here
-        cgi_server      => "fossil.hackbytes.com:3128",
-        ssl_cert_path   => "/etc/ssl/hackbytes.com/cacert.pem",
-        ssl_key_path    => "/etc/ssl/hackbytes.com/private/cakey.pem.unencrypted",
-        proxy_pass      => "http://fossilserver",
-        proxy_redirect  => "http://fossil.hackbytes.com:4545/ https://fossil.hackbytes.com/",
-        upstream        => "fossilserver",
-        # non-cgi scripts will be handled by the fossil server
-        upstream_server => "fossil.hackbytes.com:4545",
-      }
+      # nl_nginx::website { "fossil":
+      #   websiteName     => "fossil.hackbytes.com",
+      #   environmentName => "${mirror_environment}",
+      #   feed_path       => "fossil",
+      #   root_path       => "/htdocs",
+      #   enable_custom_configs => true,
+      #   enable_ssl      => true,
+      #   enable_cgi      => true,
+      #   # cgi scripts sent here
+      #   cgi_server      => "fossil.hackbytes.com:3128",
+      #   ssl_cert_path   => "/etc/ssl/hackbytes.com/cacert.pem",
+      #   ssl_key_path    => "/etc/ssl/hackbytes.com/private/cakey.pem.unencrypted",
+      #   proxy_pass      => "http://fossilserver",
+      #   proxy_redirect  => "http://fossil.hackbytes.com:4545/ https://fossil.hackbytes.com/",
+      #   upstream        => "fossilserver",
+      #   # non-cgi scripts will be handled by the fossil server
+      #   upstream_server => "fossil.hackbytes.com:4545",
+      # }
 
     }
     else {
@@ -153,36 +153,36 @@ class vcs(
 
       # fossil mirror frontend nginx for https (backend http not needed since the
       # fossil server and the http server are hosted on the same node)
-      nl_nginx::website { "fossil":
-        websiteName     => "fossil.hackbytes.com",
-        environmentName => "${mirror_environment}",
-        feed_path       => "fossil",
-        root_path       => "/htdocs",
-        enable_custom_configs => true,
-        enable_ssl      => true,
-        enable_cgi      => true,
-        # cgi scripts sent here
-        cgi_server      => "${mirror_environment}.fossil.hackbytes.com:3128",
-        ssl_cert_path   => "/etc/ssl/hackbytes.com/cacert.pem",
-        ssl_key_path    => "/etc/ssl/hackbytes.com/private/cakey.pem.unencrypted",
-        proxy_pass      => "http://fossilserver",
-        proxy_redirect  => "http://${mirror_environment}.fossil.hackbytes.com:4545/ https://${mirror_environment}.fossil.hackbytes.com/",
-        upstream        => "fossilserver",
-        # non-cgi scripts will be handled by the fossil server
-        upstream_server => "${mirror_environment}.fossil.hackbytes.com:4545",
-      }
+      # nl_nginx::website { "fossil":
+      #   websiteName     => "fossil.hackbytes.com",
+      #   environmentName => "${mirror_environment}",
+      #   feed_path       => "fossil",
+      #   root_path       => "/htdocs",
+      #   enable_custom_configs => true,
+      #   enable_ssl      => true,
+      #   enable_cgi      => true,
+      #   # cgi scripts sent here
+      #   cgi_server      => "${mirror_environment}.fossil.hackbytes.com:3128",
+      #   ssl_cert_path   => "/etc/ssl/hackbytes.com/cacert.pem",
+      #   ssl_key_path    => "/etc/ssl/hackbytes.com/private/cakey.pem.unencrypted",
+      #   proxy_pass      => "http://fossilserver",
+      #   proxy_redirect  => "http://${mirror_environment}.fossil.hackbytes.com:4545/ https://${mirror_environment}.fossil.hackbytes.com/",
+      #   upstream        => "fossilserver",
+      #   # non-cgi scripts will be handled by the fossil server
+      #   upstream_server => "${mirror_environment}.fossil.hackbytes.com:4545",
+      # }
 
     }
 
     # the front end server
-    file { "/etc/nginx/conf.d/nitelite/fossil.hackbytes.com":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nginx/conf.d/nitelite'],
-      path => "/etc/nginx/conf.d/nitelite/fossil.hackbytes.com",
-      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/fossil.hackbytes.com",
-    }
+    # file { "/etc/nginx/conf.d/nitelite/fossil.hackbytes.com":
+    #   ensure => present,
+    #   owner => "root",
+    #   group => "root",
+    #   require => File['/etc/nginx/conf.d/nitelite'],
+    #   path => "/etc/nginx/conf.d/nitelite/fossil.hackbytes.com",
+    #   source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/fossil.hackbytes.com",
+    # }
 
     # needs to be on the cgi server
     file { "/etc/nginx/conf.d/nitelite/git.hackbytes.com":
@@ -214,11 +214,11 @@ class vcs(
   # once I get my new environment configured.
   if ($vcs_type == 'remote') {
 
-    # git.nitelite.io
+    # git.hackbytes.io
 
     exec { "webapp_config_git_${environment}":
-      command => "/usr/sbin/webapp-config -I cgit 0.12 -h git.nitelite.io -d git",
-      creates => "/srv/www/git.nitelite.io/htdocs/git",
+      command => "/usr/sbin/webapp-config -I cgit 0.12 -h git.hackbytes.io -d git",
+      creates => "/srv/www/git.hackbytes.io/htdocs/git",
       require => [
         Package[cgit],
         File['/srv/www'],
@@ -228,7 +228,7 @@ class vcs(
 
     # cgit internal backend nginx for https
     nl_nginx::website { "git":
-      websiteName           => "git.nitelite.io",
+      websiteName           => "git.hackbytes.io",
       environmentName       => "production",
       feed_path             => "git",
       root_path             => "/htdocs/git",
@@ -237,51 +237,51 @@ class vcs(
       enable_ssl            => true,
       disable_robots        => true,
       cgi_server            => "45.79.190.253:3129",
-      ssl_cert_path         => "/etc/letsencrypt/live/git.nitelite.io/fullchain.pem",
-      ssl_key_path          => "/etc/letsencrypt/live/git.nitelite.io/privkey.pem",
+      ssl_cert_path         => "/etc/letsencrypt/live/git.hackbytes.io/fullchain.pem",
+      ssl_key_path          => "/etc/letsencrypt/live/git.hackbytes.io/privkey.pem",
     }
 
     # fossil mirror frontend nginx for https (backend http not needed since the
     # fossil server and the http server are hosted on the same node)
-    nl_nginx::website { "fossil":
-      websiteName           => "fossil.nitelite.io",
-      environmentName       => "production",
-      feed_path             => "fossil",
-      root_path             => "/htdocs",
-      enable_custom_configs => true,
-      enable_cgi            => true,
-      enable_ssl            => true,
-      disable_robots        => true,
-      ssl_cert_path         => "/etc/letsencrypt/live/fossil.nitelite.io/fullchain.pem",
-      ssl_key_path          => "/etc/letsencrypt/live/fossil.nitelite.io/privkey.pem",
-      # cgi scripts sent here
-      cgi_server      => "45.79.190.253:3128",
-      proxy_pass      => "http://fossilserver",
-      proxy_redirect  => "http://fossil.nitelite.io:4545/ https://fossil.nitelite.io/",
-      upstream        => "fossilserver",
-      # non-cgi scripts will be handled by the fossil server
-      upstream_server => "localhost:4545",
-    }
+    # nl_nginx::website { "fossil":
+    #   websiteName           => "fossil.hackbytes.io",
+    #   environmentName       => "production",
+    #   feed_path             => "fossil",
+    #   root_path             => "/htdocs",
+    #   enable_custom_configs => true,
+    #   enable_cgi            => true,
+    #   enable_ssl            => true,
+    #   disable_robots        => true,
+    #   ssl_cert_path         => "/etc/letsencrypt/live/fossil.hackbytes.io/fullchain.pem",
+    #   ssl_key_path          => "/etc/letsencrypt/live/fossil.hackbytes.io/privkey.pem",
+    #   # cgi scripts sent here
+    #   cgi_server      => "45.79.190.253:3128",
+    #   proxy_pass      => "http://fossilserver",
+    #   proxy_redirect  => "http://fossil.hackbytes.io:4545/ https://fossil.hackbytes.io/",
+    #   upstream        => "fossilserver",
+    #   # non-cgi scripts will be handled by the fossil server
+    #   upstream_server => "localhost:4545",
+    # }
 
     # the front end server
-    file { "/etc/nginx/conf.d/nitelite/fossil.nitelite.io":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nginx/conf.d/nitelite'],
-      path => "/etc/nginx/conf.d/nitelite/fossil.nitelite.io",
-      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/fossil.nitelite.io",
-    }
+    # file { "/etc/nginx/conf.d/nitelite/fossil.hackbytes.io":
+    #   ensure => present,
+    #   owner => "root",
+    #   group => "root",
+    #   require => File['/etc/nginx/conf.d/nitelite'],
+    #   path => "/etc/nginx/conf.d/nitelite/fossil.hackbytes.io",
+    #   source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/fossil.hackbytes.io",
+    # }
 
     # needs to be on the cgi server
-    file { "/etc/nginx/conf.d/nitelite/git.nitelite.io":
-      ensure => present,
-      owner => "root",
-      group => "root",
-      require => File['/etc/nginx/conf.d/nitelite'],
-      path => "/etc/nginx/conf.d/nitelite/git.nitelite.io",
-      source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/git.nitelite.io",
-    }
+    # file { "/etc/nginx/conf.d/nitelite/git.hackbytes.io":
+    #   ensure => present,
+    #   owner => "root",
+    #   group => "root",
+    #   require => File['/etc/nginx/conf.d/nitelite'],
+    #   path => "/etc/nginx/conf.d/nitelite/git.hackbytes.io",
+    #   source => "puppet:///files/vcs/etc/nginx/conf.d/nitelite/git.hackbytes.io",
+    # }
 
   }
 
@@ -298,7 +298,7 @@ class vcs(
     }
 
     file { "/etc/cron.d/fossil-ping":
-      ensure => present,
+      ensure => absent,
       owner  => "root",
       group  => "root",
       mode   => 0644,
@@ -308,7 +308,7 @@ class vcs(
     }
 
     file { "/usr/local/bin/fossil-cli":
-      ensure => present,
+      ensure => absent,
       owner  => "root",
       group  => "root",
       mode   => 0755,
@@ -317,7 +317,7 @@ class vcs(
     }
 
     file { "/usr/local/bin/fossil-ping":
-      ensure => present,
+      ensure => absent,
       owner  => "root",
       group  => "root",
       mode   => 0755,
@@ -326,7 +326,7 @@ class vcs(
     }
 
     file { "/usr/local/bin/fossil-to-git-sync":
-      ensure => present,
+      ensure => absent,
       owner  => "root",
       group  => "root",
       mode   => 0755,
@@ -335,12 +335,31 @@ class vcs(
     }
 
     file { "/usr/local/bin/fossil-sync":
-      ensure => present,
+      ensure => absent,
       owner  => "root",
       group  => "root",
       mode   => 0755,
       path   => "/usr/local/bin/fossil-sync",
       source => "puppet:///files/vcs/usr/local/bin/fossil-sync",
+    }
+
+    file { "/etc/cron.d/git-ping":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0644,
+      path   => "/etc/cron.d/git-ping",
+      source => "puppet:///files/vcs/etc/cron.d/git-ping",
+      require => File["/etc/cron.d"],
+    }
+
+    file { "/usr/local/bin/git-ping":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0755,
+      path   => "/usr/local/bin/git-ping",
+      source => "puppet:///files/vcs/usr/local/bin/git-ping",
     }
 
     file { "/usr/local/bin/git-sync":
@@ -355,7 +374,8 @@ class vcs(
     # FOSSIL
 
     file { "/srv/fossil/cgi-bin":
-      ensure  => directory,
+      #ensure  => directory,
+      ensure => absent,
       owner   => "root",
       group   => "root",
       mode    => "0755",
@@ -363,7 +383,7 @@ class vcs(
     }
 
     file { "/srv/fossil/cgi-bin/index.cgi":
-      ensure => present,
+      ensure => absent,
       owner => "root",
       group => "root",
       mode    => "0755",
@@ -373,7 +393,7 @@ class vcs(
     }
 
     file { "/srv/fossil/cgi-bin/opml.cgi":
-      ensure => present,
+      ensure => absent,
       owner => "root",
       group => "root",
       mode    => "0755",
@@ -383,7 +403,7 @@ class vcs(
     }
 
     file { "/srv/fossil/cgi-bin/list.cgi":
-      ensure => present,
+      ensure => absent,
       owner => "root",
       group => "root",
       mode    => "0755",
@@ -393,14 +413,15 @@ class vcs(
     }
 
     file { "/srv/fossil/configs":
-      ensure => directory,
+      #ensure => directory,
+      ensure => absent,
       owner => "root",
       group => "root",
       require => File['/srv/fossil'],
     }
 
     file { "/srv/fossil/configs/project.conf":
-      ensure => present,
+      ensure => absent,
       owner => "root",
       group => "root",
       path => "/srv/fossil/configs/project.conf",
@@ -409,7 +430,7 @@ class vcs(
     }
 
     file { "/srv/fossil/configs/skin.conf":
-      ensure => present,
+      ensure => absent,
       owner => "root",
       group => "root",
       path => "/srv/fossil/configs/skin.conf",
@@ -418,7 +439,8 @@ class vcs(
     }
 
     file { "/srv/fossil/fossils":
-      ensure => directory,
+      #ensure => directory,
+      ensure => absent,
       owner => "deployer",
       group => "www-data",
       recurse => true,
@@ -426,35 +448,39 @@ class vcs(
     }
 
     file { "/srv/fossil":
-      ensure => directory,
+      #ensure => directory,
+      ensure => absent,
       owner => "root",
       group => "root",
       require => File['/srv'],
     }
 
     file { "/srv/fossil/uwsgi":
-      ensure => directory,
+      #ensure => directory,
+      ensure => absent,
       owner => "root",
       group => "root",
       require => File['/srv/fossil'],
     }
 
     file { "/srv/fossil/uwsgi/cgi":
-      ensure => directory,
+      #ensure => directory,
+      ensure => absent,
       owner => "root",
       group => "root",
       require => File['/srv/fossil/uwsgi'],
     }
 
     file { "/srv/fossil/uwsgi/cgi/config":
-      ensure => directory,
+      #ensure => directory,
+      ensure => absent,
       owner => "root",
       group => "root",
       require => File['/srv/fossil/uwsgi/cgi'],
     }
 
     file { "/srv/fossil/uwsgi/cgi/config/config.xml":
-      ensure => present,
+      ensure => absent,
       owner => "root",
       group => "root",
       path => "/srv/fossil/uwsgi/cgi/config/config.xml",
@@ -463,7 +489,7 @@ class vcs(
     }
 
     file { "/etc/conf.d/uwsgi.fossil":
-      ensure => present,
+      ensure => absent,
       owner => "root",
       group => "root",
       path => "/etc/conf.d/uwsgi.fossil",
@@ -471,7 +497,8 @@ class vcs(
     }
 
     file { '/etc/init.d/uwsgi.fossil':
-      ensure => 'link',
+      #ensure => 'link',
+      ensure => 'absent',
       target => '/etc/init.d/uwsgi',
     }
 
@@ -554,7 +581,7 @@ class vcs(
     }
 
     file { "/etc/xinetd.d/fossil":
-      ensure  => present,
+      ensure  => absent,
       owner   => "root",
       group   => "root",
       mode    => 0644,
@@ -597,8 +624,8 @@ class vcs(
     }
 
     service { "uwsgi.fossil":
-      ensure    => running,
-      enable => true,
+      ensure    => 'stopped',
+      enable => false,
       subscribe => File['/srv/fossil/uwsgi/cgi/config/config.xml'],
       require   => [
         File['/srv/fossil/uwsgi/cgi/config/config.xml'],
@@ -623,7 +650,7 @@ class vcs(
   }
 
   file { "/etc/portage/package.use/fossil":
-    ensure => present,
+    ensure => absent,
     owner => "root",
     group => "root",
     require => File['/etc/portage/package.use'],
@@ -642,7 +669,7 @@ class vcs(
 
   $packages = [
     "git",
-    "fossil",
+    #"fossil",
     "mercurial",
     "subversion",
     "bzr",
@@ -650,7 +677,7 @@ class vcs(
   ]
 
   $packages_require = [
-    File["/etc/portage/package.use/fossil"],
+    #File["/etc/portage/package.use/fossil"],
     File["/etc/portage/package.use/git"],
   ]
 
