@@ -16,7 +16,132 @@
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 
-* CLOSED Give the playlist-checkout script limit and random options
+* Backlog
+:PROPERTIES:
+:ID:       9319415c-1cb3-46ef-bbca-fed5fa18a19a
+:END:
+[2018-05-02 Wed 12:49]
+** OPEN Source code and line numbers lose alignment
+:PROPERTIES:
+:ID:       b5809c34-f805-4f4a-bb5f-4664374a44bc
+:END:
+[2018-05-02 Wed 23:48]
+
+In git.hackbytes.io, when viewing a large source file, it'll eventually lose
+alignment.
+
+It's visible when you get to like 9000 lines.
+
+Eg. 
+** OPEN See if you can add clone urls
+:PROPERTIES:
+:ID:       f3fedc37-bc2d-48ea-b18f-aa9b52fcc197
+:END:
+[2018-05-03 Thu 00:02]
+
+git.hackbytes.io could be improved by adding a clone url in the header ala:
+
+http://git.z3bra.org/
+** OPEN Create git ssh shell commands ala fossil-cli
+:PROPERTIES:
+:ID:       183d01ca-7f11-4abe-9e98-20bb67322a22
+:END:
+[2018-05-02 Wed 15:57]
+
+Take a look at this:
+
+#+begin_src sh
+$ ssh git@git.nixers.net help
+Available commands:
+
+        create-repo <name>
+        change-description <name> <description>
+        update-stagit <name>
+        release-tarball
+#+end_src
+
+Source: https://nixers.net/showthread.php?tid=2139&pid=18605#pid18605
+
+That way, you don't have to keep sshing /into/ the box to create repos.
+** FIXED Get git.hackbytes.io looking minimalist
+:PROPERTIES:
+:ID:       a6b983f2-53c2-4096-a996-800eae5d462b
+:END:
+[2018-05-02 Wed 15:11]
+
+Inspiration:
+
+- http://git.z3bra.org/
+- https://git.2f30.org/
+- http://git.codemadness.org/
+- https://git.xpub.nl/
+
+*** 1
+:PROPERTIES:
+:ID:       871e2915-25c0-4309-a1c6-d654aff5bacc
+:END:
+[2018-05-02 Wed 15:26]
+
+Looks like it's not cgit at all, but rather stagit:
+
+https://git.2f30.org/stagit/
+
+See more: https://nixers.net/showthread.php?tid=2139
+*** CLOSED Setup a release download CNAME+cron
+:PROPERTIES:
+:ID:       f107fe4f-5fb0-455a-b54f-14b075f547ad
+:END:
+[2018-05-02 Wed 16:11]
+
+ALA z3bra style:
+
+#+begin_quote
+...pub.nixers.net is the virtual host where release tarballs will be created.
+I've setup a cronjob to create a tarball for all tags in all repositories, and
+export them to http://pub.nixers.net/releases/ (like what I do here:
+http://dl.z3bra.org/releases). I can export them to
+http://git.nixers.net/releases is needed though (or virtually anything else),
+that's as you wish.
+#+end_quote
+
+Source: https://nixers.net/showthread.php?tid=2139&pid=18605#pid18605
+
+*** CLOSED Think this through some
+:PROPERTIES:
+:ID:       fe29bbec-e660-4eee-905e-7986d4caee02
+:END:
+[2018-05-02 Wed 18:29]
+
+Mainly, the thing is I don't think I /want/ a statically compiled web front end
+for git.
+
+I /want/ the ability to explore every part of a repo in whatever manner I might
+want- viewing source code, viewing diffs, tags, branches, refs, syntax
+highlighting, etc. Trivially changing the views just by changing gitrc, not
+having to build my own scripts to manage different parts of it, etc.
+
+I suspect sticking with cgit will be my ultimate decision, just theming the hell
+out of it.
+
+Explore what stagit can do, what it can't, what I'd have to build, and what
+functionality cgit offers over stagit, and then make my choice.
+
+[2018-05-02 Wed 23:43]
+
+Decided against it.
+
+cgit has features I like, the interactivity of searching, browsing through the
+repo dynamically, etc. I want it to be a web interactive viewer ala magit but
+via http.
+
+A static site will only generate one view and that's it. So stagit probably
+isn't my thing.
+
+And using cgit buys you the download release features built-in.
+
+Decided to just theme the hell out of cgit rather than use static compilation
+and building scripts around that.
+** CLOSED Give the playlist-checkout script limit and random options
 :PROPERTIES:
 :ID: 9289ae38-2baa-30f2-7961-425f53d8b7e3
 :EXPORT_FOSSIL_SOURCE: t
@@ -34,7 +159,7 @@
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 1
@@ -46,7 +171,7 @@
 :ID:       4695d46f-1590-47b4-9762-2842d557d0e8
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 1
@@ -61,7 +186,7 @@
 
 limit - sets a limit to the number of songs copied, or total space to use before ending a checkout
 random - choose random songs from the playlist as opposed to copying in order
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 1
@@ -73,7 +198,7 @@ random - choose random songs from the playlist as opposed to copying in order
 :ID:       132c1639-fa30-4d91-9684-5f3e183df256
 :END:
 [2015-03-29 Sun 22:30]
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 1
@@ -87,7 +212,7 @@ random - choose random songs from the playlist as opposed to copying in order
 [2017-01-15 Sun 13:44]
 
 No longer a requirement.
-* OPEN Create git user in vcs pattern to run git cron jobs
+** OPEN Create git user in vcs pattern to run git cron jobs
 :PROPERTIES:
 :ID: 93d7801f-b4d5-714f-120c-44a53430cc7d
 :EXPORT_FOSSIL_SOURCE: t
@@ -105,7 +230,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 2
@@ -117,7 +242,7 @@ No longer a requirement.
 :ID:       da5689aa-3735-4852-b777-e281c39255f7
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 2
@@ -129,7 +254,7 @@ No longer a requirement.
 :ID:       b058f8ff-c526-4222-afed-444d89741812
 :END:
 [2015-03-29 Sun 22:31]
-* FIXED use puppet to distribute ssh keys
+** FIXED use puppet to distribute ssh keys
 :PROPERTIES:
 :ID: c4a4a71a-46f1-451b-bc72-dde81b67747b
 :EXPORT_FOSSIL_SOURCE: t
@@ -147,7 +272,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 3
@@ -159,7 +284,7 @@ No longer a requirement.
 :ID:       f3ac7496-c0ff-4729-b339-b876ae80fabb
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 3
@@ -173,7 +298,7 @@ No longer a requirement.
 [2014-06-04 Wed 20:57]
 
 puppet will now distribute ssh keys to system users that require them. normal users will receive keys manually.
-* OPEN Remove duplication of git mirror cron job from vcs and mirror patterns
+** OPEN Remove duplication of git mirror cron job from vcs and mirror patterns
 :PROPERTIES:
 :ID: bcd116da-fee6-541c-b5a3-6155945eaa9d
 :EXPORT_FOSSIL_SOURCE: t
@@ -191,7 +316,7 @@ puppet will now distribute ssh keys to system users that require them. normal us
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 4
@@ -203,7 +328,7 @@ puppet will now distribute ssh keys to system users that require them. normal us
 :ID:       f5c41b70-e936-43fd-83d8-dd0fb7074ebb
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 4
@@ -217,7 +342,7 @@ puppet will now distribute ssh keys to system users that require them. normal us
 [2014-05-28 Wed 13:32]
 
 For the vcs pattern, the script currently diverges from the original by using a flat namespace for repositories. Make it use the unique namespace just like the original script.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 4
@@ -229,7 +354,7 @@ For the vcs pattern, the script currently diverges from the original by using a 
 :ID:       ff4c5ac9-69cd-4915-942f-b6c0406d8800
 :END:
 [2015-03-29 Sun 19:50]
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 4
@@ -243,7 +368,7 @@ For the vcs pattern, the script currently diverges from the original by using a 
 [2017-01-15 Sun 13:43]
 
 No longer a requirement.
-** 5
+*** 5
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 4
@@ -255,7 +380,7 @@ No longer a requirement.
 :ID:       e31fa825-3699-4b44-b1d3-9d2edce47158
 :END:
 [2017-01-15 Sun 13:43]
-* CLOSED Add public certs to java keystore
+** CLOSED Add public certs to java keystore
 :PROPERTIES:
 :ID: d8543c08-731c-68ea-adae-ac5e923bcb1d
 :EXPORT_FOSSIL_SOURCE: t
@@ -273,7 +398,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 5
@@ -285,7 +410,7 @@ No longer a requirement.
 :ID:       7032bbac-d713-49a9-ae63-59f6aac397c9
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 5
@@ -301,7 +426,7 @@ No longer a requirement.
 The command is:
 
     keytool -import -trustcacerts -file cert.pem -alias cert -keystore /etc/java-config-2/current-system-vm/jre/lib/security/cacerts
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 5
@@ -315,7 +440,7 @@ The command is:
 [2017-01-15 Sun 13:32]
 
 No longer a requirement.
-* FIXED remove gitlab resources from vcs pattern
+** FIXED remove gitlab resources from vcs pattern
 :PROPERTIES:
 :ID: c91932ca-551e-f517-c166-1d050e7eeacd
 :EXPORT_FOSSIL_SOURCE: t
@@ -333,7 +458,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 6
@@ -345,7 +470,7 @@ No longer a requirement.
 :ID:       71381831-78f5-462d-bd94-c9cea3ae9b03
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 6
@@ -357,7 +482,7 @@ No longer a requirement.
 :ID:       c455d21a-9e9c-4806-8701-a361496f2090
 :END:
 [2014-06-04 Wed 21:03]
-* CLOSED Move webserver nginx files to nginx module
+** CLOSED Move webserver nginx files to nginx module
 :PROPERTIES:
 :ID: 0adf7720-cc8a-b625-36ab-68d044076399
 :EXPORT_FOSSIL_SOURCE: t
@@ -375,7 +500,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 7
@@ -387,7 +512,7 @@ No longer a requirement.
 :ID:       0bb5b5fd-eaea-4d56-8e97-e95303e16d70
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 7
@@ -401,7 +526,7 @@ No longer a requirement.
 [2015-03-29 Sun 19:48]
 
 Fixed by [d270dc9734].
-* FIXED move contents of callisto to byronsanchez mount
+** FIXED move contents of callisto to byronsanchez mount
 :PROPERTIES:
 :ID: 77f08e84-cf19-0523-9360-d61e784182a8
 :EXPORT_FOSSIL_SOURCE: t
@@ -419,7 +544,7 @@ Fixed by [d270dc9734].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 8
@@ -431,7 +556,7 @@ Fixed by [d270dc9734].
 :ID:       14903e02-2533-4d17-ae10-61e0c9057b41
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 8
@@ -443,7 +568,7 @@ Fixed by [d270dc9734].
 :ID:       71c13506-36ce-4401-92db-2041d2a3e1f7
 :END:
 [2014-06-04 Wed 21:04]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 8
@@ -455,7 +580,7 @@ Fixed by [d270dc9734].
 :ID:       8a877231-c194-4cfd-8940-b842c514e15b
 :END:
 [2014-06-04 Wed 21:34]
-* FIXED get rid of callisto, puppet and gentoo nfs mounts
+** FIXED get rid of callisto, puppet and gentoo nfs mounts
 :PROPERTIES:
 :ID: 925cfdfd-1810-8f4b-f57d-a0e40feed56c
 :EXPORT_FOSSIL_SOURCE: t
@@ -473,7 +598,7 @@ Fixed by [d270dc9734].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 9
@@ -485,7 +610,7 @@ Fixed by [d270dc9734].
 :ID:       12e2f852-2a17-4350-aa75-358871430dfa
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 9
@@ -499,7 +624,7 @@ Fixed by [d270dc9734].
 [2014-06-04 Wed 20:56]
 
 mounts have been removed from all nodes.
-* CLOSED Determine which files across the network should be centralized
+** CLOSED Determine which files across the network should be centralized
 :PROPERTIES:
 :ID: e80aba9f-fded-9db6-5cec-9d13ec1dde0d
 :EXPORT_FOSSIL_SOURCE: t
@@ -517,7 +642,7 @@ mounts have been removed from all nodes.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 10
@@ -529,7 +654,7 @@ mounts have been removed from all nodes.
 :ID:       85edae43-8c86-424c-97ce-fcedea92ceb6
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 10
@@ -547,7 +672,7 @@ analyze the main purpose of each node and determine whether or not the files it 
 - data
 - mail
 - webserver directories (zosma and sirius)
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 10
@@ -561,7 +686,7 @@ analyze the main purpose of each node and determine whether or not the files it 
 [2017-01-15 Sun 13:33]
 
 No longer a requirement.
-* FIXED Setup backup scripts for ldap
+** FIXED Setup backup scripts for ldap
 :PROPERTIES:
 :ID: 466ead93-7186-c215-bc4d-37cb4c81f167
 :EXPORT_FOSSIL_SOURCE: t
@@ -579,7 +704,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 11
@@ -591,7 +716,7 @@ No longer a requirement.
 :ID:       57c356e7-8f8b-40a7-b137-4f7790c00b1e
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 11
@@ -605,7 +730,7 @@ No longer a requirement.
 [2014-06-07 Sat 20:16]
 
 added in [597b972be8].
-* FIXED Setup backup scripts for pgsql
+** FIXED Setup backup scripts for pgsql
 :PROPERTIES:
 :ID: 866036c6-9a3a-f679-218a-849cedbc7834
 :EXPORT_FOSSIL_SOURCE: t
@@ -623,7 +748,7 @@ added in [597b972be8].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 12
@@ -635,7 +760,7 @@ added in [597b972be8].
 :ID:       eedaee14-5e76-40aa-8f6c-8427ab90cdc2
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 12
@@ -649,7 +774,7 @@ added in [597b972be8].
 [2014-06-07 Sat 20:17]
 
 added in [597b972be8].
-* FIXED Setup backup scripts for mysql
+** FIXED Setup backup scripts for mysql
 :PROPERTIES:
 :ID: 6ccdef24-1e6c-a35f-38e0-8c449db60d29
 :EXPORT_FOSSIL_SOURCE: t
@@ -667,7 +792,7 @@ added in [597b972be8].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 13
@@ -679,7 +804,7 @@ added in [597b972be8].
 :ID:       5143ebdd-e8ae-4655-a6ca-e8c98312ccb6
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 13
@@ -693,7 +818,7 @@ added in [597b972be8].
 [2014-06-07 Sat 20:17]
 
 added in [597b972be8].
-* FIXED Setup backup scripts for files
+** FIXED Setup backup scripts for files
 :PROPERTIES:
 :ID: f5c6c156-ca2b-14f2-46ec-89768a61eb7d
 :EXPORT_FOSSIL_SOURCE: t
@@ -711,7 +836,7 @@ added in [597b972be8].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 14
@@ -723,7 +848,7 @@ added in [597b972be8].
 :ID:       b5a9188f-84f5-4158-9c9c-add1108d337c
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 14
@@ -737,7 +862,7 @@ added in [597b972be8].
 [2014-06-07 Sat 20:24]
 
 completed in [d1624b05ef].
-* FIXED Setup backup scripts for NFS shares
+** FIXED Setup backup scripts for NFS shares
 :PROPERTIES:
 :ID: 921a9d68-729a-8e1f-ce38-fd17a4152ddd
 :EXPORT_FOSSIL_SOURCE: t
@@ -755,7 +880,7 @@ completed in [d1624b05ef].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 15
@@ -767,7 +892,7 @@ completed in [d1624b05ef].
 :ID:       20bb2427-ea24-449b-a5cd-2cde4643b7c4
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 15
@@ -781,7 +906,7 @@ completed in [d1624b05ef].
 [2014-06-04 Wed 21:20]
 
 This has been added in [f3e1759bf0].
-* FIXED Finish all backup cronjob scripts used by rsnapshot
+** FIXED Finish all backup cronjob scripts used by rsnapshot
 :PROPERTIES:
 :ID: 226f581b-0905-6fcc-14b8-bcf51afc0844
 :EXPORT_FOSSIL_SOURCE: t
@@ -799,7 +924,7 @@ This has been added in [f3e1759bf0].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 16
@@ -811,7 +936,7 @@ This has been added in [f3e1759bf0].
 :ID:       f81419c4-db1a-43ed-b56c-1679cfee16ab
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 16
@@ -825,7 +950,7 @@ This has been added in [f3e1759bf0].
 [2014-06-07 Sat 20:21]
 
 added the virsh cron job backup in [48914ad155].
-* CLOSED Finish zosma node and systems pattern configuration
+** CLOSED Finish zosma node and systems pattern configuration
 :PROPERTIES:
 :ID: 396b55e5-3c9c-cd7a-1e87-8c736cc0f476
 :EXPORT_FOSSIL_SOURCE: t
@@ -843,7 +968,7 @@ added the virsh cron job backup in [48914ad155].
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 17
@@ -855,7 +980,7 @@ added the virsh cron job backup in [48914ad155].
 :ID:       fdd422f9-9faa-4151-b4eb-6233feba927c
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 17
@@ -867,7 +992,7 @@ added the virsh cron job backup in [48914ad155].
 :ID:       b5bb4950-0f0a-4047-ba72-5c4962c7acc1
 :END:
 [2015-03-29 Sun 22:31]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 17
@@ -879,7 +1004,7 @@ added the virsh cron job backup in [48914ad155].
 :ID:       bd4a7a55-a90c-4817-800b-e0afdc5f2a92
 :END:
 [2017-01-15 Sun 13:43]
-* FIXED create ebuilds for applications being published through jenkins
+** FIXED create ebuilds for applications being published through jenkins
 :PROPERTIES:
 :ID: b92a4f07-5ee0-2621-81c0-762436b3ef87
 :EXPORT_FOSSIL_SOURCE: t
@@ -897,7 +1022,7 @@ added the virsh cron job backup in [48914ad155].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 18
@@ -909,7 +1034,7 @@ added the virsh cron job backup in [48914ad155].
 :ID:       2a0c5e13-32d1-478f-87b2-d51fc1d51dfc
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 18
@@ -923,7 +1048,7 @@ added the virsh cron job backup in [48914ad155].
 [2014-06-04 Wed 21:21]
 
 This has been fixed, but the ebuilds are being tracked in another repo, so this is irrelevant here (the repo is gentoo-overlay-applications).
-* FIXED allow jenkins to deploy to the repo server
+** FIXED allow jenkins to deploy to the repo server
 :PROPERTIES:
 :ID: 2933708a-640d-dcaf-1fe5-a87fb4d04c08
 :EXPORT_FOSSIL_SOURCE: t
@@ -941,7 +1066,7 @@ This has been fixed, but the ebuilds are being tracked in another repo, so this 
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 19
@@ -953,7 +1078,7 @@ This has been fixed, but the ebuilds are being tracked in another repo, so this 
 :ID:       83c87e55-21e3-4b31-9276-2d083aacbb65
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 19
@@ -967,7 +1092,7 @@ This has been fixed, but the ebuilds are being tracked in another repo, so this 
 [2014-05-30 Fri 14:02]
 
 The build server is now capable of deploying to the binhost, which hosts distfiles and binary packages for all nodes on the network.
-* CLOSED find best way to ensure dns and ldap servers are booted asap
+** CLOSED find best way to ensure dns and ldap servers are booted asap
 :PROPERTIES:
 :ID: f66e6ee5-fad6-4716-53ea-232faae0bdb4
 :EXPORT_FOSSIL_SOURCE: t
@@ -985,7 +1110,7 @@ The build server is now capable of deploying to the binhost, which hosts distfil
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 20
@@ -997,7 +1122,7 @@ The build server is now capable of deploying to the binhost, which hosts distfil
 :ID:       5e737dcf-b882-4319-869c-74cc9cb9fd07
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 20
@@ -1011,7 +1136,7 @@ The build server is now capable of deploying to the binhost, which hosts distfil
 [2017-01-15 Sun 03:45]
 
 no longer a requirement
-* CLOSED fix syslog communications through ssl
+** CLOSED fix syslog communications through ssl
 :PROPERTIES:
 :ID: 74275604-a09c-f24d-37e8-387ffdfcfacb
 :EXPORT_FOSSIL_SOURCE: t
@@ -1029,7 +1154,7 @@ no longer a requirement
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 21
@@ -1041,7 +1166,7 @@ no longer a requirement
 :ID:       11dba0ce-d5ef-4956-a4dd-2b14daaae452
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 21
@@ -1055,7 +1180,7 @@ no longer a requirement
 [2017-01-15 Sun 13:28]
 
 No longer a requirement.
-* FIXED switch deployment method from capistrano to jenkins + package manager
+** FIXED switch deployment method from capistrano to jenkins + package manager
 :PROPERTIES:
 :ID: 8743c3a8-6386-d7df-4011-c70eb8603ab6
 :EXPORT_FOSSIL_SOURCE: t
@@ -1073,7 +1198,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 22
@@ -1085,7 +1210,7 @@ No longer a requirement.
 :ID:       5235e963-20cd-4f9e-907f-6140886232f8
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 22
@@ -1099,7 +1224,7 @@ No longer a requirement.
 [2014-06-04 Wed 21:24]
 
 this is done, with most of the logic being tracked in either the gentoo-overlay-applications repo or the ci-scripts repo
-* CLOSED secure comms via stomp as well as rabbitmq
+** CLOSED secure comms via stomp as well as rabbitmq
 :PROPERTIES:
 :ID: e41f9e2a-a844-a1a7-ac8e-74b4e8665738
 :EXPORT_FOSSIL_SOURCE: t
@@ -1117,7 +1242,7 @@ this is done, with most of the logic being tracked in either the gentoo-overlay-
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 23
@@ -1129,7 +1254,7 @@ this is done, with most of the logic being tracked in either the gentoo-overlay-
 :ID:       d9016015-3775-4e76-b98d-1b6d4a7dbdf1
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 23
@@ -1143,7 +1268,7 @@ this is done, with most of the logic being tracked in either the gentoo-overlay-
 [2017-01-15 Sun 13:33]
 
 No longer a requirement.
-* CLOSED Use seperate deployment keys for seperate zones
+** CLOSED Use seperate deployment keys for seperate zones
 :PROPERTIES:
 :ID: 83f52d59-28f7-f3eb-aa94-2b0f6e275839
 :EXPORT_FOSSIL_SOURCE: t
@@ -1161,7 +1286,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 24
@@ -1173,7 +1298,7 @@ No longer a requirement.
 :ID:       8e5eeff9-b166-4fc7-afee-f27cb6d440af
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 24
@@ -1187,7 +1312,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:29]
 
 No longer a requirement.
-* CLOSED setup ssh access for the internal git server
+** CLOSED setup ssh access for the internal git server
 :PROPERTIES:
 :ID: 29de139d-0ebc-cbb7-2178-9fc1344e2372
 :EXPORT_FOSSIL_SOURCE: t
@@ -1205,7 +1330,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 25
@@ -1217,7 +1342,7 @@ No longer a requirement.
 :ID:       eae87045-899b-4605-b221-83d34c786769
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 25
@@ -1231,7 +1356,7 @@ No longer a requirement.
 [2014-06-04 Wed 21:24]
 
 this is no longer needed since fossil is now used as the scm
-* FIXED Consider using fossil
+** FIXED Consider using fossil
 :PROPERTIES:
 :ID: fb5d6749-e9e4-f75a-946f-3477df4e7147
 :EXPORT_FOSSIL_SOURCE: t
@@ -1249,7 +1374,7 @@ this is no longer needed since fossil is now used as the scm
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 26
@@ -1261,7 +1386,7 @@ this is no longer needed since fossil is now used as the scm
 :ID:       c3d5d446-35e4-4001-8e03-aec063390611
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 26
@@ -1275,7 +1400,7 @@ this is no longer needed since fossil is now used as the scm
 [2014-05-28 Wed 23:57]
 
 Fossil resources have been added to make fossil the main repository for projects. Fossil will keep track of all project source, tickets, wiki. There is a nightly script which exports the repo and makes it accessible via git, so that it may be published on external git mirrors. However, no changes will be accepted via git. Everything is managed via fossil. The git repos simply provide another way the source can be accessed and viewed/used by other developers.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 26
@@ -1287,7 +1412,7 @@ Fossil resources have been added to make fossil the main repository for projects
 :ID:       e887644b-3be9-4f81-9dad-3c0b45e453f4
 :END:
 [2014-05-28 Wed 23:58]
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 26
@@ -1299,7 +1424,7 @@ Fossil resources have been added to make fossil the main repository for projects
 :ID:       cd4924af-1e8c-4bc0-a069-d9d0b7f89e90
 :END:
 [2014-05-29 Thu 00:01]
-** 5
+*** 5
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 26
@@ -1311,7 +1436,7 @@ Fossil resources have been added to make fossil the main repository for projects
 :ID:       a381d21f-d603-40b5-8fda-4e18ed13552f
 :END:
 [2014-05-29 Thu 00:02]
-** 6
+*** 6
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 26
@@ -1323,7 +1448,7 @@ Fossil resources have been added to make fossil the main repository for projects
 :ID:       cdc4628f-76ca-4ccc-9c22-962e739fa86e
 :END:
 [2015-03-29 Sun 19:52]
-* CLOSED configure data node
+** CLOSED configure data node
 :PROPERTIES:
 :ID: 60d35fde-1aa0-1a9e-1fae-22a615bea8e9
 :EXPORT_FOSSIL_SOURCE: t
@@ -1341,7 +1466,7 @@ Fossil resources have been added to make fossil the main repository for projects
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 27
@@ -1353,7 +1478,7 @@ Fossil resources have been added to make fossil the main repository for projects
 :ID:       5be2823a-1a34-48fb-9202-8b4ff41acfa9
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 27
@@ -1367,7 +1492,7 @@ Fossil resources have been added to make fossil the main repository for projects
 [2017-01-15 Sun 13:27]
 
 No longer a requirement.
-* OPEN Put all apps through build pipeline
+** OPEN Put all apps through build pipeline
 :PROPERTIES:
 :ID: 35d7c844-7265-00e5-76cb-0eb4b2d0b018
 :EXPORT_FOSSIL_SOURCE: t
@@ -1385,7 +1510,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 28
@@ -1397,7 +1522,7 @@ No longer a requirement.
 :ID:       20482320-b4dc-4154-b800-aa5217786fc2
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 28
@@ -1409,7 +1534,7 @@ No longer a requirement.
 :ID:       d2f3df77-16da-407b-bd0e-9516f62c90d8
 :END:
 [2015-03-29 Sun 19:47]
-* CLOSED centralize account authentication for the different applications used on the network
+** CLOSED centralize account authentication for the different applications used on the network
 :PROPERTIES:
 :ID: c7031281-ac10-5529-ca30-4c15a7f327a5
 :EXPORT_FOSSIL_SOURCE: t
@@ -1427,7 +1552,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 29
@@ -1439,7 +1564,7 @@ No longer a requirement.
 :ID:       b746f581-35f6-410e-89a1-e1d30d9b8ce6
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 29
@@ -1453,7 +1578,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:31]
 
 No longer a requirement.
-* CLOSED Add mail attribute to users in ldap schema
+** CLOSED Add mail attribute to users in ldap schema
 :PROPERTIES:
 :ID: 35569746-8bf1-74e7-8c47-dfad594e7789
 :EXPORT_FOSSIL_SOURCE: t
@@ -1471,7 +1596,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 30
@@ -1483,7 +1608,7 @@ No longer a requirement.
 :ID:       62c8b797-60c3-46ec-8591-30391d11c28d
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 30
@@ -1497,7 +1622,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:24]
 
 No longer a requirement.
-* OPEN secure all http communications
+** OPEN secure all http communications
 :PROPERTIES:
 :ID: 42c38c2c-fdee-d5e0-7314-77d9c0ae6686
 :EXPORT_FOSSIL_SOURCE: t
@@ -1515,7 +1640,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 31
@@ -1527,7 +1652,7 @@ No longer a requirement.
 :ID:       d5360d7d-7eff-4f1d-9e88-2fb588410d31
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 31
@@ -1544,7 +1669,7 @@ Find all servers running nginx and ensure ssl is enabled:
 binhost
 consider local reverse proxy for tomcat nodes
 consider local reverse proxy for ci server
-* CLOSED research help desk ticketing tools
+** CLOSED research help desk ticketing tools
 :PROPERTIES:
 :ID: 45832e43-6931-c5a5-9a9b-240fd1b4fa2d
 :EXPORT_FOSSIL_SOURCE: t
@@ -1562,7 +1687,7 @@ consider local reverse proxy for ci server
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 32
@@ -1574,7 +1699,7 @@ consider local reverse proxy for ci server
 :ID:       ce2d6781-ef6f-4781-bb14-6f3a82a24504
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 32
@@ -1590,7 +1715,7 @@ consider local reverse proxy for ci server
 I forget why I wanted this. Probably as an alternative to engineer-like bug reports, something more user-friendly.
 
 This is no longer needed! I was probably thinking of doing freelance work at the time, but this is something I'm no longer interested in doing.
-* OPEN set locale and locale-gen resources
+** OPEN set locale and locale-gen resources
 :PROPERTIES:
 :ID: b21ad03e-95d5-6fad-8e6e-b79d59b4be90
 :EXPORT_FOSSIL_SOURCE: t
@@ -1608,7 +1733,7 @@ This is no longer needed! I was probably thinking of doing freelance work at the
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 33
@@ -1620,7 +1745,7 @@ This is no longer needed! I was probably thinking of doing freelance work at the
 :ID:       7cce2fa1-f439-4889-9ce7-5811aff24dad
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 33
@@ -1634,7 +1759,7 @@ This is no longer needed! I was probably thinking of doing freelance work at the
 [2015-01-29 Thu 13:16]
 
 Application builds (eg. rake) may break if the locale is not set to UTF-8. This happened with Uglifier compilation in the hackbytes.com application.
-* CLOSED Study enough about cryptography and systems security practices to decide if I am willing to use git-crypt
+** CLOSED Study enough about cryptography and systems security practices to decide if I am willing to use git-crypt
 :PROPERTIES:
 :ID: 09df99f1-ca81-ba84-5313-ffafed142ee3
 :EXPORT_FOSSIL_SOURCE: t
@@ -1652,7 +1777,7 @@ Application builds (eg. rake) may break if the locale is not set to UTF-8. This 
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 34
@@ -1664,7 +1789,7 @@ Application builds (eg. rake) may break if the locale is not set to UTF-8. This 
 :ID:       e97fa7e5-9fcc-4d17-af2a-818e312b78e6
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 34
@@ -1678,7 +1803,7 @@ Application builds (eg. rake) may break if the locale is not set to UTF-8. This 
 [2015-03-29 Sun 19:46]
 
 I am closing this since I now use Fossil as my primary scm tool.
-* CLOSED Consider creating an nvm jenkins plugin if one doesn't already exist
+** CLOSED Consider creating an nvm jenkins plugin if one doesn't already exist
 :PROPERTIES:
 :ID: 172b2fbc-70a3-6005-e66d-85ece952bc5e
 :EXPORT_FOSSIL_SOURCE: t
@@ -1696,7 +1821,7 @@ I am closing this since I now use Fossil as my primary scm tool.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 35
@@ -1708,7 +1833,7 @@ I am closing this since I now use Fossil as my primary scm tool.
 :ID:       402dfb13-4c00-4874-b929-072b164977fc
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 35
@@ -1722,7 +1847,7 @@ I am closing this since I now use Fossil as my primary scm tool.
 [2017-01-15 Sun 02:50]
 
 Closed since it's no longer a priority.
-* OPEN Manage jenkins plugins
+** OPEN Manage jenkins plugins
 :PROPERTIES:
 :ID: 1ebba328-0396-553a-f029-d6b081ad05c6
 :EXPORT_FOSSIL_SOURCE: t
@@ -1740,7 +1865,7 @@ Closed since it's no longer a priority.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 36
@@ -1752,7 +1877,7 @@ Closed since it's no longer a priority.
 :ID:       b96b3a8f-a707-4ae3-98ad-400945936270
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 36
@@ -1766,7 +1891,7 @@ Closed since it's no longer a priority.
 [2014-05-28 Wed 13:32]
 
 also, see if there'd be a good way to backup project data
-* FIXED merge nas and nasclient patterns
+** FIXED merge nas and nasclient patterns
 :PROPERTIES:
 :ID: 2901dffe-aee4-c8e6-4a3f-1d032abed832
 :EXPORT_FOSSIL_SOURCE: t
@@ -1784,7 +1909,7 @@ also, see if there'd be a good way to backup project data
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 37
@@ -1796,7 +1921,7 @@ also, see if there'd be a good way to backup project data
 :ID:       ca3875ee-74a1-4811-a107-a5da77365006
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 37
@@ -1808,7 +1933,7 @@ also, see if there'd be a good way to backup project data
 :ID:       6c999b2f-8656-4857-af5e-d7235d9c3324
 :END:
 [2015-12-29 Tue 18:53]
-* OPEN Convert hostname refresh exec to service refresh in base pattern
+** OPEN Convert hostname refresh exec to service refresh in base pattern
 :PROPERTIES:
 :ID: 7da34e95-56b4-4c1f-380c-262a9ac06ee7
 :EXPORT_FOSSIL_SOURCE: t
@@ -1826,7 +1951,7 @@ also, see if there'd be a good way to backup project data
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 38
@@ -1838,7 +1963,7 @@ also, see if there'd be a good way to backup project data
 :ID:       46ac9453-7c67-4f6f-b0cc-4d9bb67d9ead
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Move nitelite mco app to a better location or to an ebuild
+** CLOSED Move nitelite mco app to a better location or to an ebuild
 :PROPERTIES:
 :ID: 64d821ef-61f0-f75a-1195-261123ab7856
 :EXPORT_FOSSIL_SOURCE: t
@@ -1856,7 +1981,7 @@ also, see if there'd be a good way to backup project data
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 39
@@ -1868,7 +1993,7 @@ also, see if there'd be a good way to backup project data
 :ID:       cef94bbf-b526-487e-8624-0fa613f75b49
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 39
@@ -1882,7 +2007,7 @@ also, see if there'd be a good way to backup project data
 [2017-01-15 Sun 13:28]
 
 No longer a requirement.
-* CLOSED Remove nfs mounts from puppet configuration
+** CLOSED Remove nfs mounts from puppet configuration
 :PROPERTIES:
 :ID: f66c00d7-ef9f-a49a-cec9-ebda3c061834
 :EXPORT_FOSSIL_SOURCE: t
@@ -1900,7 +2025,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Duplicate
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 40
@@ -1912,7 +2037,7 @@ No longer a requirement.
 :ID:       be1762fa-6670-48aa-8e09-1c6d18206171
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 40
@@ -1928,7 +2053,7 @@ No longer a requirement.
 This issue was opened in reference to the nfs mounts that were no longer used (gentoo, puppet, etc.)
 
 AKA a dupe of [925cfdfd18]
-* CLOSED Consider installing cve-checker and running it regularly
+** CLOSED Consider installing cve-checker and running it regularly
 :PROPERTIES:
 :ID: 53348154-5805-c65a-8cab-e962dad44fb0
 :EXPORT_FOSSIL_SOURCE: t
@@ -1946,7 +2071,7 @@ AKA a dupe of [925cfdfd18]
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 41
@@ -1958,7 +2083,7 @@ AKA a dupe of [925cfdfd18]
 :ID:       fd302396-2ed1-4225-b7d5-0939044ac2f5
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 41
@@ -1972,7 +2097,7 @@ AKA a dupe of [925cfdfd18]
 [2017-01-15 Sun 13:27]
 
 No longer a requirement.
-* OPEN secure all rsync communications
+** OPEN secure all rsync communications
 :PROPERTIES:
 :ID: 45f39561-acc6-f5b5-5567-4c4d25c103b3
 :EXPORT_FOSSIL_SOURCE: t
@@ -1990,7 +2115,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 42
@@ -2002,7 +2127,7 @@ No longer a requirement.
 :ID:       109a09fe-d212-4a8b-8c8a-222f965e181b
 :END:
 [2014-05-28 Wed 13:32]
-* OPEN Move rsync modules to a single rsync server
+** OPEN Move rsync modules to a single rsync server
 :PROPERTIES:
 :ID: 9f3337ee-b0ce-ca24-c894-b421abb4247a
 :EXPORT_FOSSIL_SOURCE: t
@@ -2020,7 +2145,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 43
@@ -2032,7 +2157,7 @@ No longer a requirement.
 :ID:       ebd0b3c1-9c23-438c-80b2-83585b5717af
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Use ebuilds for gems the systems are dependent on
+** CLOSED Use ebuilds for gems the systems are dependent on
 :PROPERTIES:
 :ID: 106cd362-4296-580c-6f2d-8b2692100640
 :EXPORT_FOSSIL_SOURCE: t
@@ -2050,7 +2175,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 44
@@ -2062,7 +2187,7 @@ No longer a requirement.
 :ID:       62b5e16e-5884-473f-8b40-6e0f10eaac5b
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 44
@@ -2076,7 +2201,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:22]
 
 Now managing all gems via rvm.
-* CLOSED Consider moving core data from individual nodes to a centralized share
+** CLOSED Consider moving core data from individual nodes to a centralized share
 :PROPERTIES:
 :ID: c893b1f3-5c65-ce12-21f3-3799045204db
 :EXPORT_FOSSIL_SOURCE: t
@@ -2094,7 +2219,7 @@ Now managing all gems via rvm.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 45
@@ -2106,7 +2231,7 @@ Now managing all gems via rvm.
 :ID:       39664767-79df-407f-8e2e-b5d219a055d6
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 45
@@ -2120,7 +2245,7 @@ Now managing all gems via rvm.
 [2017-01-15 Sun 13:32]
 
 No longer a requirement.
-* OPEN Move standalone portions not related to configuration to ebuilds
+** OPEN Move standalone portions not related to configuration to ebuilds
 :PROPERTIES:
 :ID: c522e1c9-9f0a-c92e-9497-346e351d237a
 :EXPORT_FOSSIL_SOURCE: t
@@ -2138,7 +2263,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 46
@@ -2150,7 +2275,7 @@ No longer a requirement.
 :ID:       d3ef80c3-d5bb-4e71-8240-03fe55ae38d1
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Ensure that local communications do not REQUIRE encryption
+** CLOSED Ensure that local communications do not REQUIRE encryption
 :PROPERTIES:
 :ID: a34cfad9-f0b6-9b25-0526-cec80b3f324e
 :EXPORT_FOSSIL_SOURCE: t
@@ -2168,7 +2293,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 47
@@ -2180,7 +2305,7 @@ No longer a requirement.
 :ID:       6d31c035-c481-4912-b1c3-584fa414afbb
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 47
@@ -2194,7 +2319,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:30]
 
 No longer a requirement.
-* CLOSED Require ssl for node communication
+** CLOSED Require ssl for node communication
 :PROPERTIES:
 :ID: b9914803-8d76-354d-cf42-69a13700954d
 :EXPORT_FOSSIL_SOURCE: t
@@ -2212,7 +2337,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 48
@@ -2224,7 +2349,7 @@ No longer a requirement.
 :ID:       980e2971-7379-4bc8-9f78-2ed0709393ba
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 48
@@ -2238,7 +2363,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:30]
 
 No longer a requirement.
-* CLOSED Verify that all communications are encrypted between nodes
+** CLOSED Verify that all communications are encrypted between nodes
 :PROPERTIES:
 :ID: 215dc9b2-7fbf-6cbf-a837-f2bfe796c9ab
 :EXPORT_FOSSIL_SOURCE: t
@@ -2256,7 +2381,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 49
@@ -2268,7 +2393,7 @@ No longer a requirement.
 :ID:       6b703b51-9306-4bce-bcf4-9b0c4f932b3d
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 49
@@ -2282,7 +2407,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:23]
 
 No longer a requirement.
-* OPEN chmod 600 and chown all private key files
+** OPEN chmod 600 and chown all private key files
 :PROPERTIES:
 :ID: 6207a401-358a-6a1a-ebba-25c22c1929d7
 :EXPORT_FOSSIL_SOURCE: t
@@ -2300,7 +2425,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 50
@@ -2312,7 +2437,7 @@ No longer a requirement.
 :ID:       ea468fa5-4c1a-4d70-b7fe-3a69dc94c258
 :END:
 [2014-05-28 Wed 13:32]
-* OPEN set secure pws for all hosts
+** OPEN set secure pws for all hosts
 :PROPERTIES:
 :ID: eee16347-a46d-8e1f-7db8-53399e15004e
 :EXPORT_FOSSIL_SOURCE: t
@@ -2330,7 +2455,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 51
@@ -2342,7 +2467,7 @@ No longer a requirement.
 :ID:       fcc07ed7-853b-4e06-8ef3-e0a147e620fc
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED configure a central ocsp responder for revocation verification
+** CLOSED configure a central ocsp responder for revocation verification
 :PROPERTIES:
 :ID: 3d846604-739d-ea5d-2904-88df72f8c9f2
 :EXPORT_FOSSIL_SOURCE: t
@@ -2360,7 +2485,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 52
@@ -2372,7 +2497,7 @@ No longer a requirement.
 :ID:       710b1c45-301b-44d3-9735-0510167bf625
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 52
@@ -2386,7 +2511,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:26]
 
 No longer a requirement.
-* OPEN make ssl shell script configuration-independent for signing requests
+** OPEN make ssl shell script configuration-independent for signing requests
 :PROPERTIES:
 :ID: 3f8db1d1-f5e6-11eb-2f4a-f0d039f4e2ff
 :EXPORT_FOSSIL_SOURCE: t
@@ -2404,7 +2529,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 53
@@ -2416,7 +2541,7 @@ No longer a requirement.
 :ID:       2ff028da-1778-4774-a21b-89e89f2e39a1
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED determine best way to secure http communications with different envs (stage, devel, etc.)
+** CLOSED determine best way to secure http communications with different envs (stage, devel, etc.)
 :PROPERTIES:
 :ID: 7d5bf50f-b4f2-a383-43fe-9c97fd287b14
 :EXPORT_FOSSIL_SOURCE: t
@@ -2434,7 +2559,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 54
@@ -2446,7 +2571,7 @@ No longer a requirement.
 :ID:       35c8dc08-18bb-4951-82a0-138984065c74
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 54
@@ -2460,7 +2585,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:28]
 
 No longer a requirement.
-* CLOSED research implementation of dnssec in bind
+** CLOSED research implementation of dnssec in bind
 :PROPERTIES:
 :ID: 7d8f31cb-663a-6f4b-032b-10835a6e7e78
 :EXPORT_FOSSIL_SOURCE: t
@@ -2478,7 +2603,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 55
@@ -2490,7 +2615,7 @@ No longer a requirement.
 :ID:       5b0b8fb5-9371-448d-92e9-031c36badf88
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 55
@@ -2504,7 +2629,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:29]
 
 No longer a requirement.
-* OPEN secure tcpwrappers
+** OPEN secure tcpwrappers
 :PROPERTIES:
 :ID: 1d1499bb-152c-4497-dd41-2dceec0fdf67
 :EXPORT_FOSSIL_SOURCE: t
@@ -2522,7 +2647,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 56
@@ -2534,7 +2659,7 @@ No longer a requirement.
 :ID:       e6e11365-e847-4f49-8dcf-0dd95f68d984
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Get rid of old postfix hash tables
+** CLOSED Get rid of old postfix hash tables
 :PROPERTIES:
 :ID: 3aebcf18-4450-3583-d6a7-bbb36bfafc43
 :EXPORT_FOSSIL_SOURCE: t
@@ -2552,7 +2677,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 57
@@ -2564,7 +2689,7 @@ No longer a requirement.
 :ID:       a67ea8ae-7726-4278-bddf-e3414be88fc2
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 57
@@ -2578,7 +2703,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:25]
 
 No longer a requirement.
-* OPEN research sshd_config's AllowGroups option
+** OPEN research sshd_config's AllowGroups option
 :PROPERTIES:
 :ID: ba0f1404-5ae0-4dd3-d029-94591b1079e8
 :EXPORT_FOSSIL_SOURCE: t
@@ -2596,7 +2721,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 58
@@ -2608,7 +2733,7 @@ No longer a requirement.
 :ID:       8a696250-4c41-4d30-bff1-c6d769dd160b
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED consider implementation of ipv6
+** CLOSED consider implementation of ipv6
 :PROPERTIES:
 :ID: 20371502-a0ab-e182-a7a5-e32b9169335f
 :EXPORT_FOSSIL_SOURCE: t
@@ -2626,7 +2751,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 59
@@ -2638,7 +2763,7 @@ No longer a requirement.
 :ID:       0427c5d7-e19b-4b36-8a93-21c5ba91c9ee
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 59
@@ -2652,7 +2777,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:23]
 
 No longer a requirement.
-* OPEN Fix sudo password bug which allows partial password authetication
+** OPEN Fix sudo password bug which allows partial password authetication
 :PROPERTIES:
 :ID: 3b4aa847-0174-6aa5-5c8e-b10d2679fb71
 :EXPORT_FOSSIL_SOURCE: t
@@ -2670,7 +2795,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 60
@@ -2682,7 +2807,7 @@ No longer a requirement.
 :ID:       fc929667-f6fc-49cc-93e0-1edc53a05eeb
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 60
@@ -2694,7 +2819,7 @@ No longer a requirement.
 :ID:       280661eb-314f-428f-8b73-72e425ec257d
 :END:
 [2015-03-29 Sun 19:45]
-* OPEN chmod 0600 any files with pws
+** OPEN chmod 0600 any files with pws
 :PROPERTIES:
 :ID: 01931488-1f9a-ee47-7836-91756370b0ad
 :EXPORT_FOSSIL_SOURCE: t
@@ -2712,7 +2837,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 61
@@ -2724,7 +2849,7 @@ No longer a requirement.
 :ID:       76bd6625-b791-4a43-b54f-60384075c1cf
 :END:
 [2014-05-28 Wed 13:32]
-* OPEN Add type guards for pattern arguments
+** OPEN Add type guards for pattern arguments
 :PROPERTIES:
 :ID: d6ba7346-fc1b-6102-24e7-b3fc14f0c91b
 :EXPORT_FOSSIL_SOURCE: t
@@ -2742,7 +2867,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 62
@@ -2754,7 +2879,7 @@ No longer a requirement.
 :ID:       24cc477d-f0f1-4529-a9a0-0896cf08bd5e
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Find a way to create a puppet forge mirror
+** CLOSED Find a way to create a puppet forge mirror
 :PROPERTIES:
 :ID: 1e05f012-9a76-b532-34e0-9fe2b0087c93
 :EXPORT_FOSSIL_SOURCE: t
@@ -2772,7 +2897,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 63
@@ -2784,7 +2909,7 @@ No longer a requirement.
 :ID:       f5b790b3-0396-4d5a-b2a3-cabc5359ea1e
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 63
@@ -2798,7 +2923,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:23]
 
 No longer managing mirrors since it's too resource intensive.
-* CLOSED Setup distcc fallback option in case a node can't compile it's own packages (eg. VERY low ram)
+** CLOSED Setup distcc fallback option in case a node can't compile it's own packages (eg. VERY low ram)
 :PROPERTIES:
 :ID: edba4fa9-6bc9-b6d9-cbe5-590bd2008171
 :EXPORT_FOSSIL_SOURCE: t
@@ -2816,7 +2941,7 @@ No longer managing mirrors since it's too resource intensive.
 :EXPORT_FOSSIL_RESOLUTION: Overcome_By_Events
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 64
@@ -2830,7 +2955,7 @@ No longer managing mirrors since it's too resource intensive.
 [2014-05-28 Wed 13:32]
 
 This isn't high priority as even nodes with 256mb ram can compile packages fine at the moment. However, prepare for the worst case scenario when there's time (eg. ruby and puppet takes up most of the ram barely leaving any for the compiler).
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 64
@@ -2844,7 +2969,7 @@ This isn't high priority as even nodes with 256mb ram can compile packages fine 
 [2017-01-15 Sun 03:05]
 
 No longer required since I no longer have to worry about provisioning nodes with low resources and since this is a design I'm no longer interested in pursuing (ideal + complete but non-pragmatic implementations).
-* CLOSED Make sure all necessary services are added to rc (eg. nfsmount)
+** CLOSED Make sure all necessary services are added to rc (eg. nfsmount)
 :PROPERTIES:
 :ID: ba972aee-3845-cc6c-4b09-13fd10c2116e
 :EXPORT_FOSSIL_SOURCE: t
@@ -2862,7 +2987,7 @@ No longer required since I no longer have to worry about provisioning nodes with
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 65
@@ -2876,7 +3001,7 @@ No longer required since I no longer have to worry about provisioning nodes with
 [2014-05-28 Wed 13:32]
 
 Make sure it matches the gentoo-provision scripts as well (and vice-versa).
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 65
@@ -2890,7 +3015,7 @@ Make sure it matches the gentoo-provision scripts as well (and vice-versa).
 [2014-05-28 Wed 13:32]
 
 Reopening. Make sure non-default runlevel services are added to the appropriate runlevel. The defaults are all good, but gotta make sure the other runlevels are good too.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 65
@@ -2904,7 +3029,7 @@ Reopening. Make sure non-default runlevel services are added to the appropriate 
 [2017-01-15 Sun 13:30]
 
 No longer a requirement.
-* CLOSED Add a secondary mail server
+** CLOSED Add a secondary mail server
 :PROPERTIES:
 :ID: 3430c17c-c4d9-1f52-6480-66830b7d9de1
 :EXPORT_FOSSIL_SOURCE: t
@@ -2922,7 +3047,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 66
@@ -2936,7 +3061,7 @@ No longer a requirement.
 [2014-05-28 Wed 13:32]
 
 This is not currently necessary, as email is send-only. However, add this as part of #65 when mail starts being received as well.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 66
@@ -2950,7 +3075,7 @@ This is not currently necessary, as email is send-only. However, add this as par
 [2017-01-15 Sun 02:51]
 
 Closed since it's no longer a priority.
-* FIXED Hypervisor: backup virsh xmls via a cron job
+** FIXED Hypervisor: backup virsh xmls via a cron job
 :PROPERTIES:
 :ID: 078a41e0-09fb-0029-b619-bfc3316d847b
 :EXPORT_FOSSIL_SOURCE: t
@@ -2968,7 +3093,7 @@ Closed since it's no longer a priority.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 67
@@ -2980,7 +3105,7 @@ Closed since it's no longer a priority.
 :ID:       73682970-4ad0-4aeb-a41d-ca89f91ebf8c
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 67
@@ -2994,7 +3119,7 @@ Closed since it's no longer a priority.
 [2015-03-29 Sun 19:49]
 
 Fixed by [48914ad155].
-* CLOSED Research and see if puppet offers DNS options
+** CLOSED Research and see if puppet offers DNS options
 :PROPERTIES:
 :ID: d93bf699-8330-0f2e-7d7b-4f1e39c89e5a
 :EXPORT_FOSSIL_SOURCE: t
@@ -3012,7 +3137,7 @@ Fixed by [48914ad155].
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 68
@@ -3024,7 +3149,7 @@ Fixed by [48914ad155].
 :ID:       beaa1c25-4962-4e8f-a9cf-08c00f152d9a
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 68
@@ -3038,7 +3163,7 @@ Fixed by [48914ad155].
 [2017-01-15 Sun 13:32]
 
 No longer a requirement.
-* CLOSED Symlink /dev/null to each user's .mysql_history file
+** CLOSED Symlink /dev/null to each user's .mysql_history file
 :PROPERTIES:
 :ID: 40712779-309a-e0aa-6e9b-60b55d0f67f6
 :EXPORT_FOSSIL_SOURCE: t
@@ -3056,7 +3181,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 69
@@ -3068,7 +3193,7 @@ No longer a requirement.
 :ID:       ba0ccdc6-113a-49da-bdce-52076d10e62d
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 69
@@ -3082,7 +3207,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:26]
 
 No longer a requirement.
-* CLOSED Remove .mysql_history from all home directories
+** CLOSED Remove .mysql_history from all home directories
 :PROPERTIES:
 :ID: 45733d88-0904-fc40-bcbf-98c69dbce452
 :EXPORT_FOSSIL_SOURCE: t
@@ -3100,7 +3225,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 70
@@ -3112,7 +3237,7 @@ No longer a requirement.
 :ID:       7abba290-cf1a-43cd-898b-001a699b8485
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 70
@@ -3126,7 +3251,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:26]
 
 No longer a requirement.
-* CLOSED Have php run as deployer only on nginx nodes
+** CLOSED Have php run as deployer only on nginx nodes
 :PROPERTIES:
 :ID: ceb9ce22-9388-c652-24eb-aa6ee30bf9a4
 :EXPORT_FOSSIL_SOURCE: t
@@ -3144,7 +3269,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 71
@@ -3156,7 +3281,7 @@ No longer a requirement.
 :ID:       af68a2c4-d1f3-4afe-9860-69e2313465f0
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 71
@@ -3170,7 +3295,7 @@ No longer a requirement.
 [2014-06-04 Wed 21:27]
 
 went with a different approach. nginx and php will run as www-data, and they will not own any file or directory. instead, the group of served directories will be www-data. this way, directory access is secured.
-* CLOSED Remove deployer from non-nginx nodes
+** CLOSED Remove deployer from non-nginx nodes
 :PROPERTIES:
 :ID: c1a8b438-b8b7-fd80-a6f3-9d83ff5c60aa
 :EXPORT_FOSSIL_SOURCE: t
@@ -3188,7 +3313,7 @@ went with a different approach. nginx and php will run as www-data, and they wil
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 72
@@ -3200,7 +3325,7 @@ went with a different approach. nginx and php will run as www-data, and they wil
 :ID:       be13b585-146e-4ff4-8edb-4fe72710a119
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 72
@@ -3214,7 +3339,7 @@ went with a different approach. nginx and php will run as www-data, and they wil
 [2017-01-15 Sun 13:31]
 
 No longer a requirement.
-* OPEN Require layman for all packages using overlay ebuilds
+** OPEN Require layman for all packages using overlay ebuilds
 :PROPERTIES:
 :ID: c57d5059-9a1e-7700-d9f1-a27332770162
 :EXPORT_FOSSIL_SOURCE: t
@@ -3232,7 +3357,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 73
@@ -3244,7 +3369,7 @@ No longer a requirement.
 :ID:       204389d7-3e4d-4c7c-8cc9-775654656d68
 :END:
 [2014-05-28 Wed 13:32]
-* FIXED Make sure sysctl.conf gets loaded on boot
+** FIXED Make sure sysctl.conf gets loaded on boot
 :PROPERTIES:
 :ID: 2bb970b8-d557-1d01-7f46-b77ee9ceb47c
 :EXPORT_FOSSIL_SOURCE: t
@@ -3262,7 +3387,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 74
@@ -3274,7 +3399,7 @@ No longer a requirement.
 :ID:       448479ae-e0ee-47fb-9a71-b12f219b2671
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 74
@@ -3288,7 +3413,7 @@ No longer a requirement.
 [2015-03-29 Sun 19:44]
 
 Fixed by [f8eb63284d].
-* CLOSED Research chrooting bind
+** CLOSED Research chrooting bind
 :PROPERTIES:
 :ID: c5670ff6-a20b-5bd3-8dc1-dcfad56f7c40
 :EXPORT_FOSSIL_SOURCE: t
@@ -3306,7 +3431,7 @@ Fixed by [f8eb63284d].
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 75
@@ -3318,7 +3443,7 @@ Fixed by [f8eb63284d].
 :ID:       015543c2-c731-482e-b0da-946a254cf7e9
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 75
@@ -3332,7 +3457,7 @@ Fixed by [f8eb63284d].
 [2017-01-15 Sun 13:31]
 
 No longer a requirement.
-* OPEN Ensure all use files are in place prior to installing pkgs (pkgs require the use)
+** OPEN Ensure all use files are in place prior to installing pkgs (pkgs require the use)
 :PROPERTIES:
 :ID: 68d66a94-9ae0-e37e-d51b-42cbad507dd5
 :EXPORT_FOSSIL_SOURCE: t
@@ -3350,7 +3475,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 76
@@ -3362,7 +3487,7 @@ No longer a requirement.
 :ID:       7125ab6d-46a7-4049-9c87-31932a1abe76
 :END:
 [2014-05-28 Wed 13:32]
-* OPEN Ensure user home directories exist
+** OPEN Ensure user home directories exist
 :PROPERTIES:
 :ID: 5387c1fe-570d-3d62-4ce6-1219631f3c6a
 :EXPORT_FOSSIL_SOURCE: t
@@ -3380,7 +3505,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 77
@@ -3392,7 +3517,7 @@ No longer a requirement.
 :ID:       cbd535f3-2a08-4778-94bd-551205004459
 :END:
 [2014-05-28 Wed 13:32]
-* OPEN Add ssh known hosts
+** OPEN Add ssh known hosts
 :PROPERTIES:
 :ID: cec5fb75-a06f-99f8-7085-25cc928bdf81
 :EXPORT_FOSSIL_SOURCE: t
@@ -3410,7 +3535,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 78
@@ -3422,7 +3547,7 @@ No longer a requirement.
 :ID:       c3ecfcbd-d69e-4564-9c95-8d25809f166b
 :END:
 [2014-05-28 Wed 13:32]
-* OPEN Ensure users are created before attempting to apply an ssh resource
+** OPEN Ensure users are created before attempting to apply an ssh resource
 :PROPERTIES:
 :ID: 2a574eaf-7531-8877-caf5-e7ddb204e6fd
 :EXPORT_FOSSIL_SOURCE: t
@@ -3440,7 +3565,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 79
@@ -3452,7 +3577,7 @@ No longer a requirement.
 :ID:       4d1ba071-10c5-490b-8d65-c1d3fc249884
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Centralize and modularize local account password management
+** CLOSED Centralize and modularize local account password management
 :PROPERTIES:
 :ID: 87396d79-beed-7684-43cc-ece54a42e6ab
 :EXPORT_FOSSIL_SOURCE: t
@@ -3470,7 +3595,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 80
@@ -3482,7 +3607,7 @@ No longer a requirement.
 :ID:       9d8013e3-cb4a-451c-b6ed-7c7713a8f78b
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 80
@@ -3494,7 +3619,7 @@ No longer a requirement.
 :ID:       a6cb89de-0a8b-4f82-8983-f011ccab1c7a
 :END:
 [2017-01-15 Sun 13:29]
-* OPEN Ensure users are created prior to changing file ownership to them (nginx, ldap, etc.)
+** OPEN Ensure users are created prior to changing file ownership to them (nginx, ldap, etc.)
 :PROPERTIES:
 :ID: da2905fa-c7c1-2061-e2ce-68030be0dec4
 :EXPORT_FOSSIL_SOURCE: t
@@ -3512,7 +3637,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 81
@@ -3524,7 +3649,7 @@ No longer a requirement.
 :ID:       b04e0dee-83a8-462c-9f4a-5d2b06891f81
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Find a way to create a Bower mirror
+** CLOSED Find a way to create a Bower mirror
 :PROPERTIES:
 :ID: 36d1349d-47fc-5086-13b9-925bdf64bbe8
 :EXPORT_FOSSIL_SOURCE: t
@@ -3542,7 +3667,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 82
@@ -3554,7 +3679,7 @@ No longer a requirement.
 :ID:       3e8420b4-2a5a-4cc8-849e-54cf91bb2aa6
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 82
@@ -3570,7 +3695,7 @@ No longer a requirement.
 Not using bower anymore for apps.
 
 Preferring npm as part of webpack toolchain pattern.
-* CLOSED Create a RubyGems mirror
+** CLOSED Create a RubyGems mirror
 :PROPERTIES:
 :ID: b425aba7-df38-8e18-d36b-6027f239968a
 :EXPORT_FOSSIL_SOURCE: t
@@ -3588,7 +3713,7 @@ Preferring npm as part of webpack toolchain pattern.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 83
@@ -3600,7 +3725,7 @@ Preferring npm as part of webpack toolchain pattern.
 :ID:       b6214679-5384-4fbe-9abe-d486dad92770
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 83
@@ -3614,7 +3739,7 @@ Preferring npm as part of webpack toolchain pattern.
 [2017-01-15 Sun 03:06]
 
 Too resource intensive for my purposes.
-* CLOSED Create an NPM mirror
+** CLOSED Create an NPM mirror
 :PROPERTIES:
 :ID: 76f423a1-178f-5ca6-93b9-92036d63efec
 :EXPORT_FOSSIL_SOURCE: t
@@ -3632,7 +3757,7 @@ Too resource intensive for my purposes.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 84
@@ -3644,7 +3769,7 @@ Too resource intensive for my purposes.
 :ID:       8db653bb-19e8-44b0-9940-8c13ce9ace17
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 84
@@ -3658,7 +3783,7 @@ Too resource intensive for my purposes.
 [2017-01-15 Sun 03:02]
 
 No longer doing this as it's resource intensive and we don't need it for our simple use case of workstation + remote node.
-* CLOSED Change files with any node-specific email notifications to templates
+** CLOSED Change files with any node-specific email notifications to templates
 :PROPERTIES:
 :ID: d9aadb56-b04c-5f68-101f-91b9e9d0a84c
 :EXPORT_FOSSIL_SOURCE: t
@@ -3676,7 +3801,7 @@ No longer doing this as it's resource intensive and we don't need it for our sim
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 85
@@ -3688,7 +3813,7 @@ No longer doing this as it's resource intensive and we don't need it for our sim
 :ID:       f857e0e1-a4fc-4121-b369-705097265962
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 85
@@ -3702,7 +3827,7 @@ No longer doing this as it's resource intensive and we don't need it for our sim
 [2017-01-15 Sun 13:33]
 
 No longer a requirement.
-* CLOSED Consider moving truecrypt keyword to custom overlay scope
+** CLOSED Consider moving truecrypt keyword to custom overlay scope
 :PROPERTIES:
 :ID: 5042dd4c-3f79-0f04-610c-c3aa55ad1285
 :EXPORT_FOSSIL_SOURCE: t
@@ -3720,7 +3845,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Overcome_By_Events
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 86
@@ -3732,7 +3857,7 @@ No longer a requirement.
 :ID:       72651768-6825-4451-a35d-f33cb9d9f26d
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 86
@@ -3748,7 +3873,7 @@ No longer a requirement.
 The removal of truecrypt has made this a non-issue.
 
 See [b919b65268].
-* OPEN Modularize very common blocks of functionality
+** OPEN Modularize very common blocks of functionality
 :PROPERTIES:
 :ID: d556e34f-9206-ed1d-d22e-4068dd308c70
 :EXPORT_FOSSIL_SOURCE: t
@@ -3766,7 +3891,7 @@ See [b919b65268].
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 87
@@ -3778,7 +3903,7 @@ See [b919b65268].
 :ID:       8edd5058-9cf8-479e-8b9a-2a774fbb1f6b
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Consider the creation of a binhost USE flag matching installer script for nodes on the network
+** CLOSED Consider the creation of a binhost USE flag matching installer script for nodes on the network
 :PROPERTIES:
 :ID: 286b86fe-5f56-76e6-37f6-c31a9997f628
 :EXPORT_FOSSIL_SOURCE: t
@@ -3796,7 +3921,7 @@ See [b919b65268].
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 88
@@ -3833,7 +3958,7 @@ Limitations:
   - Currently, the concept may only work on network shared storage. Thus, a better implementation would allow the use of HTTP as well (for PORTAGE_BINHOST).
   - The ability to query a package's USE flags needs further research
   - Binary package naming scheme. It seems unique ids are the most appropriate for now.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 88
@@ -3852,7 +3977,7 @@ Querying package USE flags - http://forums.gentoo.org/viewtopic-t-983128-view-pr
 
 Building packages using the quickest method available - http://forums.gentoo.org/viewtopic-t-660863-view-previous.html?sid=02b7e2f48100c267bae30e2076259120
 
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 88
@@ -3870,7 +3995,7 @@ I have decided that this solution is overkill.
 The best approach is to declare a base set of USE flags per required package and ensure those flags are used by all nodes that require that package.
 
 The previous solution may be useful in a case where mass node USE flag customization is desirable, but it won't currently be beneficial for this current infrastructure.
-* CLOSED Consider having conky report last update time for portage
+** CLOSED Consider having conky report last update time for portage
 :PROPERTIES:
 :ID: 2b33a8c6-4056-85e1-e10f-04a6a6b87e74
 :EXPORT_FOSSIL_SOURCE: t
@@ -3888,7 +4013,7 @@ The previous solution may be useful in a case where mass node USE flag customiza
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 89
@@ -3900,7 +4025,7 @@ The previous solution may be useful in a case where mass node USE flag customiza
 :ID:       9bf445a8-624c-4c6f-8ec7-786341c36c31
 :END:
 [2014-05-28 Wed 13:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 89
@@ -3914,7 +4039,7 @@ The previous solution may be useful in a case where mass node USE flag customiza
 [2017-01-15 Sun 13:24]
 
 No longer a requirement.
-* OPEN Consider adding EVM
+** OPEN Consider adding EVM
 :PROPERTIES:
 :ID: 7dd00b46-e939-e1f7-7d5e-e45bc583a3bd
 :EXPORT_FOSSIL_SOURCE: t
@@ -3932,7 +4057,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 90
@@ -3944,7 +4069,7 @@ No longer a requirement.
 :ID:       74373144-c89b-4558-8b99-885b045f84eb
 :END:
 [2014-05-28 Wed 13:32]
-* OPEN Consider adding IMA
+** OPEN Consider adding IMA
 :PROPERTIES:
 :ID: 2aa062d1-b8c0-0f20-c601-ff0add9433f9
 :EXPORT_FOSSIL_SOURCE: t
@@ -3962,7 +4087,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 91
@@ -3974,7 +4099,7 @@ No longer a requirement.
 :ID:       7d1e67b5-1b73-48fe-9734-1647f00cdb2c
 :END:
 [2014-05-28 Wed 13:32]
-* CLOSED Use a header.erb for applying header warnings for files
+** CLOSED Use a header.erb for applying header warnings for files
 :PROPERTIES:
 :ID: 3e08a0fb-1ca1-e02d-d7b9-28118441fac1
 :EXPORT_FOSSIL_SOURCE: t
@@ -3992,7 +4117,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 92
@@ -4004,7 +4129,7 @@ No longer a requirement.
 :ID:       b43577d7-068f-4a53-a1be-f31d9be7dc33
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 92
@@ -4018,7 +4143,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:26]
 
 No longer a requirement.
-* CLOSED Ensure binhost has required compiled packages for all nodes
+** CLOSED Ensure binhost has required compiled packages for all nodes
 :PROPERTIES:
 :ID: 3571a86c-f4b3-01cf-a6e3-1c16de260ac9
 :EXPORT_FOSSIL_SOURCE: t
@@ -4036,7 +4161,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 93
@@ -4048,7 +4173,7 @@ No longer a requirement.
 :ID:       4736497e-ae45-4feb-98ec-569774586eff
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 93
@@ -4062,7 +4187,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:24]
 
 No longer a requirement.
-* FIXED Write the dependency relationships between portage files and their respective packages
+** FIXED Write the dependency relationships between portage files and their respective packages
 :PROPERTIES:
 :ID: 4b954387-0801-cc19-a353-989f88a8201c
 :EXPORT_FOSSIL_SOURCE: t
@@ -4080,7 +4205,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 94
@@ -4092,7 +4217,7 @@ No longer a requirement.
 :ID:       ad8047f1-8c6d-4915-9f4e-a9799fe665f7
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 94
@@ -4104,7 +4229,7 @@ No longer a requirement.
 :ID:       789fe152-ad32-4fa3-9c5e-91c90661c819
 :END:
 [2015-03-29 Sun 22:40]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 94
@@ -4118,7 +4243,7 @@ No longer a requirement.
 [2015-03-29 Sun 22:43]
 
 Fixed by [2e4f7e3b1e].
-* CLOSED Write custom network module that supports DHCP and bridging
+** CLOSED Write custom network module that supports DHCP and bridging
 :PROPERTIES:
 :ID: 5d48acb8-a34f-9466-a4f8-0f8f4e5eeb88
 :EXPORT_FOSSIL_SOURCE: t
@@ -4136,7 +4261,7 @@ Fixed by [2e4f7e3b1e].
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 95
@@ -4148,7 +4273,7 @@ Fixed by [2e4f7e3b1e].
 :ID:       e4e6ff9e-3385-4d00-9f01-1a979b75984d
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 95
@@ -4164,7 +4289,7 @@ Fixed by [2e4f7e3b1e].
 Here is some information about the initial setup of a bridged network:
 
 http://gentooligan.blogspot.com/2012/03/kvm-network-bridging.html
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 95
@@ -4178,7 +4303,7 @@ http://gentooligan.blogspot.com/2012/03/kvm-network-bridging.html
 [2017-01-15 Sun 13:27]
 
 No longer a requirement.
-* FIXED Add SELinux
+** FIXED Add SELinux
 :PROPERTIES:
 :ID: 0863d762-6413-6246-21c3-35f5819b9a4c
 :EXPORT_FOSSIL_SOURCE: t
@@ -4196,7 +4321,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 96
@@ -4208,7 +4333,7 @@ No longer a requirement.
 :ID:       11e5c11a-49b0-458d-af13-da4dc51bd875
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 96
@@ -4222,7 +4347,7 @@ No longer a requirement.
 [2015-12-29 Tue 18:37]
 
 SELinux setup was added in the gentoo-provision repo.
-* CLOSED Fix up git through https to central vcs
+** CLOSED Fix up git through https to central vcs
 :PROPERTIES:
 :ID: c192a745-b62d-41a7-2a6a-388865f4d126
 :EXPORT_FOSSIL_SOURCE: t
@@ -4240,7 +4365,7 @@ SELinux setup was added in the gentoo-provision repo.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 97
@@ -4252,7 +4377,7 @@ SELinux setup was added in the gentoo-provision repo.
 :ID:       be287e16-194e-44ad-890b-dee52e54bc0e
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 97
@@ -4266,7 +4391,7 @@ SELinux setup was added in the gentoo-provision repo.
 [2014-06-04 Wed 21:54]
 
 rejected since git is no longer the main scm
-* CLOSED consider provisioning a standalone webserver for system webapps
+** CLOSED consider provisioning a standalone webserver for system webapps
 :PROPERTIES:
 :ID: 0357e1ea-2358-3d0a-a9d9-5aea2e60adb6
 :EXPORT_FOSSIL_SOURCE: t
@@ -4284,7 +4409,7 @@ rejected since git is no longer the main scm
 :EXPORT_FOSSIL_RESOLUTION: Duplicate
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 98
@@ -4296,7 +4421,7 @@ rejected since git is no longer the main scm
 :ID:       c092989e-cbe9-4410-a9c3-6dbb9278837e
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 98
@@ -4310,7 +4435,7 @@ rejected since git is no longer the main scm
 [2014-06-04 Wed 21:54]
 
 duplicate of [75419852c5]
-* CLOSED Figure out what's deleting /var/run during the puppet application
+** CLOSED Figure out what's deleting /var/run during the puppet application
 :PROPERTIES:
 :ID: 5612e293-2408-e627-006c-a708ce710384
 :EXPORT_FOSSIL_SOURCE: t
@@ -4328,7 +4453,7 @@ duplicate of [75419852c5]
 :EXPORT_FOSSIL_RESOLUTION: Overcome_By_Events
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 99
@@ -4340,7 +4465,7 @@ duplicate of [75419852c5]
 :ID:       279f6600-a1bd-483a-9f2f-77a0731638ca
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 99
@@ -4361,7 +4486,7 @@ Steps:
 Result:
 
 The puppet apply process runs and results in a deleted /var/run directory.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 99
@@ -4382,7 +4507,7 @@ So I'm not sure what the cause is exactly, but right now it seems those variable
 
 I'll close this for now. But these details may be useful should the bug reappear. If that happens again, I'll look for a clearer solution. For my personal use case, this is sufficient.
 
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 99
@@ -4394,7 +4519,7 @@ I'll close this for now. But these details may be useful should the bug reappear
 :ID:       e659e4d2-7431-4a9a-9bd1-53f61ec86d09
 :END:
 [2014-06-04 Wed 21:52]
-* FIXED Decide how to deal with gems vs packages
+** FIXED Decide how to deal with gems vs packages
 :PROPERTIES:
 :ID: 22c0bea2-ad53-ff58-4d2c-1dc6977fcb35
 :EXPORT_FOSSIL_SOURCE: t
@@ -4412,7 +4537,7 @@ I'll close this for now. But these details may be useful should the bug reappear
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 100
@@ -4424,7 +4549,7 @@ I'll close this for now. But these details may be useful should the bug reappear
 :ID:       3f123d6d-210c-4268-9b9d-7af7810f926a
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 100
@@ -4438,7 +4563,7 @@ I'll close this for now. But these details may be useful should the bug reappear
 [2014-06-04 Wed 21:52]
 
 reopening. this is an important issue and i will need to thoroughly research portage and it's management of gems. i will also need to research costs and benefits of each approach before committing to a style.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 100
@@ -4454,7 +4579,7 @@ reopening. this is an important issue and i will need to thoroughly research por
 Basically, everything is managed by RVM now if the context environment is ruby. Otherwise, it'll be packages.
 
 Yes, even the puppet subsystem is now done through RVM, since it gives fine-grained control over versions, while gentoo upstream can decide which specific versions to support. In our case, they stopped supporting 1.9 and even some of the later versions.
-* CLOSED Make sure all necessary services are added to rc (eg. nfsmount)
+** CLOSED Make sure all necessary services are added to rc (eg. nfsmount)
 :PROPERTIES:
 :ID: 4a1b2696-4e2e-6a4e-aa7c-df84ffeefc21
 :EXPORT_FOSSIL_SOURCE: t
@@ -4472,7 +4597,7 @@ Yes, even the puppet subsystem is now done through RVM, since it gives fine-grai
 :EXPORT_FOSSIL_RESOLUTION: Duplicate
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 101
@@ -4484,7 +4609,7 @@ Yes, even the puppet subsystem is now done through RVM, since it gives fine-grai
 :ID:       5b8b9c73-6c41-40f6-969c-74701410de65
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 101
@@ -4498,7 +4623,7 @@ Yes, even the puppet subsystem is now done through RVM, since it gives fine-grai
 [2014-05-28 Wed 13:33]
 
 dupe of #70
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 101
@@ -4510,7 +4635,7 @@ dupe of #70
 :ID:       a1091590-7290-4c70-9c95-1f4e9bcf3c96
 :END:
 [2014-06-04 Wed 21:49]
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 101
@@ -4524,7 +4649,7 @@ dupe of #70
 [2014-06-04 Wed 21:51]
 
 after the fossil migration, dupe of [ba972aee38]
-* CLOSED schedule puppet runs on all nodes
+** CLOSED schedule puppet runs on all nodes
 :PROPERTIES:
 :ID: e7bf44fe-acd6-0ef6-ead2-64b6b37aba69
 :EXPORT_FOSSIL_SOURCE: t
@@ -4542,7 +4667,7 @@ after the fossil migration, dupe of [ba972aee38]
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 102
@@ -4554,7 +4679,7 @@ after the fossil migration, dupe of [ba972aee38]
 :ID:       4c7e90e1-ce05-48c5-8366-bf22f477a41a
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 102
@@ -4568,7 +4693,7 @@ after the fossil migration, dupe of [ba972aee38]
 [2014-05-28 Wed 13:33]
 
 decided to invoke these manually using mcollective instead of using a cron job
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 102
@@ -4580,7 +4705,7 @@ decided to invoke these manually using mcollective instead of using a cron job
 :ID:       d4ab6811-3d92-4878-acfc-556fb403adb1
 :END:
 [2014-06-04 Wed 21:49]
-* CLOSED Add script to run command on all nodes via ssh
+** CLOSED Add script to run command on all nodes via ssh
 :PROPERTIES:
 :ID: 7d5a100e-63d2-2308-31ac-d6a10bd71dc0
 :EXPORT_FOSSIL_SOURCE: t
@@ -4598,7 +4723,7 @@ decided to invoke these manually using mcollective instead of using a cron job
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 103
@@ -4610,7 +4735,7 @@ decided to invoke these manually using mcollective instead of using a cron job
 :ID:       41691253-ed9a-4525-bfae-b64f63f5a8b4
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 103
@@ -4624,7 +4749,7 @@ decided to invoke these manually using mcollective instead of using a cron job
 [2014-05-28 Wed 13:33]
 
 decided to stick with mcollective. By sticking with one method, complexity is reduced and I can focus on securing a single communication channel as opposed to multiple ones. another reason is that mcollective allows for batch command runs and organizing output. The only tradeoff is that you have to write your own custom agents for anything you want to run on all nodes, but this isn't too complicated once you get used to how the whole system works.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 103
@@ -4638,7 +4763,7 @@ decided to stick with mcollective. By sticking with one method, complexity is re
 [2014-06-04 Wed 21:48]
 
 went with a different approach. Mcollective is used to run agent applications on all managed nodes with possible filtering.
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 103
@@ -4652,7 +4777,7 @@ went with a different approach. Mcollective is used to run agent applications on
 [2014-06-04 Wed 21:48]
 
 ehh...dupe comments. woops!
-* FIXED Consider implementing a complete virtual mail server
+** FIXED Consider implementing a complete virtual mail server
 :PROPERTIES:
 :ID: 6e93ba59-f441-5d5a-bda3-6c0b778728c5
 :EXPORT_FOSSIL_SOURCE: t
@@ -4670,7 +4795,7 @@ ehh...dupe comments. woops!
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 104
@@ -4682,7 +4807,7 @@ ehh...dupe comments. woops!
 :ID:       6e959642-8259-4a5d-b27f-2d8b286f28a2
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 104
@@ -4694,7 +4819,7 @@ ehh...dupe comments. woops!
 :ID:       57981af4-5c8f-4c7a-b2f0-3333487fecef
 :END:
 [2014-06-04 Wed 21:47]
-* FIXED Consider having a central webserver for non-stage services
+** FIXED Consider having a central webserver for non-stage services
 :PROPERTIES:
 :ID: 75419852-c56b-a809-205d-d02ea028e178
 :EXPORT_FOSSIL_SOURCE: t
@@ -4712,7 +4837,7 @@ ehh...dupe comments. woops!
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 105
@@ -4724,7 +4849,7 @@ ehh...dupe comments. woops!
 :ID:       b27e1b12-65f7-4b66-b9c1-1b8d8789c133
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 105
@@ -4736,7 +4861,7 @@ ehh...dupe comments. woops!
 :ID:       9da61240-4558-4b34-80e5-31c6a1a7046f
 :END:
 [2014-06-04 Wed 21:47]
-* FIXED Ensure that pgsql logs are written to their own files
+** FIXED Ensure that pgsql logs are written to their own files
 :PROPERTIES:
 :ID: ecf8ae05-c346-a670-dcf3-0d681f0f8062
 :EXPORT_FOSSIL_SOURCE: t
@@ -4754,7 +4879,7 @@ ehh...dupe comments. woops!
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 106
@@ -4766,7 +4891,7 @@ ehh...dupe comments. woops!
 :ID:       2063b45e-0d25-427a-88b2-3da6abdc166c
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 106
@@ -4778,7 +4903,7 @@ ehh...dupe comments. woops!
 :ID:       549e97d0-adc6-4d19-8b74-9c47ce6b7624
 :END:
 [2014-06-04 Wed 21:47]
-* FIXED Fix openldap acl error which doesn't allow user authentication
+** FIXED Fix openldap acl error which doesn't allow user authentication
 :PROPERTIES:
 :ID: 5ca13eb6-5b6b-b0c1-7bb7-74baaca66a35
 :EXPORT_FOSSIL_SOURCE: t
@@ -4796,7 +4921,7 @@ ehh...dupe comments. woops!
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 107
@@ -4808,7 +4933,7 @@ ehh...dupe comments. woops!
 :ID:       f6386b8d-2223-453b-9cf3-b47e9440dfa9
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 107
@@ -4820,7 +4945,7 @@ ehh...dupe comments. woops!
 :ID:       2acb2c16-5dbc-42f9-aaa8-6d31c298d1e1
 :END:
 [2014-06-04 Wed 21:46]
-* FIXED Add ssh authorized_keys
+** FIXED Add ssh authorized_keys
 :PROPERTIES:
 :ID: 1c8fdd5f-b480-3123-76d1-c5bb4f7c35ee
 :EXPORT_FOSSIL_SOURCE: t
@@ -4838,7 +4963,7 @@ ehh...dupe comments. woops!
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 108
@@ -4850,7 +4975,7 @@ ehh...dupe comments. woops!
 :ID:       6fa5b01f-c169-45cb-acc4-b4483961bb9a
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 108
@@ -4862,7 +4987,7 @@ ehh...dupe comments. woops!
 :ID:       a3e837a8-4416-491c-b52a-1c690aa64cfb
 :END:
 [2014-06-04 Wed 21:46]
-* CLOSED Add an init script for ldap and dns nodes
+** CLOSED Add an init script for ldap and dns nodes
 :PROPERTIES:
 :ID: b13b62df-aab7-b34e-c0cc-3116aef5866e
 :EXPORT_FOSSIL_SOURCE: t
@@ -4880,7 +5005,7 @@ ehh...dupe comments. woops!
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 109
@@ -4892,7 +5017,7 @@ ehh...dupe comments. woops!
 :ID:       f9e3d27a-5807-4186-9446-b3b2119dda26
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 109
@@ -4906,7 +5031,7 @@ ehh...dupe comments. woops!
 [2014-06-04 Wed 21:56]
 
 consider adding an init script so the hypervisor starts dns and ldap servers to minimize lag due to timeouts (mainly for ldap, but dns is needed to resolve the ldap ip address)
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 109
@@ -4918,7 +5043,7 @@ consider adding an init script so the hypervisor starts dns and ldap servers to 
 :ID:       ff10315e-9d61-4510-9c7e-f5c8b8e66924
 :END:
 [2015-03-29 Sun 18:20]
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 109
@@ -4932,7 +5057,7 @@ consider adding an init script so the hypervisor starts dns and ldap servers to 
 [2017-01-15 Sun 13:42]
 
 No longer a requirement.
-* FIXED Make sure patterns that use variables define them as arguments
+** FIXED Make sure patterns that use variables define them as arguments
 :PROPERTIES:
 :ID: ba937a26-e7c6-da6e-dc79-2313eaaadb9e
 :EXPORT_FOSSIL_SOURCE: t
@@ -4950,7 +5075,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 110
@@ -4962,7 +5087,7 @@ No longer a requirement.
 :ID:       003f0316-aa93-4078-9ac6-375c757caf33
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 110
@@ -4974,7 +5099,7 @@ No longer a requirement.
 :ID:       9274bc8e-e8f2-487e-9f16-f8eef7fe2c40
 :END:
 [2014-06-04 Wed 21:46]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 110
@@ -4986,7 +5111,7 @@ No longer a requirement.
 :ID:       3c21ca69-b90d-4654-8235-f6d8b076b94f
 :END:
 [2014-06-04 Wed 21:46]
-* CLOSED If ensuring latest, make sure to move python's sqlite USE flag to security pattern
+** CLOSED If ensuring latest, make sure to move python's sqlite USE flag to security pattern
 :PROPERTIES:
 :ID: 82634424-a852-8b01-2328-eb47fc9a078d
 :EXPORT_FOSSIL_SOURCE: t
@@ -5004,7 +5129,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 111
@@ -5016,7 +5141,7 @@ No longer a requirement.
 :ID:       e9024297-2a2b-4fcf-8388-2511f59e9f14
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 111
@@ -5030,7 +5155,7 @@ No longer a requirement.
 [2014-05-28 Wed 13:33]
 
 decided not to ensure latest for all packages. updates will be handled manually on the binhost, then propagated to other nodes using the binhost as the binary package server.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 111
@@ -5044,7 +5169,7 @@ decided not to ensure latest for all packages. updates will be handled manually 
 [2014-06-04 Wed 21:45]
 
 went with an alternative fix and decided to have one use flag file per package which will contain the necessary flags for all nodes on the network that use that package.
-* CLOSED Consider ensuring latest packages
+** CLOSED Consider ensuring latest packages
 :PROPERTIES:
 :ID: 1604d41d-5b10-1668-6518-513139c8f560
 :EXPORT_FOSSIL_SOURCE: t
@@ -5062,7 +5187,7 @@ went with an alternative fix and decided to have one use flag file per package w
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 112
@@ -5074,7 +5199,7 @@ went with an alternative fix and decided to have one use flag file per package w
 :ID:       f2ca817e-0ba9-4515-82a3-36241d2e0041
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 112
@@ -5088,7 +5213,7 @@ went with an alternative fix and decided to have one use flag file per package w
 [2014-05-28 Wed 13:33]
 
 Decided against it. It's better to perform manual updates to make sure everything runs as expected.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 112
@@ -5102,7 +5227,7 @@ Decided against it. It's better to perform manual updates to make sure everythin
 [2014-06-04 Wed 21:44]
 
 rejected since updates should be intentional and expected. that way, update errors can be contained and thoroughly debugged.
-* CLOSED Modularize common functionality
+** CLOSED Modularize common functionality
 :PROPERTIES:
 :ID: 2115c609-2842-4439-f7ee-d2b406e331a2
 :EXPORT_FOSSIL_SOURCE: t
@@ -5120,7 +5245,7 @@ rejected since updates should be intentional and expected. that way, update erro
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 113
@@ -5132,7 +5257,7 @@ rejected since updates should be intentional and expected. that way, update erro
 :ID:       64501219-3a2a-4b32-92f6-01041ac87fd6
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 113
@@ -5146,7 +5271,7 @@ rejected since updates should be intentional and expected. that way, update erro
 [2014-05-28 Wed 13:33]
 
 closed as duplicate
-* CLOSED Modularize very common blocks of functionality
+** CLOSED Modularize very common blocks of functionality
 :PROPERTIES:
 :ID: f309da65-bc14-0a3a-72e9-1c3e6aea4b43
 :EXPORT_FOSSIL_SOURCE: t
@@ -5164,7 +5289,7 @@ closed as duplicate
 :EXPORT_FOSSIL_RESOLUTION: Duplicate
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 114
@@ -5176,7 +5301,7 @@ closed as duplicate
 :ID:       08aa073b-6c34-4bc9-9822-3b8cb337b7b3
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 114
@@ -5190,7 +5315,7 @@ closed as duplicate
 [2014-05-28 Wed 13:33]
 
 closed as duplicate
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 114
@@ -5204,7 +5329,7 @@ closed as duplicate
 [2014-06-04 Wed 21:43]
 
 duplicate of [d556e34f92]
-* FIXED Configure iptables for KVM guest to internet communication
+** FIXED Configure iptables for KVM guest to internet communication
 :PROPERTIES:
 :ID: 73a6afdf-f5b2-4dd1-73ac-ea2ff64986dd
 :EXPORT_FOSSIL_SOURCE: t
@@ -5222,7 +5347,7 @@ duplicate of [d556e34f92]
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 115
@@ -5234,7 +5359,7 @@ duplicate of [d556e34f92]
 :ID:       bb461224-f9d0-46fb-b1fc-279264f09de8
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 115
@@ -5246,7 +5371,7 @@ duplicate of [d556e34f92]
 :ID:       7f51836f-343b-4ed4-bddb-1622c1aaf514
 :END:
 [2014-06-04 Wed 21:43]
-* FIXED Configure iptables for tftp
+** FIXED Configure iptables for tftp
 :PROPERTIES:
 :ID: 1957f7e7-08eb-4802-a434-92020055f9ad
 :EXPORT_FOSSIL_SOURCE: t
@@ -5264,7 +5389,7 @@ duplicate of [d556e34f92]
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 116
@@ -5276,7 +5401,7 @@ duplicate of [d556e34f92]
 :ID:       8b224b57-6014-4ec1-b173-dea0f18ba75a
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 116
@@ -5288,7 +5413,7 @@ duplicate of [d556e34f92]
 :ID:       b4c43e5f-20bc-4d54-96c0-cc95f3da35b8
 :END:
 [2014-06-04 Wed 21:42]
-* FIXED Configure iptables for rsync
+** FIXED Configure iptables for rsync
 :PROPERTIES:
 :ID: 975d2260-dbf9-13ca-36ef-4b94d69a6603
 :EXPORT_FOSSIL_SOURCE: t
@@ -5306,7 +5431,7 @@ duplicate of [d556e34f92]
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 117
@@ -5318,7 +5443,7 @@ duplicate of [d556e34f92]
 :ID:       d4347a7b-fa90-4d76-8d80-af1bccdc04aa
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 117
@@ -5330,7 +5455,7 @@ duplicate of [d556e34f92]
 :ID:       0155a5f5-2090-42f6-99f8-66df5243ca12
 :END:
 [2014-06-04 Wed 21:42]
-* FIXED Configure iptables for ssh
+** FIXED Configure iptables for ssh
 :PROPERTIES:
 :ID: 2bc65749-6f10-cbb9-06c5-8bfe5145dca5
 :EXPORT_FOSSIL_SOURCE: t
@@ -5348,7 +5473,7 @@ duplicate of [d556e34f92]
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 118
@@ -5360,7 +5485,7 @@ duplicate of [d556e34f92]
 :ID:       8aac679b-f907-44e4-a5a0-f925d07e2358
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 118
@@ -5372,7 +5497,7 @@ duplicate of [d556e34f92]
 :ID:       b0a277b7-731e-480c-b800-04291d8c1a5e
 :END:
 [2014-06-04 Wed 21:42]
-* FIXED Link NFS shares to /srv
+** FIXED Link NFS shares to /srv
 :PROPERTIES:
 :ID: 567648e6-4add-75e1-257d-daee82507c45
 :EXPORT_FOSSIL_SOURCE: t
@@ -5390,7 +5515,7 @@ duplicate of [d556e34f92]
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 119
@@ -5402,7 +5527,7 @@ duplicate of [d556e34f92]
 :ID:       8b6ca108-9f7c-4d96-a096-5eee469462d7
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 119
@@ -5414,7 +5539,7 @@ duplicate of [d556e34f92]
 :ID:       43537316-5b19-4ed0-aafb-171ad52385ea
 :END:
 [2014-06-04 Wed 21:42]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 119
@@ -5426,7 +5551,7 @@ duplicate of [d556e34f92]
 :ID:       a0098c1b-ddd9-4df3-a38d-3dfb3f7fa24a
 :END:
 [2014-06-04 Wed 21:51]
-* FIXED SSH configuration
+** FIXED SSH configuration
 :PROPERTIES:
 :ID: 68e897cc-1d4a-470a-0f0b-46794877624e
 :EXPORT_FOSSIL_SOURCE: t
@@ -5444,7 +5569,7 @@ duplicate of [d556e34f92]
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 120
@@ -5456,7 +5581,7 @@ duplicate of [d556e34f92]
 :ID:       c3986d93-5ace-4979-90af-fffecab8aa97
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 120
@@ -5468,7 +5593,7 @@ duplicate of [d556e34f92]
 :ID:       61e3d036-3255-4eb6-bbee-5c4c8800c3e1
 :END:
 [2014-06-04 Wed 21:41]
-* FIXED Consider NFS mounting scripts on boot, using local.d
+** FIXED Consider NFS mounting scripts on boot, using local.d
 :PROPERTIES:
 :ID: 1c848ef4-81d1-a29a-5c87-0d52e2f7ed1f
 :EXPORT_FOSSIL_SOURCE: t
@@ -5486,7 +5611,7 @@ duplicate of [d556e34f92]
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 121
@@ -5498,7 +5623,7 @@ duplicate of [d556e34f92]
 :ID:       1a5ada5b-f347-44c8-98d6-b3c1bf4214da
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 121
@@ -5512,7 +5637,7 @@ duplicate of [d556e34f92]
 [2014-05-28 Wed 13:33]
 
 Decided to go with #22 and use puppet to ensure mounts, as well as enabling the "atboot" option.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 121
@@ -5526,7 +5651,7 @@ Decided to go with #22 and use puppet to ensure mounts, as well as enabling the 
 [2014-06-04 Wed 21:41]
 
 Instead of using local.d, puppet-managed fstab works great via the mount resource
-* CLOSED Add eix portage overlay syncing
+** CLOSED Add eix portage overlay syncing
 :PROPERTIES:
 :ID: d1cb4fad-7c1a-31e0-7cf2-acf145c2200b
 :EXPORT_FOSSIL_SOURCE: t
@@ -5544,7 +5669,7 @@ Instead of using local.d, puppet-managed fstab works great via the mount resourc
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 122
@@ -5556,7 +5681,7 @@ Instead of using local.d, puppet-managed fstab works great via the mount resourc
 :ID:       a35ddd25-96e3-4fe1-ae09-74aff3299b0d
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 122
@@ -5570,7 +5695,7 @@ Instead of using local.d, puppet-managed fstab works great via the mount resourc
 [2014-05-28 Wed 13:33]
 
 decided not to worry about syncing with puppet. this will be done during updates and upgrades using mcollective.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 122
@@ -5584,7 +5709,7 @@ decided not to worry about syncing with puppet. this will be done during updates
 [2014-06-04 Wed 21:40]
 
 rejected since overlay syncing and updates should be manually invoked. that way, packages are not changed without it being intentional.
-* FIXED Ensure NFS shares are mounted where necessary
+** FIXED Ensure NFS shares are mounted where necessary
 :PROPERTIES:
 :ID: ba0e8542-e0c9-c687-8a11-4ea843c1bc74
 :EXPORT_FOSSIL_SOURCE: t
@@ -5602,7 +5727,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 123
@@ -5614,7 +5739,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 :ID:       1c850c74-c7d3-4f6b-aca3-21abc3f29e8c
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 123
@@ -5626,7 +5751,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 :ID:       617369f9-63a7-41c9-8a0d-364161f85fdd
 :END:
 [2014-06-04 Wed 21:39]
-* FIXED Make sure ntp syncing is configured and enabled
+** FIXED Make sure ntp syncing is configured and enabled
 :PROPERTIES:
 :ID: 5829ddbf-c709-c14b-0d9a-4441e8e7c109
 :EXPORT_FOSSIL_SOURCE: t
@@ -5644,7 +5769,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 124
@@ -5656,7 +5781,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 :ID:       da5f5cdb-8625-4048-a6c7-200188772c04
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 124
@@ -5668,7 +5793,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 :ID:       c3291cd7-527f-4703-a847-a0d2946ce2bd
 :END:
 [2014-06-04 Wed 21:39]
-* CLOSED Make sure rsync module exists for all mirroring cron jobs
+** CLOSED Make sure rsync module exists for all mirroring cron jobs
 :PROPERTIES:
 :ID: 7271747a-ccdc-2c46-a41e-8583b36f2a2d
 :EXPORT_FOSSIL_SOURCE: t
@@ -5686,7 +5811,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 125
@@ -5698,7 +5823,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 :ID:       eb5cdde3-bc2e-49df-af6a-d19cf40573e6
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 125
@@ -5712,7 +5837,7 @@ rejected since overlay syncing and updates should be manually invoked. that way,
 [2014-05-28 Wed 13:33]
 
 No longer needed.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 125
@@ -5724,7 +5849,7 @@ No longer needed.
 :ID:       a66c3ec9-9e23-4233-ab9b-3e82c27bb97f
 :END:
 [2014-06-04 Wed 21:39]
-* CLOSED Preserve overlay distfiles cronjob
+** CLOSED Preserve overlay distfiles cronjob
 :PROPERTIES:
 :ID: 508c76cf-f0a8-6b70-b9a9-addc2a812974
 :EXPORT_FOSSIL_SOURCE: t
@@ -5742,7 +5867,7 @@ No longer needed.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 126
@@ -5754,7 +5879,7 @@ No longer needed.
 :ID:       fb84a47c-1099-4c4d-adb8-7f044769bf9d
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 126
@@ -5766,7 +5891,7 @@ No longer needed.
 :ID:       a4797f8d-36f7-4b7a-9eda-cdf3dfe6c20f
 :END:
 [2014-06-04 Wed 21:39]
-* CLOSED Temporary user group system until LDAP migration is complete
+** CLOSED Temporary user group system until LDAP migration is complete
 :PROPERTIES:
 :ID: 86c07806-e921-8f94-e8fd-a36e9f7b51de
 :EXPORT_FOSSIL_SOURCE: t
@@ -5784,7 +5909,7 @@ No longer needed.
 :EXPORT_FOSSIL_RESOLUTION: Workaround
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 127
@@ -5796,7 +5921,7 @@ No longer needed.
 :ID:       bb266917-76c9-486a-8d13-2cb749df0485
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 127
@@ -5810,7 +5935,7 @@ No longer needed.
 [2014-06-04 Wed 21:38]
 
 ldap migration is complete. this is no longer needed (intention was to effectively manage user and groups, but now that ldap is used, this is not a problem)
-* CLOSED Set up iptables so that they can be properly managed via puppet
+** CLOSED Set up iptables so that they can be properly managed via puppet
 :PROPERTIES:
 :ID: 83d99c7b-dbbe-a513-bf6b-4c8ec32c0146
 :EXPORT_FOSSIL_SOURCE: t
@@ -5828,7 +5953,7 @@ ldap migration is complete. this is no longer needed (intention was to effective
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 128
@@ -5840,7 +5965,7 @@ ldap migration is complete. this is no longer needed (intention was to effective
 :ID:       0be64421-d73c-4fe9-9c33-eba1d78c94ec
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 128
@@ -5852,7 +5977,7 @@ ldap migration is complete. this is no longer needed (intention was to effective
 :ID:       088d9672-9f4e-4ce0-acae-c52f3617a4d5
 :END:
 [2014-06-04 Wed 21:37]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 128
@@ -5870,7 +5995,7 @@ What we have now works well enough.
 Basically, you have to ensure the iptables service is not running before applying the rules via puppet. That way, they get loaded in properly. Otherwise, if it's running, puppet will update the file in /var/lib/iptables, shut off the service, iptables will overwrite what puppet wrote as it shuts down and saves it's active rules, and then bam, our new rules never get applied.
 
 So what we do now is ensure iptables is off before applying puppet. It's good enough for our simple use case of workstation node and single remote node.
-* FIXED Migrate to LDAP for centralized authentication
+** FIXED Migrate to LDAP for centralized authentication
 :PROPERTIES:
 :ID: 75300262-0753-155c-f79d-f7a84a870100
 :EXPORT_FOSSIL_SOURCE: t
@@ -5888,7 +6013,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 129
@@ -5900,7 +6025,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       f52ca294-d2b2-4f70-82f8-028bee6b03e4
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 129
@@ -5912,7 +6037,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       048fc239-89bb-4f91-a829-d6d6b05f51ea
 :END:
 [2014-06-04 Wed 21:34]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 129
@@ -5924,7 +6049,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       326b2fa5-8170-46dd-a7a7-abad811745bd
 :END:
 [2014-06-04 Wed 21:36]
-* FIXED Move service directories to /srv
+** FIXED Move service directories to /srv
 :PROPERTIES:
 :ID: 6a8f4872-f987-b2c7-29a9-bd170d389b98
 :EXPORT_FOSSIL_SOURCE: t
@@ -5942,7 +6067,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 130
@@ -5954,7 +6079,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       2345f734-90cf-4e6c-8e2a-489ddf01954b
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 130
@@ -5966,7 +6091,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       02d2d828-ac02-4f9d-9315-f3e5b1208759
 :END:
 [2014-06-04 Wed 21:33]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 130
@@ -5978,7 +6103,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       def8df64-c51c-4b3d-8fe4-27eba9e8615e
 :END:
 [2014-06-04 Wed 21:36]
-* FIXED Create a template for setting the node's hostname
+** FIXED Create a template for setting the node's hostname
 :PROPERTIES:
 :ID: 5184ca40-be91-c673-fec1-fac8ce27d62f
 :EXPORT_FOSSIL_SOURCE: t
@@ -5996,7 +6121,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 131
@@ -6008,7 +6133,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       60b8cdcf-ec10-4fcf-acf7-fc6a8bce72d3
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 131
@@ -6020,7 +6145,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       1f2c4fe2-9343-4b06-89f3-d40fbecc4016
 :END:
 [2014-06-04 Wed 21:33]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 131
@@ -6032,7 +6157,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       15cde39e-6563-45c3-944e-88ee07f31418
 :END:
 [2014-06-04 Wed 21:36]
-* CLOSED Split exports based on node
+** CLOSED Split exports based on node
 :PROPERTIES:
 :ID: cb38e2d3-aa58-ca7c-2320-2c04bce874db
 :EXPORT_FOSSIL_SOURCE: t
@@ -6050,7 +6175,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 132
@@ -6062,7 +6187,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 :ID:       5117d7fd-4b6a-4bae-ad59-1866eb7a566b
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 132
@@ -6078,7 +6203,7 @@ So what we do now is ensure iptables is off before applying puppet. It's good en
 NFS won't be used on the network much. Instead, file transfers will be done through protocols typically used to remote servers, like rsync or http, simply as a matter of personal preference. Globally accessible files, like home directories for users authenticated via ldap, will still be hosted on an NFS share, managed by the NFS server.
 
 Rejected because NFS will no longer be the primary mechanism to serve files on the network.
-* FIXED Add proxy node
+** FIXED Add proxy node
 :PROPERTIES:
 :ID: 83eb316f-f7b4-5e62-b7fd-53fcd0a87d91
 :EXPORT_FOSSIL_SOURCE: t
@@ -6096,7 +6221,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 133
@@ -6108,7 +6233,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :ID:       05855e02-eafc-4a73-b906-0a58078dfd59
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 133
@@ -6120,7 +6245,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :ID:       3d6726d7-2848-4c41-84f2-8e6c70a9e81e
 :END:
 [2014-06-04 Wed 21:31]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 133
@@ -6132,7 +6257,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :ID:       04eeddd3-4b9c-408f-b45f-c46610050ee6
 :END:
 [2014-06-04 Wed 21:36]
-* FIXED Implement a PKI
+** FIXED Implement a PKI
 :PROPERTIES:
 :ID: 1ec89981-b318-f1e7-05f6-606070401c2a
 :EXPORT_FOSSIL_SOURCE: t
@@ -6150,7 +6275,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 134
@@ -6162,7 +6287,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :ID:       fec3639f-a283-4199-8e48-1edb0dcb5532
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 134
@@ -6174,7 +6299,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :ID:       9a0012d0-5c2b-4256-94bb-33ba65683987
 :END:
 [2014-06-04 Wed 21:31]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 134
@@ -6186,7 +6311,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :ID:       6b54894c-5a19-4acf-833d-1bad8dfa1b62
 :END:
 [2014-06-04 Wed 21:35]
-* CLOSED Add data node
+** CLOSED Add data node
 :PROPERTIES:
 :ID: 3b9d95c1-5093-0208-e34e-e5874b8f0d8a
 :EXPORT_FOSSIL_SOURCE: t
@@ -6204,7 +6329,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :EXPORT_FOSSIL_RESOLUTION: Duplicate
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 135
@@ -6216,7 +6341,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 :ID:       3dfdd421-29d9-43ce-ae6c-f2cad5c452f3
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 135
@@ -6230,7 +6355,7 @@ Rejected because NFS will no longer be the primary mechanism to serve files on t
 [2014-06-04 Wed 21:30]
 
 duplicate of [60d35fde1a].
-* FIXED Determine kernel and initramfs update strategy
+** FIXED Determine kernel and initramfs update strategy
 :PROPERTIES:
 :ID: 81a892c9-b7b7-f033-e74c-08e60340a05d
 :EXPORT_FOSSIL_SOURCE: t
@@ -6248,7 +6373,7 @@ duplicate of [60d35fde1a].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 136
@@ -6260,7 +6385,7 @@ duplicate of [60d35fde1a].
 :ID:       5641c77a-b35f-4456-a299-5c72c304c93c
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 136
@@ -6274,7 +6399,7 @@ duplicate of [60d35fde1a].
 [2014-06-04 Wed 21:30]
 
 updates will be done via puppet-managed shell scripts invoked through mcollective.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 136
@@ -6286,7 +6411,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :ID:       af363501-1909-4108-b8ed-4931c2b5ac0b
 :END:
 [2014-06-04 Wed 21:35]
-* FIXED Add DNS server
+** FIXED Add DNS server
 :PROPERTIES:
 :ID: 162549b8-a7b7-1b8a-8cee-6db78bdffbb8
 :EXPORT_FOSSIL_SOURCE: t
@@ -6304,7 +6429,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 137
@@ -6316,7 +6441,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :ID:       cc1c4f4c-fa8c-473f-84d8-a26d245452c5
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 137
@@ -6328,7 +6453,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :ID:       a1b4c6c2-2e40-4163-b867-3a0f9b9ed190
 :END:
 [2014-06-04 Wed 21:29]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 137
@@ -6340,7 +6465,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :ID:       fd32ce57-241c-462c-a2a6-d87f06e005e8
 :END:
 [2014-06-04 Wed 21:35]
-* FIXED Add OpenVPN
+** FIXED Add OpenVPN
 :PROPERTIES:
 :ID: 88a48eba-6da6-8212-5d7c-4df68386a27e
 :EXPORT_FOSSIL_SOURCE: t
@@ -6358,7 +6483,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 138
@@ -6370,7 +6495,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :ID:       5ed04e76-bcc1-447e-98e8-30a3f7ffb860
 :END:
 [2014-05-28 Wed 13:33]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 138
@@ -6382,7 +6507,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :ID:       df77a5a9-90f3-47d4-8fb2-5e4273dbd3fd
 :END:
 [2014-06-04 Wed 21:29]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 138
@@ -6394,7 +6519,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :ID:       928f0e5f-6916-4fc5-97c4-4668ec5f12a1
 :END:
 [2014-06-04 Wed 21:35]
-* FIXED Make sure all files have a puppet warning at the top
+** FIXED Make sure all files have a puppet warning at the top
 :PROPERTIES:
 :ID: c228b03b-25f6-6fad-6d53-726411383c2c
 :EXPORT_FOSSIL_SOURCE: t
@@ -6412,7 +6537,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-28 Wed 13:33]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 139
@@ -6426,7 +6551,7 @@ updates will be done via puppet-managed shell scripts invoked through mcollectiv
 [2014-05-28 Wed 13:33]
 
 Place a comment in each file warning that it is managed by puppet.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 139
@@ -6438,7 +6563,7 @@ Place a comment in each file warning that it is managed by puppet.
 :ID:       b59bba95-fc8a-415c-837a-aed1993eea26
 :END:
 [2014-05-29 Thu 00:02]
-* OPEN consider moving app-env-to-node logic to something else
+** OPEN consider moving app-env-to-node logic to something else
 :PROPERTIES:
 :ID: 8e822384-4286-89fb-81cf-b31ff140620e
 :EXPORT_FOSSIL_SOURCE: t
@@ -6456,7 +6581,7 @@ Place a comment in each file warning that it is managed by puppet.
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-05-29 Thu 12:51]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 140
@@ -6472,7 +6597,7 @@ Place a comment in each file warning that it is managed by puppet.
 The app-env-to-node logic is the logic that ties locally developed applications (eg. the websites, the puppet manifests, etc) to specific nodes. This way, it is easy to specify which nodes get what applications installed and which version of that application (staging, environment and even the version number).
 
 Currently, this being done through puppet and overlays containing the builds. Determine whether or not there are better approaches for managing applications (eg. using mco and filters). Right now, puppet seems the best tool for the job, but it may be worth exploring to see if better approaches exist.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 140
@@ -6492,7 +6617,7 @@ mco install via hostnames. Eg- puppet gets installed on nodes with puppet.intern
 This encourages the use of one OS for one purpose, at least for public facing applications.
 
 This is better so that puppet-nitelite has no knowledge of application-level configs and packages. Puppet can be used for the system-level resources and then mco will be used to manage the application-level resources (software that is being actively developed in-house for the purpose of publication/production).
-* FIXED Determine best way to host overlays
+** FIXED Determine best way to host overlays
 :PROPERTIES:
 :ID: 9724d0a3-79ab-d784-1c18-7e50dc42417e
 :EXPORT_FOSSIL_SOURCE: t
@@ -6510,7 +6635,7 @@ This is better so that puppet-nitelite has no knowledge of application-level con
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-05-29 Thu 17:05]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 141
@@ -6528,7 +6653,7 @@ Currently, overlays are hosted on github. Layman uses github urls to find these 
 Since git is no longer the main project management tool, the current process of updating ebuilds is to update the localnet fossil ebuild repo and push the changes to an external git repo.
 
 There's no way around the publishing model, so find the best (quickest and easiest) way to go from fossil repo to downloadable via all nodes.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 141
@@ -6542,7 +6667,7 @@ There's no way around the publishing model, so find the best (quickest and easie
 [2015-03-29 Sun 18:19]
 
 Fixed by [70663a5d0b]. This commit speeds up the push process using RSS pinging for the fossil repos.
-* OPEN fix git config email problem
+** OPEN fix git config email problem
 :PROPERTIES:
 :ID: 159e5f08-e55a-b560-7d71-4416bb884140
 :EXPORT_FOSSIL_SOURCE: t
@@ -6560,7 +6685,7 @@ Fixed by [70663a5d0b]. This commit speeds up the push process using RSS pinging 
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-05-29 Thu 16:13]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 142
@@ -6574,7 +6699,7 @@ Fixed by [70663a5d0b]. This commit speeds up the push process using RSS pinging 
 [2014-05-29 Thu 16:13]
 
 during fossil-to-git conversions, new fossil commits are being written with no git email. thus, commits are not getting blamed to the proper github user. check to see how this may be fixed.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 142
@@ -6588,7 +6713,7 @@ during fossil-to-git conversions, new fossil commits are being written with no g
 [2014-06-03 Tue 14:00]
 
 when fossil 1.29 is released, implement that on all nodes and ensure the exports are written with proper committer and email
-* CLOSED implement a DMZ
+** CLOSED implement a DMZ
 :PROPERTIES:
 :ID: 7d9ccc19-5fd2-cdcd-86d0-e4a83add0bce
 :EXPORT_FOSSIL_SOURCE: t
@@ -6606,7 +6731,7 @@ when fossil 1.29 is released, implement that on all nodes and ensure the exports
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-01 Sun 19:20]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 143
@@ -6626,7 +6751,7 @@ The DMZ will contain nodes hosting exposed services (typically servers). Hosts i
 This will require proper planning and design.
 
 Identify the services to expose, and to who, identify risks and build plans in the event one or more the the hosts get compromised.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 143
@@ -6640,7 +6765,7 @@ Identify the services to expose, and to who, identify risks and build plans in t
 [2017-01-15 Sun 13:33]
 
 No longer a requirement.
-* CLOSED add ability to uninstall apps via mco
+** CLOSED add ability to uninstall apps via mco
 :PROPERTIES:
 :ID: ad5a5156-1e76-86b5-2862-4df5c8e81437
 :EXPORT_FOSSIL_SOURCE: t
@@ -6658,7 +6783,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-02 Mon 18:54]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 144
@@ -6672,7 +6797,7 @@ No longer a requirement.
 [2014-06-02 Mon 18:54]
 
 This is needed to manage nitelite applications. Consider allowing passing args to the emerge command.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 144
@@ -6686,7 +6811,7 @@ This is needed to manage nitelite applications. Consider allowing passing args t
 [2014-06-02 Mon 21:41]
 
 decided against adding this functionality to the mco emerge-app application. for less used commands, use run-command to avoid having to update every agent for each minor change.
-* OPEN make sure all nodes use eth[n] interface names for consistency across nodes
+** OPEN make sure all nodes use eth[n] interface names for consistency across nodes
 :PROPERTIES:
 :ID: 2797f9fc-7bd5-38ee-2bbc-efa16f619a1e
 :EXPORT_FOSSIL_SOURCE: t
@@ -6704,7 +6829,7 @@ decided against adding this functionality to the mco emerge-app application. for
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-02 Mon 19:23]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 145
@@ -6716,7 +6841,7 @@ decided against adding this functionality to the mco emerge-app application. for
 :ID:       99abbfbc-9354-4aa2-8d89-3216afaf40fe
 :END:
 [2014-06-02 Mon 19:23]
-* OPEN allow for multiple network interfaces to be defined in the base pattern
+** OPEN allow for multiple network interfaces to be defined in the base pattern
 :PROPERTIES:
 :ID: 8357b4ff-9adf-0f88-31c9-b650a1a6d68d
 :EXPORT_FOSSIL_SOURCE: t
@@ -6734,7 +6859,7 @@ decided against adding this functionality to the mco emerge-app application. for
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-02 Mon 19:17]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 146
@@ -6748,7 +6873,7 @@ decided against adding this functionality to the mco emerge-app application. for
 [2014-06-02 Mon 19:17]
 
 this parallels the gentoo-provision multiple interfaces functionality in it's config file
-* OPEN consider removing resolv.conf resource
+** OPEN consider removing resolv.conf resource
 :PROPERTIES:
 :ID: 6afef814-36ed-7013-e92e-7f08d5c3a262
 :EXPORT_FOSSIL_SOURCE: t
@@ -6766,7 +6891,7 @@ this parallels the gentoo-provision multiple interfaces functionality in it's co
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-03 Tue 00:42]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 147
@@ -6780,7 +6905,7 @@ this parallels the gentoo-provision multiple interfaces functionality in it's co
 [2014-06-03 Tue 00:42]
 
 the name servers should be provided by dhcp
-* FIXED Setup iptables on hypervisor to allow talking to guests over network
+** FIXED Setup iptables on hypervisor to allow talking to guests over network
 :PROPERTIES:
 :ID: 4d06a204-64d1-a337-d9e0-fba5dfff4075
 :EXPORT_FOSSIL_SOURCE: t
@@ -6798,7 +6923,7 @@ the name servers should be provided by dhcp
 :EXPORT_FOSSIL_RESOLUTION: Overcome_By_Events
 :END:
 [2014-06-03 Tue 18:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 148
@@ -6810,7 +6935,7 @@ the name servers should be provided by dhcp
 :ID:       a1136295-8013-4e55-acbd-eefd4a000c2b
 :END:
 [2014-06-03 Tue 18:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 148
@@ -6831,7 +6956,7 @@ Possible issues at the time were:
 - Bad /etc/sysctl.conf settings preventing IP forwarding (fixed in [8d6aa0498b] and [f8eb63284d])
 
 I am writing this as historical documentation in case this issue ever manifests again. The truth is, the commits referenced above or something else fixed this issue. Thus, I am closing this as Fixed and Overcome_By_Events,
-* OPEN disable rsync when nothing is being served
+** OPEN disable rsync when nothing is being served
 :PROPERTIES:
 :ID: 618e392a-509e-18ab-f067-81676abbd0c8
 :EXPORT_FOSSIL_SOURCE: t
@@ -6849,7 +6974,7 @@ I am writing this as historical documentation in case this issue ever manifests 
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-03 Tue 18:26]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 149
@@ -6865,7 +6990,7 @@ I am writing this as historical documentation in case this issue ever manifests 
 currently, xinetd serves as the base for many patterns. the rsyncd pattern installs xinetd and the rsync daemon. find a way to disable the rsync service when nothing is overlayed on top of the rsync pattern.
 
 alternatively, never use rsync on its own- remove it from the webserver pattern.
-* OPEN setup postfix for send-only mail on a webserver
+** OPEN setup postfix for send-only mail on a webserver
 :PROPERTIES:
 :ID: b4a5f335-a496-a065-062a-27bec50efb1a
 :EXPORT_FOSSIL_SOURCE: t
@@ -6883,7 +7008,7 @@ alternatively, never use rsync on its own- remove it from the webserver pattern.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-03 Tue 18:27]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 150
@@ -6897,7 +7022,7 @@ alternatively, never use rsync on its own- remove it from the webserver pattern.
 [2014-06-03 Tue 18:27]
 
 so public can send mail to admin using php forms and similar functionality
-* FIXED Consider merging /mnt/luna and /mnt/byronsanchez
+** FIXED Consider merging /mnt/luna and /mnt/byronsanchez
 :PROPERTIES:
 :ID: ed92f86b-0165-0af8-e712-d1f9bad88eff
 :EXPORT_FOSSIL_SOURCE: t
@@ -6915,7 +7040,7 @@ so public can send mail to admin using php forms and similar functionality
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-06-04 Wed 20:59]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 151
@@ -6929,7 +7054,7 @@ so public can send mail to admin using php forms and similar functionality
 [2014-06-04 Wed 20:59]
 
 both mounts serve very similar purposes. decide if a central file share is necessary for the network and then decide the scope of it if so. luna seems to contain a lot of files that i would use and would have to secure to my own drive if i ever opened the network to other devs. so a merge might make sense.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 151
@@ -6941,7 +7066,7 @@ both mounts serve very similar purposes. decide if a central file share is neces
 :ID:       fabc5fc4-1a28-4d06-ac21-9a2e899fe816
 :END:
 [2015-03-29 Sun 19:09]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 151
@@ -6959,7 +7084,7 @@ luna is still a network share, but it contains no core data. My own workstation 
 Luna is now simply a convenient NAS drive which allows for quick centralized file storage usable by any nodes on the network. The server still backs up luna data, but [6e22e0ae04] has added support for workstation-specific backups.
 
 The infrastructure is definitely evolving!
-* CLOSED consider making db backups one per file
+** CLOSED consider making db backups one per file
 :PROPERTIES:
 :ID: a82200b4-150d-f063-2d0a-6463594e8dc1
 :EXPORT_FOSSIL_SOURCE: t
@@ -6977,7 +7102,7 @@ The infrastructure is definitely evolving!
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-05 Thu 22:13]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 152
@@ -6991,7 +7116,7 @@ The infrastructure is definitely evolving!
 [2014-06-05 Thu 22:13]
 
 Instead of having a monolithic file containing the contents of all databases, consider backing up each database individually.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 152
@@ -7005,7 +7130,7 @@ Instead of having a monolithic file containing the contents of all databases, co
 [2017-01-15 Sun 13:21]
 
 No longer a requirement.
-* CLOSED setup mco command failure reporting
+** CLOSED setup mco command failure reporting
 :PROPERTIES:
 :ID: a74a13ad-3792-dc78-a9df-b563cae90e73
 :EXPORT_FOSSIL_SOURCE: t
@@ -7023,7 +7148,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-07 Sat 13:09]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 153
@@ -7037,7 +7162,7 @@ No longer a requirement.
 [2014-06-07 Sat 13:09]
 
 have the report state which nodes failed and the error message. this is especially import for nitelite's run-command.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 153
@@ -7051,7 +7176,7 @@ have the report state which nodes failed and the error message. this is especial
 [2017-01-15 Sun 13:21]
 
 No longer a requirement.
-* CLOSED Research cfengine for possible migration
+** CLOSED Research cfengine for possible migration
 :PROPERTIES:
 :ID: b72a3c9a-303e-4476-d373-cff113bfb1c0
 :EXPORT_FOSSIL_SOURCE: t
@@ -7069,7 +7194,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-09 Mon 19:34]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 154
@@ -7081,7 +7206,7 @@ No longer a requirement.
 :ID:       bf5c98cb-5b94-48df-a671-dee255dbd44a
 :END:
 [2014-06-09 Mon 19:34]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 154
@@ -7099,7 +7224,7 @@ one of the main selling points for me is currently the lack of intense memory co
 Discussion source: [http://serverfault.com/questions/176882/puppet-performance-compared-to-cfengine](test)
 
 In the meantime, I will still continue improving the puppet scripts and building based on what I have. A well-designed network architecture will be much easier to migrate than a mediocre one.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 154
@@ -7113,7 +7238,7 @@ In the meantime, I will still continue improving the puppet scripts and building
 [2015-03-29 Sun 18:23]
 
 After some research, it has been decided to stick with puppet. The value of the new technology should outweigh the cost of migration, and the only real reason I was interested in CFEngine was the potential for slight resource savings. This really isn't affecting the software development pipeline, is I am closing this issue and marking it as rejected.
-* CLOSED setup sqlmap or something similar for sql pentesting
+** CLOSED setup sqlmap or something similar for sql pentesting
 :PROPERTIES:
 :ID: c725fb60-3eb1-9b4c-88f3-4cfffb40b33f
 :EXPORT_FOSSIL_SOURCE: t
@@ -7131,7 +7256,7 @@ After some research, it has been decided to stick with puppet. The value of the 
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-08 Sun 23:45]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 155
@@ -7143,7 +7268,7 @@ After some research, it has been decided to stick with puppet. The value of the 
 :ID:       26d3a048-4854-46eb-8e0c-1ea6da86a816
 :END:
 [2014-06-08 Sun 23:45]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 155
@@ -7157,7 +7282,7 @@ After some research, it has been decided to stick with puppet. The value of the 
 [2017-01-15 Sun 13:21]
 
 No longer a requirement.
-* CLOSED setup gdb for the appropriate pattern
+** CLOSED setup gdb for the appropriate pattern
 :PROPERTIES:
 :ID: 2423c62a-32cb-02d5-c603-404d49696763
 :EXPORT_FOSSIL_SOURCE: t
@@ -7175,7 +7300,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-08 Sun 23:39]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 156
@@ -7187,7 +7312,7 @@ No longer a requirement.
 :ID:       68ea23a4-9f2e-40d4-a01d-88cae6a6305b
 :END:
 [2014-06-08 Sun 23:39]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 156
@@ -7201,7 +7326,7 @@ No longer a requirement.
 [2017-01-15 Sun 13:22]
 
 No longer a requirement.
-* CLOSED configure bitlbee for workstations
+** CLOSED configure bitlbee for workstations
 :PROPERTIES:
 :ID: 991ef033-18fa-23cd-59fb-3146d2f9119d
 :EXPORT_FOSSIL_SOURCE: t
@@ -7219,7 +7344,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-08 Sun 23:37]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 157
@@ -7231,7 +7356,7 @@ No longer a requirement.
 :ID:       5dcfd2e3-c36c-4db6-8ab5-05cc9ea65b4a
 :END:
 [2014-06-08 Sun 23:37]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 157
@@ -7245,7 +7370,7 @@ No longer a requirement.
 [2017-01-15 Sun 02:55]
 
 No longer interested, since I never use IM. I do all my other comms through my iPhone or web interfaces.
-* CLOSED configure spark for workstations
+** CLOSED configure spark for workstations
 :PROPERTIES:
 :ID: 9c69e584-b904-0276-f475-30f64448a2a0
 :EXPORT_FOSSIL_SOURCE: t
@@ -7263,7 +7388,7 @@ No longer interested, since I never use IM. I do all my other comms through my i
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-08 Sun 23:38]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 158
@@ -7275,7 +7400,7 @@ No longer interested, since I never use IM. I do all my other comms through my i
 :ID:       b7f06a21-8785-4fcb-8647-c7347ad6f232
 :END:
 [2014-06-08 Sun 23:38]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 158
@@ -7289,7 +7414,7 @@ No longer interested, since I never use IM. I do all my other comms through my i
 [2017-01-15 Sun 03:46]
 
 This was a data node tool. Because I'm no longer building a huge network infra, this is no longer a requirement (ie. for consulting).
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 158
@@ -7301,7 +7426,7 @@ This was a data node tool. Because I'm no longer building a huge network infra, 
 :ID:       285a50ab-aabd-4c8f-ad33-c5d504c99140
 :END:
 [2017-01-15 Sun 03:46]
-* CLOSED configure skype for workstations
+** CLOSED configure skype for workstations
 :PROPERTIES:
 :ID: be6834a3-c81b-d800-940e-bec615d59eed
 :EXPORT_FOSSIL_SOURCE: t
@@ -7319,7 +7444,7 @@ This was a data node tool. Because I'm no longer building a huge network infra, 
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-08 Sun 23:38]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 159
@@ -7331,7 +7456,7 @@ This was a data node tool. Because I'm no longer building a huge network infra, 
 :ID:       5f273c10-a228-4854-b76b-99ee9012b918
 :END:
 [2014-06-08 Sun 23:38]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 159
@@ -7345,7 +7470,7 @@ This was a data node tool. Because I'm no longer building a huge network infra, 
 [2017-01-15 Sun 11:12]
 
 Decided I'm not gonna use skype with linux boxes. I can just defer to it on my phone or work machines instead of managing it for my personal machine when I don't use it myself.
-* OPEN consider implementation of docker
+** OPEN consider implementation of docker
 :PROPERTIES:
 :ID: 5f4fac58-10e4-9086-8cb9-98c41f4918e6
 :EXPORT_FOSSIL_SOURCE: t
@@ -7363,7 +7488,7 @@ Decided I'm not gonna use skype with linux boxes. I can just defer to it on my p
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-06-09 Mon 19:22]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 160
@@ -7379,7 +7504,7 @@ Decided I'm not gonna use skype with linux boxes. I can just defer to it on my p
 Consider implementing docker as part of the deployment infrastructure. This will be a long-term project that does not need to get done right away. It should be noted and probably be part of the DMZ infrastructure upgrade.
 
 Currently, the costs of implementing it outweigh the benefits (see: https://devopsu.com/blog/docker-misconceptions/), but docker should be studied and researched to see if the next infrastructure upgrade can benefit from it's implementation.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 160
@@ -7391,7 +7516,7 @@ Currently, the costs of implementing it outweigh the benefits (see: https://devo
 :ID:       800e3a55-4ca6-4f52-b5b6-ecf54b9d20ca
 :END:
 [2014-06-09 Mon 19:24]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 160
@@ -7409,7 +7534,7 @@ so here's the deal.
 docker will be set up as soon as possible as described in [0bb421786d]. Mainly to prevent the need for multiple vagrant images since this can become unwieldy with more and more projects. The idea is to have 1 vagrant vm hosting multiple docker containers (1 container per project).
 
 This will be used in development only. Production use will occur in the next configuration management upgrade.
-* CLOSED consider organizing languages through a development or devlang pattern
+** CLOSED consider organizing languages through a development or devlang pattern
 :PROPERTIES:
 :ID: b27736fd-eecf-b2a2-4bfb-67db52b310d1
 :EXPORT_FOSSIL_SOURCE: t
@@ -7427,7 +7552,7 @@ This will be used in development only. Production use will occur in the next con
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-08 Sun 23:48]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 161
@@ -7441,7 +7566,7 @@ This will be used in development only. Production use will occur in the next con
 [2014-06-08 Sun 23:48]
 
 the pattern would contain all possible languages with parameters specifying possible language options. these would all default to false. then nodes can select which languages to install.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 161
@@ -7455,7 +7580,7 @@ the pattern would contain all possible languages with parameters specifying poss
 [2014-06-08 Sun 23:49]
 
 if this is done, don't forget to move languages defined in the workstation pattern to this new proposed development pattern.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 161
@@ -7467,7 +7592,7 @@ if this is done, don't forget to move languages defined in the workstation patte
 :ID:       a4c9e104-9b77-4313-a85d-f62489ef25c9
 :END:
 [2014-06-08 Sun 23:49]
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 161
@@ -7487,7 +7612,7 @@ Pretending to be modular while being a system (a composition of modular componen
 Thus, it's better for projects to manage their own environments. Thus, language patterns make no sense other than for system environments.
 
 So I can create language patterns, but not for the reasons I initially intended, which was application deployment. Instead, I can use it to set up a system environment, but applications will manage their own environments in their codebases.
-* OPEN setup docker and vagrant for the workstation pattern
+** OPEN setup docker and vagrant for the workstation pattern
 :PROPERTIES:
 :ID: 0bb42178-6d02-b2e8-08c4-a211eae566bd
 :EXPORT_FOSSIL_SOURCE: t
@@ -7505,7 +7630,7 @@ So I can create language patterns, but not for the reasons I initially intended,
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-06-08 Sun 23:40]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 162
@@ -7517,7 +7642,7 @@ So I can create language patterns, but not for the reasons I initially intended,
 :ID:       3fcf059f-f82f-4356-b86c-d7698f93a4ad
 :END:
 [2014-06-08 Sun 23:40]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 162
@@ -7531,7 +7656,7 @@ So I can create language patterns, but not for the reasons I initially intended,
 [2014-06-12 Thu 00:07]
 
 Mainly to prevent the need for multiple vagrant images since this can become unwieldy with more and more projects. The idea is to have 1 vagrant vm hosting multiple docker containers (1 container per project).
-* CLOSED setup the indent package for the appropriate pattern
+** CLOSED setup the indent package for the appropriate pattern
 :PROPERTIES:
 :ID: ddee4106-92c4-7011-f752-97b14adab099
 :EXPORT_FOSSIL_SOURCE: t
@@ -7549,7 +7674,7 @@ Mainly to prevent the need for multiple vagrant images since this can become unw
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-08 Sun 23:39]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 163
@@ -7561,7 +7686,7 @@ Mainly to prevent the need for multiple vagrant images since this can become unw
 :ID:       ad4ca0b8-a911-410e-a5f8-3add1a96635b
 :END:
 [2014-06-08 Sun 23:39]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 163
@@ -7575,7 +7700,7 @@ Mainly to prevent the need for multiple vagrant images since this can become unw
 [2017-01-15 Sun 13:40]
 
 No longer a requirement.
-* OPEN internal.nitelite.io network upgrade
+** OPEN internal.nitelite.io network upgrade
 :PROPERTIES:
 :ID: 094e0cb4-d37a-a204-9491-13dc0a5029ea
 :EXPORT_FOSSIL_SOURCE: t
@@ -7593,7 +7718,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2014-06-15 Sun 23:41]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 164
@@ -7621,7 +7746,7 @@ Docker deployments for webapps - This is not set in stone at the moment. Docker 
 Segmented Network - There must be a segmented network setup. There would be a demilitarized zone containing nodes that should be accessible over the public internet, and a private network that will not be accessible over the public internet. This DMZ will be used for actually hosting, in-house, all the webapps developed on the network (at least my own ventures; if I end up pursuing building a client-base, I will probably give them a choice of in-house hosting, or cloud hosting via a third-party service).
 
 Data Mining - There must be organized data mining for all nodes throughout the network. This will begin with centralized logging and good log analysis. This will expand as needed, introducing analytics for webapps and will ideally evolve into useful tooling for improving each of the developed applications.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 164
@@ -7635,7 +7760,7 @@ Data Mining - There must be organized data mining for all nodes throughout the n
 [2014-06-15 Sun 23:45]
 
 You know what, it makes more sense to put this in a doc. I will use this ticket for tracking the design progress of the upgraded network and will move the actual (potential) design details to a doc and post a link here when it's ready.
-* OPEN document infrastructure design
+** OPEN document infrastructure design
 :PROPERTIES:
 :ID: e01f4ecc-71f0-fe15-c626-f7ca0749e175
 :EXPORT_FOSSIL_SOURCE: t
@@ -7653,7 +7778,7 @@ You know what, it makes more sense to put this in a doc. I will use this ticket 
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-16 Mon 01:51]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 165
@@ -7672,7 +7797,7 @@ Document the following:
 
 - Current infrastructure design
 - Target infrastructure design
-* OPEN create a doc-index generation script
+** OPEN create a doc-index generation script
 :PROPERTIES:
 :ID: 18ca9a21-42ac-3adb-d63c-7d9138863dc6
 :EXPORT_FOSSIL_SOURCE: t
@@ -7690,7 +7815,7 @@ Document the following:
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-16 Mon 01:53]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 166
@@ -7704,7 +7829,7 @@ Document the following:
 [2014-06-16 Mon 01:53]
 
 The script will generate a simple index containing a list of links (titles) to all embedded (vcs) doc pages.
-* OPEN make production deployments trivial (eg. via a command)
+** OPEN make production deployments trivial (eg. via a command)
 :PROPERTIES:
 :ID: d1fa77c6-0eb7-63b0-202c-9c24cfebe728
 :EXPORT_FOSSIL_SOURCE: t
@@ -7722,7 +7847,7 @@ The script will generate a simple index containing a list of links (titles) to a
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-16 Mon 20:26]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 167
@@ -7734,7 +7859,7 @@ The script will generate a simple index containing a list of links (titles) to a
 :ID:       63be6bba-53b4-4d4d-a061-67b044a9672e
 :END:
 [2014-06-16 Mon 20:26]
-* CLOSED introduce mirroring and high-availability to servers on the network
+** CLOSED introduce mirroring and high-availability to servers on the network
 :PROPERTIES:
 :ID: 5e6d0580-ec7d-337c-375e-5bdbf6d86cb6
 :EXPORT_FOSSIL_SOURCE: t
@@ -7752,7 +7877,7 @@ The script will generate a simple index containing a list of links (titles) to a
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-20 Fri 23:50]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 168
@@ -7764,7 +7889,7 @@ The script will generate a simple index containing a list of links (titles) to a
 :ID:       dec7b41d-e99e-40e5-a871-b339529a9c4f
 :END:
 [2014-06-20 Fri 23:50]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 168
@@ -7778,7 +7903,7 @@ The script will generate a simple index containing a list of links (titles) to a
 [2017-01-15 Sun 13:41]
 
 No longer a requirement.
-* OPEN configure backup restoration testing
+** OPEN configure backup restoration testing
 :PROPERTIES:
 :ID: 59d42479-c54c-2132-c7e2-e8344243c936
 :EXPORT_FOSSIL_SOURCE: t
@@ -7796,7 +7921,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-20 Fri 23:46]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 169
@@ -7820,7 +7945,7 @@ the current existing backups are:
 - virsh dumps
 
 consider writing a backup management script that'll take arguments to perform the needed operations
-* FIXED encrypt backup volumes
+** FIXED encrypt backup volumes
 :PROPERTIES:
 :ID: 8fffd1c8-5781-06e4-2ee0-6cc016389b4e
 :EXPORT_FOSSIL_SOURCE: t
@@ -7838,7 +7963,7 @@ consider writing a backup management script that'll take arguments to perform th
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-06-20 Fri 23:43]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 170
@@ -7852,7 +7977,7 @@ consider writing a backup management script that'll take arguments to perform th
 [2014-06-20 Fri 23:43]
 
 backup volumes should be encrypted. rsnapshot can still be used, just call it from a wrapper script that mounts and prepares the target drive and then umounts it as necessary. store the keys for the encrypted volume somewhere safe.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 170
@@ -7864,7 +7989,7 @@ backup volumes should be encrypted. rsnapshot can still be used, just call it fr
 :ID:       9e949051-33cb-4b42-98b3-c69974f33914
 :END:
 [2017-01-15 Sun 13:41]
-* OPEN implement infrastructure so "anyone can deploy"
+** OPEN implement infrastructure so "anyone can deploy"
 :PROPERTIES:
 :ID: 0f82c986-d4d7-45f7-b2cc-6dd0df71130d
 :EXPORT_FOSSIL_SOURCE: t
@@ -7882,7 +8007,7 @@ backup volumes should be encrypted. rsnapshot can still be used, just call it fr
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-19 Thu 15:24]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 171
@@ -7894,7 +8019,7 @@ backup volumes should be encrypted. rsnapshot can still be used, just call it fr
 :ID:       0d869d45-4d2e-4565-a5f1-fb8781bc5627
 :END:
 [2014-06-19 Thu 15:24]
-* CLOSED configure tooling for accounting based on ledger
+** CLOSED configure tooling for accounting based on ledger
 :PROPERTIES:
 :ID: 3321fdb9-7163-c721-2e06-555069bae96f
 :EXPORT_FOSSIL_SOURCE: t
@@ -7912,7 +8037,7 @@ backup volumes should be encrypted. rsnapshot can still be used, just call it fr
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-19 Thu 03:28]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 172
@@ -7924,7 +8049,7 @@ backup volumes should be encrypted. rsnapshot can still be used, just call it fr
 :ID:       a064702a-f4ac-4b4a-8323-9a1845ab8d2e
 :END:
 [2014-06-19 Thu 03:28]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 172
@@ -7942,7 +8067,7 @@ I wanted to make a whole thing where accounting would use ledger as a backend. T
 I think I came up with this when I was getting carried away with the scope of this infrastructure. Now that it's intended for solo development, I can confidently say that I will not need the front-end.
 
 So I'm closing this.
-* OPEN implement infrastructure for zero downtime deployments
+** OPEN implement infrastructure for zero downtime deployments
 :PROPERTIES:
 :ID: 7ad37895-b118-cc80-7c84-e892d6dbf95a
 :EXPORT_FOSSIL_SOURCE: t
@@ -7960,7 +8085,7 @@ So I'm closing this.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-19 Thu 15:23]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 173
@@ -7972,7 +8097,7 @@ So I'm closing this.
 :ID:       e4a4b88e-e29e-48d7-96a7-c9127f3405ec
 :END:
 [2014-06-19 Thu 15:23]
-* OPEN implement trivial "deployment rollback"
+** OPEN implement trivial "deployment rollback"
 :PROPERTIES:
 :ID: df1eb9fc-69ac-5c16-2aa6-ee07da82bdaf
 :EXPORT_FOSSIL_SOURCE: t
@@ -7990,7 +8115,7 @@ So I'm closing this.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-24 Tue 16:56]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 174
@@ -8024,7 +8149,7 @@ Thus, on rollback, it could rollback the database as such:
 More research should be done on properly handling database rollbacks, if they should even be handled at all.
 
 As for application code rollback, it should be simple to do, just like application deployment should be simple to do.
-* CLOSED Consider removing workstation components
+** CLOSED Consider removing workstation components
 :PROPERTIES:
 :ID: fe5b9a4b-ccd0-cf53-9df0-6600b6a3c449
 :EXPORT_FOSSIL_SOURCE: t
@@ -8042,7 +8167,7 @@ As for application code rollback, it should be simple to do, just like applicati
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2014-06-20 Fri 23:49]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 175
@@ -8060,7 +8185,7 @@ Workstations should not be centrally managed. management should be done through 
 Research if necessary to see if this is actually a doable approach (determine the implications of the workstation configuration, eg. selinux and other base components). Determine whether or not I would want all workstations to share the same configurations for certain components.
 
 This would also mean getting rid of the media server pattern and other non-production oriented patterns.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 175
@@ -8074,7 +8199,7 @@ This would also mean getting rid of the media server pattern and other non-produ
 [2015-03-29 Sun 19:07]
 
 After heavy consideration, I have decided to keep workstation configuration management within the scope of this repo. Dotfiles will be used to host user-level configuration settings. This repo will host system-level configuration settings as well as system-user configuration settings.
-* OPEN configure encrypted offsite backups
+** OPEN configure encrypted offsite backups
 :PROPERTIES:
 :ID: 74e7aa0b-171f-35ce-0b4f-9b75a6b56a5b
 :EXPORT_FOSSIL_SOURCE: t
@@ -8092,7 +8217,7 @@ After heavy consideration, I have decided to keep workstation configuration mana
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2014-06-20 Fri 23:44]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 176
@@ -8106,7 +8231,7 @@ After heavy consideration, I have decided to keep workstation configuration mana
 [2014-06-20 Fri 23:44]
 
 Configure offsite backups (currently considering tarsnap). These backups should be encrypted before being sent to the target data store.
-* CLOSED Move user-specific resources to dotfiles repo
+** CLOSED Move user-specific resources to dotfiles repo
 :PROPERTIES:
 :ID: 231436c8-2d7d-bd31-7614-39f522d7a800
 :EXPORT_FOSSIL_SOURCE: t
@@ -8124,7 +8249,7 @@ Configure offsite backups (currently considering tarsnap). These backups should 
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2015-03-15 Sun 00:32]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 177
@@ -8136,7 +8261,7 @@ Configure offsite backups (currently considering tarsnap). These backups should 
 :ID:       c0ec8070-fb08-4ccd-b88a-2c4961d01e9d
 :END:
 [2015-03-15 Sun 00:32]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 177
@@ -8148,7 +8273,7 @@ Configure offsite backups (currently considering tarsnap). These backups should 
 :ID:       9824814f-00c5-4e23-8959-0960342837a1
 :END:
 [2015-03-15 Sun 00:33]
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 177
@@ -8162,7 +8287,7 @@ Configure offsite backups (currently considering tarsnap). These backups should 
 [2015-03-29 Sun 19:08]
 
 Closed for same reasoning as [fe5b9a4bcc].
-* FIXED fix up kernel config in /usr/src/linux so that updates work properly
+** FIXED fix up kernel config in /usr/src/linux so that updates work properly
 :PROPERTIES:
 :ID: d1868f5c-a584-ce24-4cf8-588eefd19c6f
 :EXPORT_FOSSIL_SOURCE: t
@@ -8180,7 +8305,7 @@ Closed for same reasoning as [fe5b9a4bcc].
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2014-12-28 Sun 13:36]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 178
@@ -8192,7 +8317,7 @@ Closed for same reasoning as [fe5b9a4bcc].
 :ID:       be323c13-265e-4ca2-a756-a07171f3920b
 :END:
 [2014-12-28 Sun 13:36]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 178
@@ -8208,7 +8333,7 @@ Closed for same reasoning as [fe5b9a4bcc].
 This was fixed in the gentoo-provision repo.
 
 Every time the kernel is updated, a copy of the config will be placed in /usr/src/linux/.config to ensure portage reads the correct config for package update checks.
-* CLOSED global install bower on workstation and build server
+** CLOSED global install bower on workstation and build server
 :PROPERTIES:
 :ID: c4b8904f-7b3b-317a-5ff5-3ef128e081ab
 :EXPORT_FOSSIL_SOURCE: t
@@ -8226,7 +8351,7 @@ Every time the kernel is updated, a copy of the config will be placed in /usr/sr
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2015-01-29 Thu 12:54]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 179
@@ -8240,7 +8365,7 @@ Every time the kernel is updated, a copy of the config will be placed in /usr/sr
 [2015-01-29 Thu 12:54]
 
 This is necessary so that both systems can be used to manage front-end assets.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 179
@@ -8254,7 +8379,7 @@ This is necessary so that both systems can be used to manage front-end assets.
 [2017-01-15 Sun 13:42]
 
 No longer a requirement.
-* CLOSED fix workstation video-mode switching (fn+f7)
+** CLOSED fix workstation video-mode switching (fn+f7)
 :PROPERTIES:
 :ID: 85412653-104a-ed4a-922b-d771d95cf276
 :EXPORT_FOSSIL_SOURCE: t
@@ -8272,7 +8397,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Overcome_By_Events
 :END:
 [2014-12-27 Sat 23:40]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 180
@@ -8292,7 +8417,7 @@ See the following for more information:
 http://www.thinkwiki.org/wiki/Sample_fn-F7_script
 
 Troubleshoot any other thinkpad fn key combinations as well.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 180
@@ -8308,7 +8433,7 @@ Troubleshoot any other thinkpad fn key combinations as well.
 No longer required.
 
 Since upgrading my laptop from the tower computer to the Thinkpad T61 to the Thinkpad T420, video-mode switching has no longer been an issue.
-* OPEN Prefer ethernet over wifi when both are connected
+** OPEN Prefer ethernet over wifi when both are connected
 :PROPERTIES:
 :ID: 796e083d-2678-6029-46f1-72caf1aa08db
 :EXPORT_FOSSIL_SOURCE: t
@@ -8326,7 +8451,7 @@ Since upgrading my laptop from the tower computer to the Thinkpad T61 to the Thi
 :EXPORT_FOSSIL_RESOLUTION: Open
 :END:
 [2015-02-15 Sun 16:07]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 181
@@ -8340,7 +8465,7 @@ Since upgrading my laptop from the tower computer to the Thinkpad T61 to the Thi
 [2015-02-15 Sun 16:07]
 
 Prefer ethernet over wifi when both are connected.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 181
@@ -8352,7 +8477,7 @@ Prefer ethernet over wifi when both are connected.
 :ID:       f5df673e-9aea-4052-8d70-db2fc56986cb
 :END:
 [2015-03-29 Sun 18:17]
-* CLOSED Setup systemd for workstations
+** CLOSED Setup systemd for workstations
 :PROPERTIES:
 :ID: 9accafa0-4a19-445a-23a0-68edf97acb6f
 :EXPORT_FOSSIL_SOURCE: t
@@ -8370,7 +8495,7 @@ Prefer ethernet over wifi when both are connected.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2015-03-29 Sun 20:15]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 182
@@ -8386,7 +8511,7 @@ Prefer ethernet over wifi when both are connected.
 Systemd allows for Gnome-dependent desktop environments. As of now I'd like to try out Unity and Gnome 3, so systemd is a requirement.
 
 Stick with udev for server nodes at the moment.
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 182
@@ -8400,7 +8525,7 @@ Stick with udev for server nodes at the moment.
 [2015-12-29 Tue 18:44]
 
 Decided to stick with OpenRC over systemd. The only appeal for systemd in my case was custom user service files, but I don't really need to manage services at the user level (I wanted it for jackd, but I can just launch it in my .xsession script in my dotfiles repo).
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 182
@@ -8418,7 +8543,7 @@ Oh yea, also I DID want systemd to try out Unity. I tried that whole mess out a 
 I decided I didn't want to go back to floating (Unity), as that would be a step backward. So I learned, configured, and stuck with bspwm.
 
 so systemd is really no longer needed.
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 182
@@ -8430,7 +8555,7 @@ so systemd is really no longer needed.
 :ID:       60151212-5610-42da-8a3e-067281b94dda
 :END:
 [2015-12-29 Tue 18:46]
-* OPEN Merge xorg and workstation patterns
+** OPEN Merge xorg and workstation patterns
 :PROPERTIES:
 :ID: 36f32109-25b3-74e0-1a14-e1c633219a0c
 :EXPORT_FOSSIL_SOURCE: t
@@ -8448,7 +8573,7 @@ so systemd is really no longer needed.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-04-25 Sat 15:57]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 183
@@ -8462,7 +8587,7 @@ so systemd is really no longer needed.
 [2015-04-25 Sat 15:57]
 
 X11 will only be installed on workstations, so these patterns should be merged.
-* OPEN Ensure i3lock works properly with power management
+** OPEN Ensure i3lock works properly with power management
 :PROPERTIES:
 :ID: 5dc0609a-83d5-eb8b-18e4-6542aa9d19aa
 :EXPORT_FOSSIL_SOURCE: t
@@ -8480,7 +8605,7 @@ X11 will only be installed on workstations, so these patterns should be merged.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-05-16 Sat 15:14]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 184
@@ -8492,7 +8617,7 @@ X11 will only be installed on workstations, so these patterns should be merged.
 :ID:       dbb4cb4c-1e51-4b3c-b67c-cb9fdb1de8d0
 :END:
 [2015-05-16 Sat 15:14]
-* OPEN Ensure freedomproxy is setup on workstations
+** OPEN Ensure freedomproxy is setup on workstations
 :PROPERTIES:
 :ID: ae2d0abc-c3cb-0403-c91a-6a3f141aac2e
 :EXPORT_FOSSIL_SOURCE: t
@@ -8510,7 +8635,7 @@ X11 will only be installed on workstations, so these patterns should be merged.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-05-16 Sat 15:25]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 185
@@ -8522,7 +8647,7 @@ X11 will only be installed on workstations, so these patterns should be merged.
 :ID:       340288e0-b7f9-4d33-87d7-54c5997a762c
 :END:
 [2015-05-16 Sat 15:25]
-* CLOSED Add mount, umount, and shutdown commands to sudo nopassword on workstations
+** CLOSED Add mount, umount, and shutdown commands to sudo nopassword on workstations
 :PROPERTIES:
 :ID: e7fd865e-3df5-7885-acbe-cc340065b9c7
 :EXPORT_FOSSIL_SOURCE: t
@@ -8540,7 +8665,7 @@ X11 will only be installed on workstations, so these patterns should be merged.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2015-05-16 Sat 15:10]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 186
@@ -8554,7 +8679,7 @@ X11 will only be installed on workstations, so these patterns should be merged.
 [2015-05-16 Sat 15:10]
 
 For user convenience
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 186
@@ -8568,7 +8693,7 @@ For user convenience
 [2017-01-15 Sun 13:45]
 
 No longer a requirement.
-* OPEN Setup VCS forking system for managing external repos
+** OPEN Setup VCS forking system for managing external repos
 :PROPERTIES:
 :ID: a5d9316c-06ec-07d4-2e31-f591e344bb26
 :EXPORT_FOSSIL_SOURCE: t
@@ -8586,7 +8711,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-05-16 Sat 15:26]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 187
@@ -8598,7 +8723,7 @@ No longer a requirement.
 :ID:       cba80598-163a-4fd2-9532-4f745236bcc4
 :END:
 [2015-05-16 Sat 15:26]
-* OPEN Make sure VPN is working and accessible
+** OPEN Make sure VPN is working and accessible
 :PROPERTIES:
 :ID: 841b3c6a-de22-4e3c-6335-6627315d2547
 :EXPORT_FOSSIL_SOURCE: t
@@ -8616,7 +8741,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-05-16 Sat 15:18]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 188
@@ -8628,7 +8753,7 @@ No longer a requirement.
 :ID:       19870882-5f26-40da-90b5-444187a1c73c
 :END:
 [2015-05-16 Sat 15:18]
-* CLOSED Get s2ram and s2disk hybrid working
+** CLOSED Get s2ram and s2disk hybrid working
 :PROPERTIES:
 :ID: 533a6909-1e19-b126-db11-fed88cc9d201
 :EXPORT_FOSSIL_SOURCE: t
@@ -8646,7 +8771,7 @@ No longer a requirement.
 :EXPORT_FOSSIL_RESOLUTION: Rejected
 :END:
 [2015-05-16 Sat 15:13]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 189
@@ -8658,7 +8783,7 @@ No longer a requirement.
 :ID:       2377ac51-b59b-410c-84b0-c000307b8544
 :END:
 [2015-05-16 Sat 15:13]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 189
@@ -8674,7 +8799,7 @@ No longer a requirement.
 s2disk and hibernate requires the tuxonice kernel patches. I am already using the hardened-gentoo patches.
 
 Decided to prefer security over convenience.
-* OPEN Configure deployment chain with hubot
+** OPEN Configure deployment chain with hubot
 :PROPERTIES:
 :ID: 716d0ad6-bcb4-e24f-09bd-8e85bd7d2385
 :EXPORT_FOSSIL_SOURCE: t
@@ -8692,7 +8817,7 @@ Decided to prefer security over convenience.
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-05-16 Sat 15:18]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 190
@@ -8704,7 +8829,7 @@ Decided to prefer security over convenience.
 :ID:       d0c0f518-61eb-453d-bf54-0dc6cd974c04
 :END:
 [2015-05-16 Sat 15:18]
-* FIXED Come up with better system for overlay urls
+** FIXED Come up with better system for overlay urls
 :PROPERTIES:
 :ID: 5b7692b3-5c42-46d8-0285-c0e38d33d6d5
 :EXPORT_FOSSIL_SOURCE: t
@@ -8722,7 +8847,7 @@ Decided to prefer security over convenience.
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2015-06-27 Sat 16:09]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 191
@@ -8734,7 +8859,7 @@ Decided to prefer security over convenience.
 :ID:       46126379-201f-49ee-afff-9b42baf4fa2a
 :END:
 [2015-06-27 Sat 16:09]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 191
@@ -8748,7 +8873,7 @@ Decided to prefer security over convenience.
 [2017-04-10 Mon 16:56]
 
 Ended up using my own domain for a repo (git.nitelite.io) and am now using that for my dedicated overlays. No longer have to depend on github.
-** 3
+*** 3
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 191
@@ -8762,7 +8887,7 @@ Ended up using my own domain for a repo (git.nitelite.io) and am now using that 
 [2017-04-10 Mon 16:56]
 
 Also, am 100% okay with using fossil to git conversions. I prefer fossil, but git is good for publishing and distribution.
-** 4
+*** 4
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 191
@@ -8776,7 +8901,7 @@ Also, am 100% okay with using fossil to git conversions. I prefer fossil, but gi
 [2018-04-30 Mon 21:55]
 
 test
-* OPEN ssh - remove tcpwrappers (/etc/hosts{allow,deny}) since openssh no longer offers it
+** OPEN ssh - remove tcpwrappers (/etc/hosts{allow,deny}) since openssh no longer offers it
 :PROPERTIES:
 :ID: e6c2b185-9bf6-b0a3-b32a-5d774abebe83
 :EXPORT_FOSSIL_SOURCE: t
@@ -8794,7 +8919,7 @@ test
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-12-06 Sun 19:03]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 192
@@ -8806,7 +8931,7 @@ test
 :ID:       e3b3f845-9be3-425d-9e19-a5282eeca936
 :END:
 [2015-12-06 Sun 19:03]
-* OPEN Decide if mirrors belong in this repo or in dotfiles
+** OPEN Decide if mirrors belong in this repo or in dotfiles
 :PROPERTIES:
 :ID: 7788b51f-4189-8e28-81f2-147b066c116a
 :EXPORT_FOSSIL_SOURCE: t
@@ -8824,7 +8949,7 @@ test
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-12-20 Sun 15:58]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 193
@@ -8836,7 +8961,7 @@ test
 :ID:       ea37e4be-38c9-4aa8-afcf-80703cb07fc7
 :END:
 [2015-12-20 Sun 15:58]
-* FIXED Decide what the scope of this repo vs dotfiles are
+** FIXED Decide what the scope of this repo vs dotfiles are
 :PROPERTIES:
 :ID: a98cc9cf-8310-54a0-239c-02233f12d771
 :EXPORT_FOSSIL_SOURCE: t
@@ -8854,7 +8979,7 @@ test
 :EXPORT_FOSSIL_RESOLUTION: Fixed
 :END:
 [2015-12-20 Sun 15:58]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 194
@@ -8866,7 +8991,7 @@ test
 :ID:       a153b397-e362-4fe7-92e9-0bc3786bb3e6
 :END:
 [2015-12-20 Sun 15:58]
-** 2
+*** 2
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 194
@@ -8880,7 +9005,7 @@ test
 [2017-04-10 Mon 16:29]
 
 If a single user should have access to some config or resource, it's dotfiles. If it should be available for all users on the machine, it's system-infrastructure.
-* OPEN Restrict user deployer's sudoers file
+** OPEN Restrict user deployer's sudoers file
 :PROPERTIES:
 :ID: 86b6d8ab-2854-2f62-37c6-285816b10a59
 :EXPORT_FOSSIL_SOURCE: t
@@ -8898,7 +9023,7 @@ If a single user should have access to some config or resource, it's dotfiles. I
 :EXPORT_FOSSIL_RESOLUTION: nil
 :END:
 [2015-12-29 Tue 18:37]
-** 1
+*** 1
 :PROPERTIES:
 :EXPORT_FOSSIL_SOURCE: t
 :EXPORT_FOSSIL_TKT_ID: 195
@@ -8910,3 +9035,8 @@ If a single user should have access to some config or resource, it's dotfiles. I
 :ID:       26e603ff-7058-4513-a736-b0fc54763d5c
 :END:
 [2015-12-29 Tue 18:37]
+* Documentation
+:PROPERTIES:
+:ID:       527b48da-2a56-4573-aea6-093b13ba5fb7
+:END:
+[2018-05-02 Wed 12:50]
