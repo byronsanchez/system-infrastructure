@@ -1,0 +1,129 @@
+#!/bin/sh
+#
+# Git repo change description script
+
+source /usr/local/lib/nitelite/helpers/common.lib.sh;
+
+git_dir="/srv/git/repositories"
+
+# Initialize our own variables:
+organization=""
+repository=""
+description=""
+
+quiet=0
+
+############################
+# Argument Parsing Functions
+
+# TODO: validate action values
+
+function show_help ()
+{
+cat <<-EOM
+
+$0 [OPTION] command
+
+options:
+
+    -o --organization=NAME         Organization that owns the repo
+    -r --repository=NAME           Repository name
+    -d --description=DESC          Repo description
+
+optional:
+
+    -g --git-dir                   The directory containing the git files
+
+other:
+
+    -q --quiet               do not log messages to STDOUT
+    -h --help                display this message
+
+EOM
+    exit 1
+}
+
+function get_options () {
+    argv=()
+    while [ $# -gt 0 ]
+    do
+        opt=$1
+        shift
+        case ${opt} in
+            -o|--organization)
+                organization=$1
+                shift
+                ;;
+            --organization=*)
+                organization=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -r|--repository)
+                repository=$1
+                shift
+                ;;
+            --repository=*)
+                repository=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            -g|--git-dir)
+                git_dir=$1
+                shift
+                ;;
+            --git-dir=*)
+                git_dir=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+
+            # This means you gotta put the description at the end, but I'm okay
+            #  with this til I decide if I use these scripts a lot or not
+            -d|--description)
+                description=$@
+                shift
+                ;;
+            --description=*)
+                description=$@
+                ;;
+
+            -q|--quiet)
+                quiet=1
+                ;;
+            -h|--help)
+                show_help
+                ;;
+            *)
+                if [ "${opt:0:1}" = "-" ]; then
+                    fail "${opt}: unknown option."
+                fi
+                argv+=(${opt})
+                ;;
+        esac
+    done
+}
+
+##################
+# GLOBAL VALIDATION
+
+# Parse options if they were passed
+get_options $*
+
+#############
+# MAIN SCRIPT
+
+if [ ! -n "$organization" ];
+then
+    fail "please provide a valid organization name"
+fi
+
+if [ ! -n "$repository" ];
+then
+    fail "please provide a valid repository name"
+fi
+
+info "updating description for repository with name ${repository} under organization ${organization}..."
+info "setting description to: ${description}"
+
+dst_dir="${git_dir}/${organization}/${repository}.git"
+
+cd "${dst_dir}"
+
+printf "${description}" > description
+
+

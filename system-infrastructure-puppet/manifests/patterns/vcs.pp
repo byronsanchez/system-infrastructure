@@ -441,6 +441,89 @@ class vcs(
       source => "puppet:///files/vcs/usr/local/bin/git-sync",
     }
 
+    file { "/usr/local/bin/create-repo":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0755,
+      path   => "/usr/local/bin/create-repo",
+      source => "puppet:///files/vcs/usr/local/bin/create-repo",
+    }
+
+    file { "/usr/local/bin/delete-repo":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0755,
+      path   => "/usr/local/bin/delete-repo",
+      source => "puppet:///files/vcs/usr/local/bin/delete-repo",
+    }
+
+    file { "/usr/local/bin/change-description":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0755,
+      path   => "/usr/local/bin/change-description",
+      source => "puppet:///files/vcs/usr/local/bin/change-description",
+    }
+
+    file { "/usr/local/bin/list-repos":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0755,
+      path   => "/usr/local/bin/list-repos",
+      source => "puppet:///files/vcs/usr/local/bin/list-repos",
+    }
+
+    file { "/usr/local/bin/help-me":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0755,
+      path   => "/usr/local/bin/help-me",
+      source => "puppet:///files/vcs/usr/local/bin/help-me",
+    }
+
+    # TODO: If you end up using these scripts a lot, fix it so that ssh commands
+    # have /usr/local/bin in the path.
+    #
+    # The reason I'm symlinking right now is because these commands don't get
+    # added to the ssh command path env.
+
+    file { '/usr/bin/create-repo':
+      ensure => 'link',
+      target => '/usr/local/bin/create-repo',
+      require => File['/usr/local/bin/create-repo'],
+    }
+
+    file { '/usr/bin/delete-repo':
+      ensure => 'link',
+      target => '/usr/local/bin/delete-repo',
+      require => File['/usr/local/bin/delete-repo'],
+    }
+
+    file { '/usr/bin/change-description':
+      ensure => 'link',
+      target => '/usr/local/bin/change-description',
+      require => File['/usr/local/bin/change-description'],
+    }
+
+    file { '/usr/bin/list-repos':
+      ensure => 'link',
+      target => '/usr/local/bin/list-repos',
+      require => File['/usr/local/bin/list-repos'],
+    }
+
+    file { '/usr/bin/help-me':
+      ensure => 'link',
+      target => '/usr/local/bin/help-me',
+      require => File['/usr/local/bin/help-me'],
+    }
+
+
+
     # FOSSIL
 
     file { "/srv/fossil/cgi-bin":

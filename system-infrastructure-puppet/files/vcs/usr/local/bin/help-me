@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Git repo help script
+
+source /usr/local/lib/nitelite/helpers/common.lib.sh;
+
+git_dir="/srv/git/repositories"
+
+# Initialize our own variables:
+organization=""
+repository=""
+description=""
+
+quiet=0
+
+############################
+# Argument Parsing Functions
+
+# TODO: validate action values
+
+function show_help ()
+{
+cat <<-EOM
+
+Available commands:
+
+        create-repo -o <organization> -r <repo-name>
+        delete-repo -o <organization> -r <repo-name>
+        list-repos
+        change-description -o <organization> -r <repo-name> -d "<description>"
+
+EOM
+    exit 1
+}
+
+show_help
+

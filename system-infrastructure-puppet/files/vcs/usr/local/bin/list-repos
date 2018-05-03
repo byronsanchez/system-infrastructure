@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Git repo directory listing script
+
+source /usr/local/lib/nitelite/helpers/common.lib.sh;
+
+git_dir="/srv/git/repositories"
+
+# Initialize our own variables:
+organization=""
+repository=""
+description=""
+
+quiet=0
+
+#############
+# MAIN SCRIPT
+
+cd ${git_dir}
+# sort alphabetically, and remove the lead "./" so it shows as org/repo format
+#
+# also, don't bother printing out the single top level org directory for each result set
+find . -mindepth 2 -maxdepth 2 -type d | sort -h | cut -c 3-
+
