@@ -124,6 +124,8 @@ dst_dir="${git_dir}/${organization}/${repository}.git"
 
 cd "${dst_dir}"
 
-printf "${description}" > description
+if [ $? -eq 0 ]; then
+    printf "${description}" > description
+fi
 
 
