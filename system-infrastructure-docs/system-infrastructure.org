@@ -21,6 +21,13 @@
 :ID:       9319415c-1cb3-46ef-bbca-fed5fa18a19a
 :END:
 [2018-05-02 Wed 12:49]
+** FIXED Theme side-by-side diff
+:PROPERTIES:
+:ID:       9e2f78bc-3586-406a-bd39-971d9010519f
+:END:
+[2018-05-03 Thu 00:22]
+
+Eg. https://git.hackbytes.io/byronsanchez/system-infrastructure/commit/?id=b935504633f93d67638e3d4c61f52f0f0409f440&context=3&ignorews=0&dt=1
 ** OPEN Source code and line numbers lose alignment
 :PROPERTIES:
 :ID:       b5809c34-f805-4f4a-bb5f-4664374a44bc

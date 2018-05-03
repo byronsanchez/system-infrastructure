@@ -343,3 +343,122 @@ div#cgit table.blob td.linenumbers a, div#cgit table.ssdiff td.lineno a {
     text-align: right;
     text-decoration: none;
 }
+
+/* side-by-side diffs *
+
+/* header with diff meta info */
+div#cgit table.ssdiff td.head {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #e1e4e8;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	/* if i wanna go crazy later on x_x */
+	/* border-radius: 3px; */
+}
+div#cgit table.ssdiff td.head div.head {
+    font-weight: bold;
+    color: #000;
+    background: #fafbfc;
+}
+/* most of the internal border stuff */
+div#cgit table.ssdiff td {
+    font-size: 75%;
+    white-space: pre;
+    padding: 1px 4px 1px 4px;
+    border-left: none;
+    border-right: none;
+}
+
+/* The use of tr for borders allowed for removing the internal borders I didn't
+   want. The cost of this is that you'll only be able to remove the first-child
+   spacing border. The other spacing borders will have left and right borders :/
+
+   There are currently no parent selectors in CSS, so unless I can get access to
+   the html and class them, I won't be able to fix this.
+*/
+
+/* the outside can have a border (like the table) */
+div#cgit table.ssdiff tbody > tr {
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+}
+/* the first one is spacing, so don't border it */
+div#cgit table.ssdiff tbody > tr:first-child {
+    border-left: none;
+    border-right: none;
+}
+
+
+/* hunk box */
+
+div#cgit table.ssdiff td.hunk {
+    color: #1b1f2380;
+    background: #f1f8ff;
+    border-top: solid 1px #ddd;
+    border-bottom: solid 1px #ddd;
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+}
+
+/* footer */
+div#cgit table.ssdiff td.foot {
+    border-top: solid 1px #ddd;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+/* line numbers */
+div#cgit table.ssdiff td.lineno {
+	color: #1b1f234d;
+    background: #fff;
+    text-align: right;
+    width: 3em;
+    min-width: 3em;
+}
+div#cgit table.blob td.linenumbers a, div#cgit table.ssdiff td.lineno a {
+    color: #1b1f234d;
+    text-align: right;
+    text-decoration: none;
+}
+
+/* code deletion colors */
+div#cgit table.ssdiff td.del {
+	color: #24292e;
+    background-color: #ffeef0;
+    min-width: 50%;
+}
+div#cgit table.ssdiff td.del_dark {
+	color: #24292e;
+	background-color: #fafbfc;
+    min-width: 50%;
+}
+div#cgit table.ssdiff td.add {
+	color: #24292e;
+	background-color: #e6ffed;
+     min-width: 50%;
+}
+div#cgit table.ssdiff td.add_dark {
+	color: #24292e;
+	background-color: #fafbfc;
+    min-width: 50%;
+}
+div#cgit table.ssdiff td.changed {
+	color: #24292e;
+    background: #FFFFD9;
+    min-width: 50%;
+}
+div#cgit table.ssdiff td.changed_dark {
+	color: #24292e;
+	background-color: #fafbfc;
+    min-width: 50%;
+}
+
+/* font size shouldn't be the default small one! */
+div#cgit table.ssdiff td {
+    font-size: inherit;
+    white-space: pre;
+    padding: 1px 4px 1px 4px;
+    border-left: none;
+    border-right: none;
+}
