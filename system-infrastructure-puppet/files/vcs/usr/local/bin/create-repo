@@ -9,6 +9,7 @@ git_dir="/srv/git/repositories"
 # Initialize our own variables:
 organization=""
 repository=""
+description=""
 
 quiet=0
 
@@ -31,6 +32,7 @@ options:
 optional:
 
     -g --git-dir                   The directory containing the git files
+    -d --description=DESC          Repo description
 
 other:
 
@@ -68,6 +70,15 @@ function get_options () {
                 ;;
             --git-dir=*)
                 git_dir=$(echo ${opt} | cut -d'=' -f 2);
+                ;;
+            # This means you gotta put the description at the end, but I'm okay
+            #  with this til I decide if I use these scripts a lot or not
+            -d|--description)
+                description=$@
+                shift
+                ;;
+            --description=*)
+                description=$@
                 ;;
 
             -q|--quiet)
@@ -113,4 +124,12 @@ mkdir -p "${dst_dir}"
 cd "${dst_dir}"
 git init --bare "${repository}.git"
 
+if [ -n "$description" ];
+then
+    cd "${repository}.git"
+
+    if [ $? -eq 0 ]; then
+        printf "${description}" > description
+    fi
+fi
 
