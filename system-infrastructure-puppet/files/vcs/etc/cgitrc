@@ -6,18 +6,34 @@ root-title=git.hackbytes.io
 root-desc=
 snapshots=tar.gz tar.xz zip
 
-css=/cgit.css
-logo=/cgit.png
+css=
+logo=/logo.png
+#header=/srv/www/git.hackbytes.io/htdocs/git/header.html
+head-include=/srv/www/git.hackbytes.io/htdocs/git/head-include.html
+footer=/srv/www/git.hackbytes.io/htdocs/git/footer.html
+#noheader=1
 
+# causes the log to be a little more spaced out, but I think the info is useful
+# for merged feature branches.
 enable-commit-graph=1
 enable-tree-linenumbers=1
 enable-log-filecount=1
 enable-log-linecount=1
+enable-index-links=1
 remove-suffix=1
-side-by-side-diffs=1
+# unified looks cooler
+side-by-side-diffs=0
 section-sort=1
 enable-index-owner=0
+local-time=1
+enable-blame=1
 virtual-root=/
+
+max-commit-count=250
+max-repo-count=250
+summary-branches=25
+summary-log=250
+summary-tags=25
 
 scan-path=/srv/git/repositories
 

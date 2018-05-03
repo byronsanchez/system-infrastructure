@@ -226,6 +226,76 @@ class vcs(
       ]
     }
 
+    file { "/srv/www/git.hackbytes.io/htdocs/git/cgit.css":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0644,
+      path   => "/srv/www/git.hackbytes.io/htdocs/git/cgit.css",
+      source => "puppet:///files/vcs/srv/www/git.hackbytes.io/htdocs/git/cgit.css",
+      require => Exec["webapp_config_git_${environment}"],
+    }
+
+    file { "/srv/www/git.hackbytes.io/htdocs/git/style.css":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0644,
+      path   => "/srv/www/git.hackbytes.io/htdocs/git/style.css",
+      source => "puppet:///files/vcs/srv/www/git.hackbytes.io/htdocs/git/style.css",
+      require => Exec["webapp_config_git_${environment}"],
+    }
+
+    file { "/srv/www/git.hackbytes.io/htdocs/git/logo.png":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0644,
+      path   => "/srv/www/git.hackbytes.io/htdocs/git/logo.png",
+      source => "puppet:///files/vcs/srv/www/git.hackbytes.io/htdocs/git/logo.png",
+      require => Exec["webapp_config_git_${environment}"],
+    }
+
+    file { "/srv/www/git.hackbytes.io/htdocs/git/favicon.ico":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0644,
+      path   => "/srv/www/git.hackbytes.io/htdocs/git/favicon.ico",
+      source => "puppet:///files/vcs/srv/www/git.hackbytes.io/htdocs/git/favicon.ico",
+      require => Exec["webapp_config_git_${environment}"],
+    }
+
+    file { "/srv/www/git.hackbytes.io/htdocs/git/header.html":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0644,
+      path   => "/srv/www/git.hackbytes.io/htdocs/git/header.html",
+      source => "puppet:///files/vcs/srv/www/git.hackbytes.io/htdocs/git/header.html",
+      require => Exec["webapp_config_git_${environment}"],
+    }
+
+    file { "/srv/www/git.hackbytes.io/htdocs/git/head-include.html":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0644,
+      path   => "/srv/www/git.hackbytes.io/htdocs/git/head-include.html",
+      source => "puppet:///files/vcs/srv/www/git.hackbytes.io/htdocs/git/head-include.html",
+      require => Exec["webapp_config_git_${environment}"],
+    }
+
+    file { "/srv/www/git.hackbytes.io/htdocs/git/footer.html":
+      ensure => present,
+      owner  => "root",
+      group  => "root",
+      mode   => 0644,
+      path   => "/srv/www/git.hackbytes.io/htdocs/git/footer.html",
+      source => "puppet:///files/vcs/srv/www/git.hackbytes.io/htdocs/git/footer.html",
+      require => Exec["webapp_config_git_${environment}"],
+    }
+
     # cgit internal backend nginx for https
     nl_nginx::website { "git":
       websiteName           => "git.hackbytes.io",
@@ -668,8 +738,9 @@ class vcs(
   }
 
   $packages = [
-    "git",
-    #"fossil",
+    # disabling git because it /always/ recompiles on gentoo nodes
+    #"git",
+    "fossil",
     "mercurial",
     "subversion",
     "bzr",
