@@ -1,0 +1,158 @@
+#!/bin/sh
+#
+# Fossil server repository management script - run as a cron job to update mirror repos (both git and fossil) whenever
+# the authoritative fossil repos update
+
+source /usr/local/lib/nitelite/helpers/common.lib.sh;
+
+work_dir="/var/lib/nitelite/vcs/git-sync"
+cache_dir="${work_dir}/cache"
+fossil_dir="/srv/git/repositories"
+#org_dir="/etc/nitelite/vcs.d/fossil"
+
+# org/repo prefix and suffix
+rss_prefix="https://git.hackbytes.io"
+rss_suffix="atom/?h=master"
+
+# Trim the first n lines of the cached xml files to remove the always changing pubDate
+trim=0
+
+skip=0
+quiet=0
+
+############################
+# Argument Parsing Functions
+
+# TODO: validate action values
+
+function show_help ()
+{
+cat <<-EOM
+
+$0 [OPTION] command
+
+other:
+
+    -s --skip                skip the feed check and update everything
+    -q --quiet               do not log messages to STDOUT
+    -h --help                display this message
+
+EOM
+    exit 1
+}
+
+function get_options () {
+    argv=()
+    while [ $# -gt 0 ]
+    do
+        opt=$1
+        shift
+        case ${opt} in
+
+            -s|--skip)
+                skip=1
+                ;;
+            -q|--quiet)
+                quiet=1
+                ;;
+            -h|--help)
+                show_help
+                ;;
+            *)
+                if [ "${opt:0:1}" = "-" ]; then
+                    fail "${opt}: unknown option."
+                fi
+                argv+=(${opt})
+                ;;
+        esac
+    done
+}
+
+##################
+# GLOBAL VALIDATION
+
+# Parse options if they were passed
+get_options $*
+
+if [ ! -d "$fossil_dir" ]; then
+  # If there are no repos, then there is nothing to push out to external repos.
+  # Exit...
+  exit 1;
+fi
+
+#############
+# MAIN SCRIPT
+
+if [ ! -d "${work_dir}" ]; then
+  mkdir -p "${work_dir}"
+fi
+
+if [ ! -d "${cache_dir}" ]; then
+  mkdir -p "${cache_dir}"
+fi
+
+for organization in $fossil_dir/*;
+do
+
+  org_name="$(basename ${organization})"
+
+  for fossil_repo_path in $organization/*;
+  do
+
+    fossil_repo="$(basename ${fossil_repo_path})"
+    fossil_repo_base="${fossil_repo%.git}"
+    rss="${rss_prefix}/${org_name}/${fossil_repo_base}/${rss_suffix}"
+
+    echo "Pinging ${rss}"
+
+    last_xml_cache="${cache_dir}/last-xml-cache-${org_name}-${fossil_repo_base}.xml"
+    new_xml_cache="${cache_dir}/new-xml-cache-${org_name}-${fossil_repo_base}.xml"
+    trimmed_last_xml_cache="${cache_dir}/trimmed-last-xml-cache-${org_name}-${fossil_repo_base}.xml"
+    trimmed_new_xml_cache="${cache_dir}/trimmed-new-xml-cache-${org_name}-${fossil_repo_base}.xml"
+
+    # If no last cache exists, retrieve a cache and exit. A comparison can be
+    # done on the knext run of this script.
+    if [ ! -e "${last_xml_cache}" ];
+    then
+      # TODO: Fix SSL certificates and remove k switch
+      curl -s -k "${rss}" > "${last_xml_cache}"
+      continue
+    fi
+
+    # retrieve the most recent file
+    curl -s -k "${rss}" > "${new_xml_cache}"
+
+    # trim the files to remove pubDate, which always changes
+    last_contents=$(cat ${last_xml_cache} | tail -n +$trim);
+    new_contents=$(cat ${new_xml_cache} | tail -n +$trim);
+
+    # store the trimmed contents on the hard disk
+    echo "${last_contents}" > "${trimmed_last_xml_cache}"
+    echo "${new_contents}" > "${trimmed_new_xml_cache}"
+
+    diff "${trimmed_last_xml_cache}" "${trimmed_new_xml_cache}" &> /dev/null
+
+    if [ $? -eq 0 -a ${skip} -eq 0 ]; then
+      echo "Feed Is Same"
+      rm ""${new_xml_cache}""
+      rm ""${trimmed_new_xml_cache}""
+
+    else
+      echo "Feed Is Different"
+      mv "${new_xml_cache}" "${last_xml_cache}"
+      mv "${trimmed_new_xml_cache}" "${trimmed_last_xml_cache}"
+
+      # Create a git version of the repository
+      #fossil-to-git-sync -o ${org_name} -r ${fossil_repo_base}
+      # Sync the fossil repository with the public fossil mirrors
+      # UPDATE 2018-03-15: I no longer have a pattern of centralized local VCS node and external VCS node. I now just
+      # use my workstation and the external node /is/ the centralized VCS node.
+      #fossil-sync -o ${org_name} -r ${fossil_repo_base}
+      # Sync the git repository with the public git mirrors
+      git-sync -o ${org_name} -r ${fossil_repo_base}
+    fi
+
+  done
+
+done
+
