@@ -24,7 +24,7 @@ cat <<-EOM
 
 Available commands:
 
-        create-repo -o <organization> -r <repo-name>
+        create-repo -o <organization> -r <repo-name> [-d "<description">]
         delete-repo -o <organization> -r <repo-name>
         list-repos
         change-description -o <organization> -r <repo-name> -d "<description>"
