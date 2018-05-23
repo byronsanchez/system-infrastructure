@@ -21,6 +21,11 @@
 :ID:       9319415c-1cb3-46ef-bbca-fed5fa18a19a
 :END:
 [2018-05-02 Wed 12:49]
+** OPEN Try out Fira Code font for git.hackbytes.io
+:PROPERTIES:
+:ID:       ed54e7d3-d1f0-403c-ba69-8ebc316a2649
+:END:
+[2018-05-18 Fri 13:37]
 ** OPEN Create git user in vcs pattern to run git cron jobs
 :PROPERTIES:
 :ID: 93d7801f-b4d5-714f-120c-44a53430cc7d
