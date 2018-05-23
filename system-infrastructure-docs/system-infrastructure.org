@@ -9062,3 +9062,94 @@ If a single user should have access to some config or resource, it's dotfiles. I
 :ID:       527b48da-2a56-4573-aea6-093b13ba5fb7
 :END:
 [2018-05-02 Wed 12:50]
+** Infrastructure Architecture
+:PROPERTIES:
+:ID:       c76ba155-642b-4f0b-ad04-0342719fe932
+:END:
+[2018-03-24 Sat 19:54]
+*** https://github.com/elocnatsirt/terrafirm - Example pattern for terraform structure
+:PROPERTIES:
+:ID:       39e6a4fd-bb62-4527-9087-93e5f1281e4b
+:END:
+[2018-03-24 Sat 19:54]
+*** https://github.com/vancluever/packer-terraform-example - Another terraform pattern example
+:PROPERTIES:
+:ID:       9d43c5f1-2a1f-4f13-9d05-25b7109226e3
+:END:
+[2018-03-24 Sat 19:55]
+*** https://charity.wtf/2016/03/30/terraform-vpc-and-why-you-want-a-tfstate-file-per-env/ - She knows orchestration in the real world
+:PROPERTIES:
+:ID:       de086a93-b015-4942-acb4-65b24f0f69a5
+:END:
+[2018-03-24 Sat 19:54]
+*** https://charity.wtf/2016/04/14/scrapbag-of-useful-terraform-tips/
+:PROPERTIES:
+:ID:       3f1d321c-0d55-4fd3-a9db-136c95c7932d
+:END:
+[2018-03-24 Sat 19:55]
+** You /can't/ restart cron because of SELinux                          :NB:
+:PROPERTIES:
+:ID:       e4e10920-8daf-4869-8ceb-87e6a42a307a
+:END:
+[2018-03-15 Thu 18:53]
+
+Basically, if your crons aren't running you will either have to reboot or make
+sure to start the cron process with the sysadm_r so it can transition properly
+to system_r.
+
+Cron is a /pain/ with SELinux, so even if you have SELinux in permissive mode,
+you gotta get this right!
+
+source: https://jowrjowr.github.io/blog/2014/10/23/gentoo-and-selinux/
+
+If you sudo up to an admin user, you'll just inherit the lower-level user's
+user_r role. I think the "right" way to do it is perhaps to either get into
+staff, or to use a console to use the sysadm_r role.
+
+I just checked. In my current configuration of SELinux, root and staff both have
+sysadm_r. So the right way would be to ssh in via staff and manage cron that
+way.
+** SSL Configuration
+:PROPERTIES:
+:ID:       cfe24efe-5e60-4d77-a75a-68f42ac57dfc
+:END:
+
+- https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04
+** Cloudflare bug findings                                            :NOTE:
+:PROPERTIES:
+:ID:       82ae69de-2f36-4765-881e-70362ede87eb
+:END:
+   :LOGBOOK:
+   CLOCK: [2017-01-17 Tue 16:35]--[2017-01-17 Tue 19:25] =>  2:50
+   :END:
+[2017-01-17 Tue 16:35]
+[[file:f:/nitelite/notebook/org/capture.org::*Wiki%20(value,%20signal)%20over%20blog%20(cheap,%20noise)][Wiki (value, signal) over blog (cheap, noise)]]
+
+- no pass through AND dev mode AND full strict crypto, the cgi + xinetd!
+- pass through AND dev mode AND full strict crypto, cgi works, xinetd fails
+  - 502 bad gateway when xinetd is crashed
+  - 404 when xinetd is running
+- pass through AND dev mode AND no crypto, too many redirects
+  - makes sense -> cloudflare redirects to http and my server redirects to
+    https, endless cycle
+
+So the cloudflare 404 was a smart error think. When fossil returned a 404
+because my wiki index page didn't exist, cloudflare intercepted it and produced
+it's own 404 page!
+
+Okay, now that this is out of the way, I can get to work on securing uwsgi and
+xinetd.
+** Findings on xinetd not running as user                             :NOTE:
+:PROPERTIES:
+:ID:       ddde2f65-ca3c-4fe5-85c3-22c638cdf56c
+:END:
+  [2017-01-18 Wed 10:07]
+
+Xinetd runs processes that listens on ports via the root user. This is most
+likely to prevent issues with kernel port binding.
+
+When a connection is established, xinetd will spawn the configured service (git,
+rsyncd, fossil, etc.). These spawned services run as the configured user
+(www-data) and they run and exit quickly. If you run a watch command with -n
+0.1, you still might miss it.
+
